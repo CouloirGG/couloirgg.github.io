@@ -548,6 +548,147 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+/* ============================================================
+   MASCOT
+   ============================================================ */
+.mascot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 100;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.mascot-container img {
+  height: 180px;
+  width: auto;
+  filter: drop-shadow(0 4px 20px rgba(232, 166, 48, 0.2));
+  transition: opacity 0.3s ease;
+}
+
+.mascot-container img.hidden { opacity: 0; position: absolute; bottom: 0; right: 0; }
+.mascot-container img.active { opacity: 1; position: relative; }
+
+/* Idle float */
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.mascot-container.idle { animation: mascot-float 4s ease-in-out infinite; }
+
+/* Wiggle */
+@keyframes mascot-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-4deg); }
+  40% { transform: rotate(4deg); }
+  60% { transform: rotate(-3deg); }
+  80% { transform: rotate(2deg); }
+}
+.mascot-container.wiggle { animation: mascot-wiggle 0.6s ease-in-out; }
+
+/* Bounce excitement */
+@keyframes mascot-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-20px) scale(1.05); }
+  50% { transform: translateY(0) scale(0.95); }
+  70% { transform: translateY(-10px) scale(1.02); }
+}
+.mascot-container.bounce { animation: mascot-bounce 0.8s ease-in-out; }
+
+/* Divine chase - llama slides off screen */
+@keyframes mascot-chase {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(10px) rotate(5deg); }
+  100% { transform: translateX(calc(100% + 100px)) rotate(15deg); }
+}
+@keyframes mascot-return {
+  0% { transform: translateX(calc(-100vw - 200px)); }
+  60% { transform: translateX(-20px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+.mascot-container.chasing { animation: mascot-chase 1.2s ease-in forwards; }
+.mascot-container.returning { animation: mascot-return 1.5s ease-out forwards; }
+
+/* Divine orb */
+.divine-orb {
+  position: fixed;
+  bottom: 100px;
+  right: 60px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #f5d060, #e89030 50%, #c87020 100%);
+  box-shadow: 0 0 15px rgba(232, 144, 48, 0.5), inset 0 -3px 6px rgba(0,0,0,0.2);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+}
+.divine-orb::after {
+  content: '';
+  position: absolute;
+  top: 6px; left: 8px;
+  width: 8px; height: 5px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transform: rotate(-20deg);
+}
+
+@keyframes divine-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  40% { transform: translateY(60px) rotate(180deg); opacity: 1; }
+  100% { transform: translateY(60px) translateX(calc(100% + 200px)) rotate(720deg); opacity: 1; }
+}
+@keyframes divine-return {
+  0% { transform: translateX(calc(-100vw - 100px)) translateY(60px); opacity: 1; }
+  100% { transform: translateX(0) translateY(0); opacity: 0; }
+}
+.divine-orb.falling { animation: divine-fall 1.5s ease-in forwards; }
+.divine-orb.returning { animation: divine-return 1.2s ease-out forwards; }
+
+/* Rare easter egg tag */
+.rare-tag {
+  position: fixed;
+  bottom: 210px;
+  right: 50px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--amber);
+  opacity: 0;
+  z-index: 101;
+  pointer-events: none;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+@keyframes rare-reveal {
+  0% { opacity: 0; transform: translateY(5px); }
+  20% { opacity: 0.6; transform: translateY(0); }
+  80% { opacity: 0.6; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-5px); }
+}
+.rare-tag.visible { animation: rare-reveal 2s ease-in-out forwards; }
+
+/* Hero mascot (large version in hero only) */
+.hero-mascot {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  height: 320px;
+  width: auto;
+  opacity: 0.12;
+  filter: drop-shadow(0 0 40px rgba(232, 166, 48, 0.1));
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .mascot-container { bottom: 10px; right: 10px; }
+  .mascot-container img { height: 120px; }
+  .hero-mascot { height: 180px; opacity: 0.08; }
+  .rare-tag { bottom: 140px; right: 20px; }
+}
 </style>
 </head>
 <body>
@@ -643,11 +784,11 @@ footer {
       <span><span class="dot"></span> Community Funded</span>
     </div>
   </div>
+  <img src="/tools/mascot_idle.png" alt="" class="hero-mascot" aria-hidden="true">
 </div>
 
 <!-- ============================================================
-     FEATURES
-     ============================================================ -->
+     FEATURES     ============================================================ -->
 <section class="fade-in">
   <div class="section-label">// Features</div>
   <h2 class="section-title">Built for the Endgame</h2>
@@ -753,6 +894,177 @@ footer {
 <!-- ============================================================
      SCROLL ANIMATION
      ============================================================ -->
+<!-- MASCOT -->
+<div class="mascot-container idle" id="mascot">
+  <img src="/tools/mascot_idle.png" alt="" class="active" id="mascot-default">
+  <img src="/tools/mascot_look.png" alt="" class="hidden" id="mascot-alert">
+  <img src="/tools/mascot_silly.png" alt="" class="hidden" id="mascot-derp">
+</div>
+<div class="divine-orb" id="divine-orb"></div>
+<div class="rare-tag" id="rare-tag"></div>
+
+<script>
+// ============================================================
+// MASCOT ANIMATION SYSTEM — RNG-driven rare events
+// ============================================================
+(() => {
+  const mascot = document.getElementById('mascot');
+  const imgs = {
+    default: document.getElementById('mascot-default'),
+    alert: document.getElementById('mascot-alert'),
+    derp: document.getElementById('mascot-derp')
+  };
+  const divine = document.getElementById('divine-orb');
+  const rareTag = document.getElementById('rare-tag');
+  let busy = false;
+
+  function setSprite(name) {
+    Object.entries(imgs).forEach(([k, img]) => {
+      img.classList.toggle('active', k === name);
+      img.classList.toggle('hidden', k !== name);
+    });
+  }
+
+  function playAnimation(cls, duration) {
+    return new Promise(resolve => {
+      mascot.classList.remove('idle');
+      mascot.classList.add(cls);
+      setTimeout(() => {
+        mascot.classList.remove(cls);
+        resolve();
+      }, duration);
+    });
+  }
+
+  // --- ANIMATIONS ---
+
+  // Wiggle: llama shakes briefly
+  async function wiggle() {
+    if (busy) return; busy = true;
+    await playAnimation('wiggle', 600);
+    mascot.classList.add('idle');
+    busy = false;
+  }
+
+  // Tongue out: swap to derp face briefly
+  async function tongueOut() {
+    if (busy) return; busy = true;
+    setSprite('derp');
+    await playAnimation('wiggle', 600);
+    await new Promise(r => setTimeout(r, 1200));
+    setSprite('default');
+    mascot.classList.add('idle');
+    busy = false;
+  }
+
+  // Alert: swap to forward-facing, bounce
+  async function alertBounce() {
+    if (busy) return; busy = true;
+    setSprite('alert');
+    await playAnimation('bounce', 800);
+    await new Promise(r => setTimeout(r, 800));
+    setSprite('default');
+    mascot.classList.add('idle');
+    busy = false;
+  }
+
+  // Divine chase: orb falls, rolls away, llama chases it off screen, returns
+  async function divineChase() {
+    if (busy) return; busy = true;
+    
+    // Divine falls and rolls
+    divine.classList.remove('returning');
+    divine.style.opacity = '1';
+    divine.classList.add('falling');
+    
+    // Llama notices after a beat
+    await new Promise(r => setTimeout(r, 600));
+    setSprite('derp');
+    
+    // Llama chases
+    await new Promise(r => setTimeout(r, 400));
+    mascot.classList.remove('idle');
+    mascot.classList.add('chasing');
+    
+    // Both off screen
+    await new Promise(r => setTimeout(r, 1500));
+    divine.classList.remove('falling');
+    divine.style.opacity = '0';
+    
+    // Llama returns from the other side
+    await new Promise(r => setTimeout(r, 800));
+    mascot.classList.remove('chasing');
+    setSprite('default');
+    mascot.classList.add('returning');
+    
+    await new Promise(r => setTimeout(r, 1500));
+    mascot.classList.remove('returning');
+    mascot.classList.add('idle');
+    busy = false;
+  }
+
+  // SUPER RARE: Name appears briefly
+  async function rareReveal() {
+    if (busy) return; busy = true;
+    setSprite('alert');
+    rareTag.textContent = [102,114,97,110,107].map(c=>String.fromCharCode(c)).join('');
+    await playAnimation('bounce', 800);
+    rareTag.classList.add('visible');
+    await new Promise(r => setTimeout(r, 2000));
+    rareTag.classList.remove('visible');
+    rareTag.textContent = '';
+    setSprite('default');
+    mascot.classList.add('idle');
+    busy = false;
+  }
+
+  // --- RNG CONTROLLER ---
+  // Rolls every 20-40 seconds with weighted random
+  function rollAnimation() {
+    if (busy) return;
+    const roll = Math.random() * 1000;
+
+    if (roll < 1) {          // 0.1% — Rare reveal (super rare)
+      rareReveal();
+    } else if (roll < 6) {   // 0.5% — Divine chase
+      divineChase();
+    } else if (roll < 20) {  // 1.4% — Tongue out
+      tongueOut();
+    } else if (roll < 45) {  // 2.5% — Alert bounce
+      alertBounce();
+    } else if (roll < 80) {  // 3.5% — Wiggle
+      wiggle();
+    }
+    // ~92% of the time: nothing happens, just idle float
+  }
+
+  // Random interval between 20-40 seconds
+  function scheduleNext() {
+    const delay = 20000 + Math.random() * 20000;
+    setTimeout(() => {
+      rollAnimation();
+      scheduleNext();
+    }, delay);
+  }
+
+  // First roll after 10-30 seconds
+  setTimeout(() => {
+    rollAnimation();
+    scheduleNext();
+  }, 10000 + Math.random() * 20000);
+})();
+</script>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const observer = new IntersectionObserver((entries) => {
-  entrie
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
