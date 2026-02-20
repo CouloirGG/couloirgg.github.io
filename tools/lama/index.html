@@ -556,7 +556,7 @@ footer {
   bottom: 20px;
   right: 30px;
   z-index: 100;
-  pointer-events: none;
+  cursor: pointer;
   transition: transform 0.3s ease;
 }
 
@@ -917,6 +917,18 @@ footer {
   const divine = document.getElementById('divine-orb');
   const rareTag = document.getElementById('rare-tag');
   let busy = false;
+
+  // Click to stick tongue out
+  mascot.addEventListener('click', async () => {
+    if (busy) return; busy = true;
+    mascot.classList.remove('idle');
+    setSprite('derp');
+    await playAnimation('wiggle', 600);
+    await new Promise(r => setTimeout(r, 800));
+    setSprite('default');
+    mascot.classList.add('idle');
+    busy = false;
+  });
 
   function setSprite(name) {
     Object.entries(imgs).forEach(([k, img]) => {
