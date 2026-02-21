@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Frank Run — Couloir</title>
+<meta name="description" content="Help Frank the llama dodge Divine Orbs and collect Exalts in this endless runner.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0908;
+    overflow: hidden;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  #game-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 3 / 1;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 4px;
+    image-rendering: auto;
+  }
+
+  #ui-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .screen-overlay {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    pointer-events: auto;
+  }
+  .screen-overlay.active { display: flex; }
+
+  .game-title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: bold;
+    color: #e8a630;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(232, 166, 48, 0.4);
+  }
+
+  .game-subtitle {
+    font-size: clamp(11px, 2vw, 16px);
+    color: #8a7a60;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .prompt {
+    font-size: clamp(12px, 2.2vw, 18px);
+    color: #c4a44a;
+    animation: blink 1.2s ease-in-out infinite;
+    margin-top: 8px;
+  }
+
+  .score-display {
+    font-size: clamp(16px, 3vw, 28px);
+    color: #e8a630;
+    margin-bottom: 4px;
+  }
+
+  .high-score-label {
+    font-size: clamp(10px, 1.8vw, 14px);
+    color: #8a7a60;
+    letter-spacing: 1px;
+  }
+
+  .final-score {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: bold;
+    color: #e8a630;
+    text-shadow: 0 2px 12px rgba(232, 166, 48, 0.4);
+  }
+
+  .new-best {
+    font-size: clamp(11px, 2vw, 16px);
+    color: #60dd60;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: none;
+  }
+  .new-best.show { display: block; }
+
+  .stats-row {
+    display: flex;
+    gap: clamp(16px, 4vw, 40px);
+    color: #8a7a60;
+    font-size: clamp(10px, 1.6vw, 14px);
+  }
+  .stats-row span { color: #c4a44a; }
+
+  #hud {
+    position: absolute;
+    top: 12px; right: 16px;
+    text-align: right;
+    pointer-events: none;
+  }
+  #hud-score {
+    font-size: clamp(16px, 3vw, 24px);
+    color: #e8a630;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+  }
+  #hud-high {
+    font-size: clamp(9px, 1.4vw, 12px);
+    color: #6a5a40;
+    font-family: 'Courier New', monospace;
+  }
+  #hud-exalts {
+    font-size: clamp(10px, 1.6vw, 14px);
+    color: #c4a44a;
+    font-family: 'Courier New', monospace;
+  }
+
+  .watermark {
+    position: absolute;
+    bottom: 6px; left: 10px;
+    font-size: 10px;
+    color: #2a2218;
+    font-family: 'Courier New', monospace;
+    pointer-events: none;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  @media (max-width: 600px) {
+    #game-wrapper {
+      aspect-ratio: 2.5 / 1;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="game-wrapper">
+  <canvas id="game"></canvas>
+
+  <div id="ui-overlay">
+    <!-- START SCREEN -->
+    <div class="screen-overlay active" id="start-screen">
+      <div class="game-title">Frank Run</div>
+      <div class="game-subtitle">an endless runner by couloir</div>
+      <div class="prompt" id="start-prompt">Press SPACE or Tap to Start</div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div class="screen-overlay" id="gameover-screen">
+      <div class="game-subtitle">Game Over</div>
+      <div class="final-score" id="final-score">0</div>
+      <div class="new-best" id="new-best">★ New Best! ★</div>
+      <div class="stats-row">
+        <div>Distance: <span id="stat-distance">0</span>m</div>
+        <div>Exalts: <span id="stat-exalts">0</span></div>
+        <div>Best: <span id="stat-best">0</span></div>
+      </div>
+      <div class="prompt">Press SPACE or Tap to Retry</div>
+    </div>
+  </div>
+
+  <div id="hud" style="display:none;">
+    <div id="hud-score">0</div>
+    <div id="hud-high">HI 0</div>
+    <div id="hud-exalts">✦ 0</div>
+  </div>
+
+  <div class="watermark">couloir.gg</div>
+</div>
+
+<script>
+// ============================================================
+// FRANK RUN — Endless Runner
+// ============================================================
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+
+  // Internal resolution
+  const W = 900;
+  const H = 300;
+  canvas.width = W;
+  canvas.height = H;
+
+  // ---- AUDIO (Web Audio API synthesized) ----
+  let audioCtx = null;
+  function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  function playSound(type) {
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    const t = audioCtx.currentTime;
+
+    switch(type) {
+      case 'jump':
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(260, t);
+        osc.frequency.exponentialRampToValueAtTime(520, t + 0.1);
+        gain.gain.setValueAtTime(0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        osc.start(t); osc.stop(t + 0.15);
+        break;
+      case 'collect':
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, t);
+        osc.frequency.exponentialRampToValueAtTime(1200, t + 0.08);
+        gain.gain.setValueAtTime(0.1, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+        osc.start(t); osc.stop(t + 0.12);
+        // Second note
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        osc2.connect(gain2); gain2.connect(audioCtx.destination);
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(900, t + 0.06);
+        osc2.frequency.exponentialRampToValueAtTime(1400, t + 0.14);
+        gain2.gain.setValueAtTime(0.08, t + 0.06);
+        gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        osc2.start(t + 0.06); osc2.stop(t + 0.18);
+        break;
+      case 'hit':
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, t);
+        osc.frequency.exponentialRampToValueAtTime(50, t + 0.3);
+        gain.gain.setValueAtTime(0.15, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+        osc.start(t); osc.stop(t + 0.35);
+        break;
+      case 'milestone':
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, t);
+        gain.gain.setValueAtTime(0.08, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        osc.start(t); osc.stop(t + 0.15);
+        const m2 = audioCtx.createOscillator();
+        const mg2 = audioCtx.createGain();
+        m2.connect(mg2); mg2.connect(audioCtx.destination);
+        m2.type = 'triangle';
+        m2.frequency.setValueAtTime(660, t + 0.12);
+        mg2.gain.setValueAtTime(0.08, t + 0.12);
+        mg2.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+        m2.start(t + 0.12); m2.stop(t + 0.3);
+        break;
+    }
+  }
+
+  // ---- SPRITES ----
+  const sprites = {};
+  let spritesLoaded = 0;
+  const spriteTotal = 3;
+
+  function loadSprite(name, src) {
+    const img = new Image();
+    img.onload = () => { spritesLoaded++; };
+    img.src = src;
+    sprites[name] = img;
+  }
+
+  loadSprite('run', '/tools/mascot_idle.png');
+  loadSprite('jump', '/tools/mascot_silly.png');
+  loadSprite('hit', '/tools/mascot_look.png');
+
+  // ---- GAME STATE ----
+  const GROUND_Y = H - 50;
+  const FRANK_X = 100;
+  const FRANK_W = 60;
+  const FRANK_H = 76;
+  const GRAVITY = 0.65;
+  const JUMP_FORCE = -12;
+
+  let state = 'start'; // start, playing, gameover
+  let frank = {};
+  let obstacles = [];
+  let collectibles = [];
+  let particles = [];
+  let groundTiles = [];
+  let bgStars = [];
+  let speed = 0;
+  let score = 0;
+  let exaltCount = 0;
+  let distance = 0;
+  let highScore = parseInt(localStorage.getItem('frankrun_hi') || '0');
+  let shakeTimer = 0;
+  let shakeIntensity = 0;
+  let lastMilestone = 0;
+  let frameCount = 0;
+  let spawnTimer = 0;
+  let collectibleTimer = 0;
+  let difficultyLevel = 0;
+
+  // Ground parallax layers
+  function initBg() {
+    bgStars = [];
+    for (let i = 0; i < 40; i++) {
+      bgStars.push({
+        x: Math.random() * W,
+        y: Math.random() * (GROUND_Y - 40) + 10,
+        size: Math.random() * 1.5 + 0.3,
+        speed: Math.random() * 0.3 + 0.1,
+        alpha: Math.random() * 0.4 + 0.1,
+      });
+    }
+    groundTiles = [];
+    for (let i = 0; i < 30; i++) {
+      groundTiles.push({
+        x: Math.random() * (W + 200),
+        w: Math.random() * 40 + 10,
+        h: Math.random() * 4 + 1,
+        y: GROUND_Y + Math.random() * 30 + 5,
+        speed: Math.random() * 0.5 + 0.8,
+      });
+    }
+  }
+
+  function resetGame() {
+    frank = {
+      x: FRANK_X,
+      y: GROUND_Y - FRANK_H,
+      vy: 0,
+      grounded: true,
+      sprite: 'run',
+      waddlePhase: 0,
+    };
+    obstacles = [];
+    collectibles = [];
+    particles = [];
+    speed = 4;
+    score = 0;
+    exaltCount = 0;
+    distance = 0;
+    shakeTimer = 0;
+    lastMilestone = 0;
+    frameCount = 0;
+    spawnTimer = 0;
+    collectibleTimer = 0;
+    difficultyLevel = 0;
+    initBg();
+  }
+
+  // ---- SPAWNING ----
+  function spawnObstacle() {
+    const size = 26 + Math.random() * 12;
+    obstacles.push({
+      x: W + 20,
+      y: GROUND_Y - size,
+      w: size,
+      h: size,
+      rotation: 0,
+      rotSpeed: (Math.random() - 0.5) * 0.1,
+    });
+  }
+
+  function spawnCollectible() {
+    const floatY = GROUND_Y - FRANK_H - 20 - Math.random() * 50;
+    collectibles.push({
+      x: W + 20,
+      y: floatY,
+      w: 20,
+      h: 20,
+      bobPhase: Math.random() * Math.PI * 2,
+      collected: false,
+      alpha: 1,
+    });
+  }
+
+  // ---- DRAWING HELPERS ----
+  function drawDivineOrb(x, y, size, rotation) {
+    ctx.save();
+    ctx.translate(x + size/2, y + size/2);
+    ctx.rotate(rotation);
+
+    // Main orb
+    const grad = ctx.createRadialGradient(-size*0.1, -size*0.15, size*0.05, 0, 0, size/2);
+    grad.addColorStop(0, '#f5d060');
+    grad.addColorStop(0.5, '#e89030');
+    grad.addColorStop(1, '#c87020');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(0, 0, size/2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Glow
+    ctx.shadowColor = 'rgba(232, 144, 48, 0.5)';
+    ctx.shadowBlur = 12;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Highlight
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.beginPath();
+    ctx.ellipse(-size*0.1, -size*0.15, size*0.15, size*0.1, -0.3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawExaltOrb(x, y, size, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    const grad = ctx.createRadialGradient(x - 2, y - 3, 1, x, y, size/2);
+    grad.addColorStop(0, '#ffe880');
+    grad.addColorStop(0.6, '#c4a44a');
+    grad.addColorStop(1, '#8a7030');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, size/2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Star shape on it
+    ctx.fillStyle = 'rgba(255,255,220,0.5)';
+    ctx.font = `${size * 0.7}px serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('✦', x, y + 1);
+
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  function drawFrank() {
+    const f = frank;
+    const spriteImg = sprites[f.sprite];
+    if (!spriteImg) return;
+
+    ctx.save();
+
+    // Waddle when running
+    let drawY = f.y;
+    let drawRotation = 0;
+    if (f.grounded && state === 'playing') {
+      f.waddlePhase += 0.25;
+      drawY += Math.sin(f.waddlePhase * 2) * 3;
+      drawRotation = Math.sin(f.waddlePhase) * 0.06;
+    }
+
+    // Hit shake
+    if (state === 'gameover' && shakeTimer > 0) {
+      drawRotation = (Math.random() - 0.5) * 0.15;
+    }
+
+    ctx.translate(f.x + FRANK_W/2, drawY + FRANK_H/2);
+    ctx.rotate(drawRotation);
+    ctx.drawImage(spriteImg, -FRANK_W/2, -FRANK_H/2, FRANK_W, FRANK_H);
+    ctx.restore();
+  }
+
+  function drawGround() {
+    // Ground line
+    ctx.fillStyle = '#2a1f12';
+    ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+
+    // Top edge
+    ctx.strokeStyle = '#4a3520';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, GROUND_Y);
+    ctx.lineTo(W, GROUND_Y);
+    ctx.stroke();
+
+    // Ground detail
+    ctx.fillStyle = '#1a1410';
+    groundTiles.forEach(t => {
+      ctx.fillRect(t.x, t.y, t.w, t.h);
+    });
+  }
+
+  function drawBg() {
+    // Sky gradient
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+    skyGrad.addColorStop(0, '#0a0908');
+    skyGrad.addColorStop(1, '#151210');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, W, GROUND_Y);
+
+    // Stars/dust
+    bgStars.forEach(s => {
+      ctx.fillStyle = `rgba(232, 166, 48, ${s.alpha})`;
+      ctx.fillRect(s.x, s.y, s.size, s.size);
+    });
+
+    // Distant mountain silhouettes
+    ctx.fillStyle = '#0e0c09';
+    ctx.beginPath();
+    ctx.moveTo(0, GROUND_Y);
+    for (let x = 0; x <= W; x += 80) {
+      const peak = GROUND_Y - 30 - Math.sin(x * 0.008 + frameCount * 0.0003) * 25;
+      ctx.lineTo(x, peak);
+    }
+    ctx.lineTo(W, GROUND_Y);
+    ctx.fill();
+  }
+
+  function drawParticles() {
+    particles.forEach(p => {
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function spawnParticles(x, y, color, count) {
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x, y,
+        vx: (Math.random() - 0.5) * 6,
+        vy: (Math.random() - 1) * 5,
+        size: Math.random() * 3 + 1,
+        alpha: 1,
+        color,
+        life: 30 + Math.random() * 20,
+      });
+    }
+  }
+
+  // ---- UPDATE ----
+  function update() {
+    frameCount++;
+
+    if (state !== 'playing') return;
+
+    // Speed ramp
+    distance += speed * 0.1;
+    score = Math.floor(distance);
+    difficultyLevel = Math.floor(distance / 100);
+    speed = 4 + difficultyLevel * 0.4;
+    if (speed > 12) speed = 12;
+
+    // Milestones
+    const milestone = Math.floor(score / 100) * 100;
+    if (milestone > lastMilestone && milestone > 0) {
+      lastMilestone = milestone;
+      playSound('milestone');
+    }
+
+    // Frank physics
+    if (!frank.grounded) {
+      frank.vy += GRAVITY;
+      frank.y += frank.vy;
+      if (frank.y >= GROUND_Y - FRANK_H) {
+        frank.y = GROUND_Y - FRANK_H;
+        frank.vy = 0;
+        frank.grounded = true;
+        frank.sprite = 'run';
+        // Land dust
+        spawnParticles(frank.x + FRANK_W/2, GROUND_Y, '#4a3520', 4);
+      }
+    }
+
+    // Spawn obstacles
+    spawnTimer -= speed * 0.1;
+    if (spawnTimer <= 0) {
+      spawnObstacle();
+      // Min gap decreases with difficulty
+      const minGap = Math.max(25, 50 - difficultyLevel * 3);
+      const maxGap = Math.max(45, 80 - difficultyLevel * 3);
+      spawnTimer = minGap + Math.random() * (maxGap - minGap);
+    }
+
+    // Spawn collectibles
+    collectibleTimer -= speed * 0.1;
+    if (collectibleTimer <= 0) {
+      if (Math.random() < 0.4) spawnCollectible();
+      collectibleTimer = 30 + Math.random() * 40;
+    }
+
+    // Move obstacles
+    obstacles.forEach(o => {
+      o.x -= speed;
+      o.rotation += o.rotSpeed;
+    });
+    obstacles = obstacles.filter(o => o.x > -50);
+
+    // Move collectibles
+    collectibles.forEach(c => {
+      c.x -= speed;
+      c.bobPhase += 0.08;
+      if (c.collected) {
+        c.alpha -= 0.05;
+        c.y -= 2;
+      }
+    });
+    collectibles = collectibles.filter(c => c.x > -30 && c.alpha > 0);
+
+    // Move bg
+    bgStars.forEach(s => {
+      s.x -= speed * s.speed;
+      if (s.x < -5) s.x = W + 5;
+    });
+    groundTiles.forEach(t => {
+      t.x -= speed * t.speed;
+      if (t.x < -50) t.x = W + Math.random() * 100;
+    });
+
+    // Particles
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.15;
+      p.life--;
+      p.alpha = Math.max(0, p.life / 40);
+    });
+    particles = particles.filter(p => p.life > 0);
+
+    // Collision with obstacles
+    const fHitbox = {
+      x: frank.x + 10,
+      y: frank.y + 8,
+      w: FRANK_W - 20,
+      h: FRANK_H - 12,
+    };
+    for (const o of obstacles) {
+      const oHitbox = {
+        x: o.x + 4,
+        y: o.y + 4,
+        w: o.w - 8,
+        h: o.h - 8,
+      };
+      if (fHitbox.x < oHitbox.x + oHitbox.w &&
+          fHitbox.x + fHitbox.w > oHitbox.x &&
+          fHitbox.y < oHitbox.y + oHitbox.h &&
+          fHitbox.y + fHitbox.h > oHitbox.y) {
+        gameOver();
+        return;
+      }
+    }
+
+    // Collect exalts
+    for (const c of collectibles) {
+      if (c.collected) continue;
+      const dist = Math.hypot(
+        (frank.x + FRANK_W/2) - (c.x + c.w/2),
+        (frank.y + FRANK_H/2) - (c.y + c.w/2 + Math.sin(c.bobPhase) * 6)
+      );
+      if (dist < 35) {
+        c.collected = true;
+        exaltCount++;
+        score += 25;
+        playSound('collect');
+        spawnParticles(c.x + c.w/2, c.y, '#ffe880', 6);
+      }
+    }
+
+    // HUD
+    document.getElementById('hud-score').textContent = score;
+    document.getElementById('hud-high').textContent = `HI ${highScore}`;
+    document.getElementById('hud-exalts').textContent = `✦ ${exaltCount}`;
+  }
+
+  // ---- RENDER ----
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Screen shake
+    ctx.save();
+    if (shakeTimer > 0) {
+      shakeTimer--;
+      const sx = (Math.random() - 0.5) * shakeIntensity;
+      const sy = (Math.random() - 0.5) * shakeIntensity;
+      ctx.translate(sx, sy);
+      shakeIntensity *= 0.9;
+    }
+
+    drawBg();
+    drawGround();
+
+    // Obstacles
+    obstacles.forEach(o => {
+      drawDivineOrb(o.x, o.y, o.w, o.rotation);
+    });
+
+    // Collectibles
+    collectibles.forEach(c => {
+      const bobY = c.y + Math.sin(c.bobPhase) * 6;
+      drawExaltOrb(c.x + c.w/2, bobY + c.h/2, c.w, c.alpha);
+    });
+
+    drawParticles();
+    drawFrank();
+
+    ctx.restore();
+  }
+
+  // ---- GAME FLOW ----
+  function gameOver() {
+    state = 'gameover';
+    frank.sprite = 'hit';
+    shakeTimer = 20;
+    shakeIntensity = 8;
+    playSound('hit');
+
+    const isNewBest = score > highScore;
+    if (isNewBest) {
+      highScore = score;
+      localStorage.setItem('frankrun_hi', String(highScore));
+    }
+
+    document.getElementById('hud').style.display = 'none';
+    document.getElementById('final-score').textContent = score;
+    document.getElementById('stat-distance').textContent = Math.floor(distance);
+    document.getElementById('stat-exalts').textContent = exaltCount;
+    document.getElementById('stat-best').textContent = highScore;
+    document.getElementById('new-best').classList.toggle('show', isNewBest);
+    document.getElementById('gameover-screen').classList.add('active');
+  }
+
+  function startGame() {
+    initAudio();
+    resetGame();
+    state = 'playing';
+    document.getElementById('start-screen').classList.remove('active');
+    document.getElementById('gameover-screen').classList.remove('active');
+    document.getElementById('hud').style.display = 'block';
+  }
+
+  function jump() {
+    if (state === 'start' || state === 'gameover') {
+      startGame();
+      return;
+    }
+    if (state === 'playing' && frank.grounded) {
+      frank.vy = JUMP_FORCE;
+      frank.grounded = false;
+      frank.sprite = 'jump';
+      playSound('jump');
+      spawnParticles(frank.x + FRANK_W/2, GROUND_Y, '#4a3520', 3);
+    }
+  }
+
+  // ---- INPUT ----
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      e.preventDefault();
+      jump();
+    }
+  });
+
+  // Touch/tap
+  let touchStartY = null;
+  document.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchStartY = e.touches[0].clientY;
+    jump();
+  }, { passive: false });
+
+  // Swipe up for jump (mobile)
+  document.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+  }, { passive: false });
+
+  // Mouse click
+  canvas.addEventListener('mousedown', (e) => {
+    jump();
+  });
+
+  // ---- GAME LOOP ----
+  function loop() {
+    update();
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  // Wait for sprites then start loop
+  function waitAndStart() {
+    if (spritesLoaded >= spriteTotal) {
+      initBg();
+      // Draw initial frame with frank standing
+      frank = {
+        x: FRANK_X,
+        y: GROUND_Y - FRANK_H,
+        vy: 0,
+        grounded: true,
+        sprite: 'run',
+        waddlePhase: 0,
+      };
+      loop();
+    } else {
+      setTimeout(waitAndStart, 50);
+    }
+  }
+  waitAndStart();
+
+})();
+</script>
+</body>
+</html>
