@@ -474,6 +474,7 @@
 
     ctx.translate(f.x + FRANK_W/2, drawY + FRANK_H/2);
     ctx.rotate(drawRotation);
+    ctx.scale(-1, 1); // Flip to face right
     ctx.drawImage(spriteImg, -FRANK_W/2, -FRANK_H/2, FRANK_W, FRANK_H);
     ctx.restore();
   }
