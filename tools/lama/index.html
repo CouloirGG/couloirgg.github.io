@@ -596,20 +596,20 @@ footer {
 }
 .mascot-container.bounce { animation: mascot-bounce 0.8s ease-in-out; }
 
-/* Divine chase - llama slides off screen */
+/* Divine chase - orb rolls left, llama chases it */
 @keyframes mascot-chase {
   0% { transform: translateX(0); }
-  15% { transform: translateX(10px) rotate(5deg); }
-  100% { transform: translateX(calc(100% + 100px)) rotate(15deg); }
+  15% { transform: translateX(-10px) rotate(-5deg); }
+  100% { transform: translateX(calc(-100vw - 100px)) rotate(-15deg); }
 }
 @keyframes mascot-return {
-  0% { transform: translateX(calc(-100vw - 200px)); }
-  60% { transform: translateX(-20px); }
-  80% { transform: translateX(10px); }
+  0% { transform: translateX(calc(100vw + 200px)); }
+  60% { transform: translateX(20px); }
+  80% { transform: translateX(-10px); }
   100% { transform: translateX(0); }
 }
-.mascot-container.chasing { animation: mascot-chase 1.2s ease-in forwards; }
-.mascot-container.returning { animation: mascot-return 1.5s ease-out forwards; }
+.mascot-container.chasing { animation: mascot-chase 2s ease-in forwards; }
+.mascot-container.returning { animation: mascot-return 2s ease-out forwards; }
 
 /* Divine orb */
 .divine-orb {
@@ -638,15 +638,15 @@ footer {
 @keyframes divine-fall {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
   10% { opacity: 1; }
-  40% { transform: translateY(60px) rotate(180deg); opacity: 1; }
-  100% { transform: translateY(60px) translateX(calc(100% + 200px)) rotate(720deg); opacity: 1; }
+  40% { transform: translateY(60px) rotate(-180deg); opacity: 1; }
+  100% { transform: translateY(60px) translateX(calc(-100vw - 200px)) rotate(-720deg); opacity: 1; }
 }
 @keyframes divine-return {
-  0% { transform: translateX(calc(-100vw - 100px)) translateY(60px); opacity: 1; }
+  0% { transform: translateX(calc(100vw + 100px)) translateY(60px); opacity: 1; }
   100% { transform: translateX(0) translateY(0); opacity: 0; }
 }
-.divine-orb.falling { animation: divine-fall 1.5s ease-in forwards; }
-.divine-orb.returning { animation: divine-return 1.2s ease-out forwards; }
+.divine-orb.falling { animation: divine-fall 2s ease-in forwards; }
+.divine-orb.returning { animation: divine-return 1.5s ease-out forwards; }
 
 /* Rare easter egg tag */
 .rare-tag {
@@ -980,36 +980,36 @@ footer {
     busy = false;
   }
 
-  // Divine chase: orb falls, rolls away, llama chases it off screen, returns
+  // Divine chase: orb falls, rolls left, llama chases it off screen, returns from right
   async function divineChase() {
     if (busy) return; busy = true;
     
-    // Divine falls and rolls
+    // Divine falls and rolls left
     divine.classList.remove('returning');
     divine.style.opacity = '1';
     divine.classList.add('falling');
     
     // Llama notices after a beat
-    await new Promise(r => setTimeout(r, 600));
+    await new Promise(r => setTimeout(r, 800));
     setSprite('derp');
     
-    // Llama chases
-    await new Promise(r => setTimeout(r, 400));
+    // Llama chases left
+    await new Promise(r => setTimeout(r, 500));
     mascot.classList.remove('idle');
     mascot.classList.add('chasing');
     
     // Both off screen
-    await new Promise(r => setTimeout(r, 1500));
+    await new Promise(r => setTimeout(r, 2200));
     divine.classList.remove('falling');
     divine.style.opacity = '0';
     
-    // Llama returns from the other side
-    await new Promise(r => setTimeout(r, 800));
+    // Llama returns from the right side
+    await new Promise(r => setTimeout(r, 1000));
     mascot.classList.remove('chasing');
     setSprite('default');
     mascot.classList.add('returning');
     
-    await new Promise(r => setTimeout(r, 1500));
+    await new Promise(r => setTimeout(r, 2000));
     mascot.classList.remove('returning');
     mascot.classList.add('idle');
     busy = false;
