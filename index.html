@@ -3,1068 +3,827 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LAMA — Live Auction Market Assessor for POE2 — Couloir</title>
-<meta name="description" content="LAMA — free, open source price checking overlay for Path of Exile 2. Clipboard-based live market pricing via poe.ninja. GPLv3.">
-<meta property="og:title" content="LAMA — Free Price Checker for Path of Exile 2">
-<meta property="og:description" content="Real-time price overlay for POE2. Copy any item, get instant market data from poe.ninja. Free, open source, no strings attached.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://couloir.gg/tools/lama">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="@CouloirGG">
-<meta name="twitter:title" content="LAMA — Free Price Checker for Path of Exile 2">
-<meta name="twitter:description" content="Real-time price overlay for POE2. Copy any item, get instant market data from poe.ninja. Free, open source, no strings attached.">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/favicon-180x180.png">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Couloir — Games & Tools for the People</title>
+<meta name="description" content="Open source games and developer tools built by a team with decades of AAA game industry experience. Community-first. Ad-free. For the people.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg-deep: #0a0908;
-  --bg-surface: #110f0c;
-  --bg-card: #1a1714;
-  --bg-card-hover: #221e19;
-  --amber: #e8a630;
-  --amber-dim: #b8842a;
-  --amber-glow: rgba(232, 166, 48, 0.15);
-  --amber-glow-strong: rgba(232, 166, 48, 0.3);
-  --gold: #d4a84b;
-  --text: #e8e2d8;
-  --text-muted: #8a8070;
-  --text-dim: #5a5248;
-  --border: rgba(232, 166, 48, 0.08);
-  --border-hover: rgba(232, 166, 48, 0.2);
-  --mountain-dark: #2a1f12;
-  --mountain-mid: #4a3520;
-  --mountain-light: #6a5030;
-  --divine-orange: #e89030;
-  --divine-glow: rgba(232, 144, 48, 0.4);
+  --bg-deep: #0a0b0d;
+  --bg-surface: #111318;
+  --bg-card: #161920;
+  --bg-card-hover: #1c1f28;
+  --border: #1e2230;
+  --border-hover: #2a3045;
+  --text-primary: #e8eaf0;
+  --text-secondary: #8b90a0;
+  --text-muted: #555a6e;
+  --accent: #4a9eff;
+  --accent-glow: rgba(74, 158, 255, 0.15);
+  --accent-warm: #f0a050;
+  --accent-green: #50d080;
+  --gradient-mountain: linear-gradient(180deg, #151820 0%, #0a0b0d 100%);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Outfit', -apple-system, sans-serif;
   background: var(--bg-deep);
-  color: var(--text);
+  color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* ============================================================
-   BACKGROUND TEXTURE
-   ============================================================ */
-body::before {
-  content: '';
+/* ===== MOUNTAIN BACKGROUND ===== */
+.mountain-bg {
   position: fixed;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.03) 2px,
-      rgba(0,0,0,0.03) 4px
-    );
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
   pointer-events: none;
-  z-index: 9999;
-}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 24px;
   overflow: hidden;
 }
 
-/* Mountain SVG background */
-.hero-mountains {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  z-index: 0;
-}
-
-/* Ambient glow */
-.hero::after {
+.mountain-bg::before {
   content: '';
   position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
+  bottom: 0; left: -10%; right: -10%;
+  height: 60vh;
+  background:
+    linear-gradient(135deg, transparent 33%, #0e1018 33%, #0e1018 34%, transparent 34%),
+    linear-gradient(225deg, transparent 28%, #0d0f15 28%, #0d0f15 29%, transparent 29%),
+    linear-gradient(165deg, transparent 40%, #10121a 40%, #10121a 41%, transparent 41%);
+  opacity: 0.6;
+}
+
+.mountain-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
   height: 400px;
-  background: radial-gradient(ellipse, var(--amber-glow) 0%, transparent 70%);
-  z-index: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(74, 158, 255, 0.03) 0%, transparent 100%);
+}
+
+/* ===== GRAIN OVERLAY ===== */
+.grain {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
   pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 800px;
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 11, 13, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(30, 34, 48, 0.5);
+  transition: all 0.3s ease;
 }
 
-/* Divine Orb glow behind icon */
-.hero-icon {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  margin: 0 auto 32px;
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--text-primary);
 }
 
-.hero-icon::before {
-  content: '';
-  position: absolute;
-  inset: -20px;
-  background: radial-gradient(circle, var(--divine-glow) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: orb-pulse 3s ease-in-out infinite;
+.nav-logo svg { width: 28px; height: 28px; }
+
+.nav-logo span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-@keyframes orb-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
 }
 
-.hero-icon img,
-.hero-icon svg {
-  width: 140px;
-  height: 140px;
-  border-radius: 20px;
-  position: relative;
-  z-index: 1;
+.nav-links a:hover { color: var(--text-primary); }
+
+.nav-cta {
+  background: rgba(74, 158, 255, 0.1) !important;
+  color: var(--accent) !important;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(74, 158, 255, 0.2);
+  transition: all 0.2s !important;
+}
+
+.nav-cta:hover {
+  background: rgba(74, 158, 255, 0.18) !important;
+  border-color: rgba(74, 158, 255, 0.35) !important;
+}
+
+/* ===== MOBILE NAV ===== */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text-secondary); margin: 5px 0; transition: 0.3s; }
+
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    flex-direction: column;
+    background: rgba(10, 11, 13, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 1.5rem 2rem;
+    gap: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+}
+
+/* ===== LAYOUT ===== */
+main { position: relative; z-index: 2; }
+
+section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 5rem;
 }
 
 .hero-badge {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--amber);
-  border: 1px solid var(--amber-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(74, 158, 255, 0.08);
+  border: 1px solid rgba(74, 158, 255, 0.15);
   border-radius: 100px;
-  padding: 6px 18px;
-  margin-bottom: 24px;
-  background: rgba(232, 166, 48, 0.05);
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+  width: fit-content;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease both;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 .hero h1 {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
   font-weight: 700;
-  letter-spacing: 0.04em;
   line-height: 1.1;
-  margin-bottom: 8px;
-  background: linear-gradient(135deg, #f0c860 0%, #e8a630 40%, #c87820 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  animation: fadeInUp 0.8s ease 0.1s both;
 }
 
-.hero h1 span {
-  display: block;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  -webkit-text-fill-color: var(--text-muted);
-  margin-top: 8px;
-}
+.hero h1 .accent { color: var(--accent); }
 
-.hero-tagline {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: var(--text-muted);
-  max-width: 550px;
-  margin: 20px auto 36px;
+.hero-sub {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
   font-weight: 300;
+  animation: fadeInUp 0.8s ease 0.2s both;
 }
 
 .hero-actions {
   display: flex;
-  gap: 16px;
-  justify-content: center;
+  gap: 1rem;
   flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease 0.3s both;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 32px;
-  border-radius: 6px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  font-family: 'Outfit', sans-serif;
   cursor: pointer;
   border: none;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #e8a630, #c87820);
-  color: #0a0908;
-  box-shadow: 0 0 30px rgba(232, 166, 48, 0.2);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(74, 158, 255, 0.2);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 50px rgba(232, 166, 48, 0.35);
+  background: #5babff;
+  box-shadow: 0 0 30px rgba(74, 158, 255, 0.3);
   transform: translateY(-1px);
 }
 
-.btn-secondary {
-  background: var(--bg-card);
-  color: var(--text);
-  border: 1px solid var(--border-hover);
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
 }
 
-.btn-secondary:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--amber-dim);
+.btn-ghost:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  background: rgba(255,255,255,0.03);
 }
 
-.hero-meta {
+.btn svg { width: 16px; height: 16px; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== STATS BAR ===== */
+.stats-bar {
   display: flex;
-  gap: 32px;
-  justify-content: center;
-  margin-top: 40px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  letter-spacing: 0.08em;
+  gap: 3rem;
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+  animation: fadeInUp 0.8s ease 0.45s both;
 }
 
-.hero-meta span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.stat { display: flex; flex-direction: column; gap: 0.25rem; }
+.stat-value { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); }
+.stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+@media (max-width: 600px) {
+  .stats-bar { gap: 1.5rem; flex-wrap: wrap; }
 }
 
-.hero-meta .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--amber-dim);
-  opacity: 0.5;
-}
-
-/* ============================================================
-   SECTIONS
-   ============================================================ */
-section {
-  padding: 100px 24px;
-  max-width: 1100px;
-  margin: 0 auto;
+/* ===== SECTION HEADERS ===== */
+.section-header {
+  margin-bottom: 3rem;
+  padding-top: 7rem;
 }
 
 .section-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--amber-dim);
-  margin-bottom: 12px;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
 }
 
 .section-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
   font-weight: 600;
-  margin-bottom: 16px;
-  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .section-desc {
-  color: var(--text-muted);
+  margin-top: 0.75rem;
+  color: var(--text-secondary);
   font-size: 1.05rem;
-  max-width: 600px;
+  max-width: 550px;
   font-weight: 300;
-  margin-bottom: 48px;
 }
 
-/* ============================================================
-   FEATURES GRID
-   ============================================================ */
-.features-grid {
+/* ===== PROJECT CARDS ===== */
+.projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
 }
 
-.feature-card {
+.project-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 32px;
-  transition: all 0.25s ease;
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-.feature-card::before {
+.project-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--amber-dim), transparent);
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.3s;
 }
 
-.feature-card:hover {
+.project-card:hover {
   border-color: var(--border-hover);
   background: var(--bg-card-hover);
   transform: translateY(-2px);
 }
 
-.feature-card:hover::before {
-  opacity: 1;
+.project-card:hover::before { opacity: 1; }
+
+.project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
-.feature-icon {
-  font-size: 1.8rem;
-  margin-bottom: 16px;
-  display: block;
+.project-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
 }
 
-.feature-card h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+.project-icon.tools { background: rgba(74, 158, 255, 0.1); color: var(--accent); }
+.project-icon.games { background: rgba(240, 160, 80, 0.1); color: var(--accent-warm); }
+.project-icon.community { background: rgba(80, 208, 128, 0.1); color: var(--accent-green); }
 
-.feature-card p {
+.project-tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.04);
   color: var(--text-muted);
+}
+
+.project-tag.live { background: rgba(80, 208, 128, 0.1); color: var(--accent-green); }
+.project-tag.dev { background: rgba(240, 160, 80, 0.1); color: var(--accent-warm); }
+.project-tag.soon { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+
+.project-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  color: var(--text-secondary);
   font-size: 0.9rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.project-tech {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+.tech-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.55rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+}
+
+/* ===== PHILOSOPHY ===== */
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.philosophy-card {
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+
+.philosophy-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.philosophy-card h3 span { font-size: 1.2rem; }
+
+.philosophy-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ===== FUTURE / BRANDS ===== */
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.brand-card {
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-card::after {
+  content: 'COMING SOON';
+  position: absolute;
+  top: 1rem; right: -2rem;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  padding: 0.25rem 2.5rem;
+  transform: rotate(45deg);
+}
+
+.brand-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.brand-card .brand-german {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.brand-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.brand-card .brand-location {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ===== SUPPORT CTA ===== */
+.support-section {
+  padding-top: 7rem;
+  padding-bottom: 8rem;
+}
+
+.support-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 3.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.support-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.support-box h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.support-box p {
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  font-size: 1rem;
   font-weight: 300;
   line-height: 1.7;
 }
 
-/* ============================================================
-   HOW IT WORKS
-   ============================================================ */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
-  counter-reset: step;
-}
-
-.step {
-  position: relative;
-  padding: 28px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  counter-increment: step;
-}
-
-.step::before {
-  content: counter(step);
-  font-family: 'Cinzel', serif;
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--amber);
-  opacity: 0.15;
-  position: absolute;
-  top: 16px;
-  right: 20px;
-}
-
-.step h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.step p {
-  color: var(--text-muted);
-  font-size: 0.88rem;
-  font-weight: 300;
-  line-height: 1.6;
-}
-
-/* ============================================================
-   DIVIDER / ORNAMENT
-   ============================================================ */
-.ornament {
-  text-align: center;
-  padding: 20px 0;
-  color: var(--amber-dim);
-  opacity: 0.3;
-  font-size: 1.2rem;
-  letter-spacing: 0.5em;
-}
-
-/* ============================================================
-   OPEN SOURCE SECTION
-   ============================================================ */
-.open-source-banner {
-  max-width: 1100px;
-  margin: 0 auto 80px;
-  padding: 0 24px;
-}
-
-.open-source-inner {
-  background: linear-gradient(135deg, rgba(232, 166, 48, 0.04) 0%, rgba(232, 144, 48, 0.02) 100%);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 48px;
+.support-links {
   display: flex;
-  align-items: center;
-  gap: 40px;
+  justify-content: center;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
-.open-source-text {
-  flex: 1;
-  min-width: 280px;
-}
-
-.open-source-text h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 1.5rem;
-  margin-bottom: 12px;
-}
-
-.open-source-text p {
-  color: var(--text-muted);
-  font-weight: 300;
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
-
-.license-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--amber);
-  background: rgba(232, 166, 48, 0.08);
-  border: 1px solid rgba(232, 166, 48, 0.15);
-  border-radius: 6px;
-  padding: 6px 14px;
-  letter-spacing: 0.1em;
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* ===== FOOTER ===== */
 footer {
-  text-align: center;
-  padding: 60px 24px 40px;
   border-top: 1px solid var(--border);
+  padding: 3rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-inner {
   max-width: 1100px;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
-.footer-logo {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.footer-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 12px;
+}
+
+.footer-tagline {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 300;
 }
 
 .footer-links {
   display: flex;
-  gap: 24px;
-  justify-content: center;
-  margin-bottom: 20px;
+  gap: 1.5rem;
 }
 
 .footer-links a {
-  color: var(--text-dim);
+  color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 400;
+  font-size: 0.82rem;
   transition: color 0.2s;
 }
 
-.footer-links a:hover {
-  color: var(--amber);
+.footer-links a:hover { color: var(--text-secondary); }
+
+/* ===== SOCIAL ICONS ===== */
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.2s;
 }
 
-.footer-legal {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  opacity: 0.6;
-  line-height: 1.8;
-  max-width: 500px;
-  margin: 0 auto;
+.social-icon:hover {
+  border-color: var(--border-hover);
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.03);
 }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
+.social-icon svg { width: 16px; height: 16px; }
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .hero-meta {
-    flex-direction: column;
-    gap: 12px;
-  }
-  .open-source-inner {
-    flex-direction: column;
-    padding: 32px;
-  }
-  section {
-    padding: 60px 20px;
-  }
-}
-
-/* ============================================================
-   SCROLL ANIMATIONS
-   ============================================================ */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* ============================================================
-   MASCOT
-   ============================================================ */
-.mascot-container {
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  z-index: 100;
-  pointer-events: none;
-  transition: transform 0.3s ease;
-}
-
-.mascot-container img {
-  height: 180px;
-  width: auto;
-  filter: drop-shadow(0 4px 20px rgba(232, 166, 48, 0.2));
-  transition: opacity 0.3s ease;
-}
-
-.mascot-container img.hidden { opacity: 0; position: absolute; bottom: 0; right: 0; }
-.mascot-container img.active { opacity: 1; position: relative; }
-
-/* Idle float */
-@keyframes mascot-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.mascot-container.idle { animation: mascot-float 4s ease-in-out infinite; }
-
-/* Wiggle */
-@keyframes mascot-wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  20% { transform: rotate(-4deg); }
-  40% { transform: rotate(4deg); }
-  60% { transform: rotate(-3deg); }
-  80% { transform: rotate(2deg); }
-}
-.mascot-container.wiggle { animation: mascot-wiggle 0.6s ease-in-out; }
-
-/* Bounce excitement */
-@keyframes mascot-bounce {
-  0%, 100% { transform: translateY(0) scale(1); }
-  30% { transform: translateY(-20px) scale(1.05); }
-  50% { transform: translateY(0) scale(0.95); }
-  70% { transform: translateY(-10px) scale(1.02); }
-}
-.mascot-container.bounce { animation: mascot-bounce 0.8s ease-in-out; }
-
-/* Divine chase - llama slides off screen */
-@keyframes mascot-chase {
-  0% { transform: translateX(0); }
-  15% { transform: translateX(10px) rotate(5deg); }
-  100% { transform: translateX(calc(100% + 100px)) rotate(15deg); }
-}
-@keyframes mascot-return {
-  0% { transform: translateX(calc(-100vw - 200px)); }
-  60% { transform: translateX(-20px); }
-  80% { transform: translateX(10px); }
-  100% { transform: translateX(0); }
-}
-.mascot-container.chasing { animation: mascot-chase 1.2s ease-in forwards; }
-.mascot-container.returning { animation: mascot-return 1.5s ease-out forwards; }
-
-/* Divine orb */
-.divine-orb {
-  position: fixed;
-  bottom: 100px;
-  right: 60px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #f5d060, #e89030 50%, #c87020 100%);
-  box-shadow: 0 0 15px rgba(232, 144, 48, 0.5), inset 0 -3px 6px rgba(0,0,0,0.2);
-  z-index: 99;
-  opacity: 0;
-  pointer-events: none;
-}
-.divine-orb::after {
-  content: '';
-  position: absolute;
-  top: 6px; left: 8px;
-  width: 8px; height: 5px;
-  background: rgba(255,255,255,0.4);
-  border-radius: 50%;
-  transform: rotate(-20deg);
-}
-
-@keyframes divine-fall {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  40% { transform: translateY(60px) rotate(180deg); opacity: 1; }
-  100% { transform: translateY(60px) translateX(calc(100% + 200px)) rotate(720deg); opacity: 1; }
-}
-@keyframes divine-return {
-  0% { transform: translateX(calc(-100vw - 100px)) translateY(60px); opacity: 1; }
-  100% { transform: translateX(0) translateY(0); opacity: 0; }
-}
-.divine-orb.falling { animation: divine-fall 1.5s ease-in forwards; }
-.divine-orb.returning { animation: divine-return 1.2s ease-out forwards; }
-
-/* Rare easter egg tag */
-.rare-tag {
-  position: fixed;
-  bottom: 210px;
-  right: 50px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--amber);
-  opacity: 0;
-  z-index: 101;
-  pointer-events: none;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-@keyframes rare-reveal {
-  0% { opacity: 0; transform: translateY(5px); }
-  20% { opacity: 0.6; transform: translateY(0); }
-  80% { opacity: 0.6; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-5px); }
-}
-.rare-tag.visible { animation: rare-reveal 2s ease-in-out forwards; }
-
-/* Hero mascot (large version in hero only) */
-.hero-mascot {
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-  height: 320px;
-  width: auto;
-  opacity: 0.12;
-  filter: drop-shadow(0 0 40px rgba(232, 166, 48, 0.1));
-  z-index: 0;
-  pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  .mascot-container { bottom: 10px; right: 10px; }
-  .mascot-container img { height: 120px; }
-  .hero-mascot { height: 180px; opacity: 0.08; }
-  .rare-tag { bottom: 140px; right: 20px; }
+  section { padding: 0 1.25rem; }
+  .hero { min-height: 90vh; }
+  .support-box { padding: 2.5rem 1.5rem; }
+  .footer-inner { flex-direction: column; text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     HERO
-     ============================================================ -->
-<div class="hero">
-  <!-- Mountain background -->
-  <svg class="hero-mountains" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Far range -->
-    <polygon points="0,620 80,520 200,580 350,460 500,540 650,420 800,510 950,390 1100,480 1250,400 1400,490 1440,450 1440,900 0,900" fill="#0e0c09" opacity="0.6"/>
-    <!-- Mid range -->
-    <polygon points="0,700 120,580 280,660 440,520 600,620 760,480 920,580 1080,460 1240,560 1380,490 1440,540 1440,900 0,900" fill="#110f0b" opacity="0.8"/>
-    <!-- Left peak -->
-    <defs>
-      <linearGradient id="lp" x1="580" y1="180" x2="580" y2="820" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#4a3520"/>
-        <stop offset="0.6" stop-color="#2a1f12"/>
-        <stop offset="1" stop-color="#0a0908"/>
-      </linearGradient>
-      <linearGradient id="rp" x1="860" y1="220" x2="860" y2="820" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#6a5030"/>
-        <stop offset="0.6" stop-color="#3a2818"/>
-        <stop offset="1" stop-color="#0a0908"/>
-      </linearGradient>
-      <linearGradient id="gully" x1="720" y1="260" x2="720" y2="820" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#e8a630" stop-opacity="0.06"/>
-        <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <polygon points="620,200 380,800 620,680" fill="#1a1410" opacity="0.8"/>
-    <polygon points="620,200 800,800 620,680" fill="url(#lp)"/>
-    <polygon points="620,200 614,240 620,222 626,240" fill="#e8a630" opacity="0.12"/>
-    <!-- Right peak -->
-    <polygon points="830,240 650,800 830,670" fill="#201a12" opacity="0.8"/>
-    <polygon points="830,240 1040,800 830,670" fill="url(#rp)"/>
-    <line x1="830" y1="240" x2="1040" y2="800" stroke="#e8a630" stroke-width="0.5" opacity="0.08"/>
-    <polygon points="830,240 825,276 830,260 835,276" fill="#e8a630" opacity="0.18"/>
-    <!-- Couloir chute -->
-    <polygon points="710,280 688,800 725,700 762,800 740,280" fill="#050403" opacity="0.6"/>
-    <polygon points="712,290 692,800 725,700 758,800 738,290" fill="url(#gully)"/>
-    <!-- Near range -->
-    <polygon points="0,780 100,720 250,760 400,700 550,740 700,680 850,730 1000,680 1150,720 1300,690 1440,740 1440,900 0,900" fill="#0a0908"/>
-  </svg>
+<div class="mountain-bg"></div>
+<div class="grain"></div>
 
-  <div class="hero-content">
-    <div class="hero-icon">
-      <!-- Placeholder for your actual app icon — replace src with your icon -->
-      <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-        <rect width="140" height="140" rx="20" fill="#110f0c"/>
-        <!-- Dual peaks in warm tones -->
-        <polygon points="52,18 8,118 52,95" fill="#2a1f12"/>
-        <polygon points="52,18 90,118 52,95" fill="#4a3520"/>
-        <polygon points="52,18 49,34 52,27 55,34" fill="#e8a630" opacity="0.3"/>
-        <polygon points="92,28 55,118 92,92" fill="#3a2818"/>
-        <polygon points="92,28 132,118 92,92" fill="#6a5030"/>
-        <polygon points="92,28 89,42 92,36 95,42" fill="#e8a630" opacity="0.4"/>
-        <polygon points="68,38 60,118 74,100 88,118 80,38" fill="#050403" opacity="0.6"/>
-        <!-- Divine orb overlay -->
-        <circle cx="90" cy="48" r="24" fill="#e89030" opacity="0.15"/>
-        <circle cx="90" cy="48" r="16" fill="#e8a630" opacity="0.2"/>
-        <circle cx="90" cy="48" r="8" fill="#f0c860" opacity="0.3"/>
-      </svg>
-    </div>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 2L4 24h6l4-10 4 10h6L14 2z" fill="currentColor" opacity="0.9"/>
+      <path d="M14 8L9 20h3l2-5 2 5h3L14 8z" fill="currentColor" opacity="0.3"/>
+    </svg>
+    <span>Couloir</span>
+  </a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="https://github.com/CouloirGG" target="_blank" class="nav-cta">
+      <svg viewBox="0 0 16 16" fill="currentColor" style="width:14px;height:14px;margin-right:2px"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
 
-    <div class="hero-badge">Free &amp; Open Source</div>
+<main>
 
-    <h1>
-      LAMA
-      <span>Live Auction Market Assessor for Path of Exile 2</span>
-    </h1>
-
-    <p class="hero-tagline">
-      Clipboard-based overlay that shows real-time market prices from poe.ninja the moment you copy an item. No alt-tabbing. No bloat. Just Ctrl+C and know.
-    </p>
-
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-badge">Open Source Game Dev Studio</div>
+    <h1>Games & tools<br>built <span class="accent">for the people.</span></h1>
+    <p class="hero-sub">We're an independent studio with decades of AAA experience, building open source tools and games the way they should be — community-first, ad-free, no strings attached.</p>
     <div class="hero-actions">
-      <a href="https://github.com/CouloirGG/lama/releases" class="btn btn-primary">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download
+      <a href="https://github.com/CouloirGG" target="_blank" class="btn btn-primary">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
       </a>
-      <a href="https://github.com/CouloirGG/lama" class="btn btn-secondary">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        View Source
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank" class="btn btn-ghost">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.227 13.227 0 00-3.257-1.011.05.05 0 00-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 00-3.658 0 8.258 8.258 0 00-.412-.833.051.051 0 00-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 00-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 003.995 2.02.05.05 0 00.056-.019c.308-.42.582-.863.818-1.329a.05.05 0 00-.028-.07 8.746 8.746 0 01-1.248-.595.05.05 0 01-.005-.084c.084-.063.168-.129.248-.195a.05.05 0 01.051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 01.053.007c.08.066.164.132.248.195a.051.051 0 01-.004.085c-.399.233-.813.44-1.249.594a.05.05 0 00-.027.07c.24.465.515.909.817 1.329a.05.05 0 00.056.019 13.235 13.235 0 004.001-2.02.049.049 0 00.021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 00-.02-.019zM5.347 10.215c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612z"/></svg>
+        Join Discord
       </a>
     </div>
-
-    <div class="hero-meta">
-      <span><span class="dot"></span> GPLv3 Licensed</span>
-      <span><span class="dot"></span> Windows</span>
-      <span><span class="dot"></span> No Data Collection</span>
-      <span><span class="dot"></span> Community Funded</span>
-    </div>
-  </div>
-  <img src="/tools/mascot_idle.png" alt="" class="hero-mascot" aria-hidden="true">
-</div>
-
-<!-- ============================================================
-     FEATURES     ============================================================ -->
-<section class="fade-in">
-  <div class="section-label">// Features</div>
-  <h2 class="section-title">Built for the Endgame</h2>
-  <p class="section-desc">Stop alt-tabbing to trade sites mid-map. LAMA puts everything you need right on screen.</p>
-
-  <div class="features-grid">
-    <div class="feature-card">
-      <span class="feature-icon">📋</span>
-      <h3>Clipboard Price Checking</h3>
-      <p>Copy any item with Ctrl+C and instantly see its market value. Ctrl+Shift+C runs a deep query against the trade API with your item's actual mods, DPS, and defense.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">⚡</span>
-      <h3>Real-Time Prices</h3>
-      <p>Pulls current market data from poe.ninja so you always know what things are worth. Cached and refreshed automatically.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🖥️</span>
-      <h3>In-Game Overlay</h3>
-      <p>Sits on top of your game window. No alt-tabbing, no second monitor needed. Price check without breaking your flow.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔒</span>
-      <h3>TOS Compliant</h3>
-      <p>Clipboard monitoring only — no memory injection, no packet sniffing, no game file modification. Plays by the rules.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🏔️</span>
-      <h3>Open Source</h3>
-      <p>Every line of code is public under GPLv3. Read it, fork it, improve it. No hidden telemetry, no data collection, no secrets.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🪶</span>
-      <h3>Lightweight</h3>
-      <p>Minimal resource footprint. No Electron bloat, no browser engine running in the background. Just the overlay and the data.</p>
-    </div>
-  </div>
-</section>
-
-<div class="ornament">◆ ◆ ◆</div>
-
-<!-- ============================================================
-     HOW IT WORKS
-     ============================================================ -->
-<section class="fade-in">
-  <div class="section-label">// How It Works</div>
-  <h2 class="section-title">Three Steps</h2>
-  <p class="section-desc">No accounts, no API keys, no configuration files. Download LAMA and go.</p>
-
-  <div class="steps">
-    <div class="step">
-      <h3>Download &amp; Run</h3>
-      <p>Grab the latest release, extract, and launch. No installer, no admin rights needed.</p>
-    </div>
-    <div class="step">
-      <h3>Play Your Game</h3>
-      <p>LAMA runs quietly on top of POE2. It's there when you need it, invisible when you don't.</p>
-    </div>
-    <div class="step">
-      <h3>Check Prices</h3>
-      <p>Copy any item with Ctrl+C — instant price data from poe.ninja, right on your screen. Ctrl+Shift+C for a deep trade API lookup.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     OPEN SOURCE
-     ============================================================ -->
-<div class="open-source-banner fade-in">
-  <div class="open-source-inner">
-    <div class="open-source-text">
-      <h3>For the People</h3>
-      <p>LAMA exists because we needed it too — and figured every exile could use it. We don't charge for it, we don't run ads on it, and we don't collect your data. The code is yours under GPLv3.</p>
-      <p>If LAMA saves you time or currency, consider supporting us so we can keep building stuff like this.</p>
-      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;">
-        <a href="https://ko-fi.com/calschuss" class="btn btn-primary" style="padding:10px 24px; font-size:0.85rem;">
-          ☕ Buy Us Lunch
-        </a>
-        <span class="license-badge">📄 GPLv3 LICENSE</span>
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-value">Decades</span>
+        <span class="stat-label">In Games</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">AAA</span>
+        <span class="stat-label">Studio Experience</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">100%</span>
+        <span class="stat-label">Open Source</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">$0</span>
+        <span class="stat-label">Ads, Ever</span>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title">What we're building</h2>
+      <p class="section-desc">Open source tools and games — free to use, free to fork, free to build on.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card" onclick="window.location='/tools/lama'" style="cursor:pointer;">
+        <div class="project-card-header">
+          <div class="project-icon tools">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <span class="project-tag live">Live</span>
+        </div>
+        <h3>LAMA</h3>
+        <p>Live Auction Market Assessor — a real-time overlay for Path of Exile 2 that pulls market data so you can price items without leaving the game. Free, open source, no strings.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">OCR</span>
+          <span class="tech-pill">Overlay</span>
+          <span class="tech-pill">GPLv3</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-header">
+          <div class="project-icon games">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01M17 12h.01M7 12h.01"/></svg>
+          </div>
+          <span class="project-tag dev">In Dev</span>
+        </div>
+        <h3>Retrofit</h3>
+        <p>An autobattler where you scavenge, salvage, and rebuild mechanical units. Assemble your squad from the scrapyard and send them into the arena. Built with a 7-person team.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Unity</span>
+          <span class="tech-pill">C#</span>
+          <span class="tech-pill">Wwise</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-header">
+          <div class="project-icon tools">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <span class="project-tag soon">Coming</span>
+        </div>
+        <h3>More Tools Incoming</h3>
+        <p>We're always building. Game dev tools, QA utilities, automation scripts — whatever we'd want to use ourselves, we'll open source for the community.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Open Source</span>
+          <span class="tech-pill">GPLv3</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section id="philosophy">
+    <div class="section-header">
+      <div class="section-label">Philosophy</div>
+      <h2 class="section-title">Why we build this way</h2>
+    </div>
+
+    <div class="philosophy-grid">
+      <div class="philosophy-card">
+        <h3><span>⛰️</span> For the People</h3>
+        <p>Every tool and game we build comes from our own frustrations as developers and players. If it helps us, it'll help you. We don't build to extract — we build to share.</p>
+      </div>
+      <div class="philosophy-card">
+        <h3><span>🔓</span> Open Source, Always</h3>
+        <p>Our code ships under GPLv3. Use it, fork it, learn from it, build on it. The only thing you can't do is close the source. We believe great tools should be free.</p>
+      </div>
+      <div class="philosophy-card">
+        <h3><span>🚫</span> No Ads. No Tracking.</h3>
+        <p>We will never run ads, sell your data, or track your behavior. Our tools work for you, not for advertisers. If you like what we do, you can buy us lunch.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SUPPORT -->
+  <section class="support-section" id="support">
+    <div class="support-box">
+      <h2>Like what we're building?</h2>
+      <p>Everything we make is free. If our tools saved you time or our games brought you joy, you can buy us lunch. No pressure, no guilt — just gratitude.</p>
+      <div class="support-links">
+        <a href="https://ko-fi.com/calschuss" target="_blank" class="btn btn-primary">
+          ☕ Buy Us Lunch
+        </a>
+        <a href="https://github.com/CouloirGG" target="_blank" class="btn btn-ghost">
+          <svg viewBox="0 0 16 16" fill="currentColor" style="width:14px;height:14px"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          Star on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Couloir</div>
-  <div class="footer-links">
-    <a href="https://couloir.gg">couloir.gg</a>
-    <a href="https://github.com/CouloirGG">GitHub</a>
-    <a href="https://discord.gg/couloir">Discord</a>
-    <a href="/cdn-cgi/l/email-protection#2f474a4343406f4c405a4340465d014848"><span class="__cf_email__" data-cfemail="b2dad7dededdf2d1ddc7dedddbc09cd5d5">[email&#160;protected]</span></a>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="footer-name">Couloir</span>
+<span class="footer-tagline">Games & tools for the people.</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/CouloirGG" target="_blank">GitHub</a>
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank">Discord</a>
+      <a href="https://x.com/CouloirGG" target="_blank">X</a>
+      <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank">YouTube</a>
+    </div>
   </div>
-  <p class="footer-legal">
-    Not affiliated with or endorsed by Grinding Gear Games.<br>
-    Path of Exile is a registered trademark of Grinding Gear Games.<br>
-    © 2026 CouloirGG LLC. Open source under GPLv3.
-  </p>
 </footer>
 
-<!-- ============================================================
-     SCROLL ANIMATION
-     ============================================================ -->
-<!-- MASCOT -->
-<div class="mascot-container idle" id="mascot">
-  <img src="/tools/mascot_idle.png" alt="" class="active" id="mascot-default">
-  <img src="/tools/mascot_look.png" alt="" class="hidden" id="mascot-alert">
-  <img src="/tools/mascot_silly.png" alt="" class="hidden" id="mascot-derp">
-</div>
-<div class="divine-orb" id="divine-orb"></div>
-<div class="rare-tag" id="rare-tag"></div>
-
-<script>
-// ============================================================
-// MASCOT ANIMATION SYSTEM — RNG-driven rare events
-// ============================================================
-(() => {
-  const mascot = document.getElementById('mascot');
-  const imgs = {
-    default: document.getElementById('mascot-default'),
-    alert: document.getElementById('mascot-alert'),
-    derp: document.getElementById('mascot-derp')
-  };
-  const divine = document.getElementById('divine-orb');
-  const rareTag = document.getElementById('rare-tag');
-  let busy = false;
-
-  function setSprite(name) {
-    Object.entries(imgs).forEach(([k, img]) => {
-      img.classList.toggle('active', k === name);
-      img.classList.toggle('hidden', k !== name);
-    });
-  }
-
-  function playAnimation(cls, duration) {
-    return new Promise(resolve => {
-      mascot.classList.remove('idle');
-      mascot.classList.add(cls);
-      setTimeout(() => {
-        mascot.classList.remove(cls);
-        resolve();
-      }, duration);
-    });
-  }
-
-  // --- ANIMATIONS ---
-
-  // Wiggle: llama shakes briefly
-  async function wiggle() {
-    if (busy) return; busy = true;
-    await playAnimation('wiggle', 600);
-    mascot.classList.add('idle');
-    busy = false;
-  }
-
-  // Tongue out: swap to derp face briefly
-  async function tongueOut() {
-    if (busy) return; busy = true;
-    setSprite('derp');
-    await playAnimation('wiggle', 600);
-    await new Promise(r => setTimeout(r, 1200));
-    setSprite('default');
-    mascot.classList.add('idle');
-    busy = false;
-  }
-
-  // Alert: swap to forward-facing, bounce
-  async function alertBounce() {
-    if (busy) return; busy = true;
-    setSprite('alert');
-    await playAnimation('bounce', 800);
-    await new Promise(r => setTimeout(r, 800));
-    setSprite('default');
-    mascot.classList.add('idle');
-    busy = false;
-  }
-
-  // Divine chase: orb falls, rolls away, llama chases it off screen, returns
-  async function divineChase() {
-    if (busy) return; busy = true;
-    
-    // Divine falls and rolls
-    divine.classList.remove('returning');
-    divine.style.opacity = '1';
-    divine.classList.add('falling');
-    
-    // Llama notices after a beat
-    await new Promise(r => setTimeout(r, 600));
-    setSprite('derp');
-    
-    // Llama chases
-    await new Promise(r => setTimeout(r, 400));
-    mascot.classList.remove('idle');
-    mascot.classList.add('chasing');
-    
-    // Both off screen
-    await new Promise(r => setTimeout(r, 1500));
-    divine.classList.remove('falling');
-    divine.style.opacity = '0';
-    
-    // Llama returns from the other side
-    await new Promise(r => setTimeout(r, 800));
-    mascot.classList.remove('chasing');
-    setSprite('default');
-    mascot.classList.add('returning');
-    
-    await new Promise(r => setTimeout(r, 1500));
-    mascot.classList.remove('returning');
-    mascot.classList.add('idle');
-    busy = false;
-  }
-
-  // SUPER RARE: Name appears briefly
-  async function rareReveal() {
-    if (busy) return; busy = true;
-    setSprite('alert');
-    rareTag.textContent = [102,114,97,110,107].map(c=>String.fromCharCode(c)).join('');
-    await playAnimation('bounce', 800);
-    rareTag.classList.add('visible');
-    await new Promise(r => setTimeout(r, 2000));
-    rareTag.classList.remove('visible');
-    rareTag.textContent = '';
-    setSprite('default');
-    mascot.classList.add('idle');
-    busy = false;
-  }
-
-  // --- RNG CONTROLLER ---
-  // Rolls every 20-40 seconds with weighted random
-  function rollAnimation() {
-    if (busy) return;
-    const roll = Math.random() * 1000;
-
-    if (roll < 1) {          // 0.1% — Rare reveal (super rare)
-      rareReveal();
-    } else if (roll < 6) {   // 0.5% — Divine chase
-      divineChase();
-    } else if (roll < 20) {  // 1.4% — Tongue out
-      tongueOut();
-    } else if (roll < 45) {  // 2.5% — Alert bounce
-      alertBounce();
-    } else if (roll < 80) {  // 3.5% — Wiggle
-      wiggle();
-    }
-    // ~92% of the time: nothing happens, just idle float
-  }
-
-  // Random interval between 20-40 seconds
-  function scheduleNext() {
-    const delay = 20000 + Math.random() * 20000;
-    setTimeout(() => {
-      rollAnimation();
-      scheduleNext();
-    }, delay);
-  }
-
-  // First roll after 10-30 seconds
-  setTimeout(() => {
-    rollAnimation();
-    scheduleNext();
-  }, 10000 + Math.random() * 20000);
-})();
-</script>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
 </body>
 </html>
