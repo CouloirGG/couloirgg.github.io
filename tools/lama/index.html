@@ -1046,34 +1046,32 @@ footer {
     if (busy) return;
     const roll = Math.random() * 1000;
 
-    if (roll < 100) {          // 10% — Rare reveal (super rare)
-      rareReveal();
-    } else if (roll < 300) {   // 20% — Divine chase
+    if (roll < 5) {           // 0.5% — Divine chase
       divineChase();
-    } else if (roll < 500) {  // 20% — Tongue out
+    } else if (roll < 19) {  // 1.4% — Tongue out
       tongueOut();
-    } else if (roll < 700) {  // 20% — Alert bounce
+    } else if (roll < 45) {  // 2.5% — Alert bounce
       alertBounce();
-    } else if (roll < 900) {  // 20% — Wiggle
+    } else if (roll < 80) {  // 3.5% — Wiggle
       wiggle();
     }
-    // 10% of the time: nothing happens, just idle float
+    // ~92% of the time: nothing happens, just idle float
   }
 
-  // Random interval between 3-6 seconds (DEBUG)
+  // Random interval between 20-40 seconds
   function scheduleNext() {
-    const delay = 3000 + Math.random() * 3000;
+    const delay = 20000 + Math.random() * 20000;
     setTimeout(() => {
       rollAnimation();
       scheduleNext();
     }, delay);
   }
 
-  // First roll after 2 seconds (DEBUG)
+  // First roll after 10-30 seconds
   setTimeout(() => {
     rollAnimation();
     scheduleNext();
-  }, 2000);
+  }, 10000 + Math.random() * 20000);
 })();
 </script>
 
