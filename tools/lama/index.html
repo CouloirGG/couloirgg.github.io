@@ -598,13 +598,8 @@ footer {
 
 /* Divine chase - orb rolls left, llama chases it */
 @keyframes mascot-chase {
-  0% { transform: translateX(0) rotate(0deg); }
-  100% { transform: translateX(calc(-100vw - 100px)) rotate(-8deg); }
-}
-@keyframes mascot-waddle {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(3deg); }
-  75% { transform: translateY(-8px) rotate(-3deg); }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100vw - 100px)); }
 }
 @keyframes mascot-return {
   0% { transform: translateX(calc(100vw + 200px)); }
@@ -612,12 +607,14 @@ footer {
   80% { transform: translateX(-10px); }
   100% { transform: translateX(0); }
 }
-.mascot-container.chasing {
-  animation: mascot-chase 3.5s ease-in forwards, mascot-waddle 0.35s ease-in-out infinite;
+@keyframes mascot-waddle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(3deg); }
+  75% { transform: translateY(-8px) rotate(-3deg); }
 }
-.mascot-container.returning {
-  animation: mascot-return 2.5s ease-out forwards, mascot-waddle 0.4s ease-in-out infinite;
-}
+.mascot-container.chasing { animation: mascot-chase 3.5s ease-in forwards; }
+.mascot-container.returning { animation: mascot-return 2.5s ease-out forwards; }
+.mascot-inner.waddle { animation: mascot-waddle 0.35s ease-in-out infinite; }
 
 /* Divine orb */
 .divine-orb {
@@ -904,9 +901,11 @@ footer {
      ============================================================ -->
 <!-- MASCOT -->
 <div class="mascot-container idle" id="mascot">
-  <img src="/tools/mascot_idle.png" alt="" class="active" id="mascot-default">
-  <img src="/tools/mascot_look.png" alt="" class="hidden" id="mascot-alert">
-  <img src="/tools/mascot_silly.png" alt="" class="hidden" id="mascot-derp">
+  <div class="mascot-inner" id="mascot-inner">
+    <img src="/tools/mascot_idle.png" alt="" class="active" id="mascot-default">
+    <img src="/tools/mascot_look.png" alt="" class="hidden" id="mascot-alert">
+    <img src="/tools/mascot_silly.png" alt="" class="hidden" id="mascot-derp">
+  </div>
 </div>
 <div class="divine-orb" id="divine-orb"></div>
 <div class="rare-tag" id="rare-tag"></div>
@@ -917,6 +916,7 @@ footer {
 // ============================================================
 (() => {
   const mascot = document.getElementById('mascot');
+  const mascotInner = document.getElementById('mascot-inner');
   const imgs = {
     default: document.getElementById('mascot-default'),
     alert: document.getElementById('mascot-alert'),
@@ -1004,6 +1004,7 @@ footer {
     // Llama waddles after it
     await new Promise(r => setTimeout(r, 600));
     mascot.classList.remove('idle');
+    mascotInner.classList.add('waddle');
     mascot.classList.add('chasing');
     
     // Both off screen
@@ -1019,6 +1020,7 @@ footer {
     
     await new Promise(r => setTimeout(r, 2500));
     mascot.classList.remove('returning');
+    mascotInner.classList.remove('waddle');
     mascot.classList.add('idle');
     busy = false;
   }
