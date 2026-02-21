@@ -926,8 +926,21 @@ footer {
   const rareTag = document.getElementById('rare-tag');
   let busy = false;
 
+  // Easter egg: 5 rapid clicks → launch Frank Run
+  let clickTimes = [];
+  
   // Click to stick tongue out
   mascot.addEventListener('click', async () => {
+    // Track rapid clicks
+    const now = Date.now();
+    clickTimes.push(now);
+    clickTimes = clickTimes.filter(t => now - t < 2000);
+    if (clickTimes.length >= 5) {
+      clickTimes = [];
+      window.location.href = '/tools/lama/game.html';
+      return;
+    }
+    
     if (busy) return; busy = true;
     mascot.classList.remove('idle');
     setSprite('derp');
