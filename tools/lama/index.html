@@ -6,7 +6,7 @@
 <title>LAMA — Live Auction Market Assessor for POE2 — Couloir</title>
 <meta name="description" content="LAMA — free, open source price checking overlay for Path of Exile 2. Clipboard-based live market pricing via poe.ninja. GPLv3.">
 <meta property="og:title" content="LAMA — Free Price Checker for Path of Exile 2">
-<meta property="og:description" content="Real-time price overlay for POE2. Copy any item, get instant mharket data from poe.ninja. Free, open source, no strings attached.">
+<meta property="og:description" content="Real-time price overlay for POE2. Copy any item, get instant market data from poe.ninja. Free, open source, no strings attached.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://couloir.gg/tools/lama">
 <meta name="twitter:card" content="summary">
@@ -1036,34 +1036,34 @@ footer {
     if (busy) return;
     const roll = Math.random() * 1000;
 
-    if (roll < 1) {          // 0.1% — Rare reveal (super rare)
+    if (roll < 100) {          // 10% — Rare reveal (super rare)
       rareReveal();
-    } else if (roll < 6) {   // 0.5% — Divine chase
+    } else if (roll < 300) {   // 20% — Divine chase
       divineChase();
-    } else if (roll < 20) {  // 1.4% — Tongue out
+    } else if (roll < 500) {  // 20% — Tongue out
       tongueOut();
-    } else if (roll < 45) {  // 2.5% — Alert bounce
+    } else if (roll < 700) {  // 20% — Alert bounce
       alertBounce();
-    } else if (roll < 80) {  // 3.5% — Wiggle
+    } else if (roll < 900) {  // 20% — Wiggle
       wiggle();
     }
-    // ~92% of the time: nothing happens, just idle float
+    // 10% of the time: nothing happens, just idle float
   }
 
-  // Random interval between 20-40 seconds
+  // Random interval between 3-6 seconds (DEBUG)
   function scheduleNext() {
-    const delay = 20000 + Math.random() * 20000;
+    const delay = 3000 + Math.random() * 3000;
     setTimeout(() => {
       rollAnimation();
       scheduleNext();
     }, delay);
   }
 
-  // First roll after 10-30 seconds
+  // First roll after 2 seconds (DEBUG)
   setTimeout(() => {
     rollAnimation();
     scheduleNext();
-  }, 10000 + Math.random() * 20000);
+  }, 2000);
 })();
 </script>
 
