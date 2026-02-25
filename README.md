@@ -8,7 +8,7 @@ Live at: [couloir.gg](https://couloir.gg)
 
 ## About
 
-Couloir is an independent studio operating under a pseudonym (handle: **CarbonSMASH**), built on 17+ years of AAA game development experience. Everything we make is open source under GPLv3 — community-first, ad-free, no strings attached.
+Couloir is an independent studio built on 17+ years of AAA game development experience. Everything we make is open source under GPLv3 — community-first, ad-free, no strings attached.
 
 ---
 
@@ -30,8 +30,8 @@ Couloir is an independent studio operating under a pseudonym (handle: **CarbonSM
 
 ### POE2 Price Checker
 - Real-time overlay tool for Path of Exile 2
-- Pulls live market data via OCR
-- Stack: Python, OCR, Overlay
+- Pulls live market data for pricing
+- Stack: Python, Overlay
 - License: GPLv3
 - Status: **In Development**
 
@@ -89,5 +89,5 @@ The site is hosted on **GitHub Pages** and auto-deploys on every push to `main`.
 ## Notes
 
 - The site is intentionally a **single HTML file** — all CSS and JS is inline. No frameworks, no build pipeline.
-- The pseudonym **CarbonSMASH** is used publicly due to employment IP restrictions. Do not associate the studio with real name in public-facing content.
+- Do not associate the studio with real name in public-facing content.
 - Ko-fi (`ko-fi.com/calschuss`) is the public support/donation link. PayPal is connected on the backend via Ko-fi — do not link the PayPal dashboard directly.
