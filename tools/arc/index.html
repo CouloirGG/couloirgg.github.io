@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARC View — Companion Overlay for Arc Raiders — Couloir</title>
+<meta name="description" content="ARC View — free, open source desktop companion for Arc Raiders. Real-time overlay HUD, stash organizer, build advisor, quest tracking, and raid analytics. GPLv3.">
+<meta property="og:title" content="ARC View — Free Desktop Companion for Arc Raiders">
+<meta property="og:description" content="In-game overlay with event tracking, stash organizer, build advisor, and raid analytics for Arc Raiders. Free, open source, no strings attached.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://couloir.gg/tools/arc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@CouloirGG">
+<meta name="twitter:title" content="ARC View — Free Desktop Companion for Arc Raiders">
+<meta name="twitter:description" content="In-game overlay with event tracking, stash organizer, build advisor, and raid analytics for Arc Raiders. Free, open source, no strings attached.">
+<link rel="icon" type="image/png" href="/couloir_avatar.png">
+<link rel="apple-touch-icon" href="/couloir_avatar.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0a0e12;
+  --bg-surface: #0e1318;
+  --bg-card: #111a22;
+  --bg-card-hover: #182430;
+  --accent: #00b4d8;
+  --accent-dim: #0077b6;
+  --accent-glow: rgba(0, 180, 216, 0.15);
+  --accent-glow-strong: rgba(0, 180, 216, 0.3);
+  --teal: #00b4d8;
+  --text: #c8d6e0;
+  --text-muted: #6b8498;
+  --text-dim: #3d5568;
+  --border: rgba(0, 180, 216, 0.08);
+  --border-hover: rgba(0, 180, 216, 0.2);
+  --green: #2d9b4e;
+  --amber: #e67e22;
+  --red: #c0392b;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   BACKGROUND TEXTURE
+   ============================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Grain overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  overflow: hidden;
+}
+
+/* Sci-fi cityscape SVG background */
+.hero-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Ambient glow */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+/* Radar glow behind icon */
+.hero-icon {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 32px;
+}
+
+.hero-icon::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, var(--accent-glow-strong) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: orb-pulse 3s ease-in-out infinite;
+}
+
+@keyframes orb-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.hero-icon svg {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent-dim);
+  border-radius: 100px;
+  padding: 6px 18px;
+  margin-bottom: 24px;
+  background: rgba(0, 180, 216, 0.05);
+}
+
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #4dd8f0 0%, #00b4d8 40%, #0077b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero h1 span {
+  display: block;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  -webkit-text-fill-color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.hero-tagline {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 20px auto 36px;
+  font-weight: 300;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  color: #fff;
+  box-shadow: 0 0 30px rgba(0, 180, 216, 0.2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 50px rgba(0, 180, 216, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border-hover);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-dim);
+}
+
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 40px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+
+.hero-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-meta .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  opacity: 0.5;
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+section {
+  padding: 100px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 600px;
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+
+/* ============================================================
+   FEATURES GRID
+   ============================================================ */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 32px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.feature-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-icon {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.feature-card h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   DIVIDER / ORNAMENT
+   ============================================================ */
+.ornament {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--accent-dim);
+  opacity: 0.3;
+  font-size: 1.2rem;
+  letter-spacing: 0.5em;
+}
+
+/* ============================================================
+   HOW IT WORKS
+   ============================================================ */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  padding: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step);
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  opacity: 0.15;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+}
+
+.step h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.step p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   TOOLS SHOWCASE
+   ============================================================ */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tool-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.tool-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.tool-card:hover::before { opacity: 1; }
+
+.tool-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tool-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.tool-card-icon.keep { background: rgba(45, 155, 78, 0.12); color: var(--green); }
+.tool-card-icon.overlay { background: rgba(0, 180, 216, 0.12); color: var(--accent); }
+.tool-card-icon.build { background: rgba(230, 126, 34, 0.12); color: var(--amber); }
+.tool-card-icon.raid { background: rgba(192, 57, 43, 0.12); color: var(--red); }
+.tool-card-icon.quest { background: rgba(0, 180, 216, 0.12); color: var(--accent); }
+.tool-card-icon.intel { background: rgba(45, 155, 78, 0.12); color: var(--green); }
+
+.tool-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.tool-card p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.tool-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.tool-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  background: rgba(0, 180, 216, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-dim);
+}
+
+/* ============================================================
+   OPEN SOURCE SECTION
+   ============================================================ */
+.open-source-banner {
+  max-width: 1100px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+
+.open-source-inner {
+  background: linear-gradient(135deg, rgba(0, 180, 216, 0.04) 0%, rgba(0, 119, 182, 0.02) 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.open-source-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.open-source-text h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.open-source-text p {
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.license-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: rgba(0, 180, 216, 0.08);
+  border: 1px solid rgba(0, 180, 216, 0.15);
+  border-radius: 6px;
+  padding: 6px 14px;
+  letter-spacing: 0.1em;
+}
+
+/* ============================================================
+   ALPHA CTA
+   ============================================================ */
+.alpha-cta { padding: 4rem 2rem; text-align: center; }
+.alpha-cta-box {
+  max-width: 700px;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 180, 216, 0.3);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(0, 180, 216, 0.04), rgba(10, 14, 18, 0.8));
+}
+.alpha-cta-box h2 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.75rem;
+}
+.alpha-cta-box p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.alpha-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.alpha-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.alpha-btn-primary { background: linear-gradient(135deg, #00b4d8, #0077b6); color: #fff; }
+.alpha-btn-primary:hover { background: linear-gradient(135deg, #2dc8e6, #00b4d8); transform: translateY(-1px); }
+.alpha-btn-secondary { background: transparent; color: var(--accent); border: 1px solid rgba(0, 180, 216, 0.4); }
+.alpha-btn-secondary:hover { background: rgba(0, 180, 216, 0.08); border-color: var(--accent); transform: translateY(-1px); }
+.alpha-spots {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-top: 1px solid var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.footer-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-legal {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  opacity: 0.6;
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .open-source-inner {
+    flex-direction: column;
+    padding: 32px;
+  }
+  section {
+    padding: 60px 20px;
+  }
+}
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<div class="hero">
+  <!-- Sci-fi city / structure background -->
+  <svg class="hero-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Sky glow -->
+    <defs>
+      <radialGradient id="skyglow" cx="50%" cy="40%" r="50%">
+        <stop offset="0%" stop-color="#00b4d8" stop-opacity="0.03"/>
+        <stop offset="100%" stop-color="#0a0e12" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="tower1" x1="400" y1="200" x2="400" y2="800" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#1e2e3a"/>
+        <stop offset="1" stop-color="#0a0e12"/>
+      </linearGradient>
+      <linearGradient id="tower2" x1="1050" y1="250" x2="1050" y2="800" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#2a3a4a"/>
+        <stop offset="1" stop-color="#0a0e12"/>
+      </linearGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#skyglow)"/>
+    <!-- Far structures -->
+    <polygon points="0,650 100,560 200,620 350,500 500,580 650,460 800,540 950,430 1100,520 1250,450 1440,520 1440,900 0,900" fill="#0c1018" opacity="0.6"/>
+    <!-- Mid structures -->
+    <polygon points="0,720 120,610 280,680 440,550 600,640 760,510 920,600 1080,490 1240,570 1380,520 1440,560 1440,900 0,900" fill="#0e1520" opacity="0.8"/>
+    <!-- Left tower -->
+    <polygon points="380,220 340,800 420,800" fill="url(#tower1)"/>
+    <polygon points="380,220 420,800 460,800" fill="#142030" opacity="0.7"/>
+    <rect x="375" y="220" width="10" height="3" fill="#00b4d8" opacity="0.2"/>
+    <!-- Right tower -->
+    <polygon points="1050,280 1000,800 1100,800" fill="url(#tower2)"/>
+    <polygon points="1050,280 1100,800 1150,800" fill="#1a2a38" opacity="0.7"/>
+    <rect x="1045" y="280" width="10" height="3" fill="#00b4d8" opacity="0.25"/>
+    <!-- Signal beams -->
+    <line x1="385" y1="220" x2="1055" y2="280" stroke="#00b4d8" stroke-width="0.5" opacity="0.06"/>
+    <!-- Near ground -->
+    <polygon points="0,780 100,740 250,770 400,720 550,750 700,700 850,740 1000,700 1150,730 1300,710 1440,750 1440,900 0,900" fill="#0a0e12"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-icon">
+      <!-- ARC View icon: radar/shield motif -->
+      <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+        <rect width="140" height="140" rx="20" fill="#111a22"/>
+        <!-- Radar circles -->
+        <circle cx="70" cy="70" r="50" fill="none" stroke="#00b4d8" stroke-width="0.5" opacity="0.15"/>
+        <circle cx="70" cy="70" r="35" fill="none" stroke="#00b4d8" stroke-width="0.5" opacity="0.2"/>
+        <circle cx="70" cy="70" r="20" fill="none" stroke="#00b4d8" stroke-width="0.5" opacity="0.3"/>
+        <!-- Radar sweep -->
+        <path d="M70 70 L70 20 A50 50 0 0 1 113 45 Z" fill="#00b4d8" opacity="0.08"/>
+        <!-- Crosshair lines -->
+        <line x1="70" y1="25" x2="70" y2="115" stroke="#00b4d8" stroke-width="0.3" opacity="0.2"/>
+        <line x1="25" y1="70" x2="115" y2="70" stroke="#00b4d8" stroke-width="0.3" opacity="0.2"/>
+        <!-- Center dot -->
+        <circle cx="70" cy="70" r="4" fill="#00b4d8" opacity="0.6"/>
+        <circle cx="70" cy="70" r="2" fill="#4dd8f0" opacity="0.9"/>
+        <!-- Signal blips -->
+        <circle cx="55" cy="48" r="3" fill="#2d9b4e" opacity="0.5"/>
+        <circle cx="90" cy="62" r="2.5" fill="#e67e22" opacity="0.5"/>
+        <circle cx="60" cy="88" r="2" fill="#00b4d8" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <div class="hero-badge">Free &amp; Open Source</div>
+
+    <h1>
+      ARC VIEW
+      <span>Desktop Companion &amp; Overlay for Arc Raiders</span>
+    </h1>
+
+    <p class="hero-tagline">
+      In-game overlay HUD with event tracking, stash organizer, build advisor, quest progress, and raid analytics. Everything you need on screen while you raid.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://github.com/Chaddums/arc-desktop/releases/latest" style="text-decoration:none;">
+        Download Latest Build
+      </a>
+      <a class="btn btn-secondary" href="https://discord.gg/mwNZ8P6q" target="_blank" style="text-decoration:none;">
+        <svg viewBox="0 0 16 16" fill="currentColor" style="width:14px;height:14px"><path d="M13.545 2.907a13.227 13.227 0 00-3.257-1.011.05.05 0 00-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 00-3.658 0 8.258 8.258 0 00-.412-.833.051.051 0 00-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 00-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 003.995 2.02.05.05 0 00.056-.019c.308-.42.582-.863.818-1.329a.05.05 0 00-.028-.07 8.746 8.746 0 01-1.248-.595.05.05 0 01-.005-.084c.084-.063.168-.129.248-.195a.05.05 0 01.051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 01.053.007c.08.066.164.132.248.195a.051.051 0 01-.004.085c-.399.233-.813.44-1.249.594a.05.05 0 00-.027.07c.24.465.515.909.817 1.329a.05.05 0 00.056.019 13.235 13.235 0 004.001-2.02.049.049 0 00.021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 00-.02-.019zM5.347 10.215c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612z"/></svg>
+        Join Discord
+      </a>
+    </div>
+
+    <div class="hero-meta">
+      <span><span class="dot"></span> GPLv3 Licensed</span>
+      <span><span class="dot"></span> Windows</span>
+      <span><span class="dot"></span> No Data Collection</span>
+      <span><span class="dot"></span> Community Built</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FEATURES
+     ============================================================ -->
+<section class="fade-in">
+  <div class="section-label">// Features</div>
+  <h2 class="section-title">Built for Raiders</h2>
+  <p class="section-desc">Stop alt-tabbing to wikis and spreadsheets. ARC View puts everything on screen while you play.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">&#x1F4E1;</span>
+      <h3>Overlay HUD</h3>
+      <p>Always-on-top event timer with active raid countdowns, next event preview, and imminent alerts. See what's happening without leaving the game.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#x1F4E6;</span>
+      <h3>Stash Organizer</h3>
+      <p>Bulk-analyze every item in the database with keep/sell/recycle verdicts. Filter by verdict, search by name, and see crafting uses and recycle yields at a glance.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#x2699;&#xFE0F;</span>
+      <h3>Build Advisor</h3>
+      <p>Pick your playstyle and get ranked gear and skill recommendations. DPS, Survival, Farming, or Balanced — the advisor scores items against your goals.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#x1F4CA;</span>
+      <h3>Raid Analytics</h3>
+      <p>Log every raid and track your extraction rate, average loot value, and loadout performance over time. Pre-raid risk assessment helps you decide what to bring.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#x1F5FA;&#xFE0F;</span>
+      <h3>Map Intel Overlay</h3>
+      <p>OCR-powered map detection that auto-shows threats, quests, events, and loot when you enter a new area. Pin it or let it auto-dismiss.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#x1F50D;</span>
+      <h3>Item Database</h3>
+      <p>Full item browser with stat bars, rarity filters, equipment slot grid, and side-by-side comparison. Every weapon, armor, and material in the game.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">&#x25C6; &#x25C6; &#x25C6;</div>
+
+<!-- ============================================================
+     HOW IT WORKS
+     ============================================================ -->
+<section class="fade-in">
+  <div class="section-label">// How It Works</div>
+  <h2 class="section-title">Three Steps</h2>
+  <p class="section-desc">No accounts, no API keys, no configuration. Download ARC View and go.</p>
+
+  <div class="steps">
+    <div class="step">
+      <h3>Download &amp; Launch</h3>
+      <p>Grab the latest release from GitHub. Extract the portable exe and run it. No installer needed.</p>
+    </div>
+    <div class="step">
+      <h3>Play Arc Raiders</h3>
+      <p>ARC View's overlay sits on top of your game. Event timers, quest progress, and map intel update automatically.</p>
+    </div>
+    <div class="step">
+      <h3>Use the Tools</h3>
+      <p>Browse items, run the stash organizer, check build recommendations, or log your raids. All in one window alongside your game.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TOOLS SHOWCASE
+     ============================================================ -->
+<section class="fade-in">
+  <div class="section-label">// Tools</div>
+  <h2 class="section-title">What's Inside</h2>
+  <p class="section-desc">Every tool a raider needs, from stash management to loadout optimization.</p>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-card-icon keep">&#x2726;</div>
+        <h3>Stash Organizer</h3>
+      </div>
+      <p>Bulk keep/sell/recycle verdicts for your entire item database. See what's worth crafting, what to sell, and what to break down for components.</p>
+      <div class="tool-tags">
+        <span class="tool-tag">Bulk Analysis</span>
+        <span class="tool-tag">Crafting Uses</span>
+        <span class="tool-tag">Recycle Yields</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-card-icon overlay">&#x1F4E1;</div>
+        <h3>Overlay HUD</h3>
+      </div>
+      <p>Compact in-game strip showing active events, next event countdown, and an imminent alert system. Includes quest progress toasts and map intel cards.</p>
+      <div class="tool-tags">
+        <span class="tool-tag">Click-Through</span>
+        <span class="tool-tag">Auto/Pinned</span>
+        <span class="tool-tag">OCR Detection</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-card-icon build">&#x2699;&#xFE0F;</div>
+        <h3>Build Advisor</h3>
+      </div>
+      <p>Choose Aggressive, Balanced, Survival, or Farming playstyle. Get ranked gear recommendations with scores and skill allocation suggestions.</p>
+      <div class="tool-tags">
+        <span class="tool-tag">4 Playstyles</span>
+        <span class="tool-tag">Gear Scoring</span>
+        <span class="tool-tag">Skill Recs</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-card-icon raid">&#x1F4CA;</div>
+        <h3>Raid Log &amp; Risk</h3>
+      </div>
+      <p>Track extraction rate, loot value, and loadout performance. Pre-raid risk score factors in map, loadout, history, and active events.</p>
+      <div class="tool-tags">
+        <span class="tool-tag">Personal Stats</span>
+        <span class="tool-tag">Risk Score</span>
+        <span class="tool-tag">Loadout Tracking</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-card-icon quest">&#x1F3AF;</div>
+        <h3>Quest Tracker</h3>
+      </div>
+      <p>Track quest chains by trader, see prerequisites and objectives, mark completions. OCR auto-detects quest progress from in-game screenshots.</p>
+      <div class="tool-tags">
+        <span class="tool-tag">Auto-Detect</span>
+        <span class="tool-tag">Quest Chains</span>
+        <span class="tool-tag">Squad Sync</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-card-icon intel">&#x1F5FA;&#xFE0F;</div>
+        <h3>Map Intel &amp; Routes</h3>
+      </div>
+      <p>Per-map threat data, enemy weaknesses, loot tables, and active events. Plan routes with waypoints and estimated loot-per-minute calculations.</p>
+      <div class="tool-tags">
+        <span class="tool-tag">Threat Data</span>
+        <span class="tool-tag">Route Planner</span>
+        <span class="tool-tag">Loot Tables</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     OPEN SOURCE
+     ============================================================ -->
+<div class="open-source-banner fade-in">
+  <div class="open-source-inner">
+    <div class="open-source-text">
+      <h3>For the Raiders</h3>
+      <p>ARC View exists because we needed it too. We don't charge for it, we don't run ads, and we don't collect your data. The code is yours under GPLv3.</p>
+      <p>If ARC View helps you survive more raids, consider supporting us so we can keep building stuff like this.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;">
+        <a href="https://ko-fi.com/calschuss" class="btn btn-primary" style="padding:10px 24px; font-size:0.85rem;">
+          &#x2615; Buy Us Lunch
+        </a>
+        <a href="https://github.com/Chaddums/arc-desktop/blob/master/LICENSE" class="license-badge" style="text-decoration:none;color:inherit;">&#x1F4C4; GPLv3 LICENSE</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ALPHA CTA
+     ============================================================ -->
+<div class="alpha-cta fade-in">
+  <div class="alpha-cta-box">
+    <h2>Early Access &mdash; Available Now</h2>
+    <p>ARC View is in active development. Download the latest build and join the community to help shape the tool.</p>
+    <div class="alpha-buttons">
+      <a href="https://github.com/Chaddums/arc-desktop/releases/latest" class="alpha-btn alpha-btn-primary">Download Latest Build</a>
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank" class="alpha-btn alpha-btn-secondary">Join Discord</a>
+    </div>
+    <div class="alpha-spots">Windows 10/11 &middot; Free forever &middot; GPLv3</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-logo">Couloir</div>
+  <div class="footer-links">
+    <a href="https://couloir.gg">couloir.gg</a>
+    <a href="https://github.com/Chaddums/arc-desktop">GitHub</a>
+    <a href="https://discord.gg/mwNZ8P6q">Discord</a>
+    <a href="https://ko-fi.com/calschuss">Ko-fi</a>
+    <a href="https://x.com/CouloirGG">X</a>
+    <a href="https://bsky.app/profile/couloirgg.bsky.social">Bluesky</a>
+  </div>
+  <p class="footer-legal">
+    Not affiliated with or endorsed by Embark Studios.<br>
+    Arc Raiders is a trademark of Embark Studios AB.<br>
+    &copy; 2026 CouloirGG LLC. Open source under GPLv3.
+  </p>
+</footer>
+
+<!-- ============================================================
+     SCROLL ANIMATION
+     ============================================================ -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
