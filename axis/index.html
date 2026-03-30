@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXIS Producer — AI Session Intelligence for Teams</title>
+<meta name="description" content="AXIS Producer captures your meetings and work sessions, then uses AI to extract decisions, action items, and communication insights. Local-first, consent-required, privacy by default.">
+<meta property="og:title" content="AXIS Producer — AI Session Intelligence">
+<meta property="og:description" content="Turn hours of conversation into actionable intelligence. Decisions, blockers, action items — extracted automatically with full participant consent.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://couloir.gg/axis">
+<link rel="icon" type="image/png" href="/couloir_avatar.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Outfit', system-ui, sans-serif;
+    background: #0a0f1a;
+    color: #c8d0e0;
+    line-height: 1.6;
+  }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+
+  /* Header */
+  .hero { text-align: center; padding: 60px 0 40px; }
+  .hero h1 { font-size: 2.5rem; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
+  .hero h1 span { color: #4ac0ff; }
+  .hero .subtitle { font-size: 1.1rem; color: #94a3b8; max-width: 600px; margin: 0 auto; }
+
+  /* Sections */
+  .section { margin: 48px 0; }
+  .section h2 { font-size: 1.4rem; font-weight: 600; color: #e2e8f0; margin-bottom: 16px; border-left: 3px solid #4ac0ff; padding-left: 12px; }
+  .section p { color: #94a3b8; margin-bottom: 12px; }
+  .section ul { padding-left: 20px; color: #94a3b8; }
+  .section li { margin-bottom: 8px; }
+
+  /* Features grid */
+  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .feature {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .feature h3 { font-size: 1rem; color: #4ac0ff; margin-bottom: 6px; }
+  .feature p { font-size: 0.9rem; color: #94a3b8; margin: 0; }
+
+  /* Trust section */
+  .trust {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 32px;
+    margin: 48px 0;
+  }
+  .trust h2 { border: none; padding: 0; margin-bottom: 16px; }
+  .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .trust-item h4 { color: #34d399; font-size: 0.9rem; margin-bottom: 4px; }
+  .trust-item p { font-size: 0.85rem; color: #64748b; margin: 0; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 40px 0; color: #475569; font-size: 0.85rem; border-top: 1px solid #1e293b; margin-top: 48px; }
+  .footer a { color: #4ac0ff; text-decoration: none; }
+
+  /* Legal */
+  .legal { margin-top: 48px; }
+  .legal h2 { font-size: 1.1rem; }
+  .legal p, .legal li { font-size: 0.85rem; color: #64748b; }
+
+  @media (max-width: 600px) {
+    .features, .trust-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span>AXIS</span> Producer</h1>
+    <p class="subtitle">AI-powered session intelligence. Capture meetings, design sessions, and working conversations — get structured notes, action items, and communication insights automatically.</p>
+  </div>
+
+  <div class="section">
+    <h2>What AXIS Does</h2>
+    <p>AXIS Producer is a desktop productivity tool that records your team's work sessions and uses AI to extract what matters: decisions made, action items committed, blockers identified, and open questions raised.</p>
+    <p>After each session, AXIS generates a deep analysis report — not just what was said, but how the team communicated: where they agreed, where they talked past each other, and what to do differently next time.</p>
+  </div>
+
+  <div class="section">
+    <h2>Features</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Session Recording</h3>
+        <p>Capture mic audio, system audio, and text input from meetings, design sessions, and working conversations.</p>
+      </div>
+      <div class="feature">
+        <h3>AI Extraction</h3>
+        <p>Decisions, action items, blockers, ideas, and questions — automatically categorized from your conversations.</p>
+      </div>
+      <div class="feature">
+        <h3>Session Reports</h3>
+        <p>Deep post-session analysis: communication patterns, points of agreement and tension, actionable recommendations.</p>
+      </div>
+      <div class="feature">
+        <h3>Team Sync</h3>
+        <p>Share session intelligence across your team. See what everyone is working on without asking.</p>
+      </div>
+      <div class="feature">
+        <h3>Local-First</h3>
+        <p>Audio and transcripts stay on your machine. Cloud sync is opt-in and only shares structured summaries.</p>
+      </div>
+      <div class="feature">
+        <h3>Multi-Source</h3>
+        <p>Captures from voice, Claude Code, clipboard, Git, Slack, email, and calendar — all in one timeline.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <h2>Privacy &amp; Consent</h2>
+    <p style="color:#94a3b8;margin-bottom:20px;">AXIS Producer is a productivity tool, not surveillance software. Privacy and consent are built into the product at every level.</p>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <h4>Consent Required</h4>
+        <p>All users must acknowledge a consent notice during setup. Recording only starts when the user explicitly initiates a session.</p>
+      </div>
+      <div class="trust-item">
+        <h4>Self-Attestation</h4>
+        <p>Users attest during signup that the tool will be used for lawful internal team communication only — not for surveillance or monitoring non-consenting parties.</p>
+      </div>
+      <div class="trust-item">
+        <h4>Local by Default</h4>
+        <p>Audio recordings and full transcripts never leave the user's machine. Only structured summaries are synced to the cloud when the user opts in.</p>
+      </div>
+      <div class="trust-item">
+        <h4>No Government Use</h4>
+        <p>AXIS Producer explicitly prohibits use by government agencies, law enforcement, or for monitoring individuals without their knowledge and consent.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How It Works</h2>
+    <ul>
+      <li><strong>Start a session</strong> — click the tray icon or press Ctrl+Shift+F9</li>
+      <li><strong>Work normally</strong> — AXIS captures audio, text, and activity in the background</li>
+      <li><strong>Get structured notes</strong> — every 5 minutes, AI extracts decisions, actions, blockers</li>
+      <li><strong>Session report</strong> — when you stop, get a deep analysis of the entire session</li>
+      <li><strong>Team briefing</strong> — see what your whole team discussed, clustered by topic</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Pricing</h2>
+    <p><strong>Team</strong> — $49.99/month for up to 20 seats. Desktop app, local transcription, cloud sync.</p>
+    <p><strong>Pro</strong> — $24.99/seat/month. Standalone mobile, cloud transcription.</p>
+    <p>14-day free trial. No credit card required to start.</p>
+  </div>
+
+  <div class="legal">
+    <h2>Privacy Policy</h2>
+    <p>AXIS Producer ("the Service") is operated by Vine Logic TD / Couloir ("we", "us").</p>
+    <ul>
+      <li><strong>Data collected:</strong> Audio recordings, transcripts, and structured session notes are stored locally on the user's device. When cloud sync is enabled, only structured summaries (decisions, action items, blockers) are transmitted to our servers.</li>
+      <li><strong>Audio recordings:</strong> Never uploaded to our servers. Processed locally using on-device AI (Whisper) or transmitted to the user's chosen cloud provider (Anthropic, OpenAI, Groq) for transcription only when the user explicitly configures this.</li>
+      <li><strong>Third-party services:</strong> When using cloud features, structured summaries are stored in Supabase (PostgreSQL). LLM analysis uses Anthropic's Claude API. Payment processing uses Stripe.</li>
+      <li><strong>Data retention:</strong> Local data is retained until the user deletes it. Cloud-synced summaries are retained for the duration of the subscription.</li>
+      <li><strong>Data deletion:</strong> Users can delete their account and all associated data at any time via the app settings.</li>
+      <li><strong>Consent:</strong> All users must acknowledge a consent notice during onboarding. The tool records only when the user explicitly starts a session.</li>
+      <li><strong>Prohibited uses:</strong> Surveillance of non-consenting parties, law enforcement monitoring, government use, and any use that violates applicable wiretapping or recording consent laws.</li>
+    </ul>
+
+    <h2 style="margin-top:24px;">Terms of Service</h2>
+    <ul>
+      <li>You must have legal authority to record conversations in your jurisdiction.</li>
+      <li>You must obtain consent from all participants before recording.</li>
+      <li>You may not use the Service for surveillance, law enforcement, or monitoring non-consenting individuals.</li>
+      <li>You are responsible for compliance with all applicable laws regarding recording consent.</li>
+      <li>We reserve the right to terminate accounts that violate these terms.</li>
+    </ul>
+
+    <h2 style="margin-top:24px;">Contact</h2>
+    <p>Email: <a href="mailto:hello@couloir.gg" style="color:#4ac0ff;">hello@couloir.gg</a></p>
+    <p>Website: <a href="https://couloir.gg" style="color:#4ac0ff;">couloir.gg</a></p>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2026 Vine Logic TD / Couloir. All rights reserved.</p>
+    <p><a href="https://couloir.gg">couloir.gg</a></p>
+  </div>
+
+</div>
+
+</body>
+</html>
