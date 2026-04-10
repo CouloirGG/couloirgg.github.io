@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CouloirGG - Private</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}html,body{height:100%;}
+body{font-family:'Sora',sans-serif;background:#0a1a20;}
+#gate{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px;}
+.gate-inner{display:flex;flex-direction:column;align-items:center;gap:20px;max-width:320px;width:100%;}
+.g-logo{font-size:18px;font-weight:800;color:rgba(255,255,255,0.15);letter-spacing:-0.02em;}
+.g-logo span{color:#A7DB78;}
+.g-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);font-family:'JetBrains Mono',monospace;}
+.g-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;font-size:18px;color:white;font-family:'JetBrains Mono',monospace;letter-spacing:0.15em;text-align:center;outline:none;transition:border-color 0.2s;}
+.g-input:focus{border-color:rgba(167,219,120,0.4);}
+.g-input.err{border-color:rgba(239,68,68,0.5);animation:shake 0.3s;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.g-btn{width:100%;background:#A7DB78;color:#003E47;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;padding:12px;border:none;border-radius:10px;cursor:pointer;transition:opacity 0.2s;}
+.g-btn:hover{opacity:0.88;}
+.g-err{font-size:11px;color:rgba(239,68,68,0.7);font-family:'JetBrains Mono',monospace;opacity:0;transition:opacity 0.2s;}
+.g-err.show{opacity:1;}
+#content{display:none;}
+</style>
+</head>
+<body>
+<div id="gate"><div class="gate-inner"><div class="g-logo">Couloir<span>GG</span></div><div class="g-label">Private access</div><input class="g-input" id="pw" type="password" placeholder="..." autocomplete="off" /><button class="g-btn" id="enter-btn">Enter</button><div class="g-err" id="g-err">incorrect</div></div></div>
+<div id="content"></div>
+<template id="inner-html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REDAPT - Visual Library - April 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--lime:#A7DB78;--lime-dark:#6a9c2a;--teal:#005770;--teal-dark:#003E47;--teal-pale:#e0eef2;--bg-dark:#0a1a20;--bg-light:#f5f7fa;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--dim:rgba(255,255,255,0.5);--faint:rgba(255,255,255,0.22);--charcoal:#1e293b;--red:#ef4444;--amber:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'Sora',sans-serif;}
+.master-header{background:var(--teal-dark);padding:14px 40px;position:sticky;top:0;z-index:1000;border-bottom:2px solid var(--lime);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mh-brand{font-size:14px;font-weight:800;color:white;letter-spacing:-0.02em;}
+.mh-brand span{color:var(--lime);}
+.mh-sub{font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;letter-spacing:0.04em;}
+.nav-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.nav-pill{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.55);text-decoration:none;transition:all 0.2s;}
+.nav-pill:hover{border-color:rgba(167,219,120,0.35);color:var(--lime);background:rgba(167,219,120,0.07);}
+.nav-pill.active{background:var(--lime);color:var(--teal-dark);border-color:var(--lime);}
+.np-num{font-family:'JetBrains Mono',monospace;font-size:10px;opacity:0.7;}
+.visual-section{position:relative;}
+.section-header{display:flex;align-items:center;gap:14px;padding:18px 40px 0;}
+.sh-num{font-size:11px;font-weight:700;letter-spacing:0.15em;font-family:'JetBrains Mono',monospace;color:var(--lime);background:rgba(167,219,120,0.1);border:1px solid rgba(167,219,120,0.2);padding:4px 10px;border-radius:20px;}
+.sh-label{font-size:13px;font-weight:700;letter-spacing:0.02em;}
+#path,#telephone,#choice{background:var(--bg-dark);}
+#path .sh-label,#telephone .sh-label,#choice .sh-label{color:rgba(255,255,255,0.35);}
+#stands{background:#f5f7fa;}#stands .section-header{border-top:1px solid #e2e8f0;}#stands .sh-label{color:#94a3b8;}
+.visual-section+.visual-section{border-top:2px solid rgba(167,219,120,0.15);}
+
+/* == 01: The Obvious Path == */
+
+:root {
+  --lime: #A7DB78; --lime-dark: #6a9c2a;
+  --teal: #005770; --teal-dark: #003E47;
+  --bg: #0a1a20; --card: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08); --dim: rgba(255,255,255,0.5);
+  --faint: rgba(255,255,255,0.22); --red: #ef4444;
+  --amber: #f59e0b; --blue: #4ac0ff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; }
+
+header { background: rgba(0,62,71,0.9); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
+.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
+.brand-sub { font-size: 11px; color: var(--faint); margin-top: 2px; font-weight: 300; }
+.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(167,219,120,0.3); color: var(--lime); background: rgba(167,219,120,0.07); }
+
+.main { flex: 1; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 48px; }
+
+.title-block { text-align: center; max-width: 680px; }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+h1 { font-size: clamp(26px, 4vw, 46px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 16px; }
+h1 em { color: var(--lime); font-style: normal; }
+.subtitle { font-size: 14px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 560px; margin: 0 auto; }
+
+.industry-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.ind-tab { padding: 9px 20px; border-radius: 30px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 600; color: var(--faint); cursor: pointer; transition: all 0.3s; background: transparent; font-family: 'Sora', sans-serif; display: flex; align-items: center; gap: 8px; }
+.ind-tab:hover { border-color: rgba(167,219,120,0.3); color: rgba(255,255,255,0.7); }
+.ind-tab.active { border-color: var(--lime); color: var(--lime); background: rgba(167,219,120,0.08); }
+
+.chain-wrap { width: 100%; max-width: 960px; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 36px 40px; position: relative; overflow: hidden; }
+.chain-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--teal), var(--lime)); }
+.chain-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); font-family: 'JetBrains Mono', monospace; margin-bottom: 28px; }
+
+.steps { display: flex; align-items: flex-start; overflow-x: auto; padding-bottom: 8px; gap: 0; }
+.step { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; width: 130px; gap: 10px; }
+.step-orb { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; border: 2px solid var(--border); background: rgba(255,255,255,0.03); transition: all 0.5s ease; }
+.step.lit .step-orb { border-color: rgba(167,219,120,0.5); background: rgba(167,219,120,0.08); box-shadow: 0 0 20px rgba(167,219,120,0.12); }
+.step.warn .step-orb { border-color: rgba(245,158,11,0.5); background: rgba(245,158,11,0.08); box-shadow: 0 0 20px rgba(245,158,11,0.12); }
+.step.crack .step-orb { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.06); animation: crack-pulse 2.5s infinite; }
+@keyframes crack-pulse { 0%,100% { box-shadow: 0 0 20px rgba(239,68,68,0.12); } 50% { box-shadow: 0 0 28px rgba(239,68,68,0.25); } }
+
+.step-title { font-size: 12px; font-weight: 700; text-align: center; color: var(--faint); transition: color 0.5s; line-height: 1.35; }
+.step.lit .step-title { color: rgba(255,255,255,0.9); }
+.step.warn .step-title { color: #fcd34d; }
+.step.crack .step-title { color: #fca5a5; }
+.step-note { font-size: 10px; color: var(--faint); text-align: center; line-height: 1.5; max-width: 110px; font-family: 'JetBrains Mono', monospace; transition: color 0.5s; }
+.step.crack .step-note { color: rgba(239,68,68,0.7); }
+
+.connector { flex-shrink: 0; width: 44px; display: flex; flex-direction: column; align-items: center; margin-top: 27px; position: relative; }
+.conn-line { width: 100%; height: 2px; border-radius: 1px; background: var(--border); transition: background 0.5s; }
+.connector.ok .conn-line { background: rgba(167,219,120,0.25); }
+.connector.warn .conn-line { background: rgba(245,158,11,0.3); }
+.connector.crack .conn-line { background: rgba(239,68,68,0.3); }
+.pkt { position: absolute; top: -3px; left: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 5px rgba(167,219,120,0.5); animation: pkt-travel 2.2s infinite; }
+.pkt.d2 { animation-delay: 1.1s; }
+.pkt.stall { background: var(--amber); box-shadow: 0 0 5px rgba(245,158,11,0.5); animation: pkt-stall 2.5s infinite; }
+@keyframes pkt-travel { 0% { left:0; opacity:0; } 15% { opacity:1; } 85% { opacity:1; } 100% { left:36px; opacity:0; } }
+@keyframes pkt-stall { 0% { left:0; opacity:0; } 15% { opacity:1; } 50% { left:18px; opacity:1; } 65% { opacity:0.3; } 80% { opacity:0; } 100% { left:0; opacity:0; } }
+
+.compound-row { display: flex; gap: 14px; width: 100%; max-width: 960px; flex-wrap: wrap; }
+.compound-card { flex: 1; min-width: 200px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 18px; position: relative; overflow: hidden; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.compound-card.visible { opacity: 1; transform: translateY(0); }
+.compound-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.compound-card:nth-child(1)::before { background: rgba(167,219,120,0.5); }
+.compound-card:nth-child(2)::before { background: rgba(245,158,11,0.6); }
+.compound-card:nth-child(3)::before { background: rgba(239,68,68,0.6); }
+.compound-step { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+.compound-step.s1 { color: rgba(167,219,120,0.7); }
+.compound-step.s2 { color: rgba(245,158,11,0.8); }
+.compound-step.s3 { color: rgba(239,68,68,0.8); }
+.compound-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+.compound-body { font-size: 11px; color: var(--faint); line-height: 1.6; font-weight: 300; }
+
+.bottom-note { max-width: 640px; text-align: center; background: rgba(167,219,120,0.05); border: 1px solid rgba(167,219,120,0.15); border-radius: 12px; padding: 24px 32px; }
+.bottom-note p { font-size: 14px; color: var(--dim); line-height: 1.8; font-weight: 300; }
+.bottom-note strong { color: var(--lime); font-weight: 600; }
+
+/* == 02: The Telephone Effect == */
+
+:root {
+  --lime: #A7DB78; --lime-dark: #6a9c2a;
+  --teal: #005770; --teal-dark: #003E47;
+  --bg: #0a1a20; --card: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08); --dim: rgba(255,255,255,0.5);
+  --faint: rgba(255,255,255,0.22); --red: #ef4444; --amber: #f59e0b;
+  --orange: #f97316;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; }
+
+header { background: rgba(0,62,71,0.9); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
+.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
+.brand-sub { font-size: 11px; color: var(--faint); margin-top: 2px; font-weight: 300; }
+.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(245,158,11,0.35); color: #fcd34d; background: rgba(245,158,11,0.07); }
+
+.main { flex: 1; padding: 48px 20px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+@media (min-width:640px) { .main { padding: 48px 40px; } }
+
+/* ── PANEL HEADERS ── */
+.panel-intro { width: 100%; max-width: 960px; padding-bottom: 36px; }
+.panel-intro.second { padding-top: 64px; padding-bottom: 36px; border-top: 2px solid rgba(255,255,255,0.06); margin-top: 64px; }
+.panel-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+.panel-intro:first-child .panel-tag { color: var(--lime); }
+.panel-intro.second .panel-tag { color: #a78bfa; }
+h2 { font-size: clamp(22px, 3vw, 36px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 10px; }
+h2 em { font-style: normal; }
+.panel-intro:first-child h2 em { color: var(--amber); }
+.panel-intro.second h2 em { color: #a78bfa; }
+.panel-sub { font-size: 13px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 620px; }
+
+/* ── PANEL A: SPREAD CANVAS ── */
+.spread-wrap {
+  width: 100%; max-width: 960px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; position: relative;
+}
+.spread-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--lime), var(--amber), var(--orange)); z-index: 2; }
+#spread-canvas { display: block; width: 100%; min-height: 360px; }
+.replay-btn { position: absolute; bottom: 14px; right: 14px; z-index: 10; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.03); cursor: pointer; font-family: 'Sora', sans-serif; transition: all 0.2s; }
+.replay-btn:hover { border-color: var(--lime); color: var(--lime); }
+
+/* ── SPREAD SCROLL TIMELINE ── */
+.spread-timeline {
+  width: 100%; padding: 16px 20px 20px;
+  background: rgba(0,0,0,0.15);
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.stl-track {
+  position: relative; height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px; margin-bottom: 20px;
+}
+.stl-fill {
+  position: absolute; top: 0; left: 0; height: 100%;
+  background: linear-gradient(90deg, var(--lime), var(--amber), var(--orange), var(--red));
+  border-radius: 2px; width: 0%;
+  transition: width 0.3s ease;
+}
+.stl-cursor {
+  position: absolute; top: -5px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: white; border: 2px solid var(--lime);
+  transform: translateX(-50%);
+  transition: left 0.3s ease, border-color 0.5s;
+  box-shadow: 0 0 8px rgba(167,219,120,0.4);
+}
+.stl-stops {
+  display: flex; justify-content: space-between;
+  position: relative;
+}
+.stl-stop {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  flex: 1; opacity: 0.3; transition: opacity 0.4s;
+}
+.stl-stop.active { opacity: 1; }
+.stl-stop-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  border: 1.5px solid; background: transparent;
+  transition: background 0.4s;
+}
+.stl-stop.active .stl-stop-dot { background: currentColor; }
+.stl-stop:nth-child(1) { color: var(--lime); }
+.stl-stop:nth-child(2) { color: var(--amber); }
+.stl-stop:nth-child(3) { color: var(--orange); }
+.stl-stop:nth-child(4) { color: var(--red); }
+.stl-stop-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; font-family: 'JetBrains Mono', monospace;
+  text-align: center; color: inherit;
+}
+.stl-stop-sub {
+  font-size: 9px; color: var(--faint); font-weight: 300;
+  text-align: center; line-height: 1.3; max-width: 80px;
+}
+
+/* speech bubble appearing near nodes */
+.bubble-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+.speech-bubble { position: absolute; background: rgba(10,26,32,0.92); border: 1px solid; border-radius: 8px; padding: 6px 10px; font-size: 10px; line-height: 1.4; max-width: 160px; opacity: 0; transition: opacity 0.4s; font-family: 'JetBrains Mono', monospace; }
+.speech-bubble.show { opacity: 1; }
+.speech-bubble::after { content: ''; position: absolute; bottom: -6px; left: 12px; width: 10px; height: 6px; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.speech-bubble.intact { border-color: rgba(167,219,120,0.4); color: var(--lime); }
+.speech-bubble.intact::after { background: rgba(167,219,120,0.4); }
+.speech-bubble.degraded { border-color: rgba(245,158,11,0.4); color: #fcd34d; }
+.speech-bubble.degraded::after { background: rgba(245,158,11,0.4); }
+.speech-bubble.bad { border-color: rgba(249,115,22,0.4); color: #fdba74; }
+.speech-bubble.bad::after { background: rgba(249,115,22,0.4); }
+
+/* ── PANEL B: SEDIMENT ── */
+.sediment-wrap { width: 100%; max-width: 960px; }
+
+/* Timeline row */
+.timeline { display: flex; gap: 0; align-items: stretch; position: relative; margin-bottom: 32px; }
+.timeline::before { content: ''; position: absolute; top: 28px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, rgba(167,219,120,0.3), rgba(167,35,35,0.4)); z-index: 0; }
+
+.tl-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+.tl-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid; position: relative; z-index: 2; transition: all 0.5s; }
+.tl-col:nth-child(1) .tl-dot { background: rgba(167,219,120,0.3); border-color: var(--lime); }
+.tl-col:nth-child(2) .tl-dot { background: rgba(245,158,11,0.3); border-color: var(--amber); }
+.tl-col:nth-child(3) .tl-dot { background: rgba(249,115,22,0.3); border-color: var(--orange); }
+.tl-col:nth-child(4) .tl-dot { background: rgba(239,68,68,0.3); border-color: var(--red); }
+.tl-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+.tl-col:nth-child(1) .tl-label { color: var(--lime); }
+.tl-col:nth-child(2) .tl-label { color: var(--amber); }
+.tl-col:nth-child(3) .tl-label { color: var(--orange); }
+.tl-col:nth-child(4) .tl-label { color: var(--red); }
+
+/* Sediment layers */
+.layers-wrap { position: relative; margin-bottom: 40px; }
+.layer {
+  width: 100%; border-radius: 10px; padding: 14px 20px;
+  margin-bottom: 6px; display: flex; align-items: flex-start; gap: 14px;
+  border: 1px solid; transition: all 0.5s;
+  opacity: 0; transform: translateY(6px);
+}
+.layer.show { opacity: 1; transform: translateY(0); }
+.layer-year { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; width: 60px; margin-top: 2px; }
+.layer-content { flex: 1; }
+.layer-belief { font-size: 12px; font-weight: 500; line-height: 1.5; margin-bottom: 4px; }
+.layer-origin { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--faint); line-height: 1.4; }
+.layer-solidity { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.solidity-bar { height: 3px; border-radius: 2px; transition: width 0.8s ease; }
+.solidity-label { font-size: 9px; color: var(--faint); font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+
+/* Year 1 - fresh, faint */
+.layer.y1 { background: rgba(167,219,120,0.04); border-color: rgba(167,219,120,0.15); }
+.layer.y1 .layer-year { color: var(--lime); }
+.layer.y1 .layer-belief { color: rgba(255,255,255,0.7); }
+.layer.y1 .solidity-bar { width: 15%; background: var(--lime); }
+
+/* Year 2 - solidifying */
+.layer.y2 { background: rgba(245,158,11,0.04); border-color: rgba(245,158,11,0.2); }
+.layer.y2 .layer-year { color: var(--amber); }
+.layer.y2 .layer-belief { color: rgba(255,255,255,0.8); }
+.layer.y2 .solidity-bar { width: 40%; background: var(--amber); }
+
+/* Year 3 - hardening */
+.layer.y3 { background: rgba(249,115,22,0.05); border-color: rgba(249,115,22,0.25); }
+.layer.y3 .layer-year { color: var(--orange); }
+.layer.y3 .layer-belief { color: rgba(255,255,255,0.88); font-weight: 600; }
+.layer.y3 .solidity-bar { width: 72%; background: var(--orange); }
+
+/* Year 4+ - concrete */
+.layer.y4 { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.3); }
+.layer.y4 .layer-year { color: var(--red); }
+.layer.y4 .layer-belief { color: white; font-weight: 700; font-size: 13px; }
+.layer.y4 .solidity-bar { width: 100%; background: var(--red); }
+
+/* ── DINOSAUR ROW ── */
+.dino-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+@media (min-width: 640px) { .dino-row { grid-template-columns: repeat(4,1fr); gap: 14px; } }
+.person-card { width: 100%; overflow: hidden; min-width: 0; background: var(--card); border: 1.5px solid; border-radius: 12px; padding: 18px 16px; position: relative; overflow: hidden; opacity: 0; transform: translateY(8px); transition: all 0.5s; }
+.person-card.show { opacity: 1; transform: translateY(0); }
+
+.person-card.dino { border-color: rgba(239,68,68,0.25); }
+.person-card.dino::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); }
+.person-card.newjoin { border-color: rgba(167,219,120,0.2); }
+.person-card.newjoin::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--lime); }
+
+.pc-avatar { font-size: 28px; margin-bottom: 8px; display: block; }
+.pc-tenure { font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 6px; word-break: break-word; overflow-wrap: break-word; white-space: normal; }
+.person-card.dino .pc-tenure { color: rgba(239,68,68,0.7); }
+.person-card.newjoin .pc-tenure { color: rgba(167,219,120,0.7); }
+.pc-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; word-break: break-word; overflow-wrap: break-word; line-height: 1.3; }
+.pc-belief { font-size: 11px; color: var(--faint); line-height: 1.55; font-weight: 300; font-style: italic; word-break: break-word; overflow-wrap: break-word; }
+.pc-source { font-size: 9px; font-family: 'JetBrains Mono', monospace; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); word-break: break-word; overflow-wrap: break-word; line-height: 1.5; }
+.person-card.dino .pc-source { color: rgba(239,68,68,0.5); }
+.person-card.newjoin .pc-source { color: rgba(167,219,120,0.5); }
+
+/* influence radius badge */
+.influence-badge { position: static; display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
+.person-card.dino .influence-badge { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+.person-card.newjoin .influence-badge { background: rgba(167,219,120,0.08); color: var(--lime); border: 1px solid rgba(167,219,120,0.15); }
+
+/* ── TRUTH BURIED ── */
+.truth-block { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; position: relative; overflow: hidden; opacity: 0; transition: opacity 0.6s; }
+.truth-block.show { opacity: 1; }
+.truth-block::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, rgba(167,219,120,0.4), rgba(167,219,120,0.1)); }
+.truth-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; color: var(--lime); margin-bottom: 8px; }
+.truth-text { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.65; font-style: italic; text-decoration: line-through; text-decoration-color: rgba(239,68,68,0.4); }
+.truth-note { font-size: 11px; color: var(--faint); margin-top: 10px; line-height: 1.6; font-weight: 300; }
+.truth-note strong { color: rgba(239,68,68,0.8); font-weight: 600; }
+
+/* ── BOTTOM LINE ── */
+.bottom-line { width: 100%; max-width: 960px; text-align: center; padding: 40px 0 0; }
+.bottom-line-text { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; color: rgba(255,255,255,0.35); line-height: 1.5; }
+.bottom-line-text em { color: rgba(255,255,255,0.7); font-style: normal; }
+
+/* == 03: The Choice Point == */
+
+:root {
+  --lime: #A7DB78; --lime-dark: #6a9c2a;
+  --teal: #005770; --teal-dark: #003E47;
+  --bg: #0d1117; --card: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.07); --dim: rgba(255,255,255,0.5);
+  --faint: rgba(255,255,255,0.22); --red: #ef4444; --amber: #f59e0b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; }
+
+header { background: rgba(0,62,71,0.9); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
+.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
+.brand-sub { font-size: 11px; color: var(--faint); margin-top: 2px; font-weight: 300; }
+.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(245,158,11,0.35); color: #fcd34d; background: rgba(245,158,11,0.07); }
+
+.main { flex: 1; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 44px; }
+
+.title-block { text-align: center; max-width: 640px; }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+h1 { font-size: clamp(26px, 4vw, 44px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 14px; }
+h1 em { color: var(--amber); font-style: normal; }
+.subtitle { font-size: 14px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 520px; margin: 0 auto; }
+
+/* SCENARIO TABS */
+.scenario-tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.stab { padding: 8px 16px; border-radius: 24px; border: 1.5px solid var(--border); font-size: 11px; font-weight: 600; color: var(--faint); cursor: pointer; transition: all 0.25s; background: transparent; font-family: 'Sora', sans-serif; }
+.stab:hover { border-color: rgba(245,158,11,0.3); color: rgba(255,255,255,0.7); }
+.stab.active { border-color: var(--amber); color: #fcd34d; background: rgba(245,158,11,0.07); }
+
+/* FORK */
+.fork-outer { width: 100%; max-width: 900px; display: flex; flex-direction: column; gap: 12px; }
+.fork-ctx { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; display: flex; align-items: flex-start; gap: 12px; }
+.fork-ctx-icon { font-size: 20px; flex-shrink: 0; }
+.fork-ctx-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
+.fork-ctx-text { font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 300; line-height: 1.6; }
+
+.fork-options { display: flex; gap: 12px; flex-wrap: wrap; }
+.opt { flex: 1; min-width: 240px; border-radius: 12px; border: 1.5px solid; padding: 20px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; }
+.opt::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.opt.easy { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); }
+.opt.easy::before { background: var(--amber); }
+.opt.easy:hover, .opt.easy.sel { border-color: rgba(245,158,11,0.55); background: rgba(245,158,11,0.08); }
+.opt.hard { border-color: var(--border); background: var(--card); }
+.opt.hard::before { background: rgba(167,219,120,0.5); }
+.opt.hard:hover, .opt.hard.sel { border-color: rgba(167,219,120,0.35); background: rgba(167,219,120,0.05); }
+
+.opt-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; margin-bottom: 10px; display: inline-block; }
+.opt-tag.easy { background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.25); }
+.opt-tag.hard { background: rgba(167,219,120,0.08); color: var(--lime); border: 1px solid rgba(167,219,120,0.2); }
+.opt-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+.opt-title.easy { color: #fcd34d; }
+.opt-title.hard { color: rgba(255,255,255,0.85); }
+.opt-desc { font-size: 11px; color: var(--faint); line-height: 1.6; font-weight: 300; margin-bottom: 12px; }
+.opt-friction { display: flex; align-items: center; gap: 7px; }
+.fric-label { font-size: 10px; color: var(--faint); font-family: 'JetBrains Mono', monospace; }
+.fdots { display: flex; gap: 3px; }
+.fd { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
+.fd.e { background: var(--amber); }
+.fd.h { background: var(--lime); }
+.opt-result { font-size: 10px; font-family: 'JetBrains Mono', monospace; padding: 8px 10px; border-radius: 7px; margin-top: 12px; opacity: 0; transition: opacity 0.3s; line-height: 1.5; }
+.opt.sel .opt-result { opacity: 1; }
+.opt-result.easy { background: rgba(245,158,11,0.08); color: #fcd34d; border: 1px solid rgba(245,158,11,0.15); }
+.opt-result.hard { background: rgba(167,219,120,0.07); color: var(--lime); border: 1px solid rgba(167,219,120,0.15); }
+
+/* TIGHT REASON CARDS */
+.reason-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; width: 100%; max-width: 900px; }
+.rc { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.25s; opacity: 0; transform: translateY(8px); position: relative; overflow: hidden; }
+.rc.visible { opacity: 1; transform: translateY(0); }
+.rc:hover, .rc.open { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); }
+.rc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(245,158,11,0.35); }
+.rc-num { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: rgba(245,158,11,0.5); font-family: 'JetBrains Mono', monospace; margin-bottom: 6px; }
+.rc-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 0; line-height: 1.35; }
+.rc-body { font-size: 11px; color: var(--faint); line-height: 1.6; font-weight: 300; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, margin-top 0.25s; }
+.rc.open .rc-body { max-height: 100px; margin-top: 7px; }
+.rc-hint { font-size: 9px; color: rgba(245,158,11,0.4); font-family: 'JetBrains Mono', monospace; margin-top: 6px; transition: opacity 0.25s; }
+.rc.open .rc-hint { opacity: 0; }
+
+.bottom-note { max-width: 660px; text-align: center; background: rgba(167,219,120,0.04); border: 1px solid rgba(167,219,120,0.14); border-radius: 12px; padding: 20px 28px; }
+.bottom-note p { font-size: 13px; color: var(--dim); line-height: 1.8; font-weight: 300; }
+.bottom-note strong { color: var(--lime); font-weight: 600; }
+
+/* == 04: Where Things Stand == */
+
+:root {
+  --lime: #A7DB78; --lime-dark: #6a9c2a;
+  --teal: #005770; --teal-dark: #003E47; --teal-pale: #e0eef2;
+  --bg: #f5f7fa; --card: #ffffff; --border: #e2e8f0;
+  --dim: #64748b; --faint: #94a3b8; --charcoal: #1e293b;
+  --red: #ef4444; --amber: #f59e0b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--charcoal); min-height: 100vh; display: flex; flex-direction: column; }
+
+header { background: var(--teal-dark); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
+.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
+.brand-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; font-weight: 300; }
+.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(167,219,120,0.4); color: var(--lime); background: rgba(167,219,120,0.08); }
+
+.main { flex: 1; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 48px; }
+
+.title-block { text-align: center; max-width: 680px; }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+h1 { font-size: clamp(26px, 3.5vw, 44px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 16px; color: var(--charcoal); }
+h1 em { color: var(--teal); font-style: normal; }
+.subtitle { font-size: 14px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 540px; margin: 0 auto; }
+
+/* STAGE SELECTOR */
+.stage-wrap { display: flex; gap: 0; border-radius: 12px; border: 1.5px solid var(--border); overflow: hidden; background: var(--card); }
+.stage-btn { padding: 12px 28px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: none; background: transparent; font-family: 'Sora', sans-serif; color: var(--faint); border-right: 1px solid var(--border); }
+.stage-btn:last-child { border-right: none; }
+.stage-btn.active-now { background: #FFFBF0; color: #92400e; }
+.stage-btn.active-fix1 { background: var(--teal-pale); color: var(--teal-dark); }
+.stage-btn.active-fix2 { background: rgba(167,219,120,0.1); color: var(--lime-dark); }
+.stage-btn.active-full { background: var(--teal-dark); color: var(--lime); }
+
+/* MAIN FLOW DIAGRAM */
+.flow-diagram { width: 100%; max-width: 1040px; background: var(--card); border: 1.5px solid var(--border); border-radius: 18px; padding: 36px; position: relative; overflow: hidden; }
+.flow-diagram::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; transition: background 0.5s; }
+.stage-now .flow-diagram::before { background: linear-gradient(90deg, var(--teal), var(--amber), var(--amber)); }
+.stage-fix1 .flow-diagram::before { background: linear-gradient(90deg, var(--teal), var(--lime), var(--amber)); }
+.stage-fix2 .flow-diagram::before { background: linear-gradient(90deg, var(--teal), var(--lime), var(--lime)); }
+.stage-full .flow-diagram::before { background: linear-gradient(90deg, var(--teal), var(--lime)); }
+
+.flow-stage-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 28px; transition: color 0.4s; }
+
+/* Flow nodes */
+.flow-nodes { display: flex; align-items: flex-start; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+.fn { flex-shrink: 0; width: 140px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.fn-box { width: 100%; padding: 12px 10px; border-radius: 10px; border: 1.5px solid; text-align: center; transition: all 0.5s; position: relative; }
+.fn-icon { font-size: 20px; margin-bottom: 4px; display: block; }
+.fn-title { font-size: 11px; font-weight: 700; line-height: 1.3; }
+.fn-note { font-size: 10px; font-family: 'JetBrains Mono', monospace; margin-top: 4px; line-height: 1.4; }
+
+/* Node states */
+.fn-box.ok { border-color: rgba(0,87,112,0.18); background: var(--teal-pale); }
+.fn-box.ok .fn-title { color: var(--teal-dark); }
+.fn-box.ok .fn-note { color: var(--faint); }
+
+.fn-box.crack { border-color: rgba(245,158,11,0.35); background: #FFFBF0; }
+.fn-box.crack .fn-title { color: #92400e; }
+.fn-box.crack .fn-note { color: #b45309; }
+
+.fn-box.broken { border-color: rgba(239,68,68,0.3); background: #FFF5F5; }
+.fn-box.broken .fn-title { color: var(--red); }
+.fn-box.broken .fn-note { color: #b91c1c; }
+
+.fn-box.fixed { border-color: rgba(167,219,120,0.45); background: rgba(167,219,120,0.08); }
+.fn-box.fixed .fn-title { color: var(--lime-dark); }
+.fn-box.fixed .fn-note { color: var(--lime-dark); }
+
+/* crack overlay animation */
+.fn-box.crack::after { content: '⚠'; position: absolute; top: -8px; right: -8px; font-size: 14px; background: var(--amber); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; line-height: 20px; text-align: center; }
+.fn-box.broken::after { content: '!'; position: absolute; top: -8px; right: -8px; font-size: 12px; background: var(--red); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; line-height: 20px; text-align: center; }
+.fn-box.fixed::after { content: '✓'; position: absolute; top: -8px; right: -8px; font-size: 12px; background: var(--lime-dark); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; line-height: 20px; text-align: center; }
+
+/* Connector arrows */
+.fc { flex-shrink: 0; width: 40px; display: flex; flex-direction: column; align-items: center; margin-top: 24px; position: relative; }
+.fc-line { width: 100%; height: 2px; border-radius: 1px; transition: background 0.5s; }
+.fc.ok .fc-line { background: rgba(0,87,112,0.2); }
+.fc.crack .fc-line { background: rgba(245,158,11,0.4); }
+.fc.broken .fc-line { background: rgba(239,68,68,0.3); }
+.fc.fixed .fc-line { background: rgba(167,219,120,0.4); }
+
+/* animated packets on connectors */
+.fpkt { position: absolute; top: -4px; left: 0; width: 10px; height: 10px; border-radius: 50%; animation: fpkt-go 2s infinite; }
+.fpkt.ok { background: rgba(0,87,112,0.5); animation: fpkt-go 2s infinite; }
+.fpkt.crack { background: var(--amber); animation: fpkt-stall 2.2s infinite; }
+.fpkt.broken { background: var(--red); animation: fpkt-stop 2s infinite; }
+.fpkt.fixed { background: var(--lime); animation: fpkt-go 1.8s infinite; box-shadow: 0 0 6px rgba(167,219,120,0.4); }
+.fpkt.d2 { animation-delay: 1s; }
+@keyframes fpkt-go { 0%{left:0;opacity:0} 15%{opacity:1} 85%{opacity:1} 100%{left:30px;opacity:0} }
+@keyframes fpkt-stall { 0%{left:0;opacity:0} 15%{opacity:1} 55%{left:16px;opacity:1} 70%{opacity:0.3} 85%{opacity:0} 100%{left:0;opacity:0} }
+@keyframes fpkt-stop { 0%{left:0;opacity:0} 15%{opacity:1} 40%{left:10px;opacity:1} 55%{opacity:0} 100%{left:0;opacity:0} }
+
+/* WHAT CHANGED */
+.changes-wrap { width: 100%; max-width: 1040px; }
+.changes-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); font-family: 'JetBrains Mono', monospace; margin-bottom: 16px; }
+.changes-list { display: flex; flex-direction: column; gap: 10px; }
+.change-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; border-radius: 10px; border: 1.5px solid; opacity: 0; transform: translateX(-10px); transition: all 0.4s ease; }
+.change-item.show { opacity: 1; transform: translateX(0); }
+.change-item.pending { border-color: var(--border); background: #f8fafc; }
+.change-item.done { border-color: rgba(167,219,120,0.35); background: rgba(167,219,120,0.05); }
+.change-item.fixing { border-color: rgba(245,158,11,0.3); background: #FFFBF0; }
+.change-dot { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; margin-top: 1px; }
+.change-dot.done { background: var(--lime-dark); color: white; }
+.change-dot.fixing { background: var(--amber); color: white; }
+.change-dot.pending { background: var(--border); color: var(--faint); }
+.change-body-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.change-item.done .change-body-title { color: var(--lime-dark); }
+.change-item.fixing .change-body-title { color: #92400e; }
+.change-item.pending .change-body-title { color: var(--faint); }
+.change-body-desc { font-size: 11px; color: var(--faint); line-height: 1.5; font-weight: 300; }
+
+.stage-note { max-width: 1040px; width: 100%; padding: 20px 24px; border-radius: 12px; border: 1.5px solid; font-size: 13px; line-height: 1.7; font-weight: 300; transition: all 0.4s; }
+.stage-note.now { border-color: rgba(245,158,11,0.3); background: #FFFBF0; color: #92400e; }
+.stage-note.progress { border-color: rgba(0,87,112,0.2); background: var(--teal-pale); color: var(--teal-dark); }
+.stage-note.full { border-color: rgba(167,219,120,0.35); background: rgba(167,219,120,0.06); color: var(--lime-dark); }
+
+</style>
+</head>
+<body>
+<div class="master-header"><div><div class="mh-brand">REDAPT<span> -</span> Visual Library</div><div class="mh-sub">April 21 - Working Session - Confidential</div></div><nav class="nav-pills">
+<a href="#path" class="nav-pill" data-anchor="path"><span class="np-num">01</span>The Obvious Path</a>
+<a href="#telephone" class="nav-pill" data-anchor="telephone"><span class="np-num">02</span>The Telephone Effect</a>
+<a href="#choice" class="nav-pill" data-anchor="choice"><span class="np-num">03</span>The Choice Point</a>
+<a href="#stands" class="nav-pill" data-anchor="stands"><span class="np-num">04</span>Where Things Stand</a>
+</nav></div>
+
+<section class="visual-section" id="path">
+  <div class="section-header"><div class="sh-num">01</div><div class="sh-label">The Obvious Path</div></div>
+  <div class="main">
+  <div class="title-block">
+    <div class="eyebrow">Not a people problem. Not a company problem.</div>
+    <h1>Work is complex.<br>People take <em>the path forward.</em></h1>
+    <p class="subtitle">That's rational. Nobody is cutting corners - they're doing the job in front of them. The issue is that those reasonable choices in isolation quietly compound over time into something harder to untangle. Every industry. Same arc.</p>
+  </div>
+
+  <div class="industry-tabs">
+    <button class="ind-tab active" onclick="setIndustry(0)" id="tab-0"><span>🏭</span> Manufacturing</button>
+    <button class="ind-tab" onclick="setIndustry(1)" id="tab-1"><span>🎮</span> Game Development</button>
+    <button class="ind-tab" onclick="setIndustry(2)" id="tab-2"><span>📡</span> Sales & CSP Ops</button>
+  </div>
+
+  <div class="chain-wrap">
+    <div class="chain-label" id="chain-label">// manufacturing · how a defect compounds downstream</div>
+    <div class="steps">
+      <div class="step lit" id="st0"><div class="step-orb" id="so0">📦</div><div class="step-title" id="stit0">Supply</div><div class="step-note" id="snote0">Material arrives. Quality looks fine.</div></div>
+      <div class="connector ok" id="cn0"><div class="conn-line"></div><div class="pkt"></div><div class="pkt d2"></div></div>
+      <div class="step lit" id="st1"><div class="step-orb" id="so1">⚙️</div><div class="step-title" id="stit1">Assembly</div><div class="step-note" id="snote1">Unit built. Team moves fast.</div></div>
+      <div class="connector ok" id="cn1"><div class="conn-line"></div><div class="pkt"></div></div>
+      <div class="step warn" id="st2"><div class="step-orb" id="so2">💬</div><div class="step-title" id="stit2">Verbal handoff</div><div class="step-note" id="snote2">Context passed by mouth. Some lands.</div></div>
+      <div class="connector warn" id="cn2"><div class="conn-line"></div><div class="pkt stall"></div></div>
+      <div class="step warn" id="st3"><div class="step-orb" id="so3">🔍</div><div class="step-title" id="stit3">QA / check</div><div class="step-note" id="snote3">Working from partial context.</div></div>
+      <div class="connector crack" id="cn3"><div class="conn-line"></div><div class="pkt stall"></div></div>
+      <div class="step crack" id="st4"><div class="step-orb" id="so4">🏷️</div><div class="step-title" id="stit4">Delivery</div><div class="step-note" id="snote4">Defect surfaces here. 10× cost to fix.</div></div>
+    </div>
+  </div>
+
+  <div class="compound-row" id="compound-row">
+    <div class="compound-card"><div class="compound-step s1">// early on</div><div class="compound-title">The choice makes sense</div><div class="compound-body">Sending a quick message is faster than logging it. Telling someone verbally is more natural. The system feels fine because it mostly is.</div></div>
+    <div class="compound-card"><div class="compound-step s2">// over time</div><div class="compound-title">Small gaps start to show</div><div class="compound-body">Someone misses context they should have had. A signal arrives late. A handoff loses something in translation. Noticed in hindsight, not in the moment.</div></div>
+    <div class="compound-card"><div class="compound-step s3">// later still</div><div class="compound-title">The org runs on tribal knowledge</div><div class="compound-body">The people who know things become load-bearing. Not because they're exceptional - because they're the only ones who remember. That's a fragile place to be.</div></div>
+  </div>
+
+  <div class="bottom-note">
+    <p>The goal isn't to change how people work. It's to make the <strong>structured path feel as natural as the obvious one</strong> - so the right context travels automatically, and the compounding stops.</p>
+  </div>
+</div>
+</section>
+<section class="visual-section" id="telephone">
+  <div class="section-header"><div class="sh-num">02</div><div class="sh-label">The Telephone Effect</div></div>
+  <div class="main">
+
+  <!-- ══ PANEL A ══ -->
+  <div class="panel-intro">
+    <div class="panel-tag">Part 01 - The spread</div>
+    <h2>Information travels. <em>Integrity doesn't.</em></h2>
+    <p class="panel-sub">Nobody is doing anything wrong. One person shares what they understood. The next person shares what they heard. By the time it reaches the end of the chain, it's a different thing - and nobody knows it changed.</p>
+  </div>
+
+  <div class="spread-wrap" id="spread-wrap">
+    <canvas id="spread-canvas" height="400"></canvas>
+    <div class="bubble-overlay" id="bubble-overlay">
+      <div class="speech-bubble intact" id="b0" style="left:18%;top:22%">"Client A needs to scale Azure - 30 day window, new CFO."</div>
+      <div class="speech-bubble degraded" id="b1" style="left:38%;top:12%">"Client A might need an Azure upgrade - budget should be there."</div>
+      <div class="speech-bubble degraded" id="b2" style="left:62%;top:18%">"Something about Client A and cloud costs - CFO involved."</div>
+      <div class="speech-bubble bad" id="b3" style="left:48%;top:62%">"Client A is moving off Azure - get in front of them."</div>
+      <div class="speech-bubble bad" id="b4" style="right:4%;top:38%">"Client A is switching providers - competitor risk."</div>
+    </div>
+    <button class="replay-btn" id="spread-replay">↺ replay</button>
+    <div class="spread-timeline">
+      <div class="stl-track">
+        <div class="stl-fill" id="stl-fill"></div>
+        <div class="stl-cursor" id="stl-cursor" style="left:0%"></div>
+      </div>
+      <div class="stl-stops">
+        <div class="stl-stop active" id="stl-0">
+          <div class="stl-stop-dot" style="border-color:var(--lime)"></div>
+          <div class="stl-stop-label">Origin</div>
+          <div class="stl-stop-sub">1 person - full context</div>
+        </div>
+        <div class="stl-stop" id="stl-1">
+          <div class="stl-stop-dot" style="border-color:var(--amber)"></div>
+          <div class="stl-stop-label">Meeting</div>
+          <div class="stl-stop-sub">5 people - mixed attention</div>
+        </div>
+        <div class="stl-stop" id="stl-2">
+          <div class="stl-stop-dot" style="border-color:var(--orange)"></div>
+          <div class="stl-stop-label">Cross-team</div>
+          <div class="stl-stop-sub">signal reaches other depts</div>
+        </div>
+        <div class="stl-stop" id="stl-3">
+          <div class="stl-stop-dot" style="border-color:var(--red)"></div>
+          <div class="stl-stop-label">Org-wide</div>
+          <div class="stl-stop-sub">corrupted version everywhere</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL B ══ -->
+  <div class="panel-intro second">
+    <div class="panel-tag">Part 02 - The sediment</div>
+    <h2>Then it stops being a story. <em>It becomes a fact.</em></h2>
+    <p class="panel-sub">The short-term effect is miscommunication. The long-term effect is something harder to fix - received wisdom. Nobody remembers where it came from. It just becomes what everyone knows. And the people who've been there longest are most certain it's true.</p>
+  </div>
+
+  <div class="sediment-wrap">
+
+    <!-- Timeline -->
+    <div class="timeline" id="timeline">
+      <div class="tl-col"><div class="tl-dot"></div><div class="tl-label">Year 1</div></div>
+      <div class="tl-col"><div class="tl-dot"></div><div class="tl-label">Year 2</div></div>
+      <div class="tl-col"><div class="tl-dot"></div><div class="tl-label">Year 3</div></div>
+      <div class="tl-col"><div class="tl-dot"></div><div class="tl-label">Year 4+</div></div>
+    </div>
+
+    <!-- Layers -->
+    <div class="layers-wrap" id="layers-wrap">
+
+      <div class="layer y1" id="ly1">
+        <div class="layer-year">Year 1</div>
+        <div class="layer-content">
+          <div class="layer-belief">"I think Client A had a bad experience with the last engineer we sent."</div>
+          <div class="layer-origin">// origin: one support call. one frustrated customer. one rep who vented in standup.</div>
+          <div class="layer-solidity"><div class="solidity-bar"></div><div class="solidity-label">soft - still a story, not a fact</div></div>
+        </div>
+      </div>
+
+      <div class="layer y2" id="ly2">
+        <div class="layer-year">Year 2</div>
+        <div class="layer-content">
+          <div class="layer-belief">"Client A is pretty high-maintenance - just FYI before you call them."</div>
+          <div class="layer-origin">// the rep who said it left. nobody remembers the original context anymore.</div>
+          <div class="layer-solidity"><div class="solidity-bar"></div><div class="solidity-label">hardening - passed to 4 new reps at onboarding</div></div>
+        </div>
+      </div>
+
+      <div class="layer y3" id="ly3">
+        <div class="layer-year">Year 3</div>
+        <div class="layer-content">
+          <div class="layer-belief">"That account is a nightmare - we've had problems with them for years."</div>
+          <div class="layer-origin">// nobody alive at the company was there for the original incident.</div>
+          <div class="layer-solidity"><div class="solidity-bar"></div><div class="solidity-label">concrete - it's just "what everyone knows"</div></div>
+        </div>
+      </div>
+
+      <div class="layer y4" id="ly4">
+        <div class="layer-year">Year 4+</div>
+        <div class="layer-content">
+          <div class="layer-belief">"That customer is just an asshole. Always has been."</div>
+          <div class="layer-origin">// this is now org culture. new hires learn it on day one. no evidence required.</div>
+          <div class="layer-solidity"><div class="solidity-bar"></div><div class="solidity-label">fully calcified - impossible to challenge without proof nobody has</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- People cards -->
+    <div class="dino-row" id="dino-row">
+
+      <div class="person-card dino" id="pc0">
+        <div class="influence-badge">8 yrs · high influence</div>
+        <span class="pc-avatar">🦕</span>
+        <div class="pc-tenure">// dinosaur · been here since year 1</div>
+        <div class="pc-name">Long-timer</div>
+        <div class="pc-belief">"I've been saying it for years - that account is a problem. Trust me on this one."</div>
+        <div class="pc-source">// genuinely believes this. was there. remembers it differently than it happened.</div>
+      </div>
+
+      <div class="person-card dino" id="pc1">
+        <div class="influence-badge">5 yrs · team lead</div>
+        <span class="pc-avatar">🦖</span>
+        <div class="pc-tenure">// dinosaur · joined year 2</div>
+        <div class="pc-name">Team Lead</div>
+        <div class="pc-belief">"We've always had a rocky relationship with them. It's just how it is."</div>
+        <div class="pc-source">// inherited the belief. never questioned it. passes it to everyone they onboard.</div>
+      </div>
+
+      <div class="person-card newjoin" id="pc2">
+        <div class="influence-badge">6 months · new</div>
+        <span class="pc-avatar">🌱</span>
+        <div class="pc-tenure">// new join · no prior context</div>
+        <div class="pc-name">New Rep</div>
+        <div class="pc-belief">"I was told they're difficult before I even made my first call."</div>
+        <div class="pc-source">// starts every interaction with Client A already biased. the account never gets a clean slate.</div>
+      </div>
+
+      <div class="person-card newjoin" id="pc3">
+        <div class="influence-badge">2 months · new</div>
+        <span class="pc-avatar">🌱</span>
+        <div class="pc-tenure">// new join · curious</div>
+        <div class="pc-name">New Engineer</div>
+        <div class="pc-belief">"Wait - I just had a great call with them. Are we sure about this?"</div>
+        <div class="pc-source">// the only person willing to question it. will stop questioning it by month six.</div>
+      </div>
+
+    </div>
+
+    <!-- Buried truth -->
+    <div class="truth-block" id="truth-block">
+      <div class="truth-tag">// what actually happened · year 1 · one incident · never documented</div>
+      <div class="truth-text">"One support call went badly. The engineer was having a rough week. The customer was frustrated but reasonable. It was resolved. Nobody wrote it down."</div>
+      <div class="truth-note">This is the origin of four years of org-wide received wisdom. It shaped how dozens of people approach an account they've never had a problem with themselves. <strong>It's not retrievable because it was never captured.</strong></div>
+    </div>
+
+  </div>
+
+  <!-- Bottom line -->
+  <div class="bottom-line">
+    <div class="bottom-line-text">Nobody did anything wrong.<br><em>Time just passed. And nobody wrote it down.</em></div>
+  </div>
+
+</div>
+</section>
+<section class="visual-section" id="choice">
+  <div class="section-header"><div class="sh-num">03</div><div class="sh-label">The Choice Point</div></div>
+  <div class="main">
+  <div class="title-block">
+    <div class="eyebrow">Every handoff. Every team.</div>
+    <h1>The easier path is<br><em>always right there.</em></h1>
+    <p class="subtitle">When structured capture requires more effort than saying it out loud, most people say it out loud. Not because they're doing it wrong. The problem compounds quietly in the background.</p>
+  </div>
+
+  <div class="scenario-tabs">
+    <button class="stab active" onclick="setSc(0)">📡 Signal just landed</button>
+    <button class="stab" onclick="setSc(1)">🎫 Ticket just resolved</button>
+    <button class="stab" onclick="setSc(2)">📞 Client call just ended</button>
+    <button class="stab" onclick="setSc(3)">🤝 Kickoff just wrapped</button>
+  </div>
+
+  <div class="fork-outer">
+    <div class="fork-ctx">
+      <div class="fork-ctx-icon" id="ctx-icon">📡</div>
+      <div>
+        <div class="fork-ctx-tag">The moment</div>
+        <div class="fork-ctx-text" id="ctx-text">Enlyft just flagged Client A expanding their AWS footprint. Real buying signal. Probably a 30-day window. Someone knows. What happens next?</div>
+      </div>
+    </div>
+    <div class="fork-options">
+      <div class="opt easy" id="opt-easy" onclick="selOpt('easy')">
+        <div class="opt-tag easy">Obvious path</div>
+        <div class="opt-title easy" id="easy-title">Message someone about it</div>
+        <div class="opt-desc" id="easy-desc">Slack the BDR. Mention it in standup. Done in 60 seconds. Information moved.</div>
+        <div class="opt-friction"><div class="fric-label">friction</div><div class="fdots"><div class="fd e"></div><div class="fd"></div><div class="fd"></div><div class="fd"></div><div class="fd"></div></div></div>
+        <div class="opt-result easy" id="easy-result">// lands with one person, one channel - no guarantee it reaches the right person, or survives at all</div>
+      </div>
+      <div class="opt hard" id="opt-hard" onclick="selOpt('hard')">
+        <div class="opt-tag hard">Structured path</div>
+        <div class="opt-title hard" id="hard-title">Route it through the system</div>
+        <div class="opt-desc" id="hard-desc">Tag the account, score it, route to the morning queue, cross-reference history. A few minutes.</div>
+        <div class="opt-friction"><div class="fric-label">friction</div><div class="fdots"><div class="fd h"></div><div class="fd h"></div><div class="fd h"></div><div class="fd h"></div><div class="fd"></div></div></div>
+        <div class="opt-result hard" id="hard-result">// reaches the right person with full context at 8am - still there even if the person who spotted it leaves</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reason-grid" id="reason-grid">
+    <div class="rc" onclick="this.classList.toggle('open')">
+      <div class="rc-num">01</div>
+      <div class="rc-title">The system is always more steps</div>
+      <div class="rc-body">Login, navigate, fill fields, tag, submit. The verbal path is one message. Until you close that gap in friction, verbal wins every time.</div>
+      <div class="rc-hint">// tap to expand</div>
+    </div>
+    <div class="rc" onclick="this.classList.toggle('open')">
+      <div class="rc-num">02</div>
+      <div class="rc-title">It works well enough most days</div>
+      <div class="rc-body">The verbal network mostly functions. The failure is invisible - you don't see the missed expansion or cold lead, just a normal week.</div>
+      <div class="rc-hint">// tap to expand</div>
+    </div>
+    <div class="rc" onclick="this.classList.toggle('open')">
+      <div class="rc-num">03</div>
+      <div class="rc-title">Mandates don't move the needle</div>
+      <div class="rc-body">You can require the CRM. Run workshops. Behaviour reverts within weeks because the friction hasn't changed. The only durable fix is removing the friction.</div>
+      <div class="rc-hint">// tap to expand</div>
+    </div>
+  </div>
+
+  <div class="bottom-note">
+    <p>The goal is never to police the obvious path. It's to make the <strong>structured path disappear into the workflow</strong> - so information routes itself without anyone having to think about it.</p>
+  </div>
+</div>
+</section>
+<section class="visual-section" id="stands">
+  <div class="section-header"><div class="sh-num">04</div><div class="sh-label">Where Things Stand</div></div>
+  <div class="main" id="main-wrap">
+  <div class="title-block">
+    <div class="eyebrow">Not broken. Not finished.</div>
+    <h1>Things are <em>working</em> -<br>with a few fracture points.</h1>
+    <p class="subtitle">The goal isn't to overhaul how Redapt operates. It's to find the specific places where signals stop travelling and close those gaps. Small targeted fixes. Compounding results.</p>
+  </div>
+
+  <!-- Stage selector -->
+  <div class="stage-wrap">
+    <button class="stage-btn active-now" onclick="setStage('now')" id="btn-now">Right now</button>
+    <button class="stage-btn" onclick="setStage('fix1')" id="btn-fix1">Fix 01 - Signal routing</button>
+    <button class="stage-btn" onclick="setStage('fix2')" id="btn-fix2">Fix 02 - Session capture</button>
+    <button class="stage-btn" onclick="setStage('full')" id="btn-full">Both in place</button>
+  </div>
+
+  <!-- Flow diagram -->
+  <div class="flow-diagram stage-now" id="flow-wrap">
+    <div class="flow-stage-label" id="flow-stage-label" style="color:var(--amber)">// how it looks right now - mostly working, specific gaps</div>
+    <div class="flow-nodes">
+
+      <div class="fn">
+        <div class="fn-box ok" id="fn0"><span class="fn-icon">📡</span><div class="fn-title">Signal exists</div><div class="fn-note">Enlyft, CSP tickets, client calls</div></div>
+      </div>
+      <div class="fc ok" id="fc0"><div class="fc-line"></div><div class="fpkt ok"></div><div class="fpkt ok d2"></div></div>
+
+      <div class="fn">
+        <div class="fn-box ok" id="fn1"><span class="fn-icon">⚙️</span><div class="fn-title">Work gets done</div><div class="fn-note">Teams execute well in their lanes</div></div>
+      </div>
+      <div class="fc crack" id="fc1"><div class="fc-line"></div><div class="fpkt crack"></div></div>
+
+      <div class="fn">
+        <div class="fn-box crack" id="fn2"><span class="fn-icon">💬</span><div class="fn-title">Handoff is verbal</div><div class="fn-note">Context degrades here</div></div>
+      </div>
+      <div class="fc crack" id="fc2"><div class="fc-line"></div><div class="fpkt crack"></div></div>
+
+      <div class="fn">
+        <div class="fn-box broken" id="fn3"><span class="fn-icon">🕳️</span><div class="fn-title">No routing layer</div><div class="fn-note">Signal doesn't reach next person</div></div>
+      </div>
+      <div class="fc broken" id="fc3"><div class="fc-line"></div><div class="fpkt broken"></div></div>
+
+      <div class="fn">
+        <div class="fn-box broken" id="fn4"><span class="fn-icon">📉</span><div class="fn-title">Opportunity missed</div><div class="fn-note">BDR works blind. Expansion unnoticed.</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- What changed -->
+  <div class="changes-wrap">
+    <div class="changes-title" id="changes-title">// what's in place right now</div>
+    <div class="changes-list" id="changes-list">
+      <div class="change-item pending show"><div class="change-dot pending">–</div><div><div class="change-body-title">Enlyft signals have nowhere to route</div><div class="change-body-desc">About to go live. The data will exist. Without an aggregation layer, it stays in the tool.</div></div></div>
+      <div class="change-item pending show"><div class="change-dot pending">–</div><div><div class="change-body-title">CSP ticket resolutions don't generate next actions</div><div class="change-body-desc">Team resolves well. The expansion signal in that resolution doesn't travel to the BDR.</div></div></div>
+      <div class="change-item pending show"><div class="change-dot pending">–</div><div><div class="change-body-title">Meeting context evaporates</div><div class="change-body-desc">Client calls, kickoffs, strategy sessions - context lives in notes or memory, not structured records.</div></div></div>
+      <div class="change-item pending show"><div class="change-dot pending">–</div><div><div class="change-body-title">Practice teams have no shared account view</div><div class="change-body-desc">Infra, Cloud, Cybersecurity, DevOps - each knows something about an account the others don't.</div></div></div>
+    </div>
+  </div>
+
+  <div class="stage-note now" id="stage-note">Things are working. Teams are delivering. The gaps are specific - and they're the difference between a signal that reaches someone and one that disappears into the handoff.</div>
+
+</div>
+</section>
+
+<div style="background:var(--teal-dark);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid rgba(167,219,120,0.2);"><div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.7);">CouloirGG LLC - Confidential</div><div style="font-size:10px;color:rgba(255,255,255,0.25);font-family:'JetBrains Mono',monospace;">April 21 2026</div></div>
+<script>
+// == The Obvious Path ==
+(function(){
+const industries = [
+  { label: '// manufacturing · how a defect compounds downstream', steps: [ {orb:'📦',title:'Supply',note:'Material arrives. Quality looks fine.',cls:'lit'}, {orb:'⚙️',title:'Assembly',note:'Unit built. Team moves fast.',cls:'lit'}, {orb:'💬',title:'Verbal handoff',note:'Context passed by mouth. Some lands.',cls:'warn'}, {orb:'🔍',title:'QA / check',note:'Working from partial context.',cls:'warn'}, {orb:'🏷️',title:'Delivery',note:'Defect surfaces here. 10× cost to fix.',cls:'crack'} ], connectors:['ok','ok','warn','crack'] },
+  { label: '// game development · how a bug compounds toward ship', steps: [ {orb:'🛠️',title:'Feature built',note:'Dev builds to spec. Works in isolation.',cls:'lit'}, {orb:'🧪',title:'Internal test',note:'Team tests their own work. Passes.',cls:'lit'}, {orb:'💬',title:'Handoff to QA',note:'Context passed verbally. Edge cases not documented.',cls:'warn'}, {orb:'✅',title:'QA sign-off',note:'Partial context, partial coverage.',cls:'warn'}, {orb:'🚨',title:'Post-ship',note:'Bug found in live. 10× cost to fix.',cls:'crack'} ], connectors:['ok','ok','warn','crack'] },
+  { label: '// sales & csp ops · how a signal compounds into a missed opportunity', steps: [ {orb:'📡',title:'Signal fires',note:'Enlyft detects expansion. Ticket resolves.',cls:'lit'}, {orb:'⚙️',title:'Work gets done',note:'CSP resolves. BDR cold-calls elsewhere.',cls:'lit'}, {orb:'💬',title:'No structured route',note:'Signal lives in a tool nobody checks.',cls:'warn'}, {orb:'🤷',title:'Context fragments',note:'Next person works without it.',cls:'warn'}, {orb:'📉',title:'Opportunity missed',note:'Lead gone cold. Expansion unnoticed.',cls:'crack'} ], connectors:['ok','ok','warn','crack'] }
+];
+let _current_1 = 0, _timer_1;
+function setIndustry(idx) {
+  _current_1 = idx; clearInterval(_timer_1);
+  const d = industries[idx];
+  document.querySelectorAll('.ind-tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.getElementById('chain-label').textContent = d.label;
+  d.steps.forEach((s,i) => {
+    document.getElementById('st'+i).className = 'step '+s.cls;
+    document.getElementById('so'+i).textContent = s.orb;
+    document.getElementById('stit'+i).textContent = s.title;
+    document.getElementById('snote'+i).textContent = s.note;
+  });
+  d.connectors.forEach((c,i) => { document.getElementById('cn'+i).className = 'connector '+c; });
+  _timer_1 = setInterval(() => { _current_1 = (_current_1+1)%3; setIndustry(_current_1); }, 5000);
+}
+const _io_1 = new IntersectionObserver(e => { e.forEach(x => { if(!x.isIntersecting) return; x.target.querySelectorAll('.compound-card').forEach((c,i) => setTimeout(() => c.classList.add('visible'), i*150)); }); }, {threshold:0.2});
+_io_1.observe(document.getElementById('compound-row'));
+_timer_1 = setInterval(() => { _current_1 = (_current_1+1)%3; setIndustry(_current_1); }, 5000);
+})();
+
+// == The Telephone Effect ==
+(function(){
+(function() {
+
+// ══════════════════════════════════
+// PANEL A - SPREAD ANIMATION
+// ══════════════════════════════════
+const canvas = document.getElementById('spread-canvas');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('spread-wrap');
+
+function resizeCanvas() {
+  canvas.width = wrap.clientWidth;
+  canvas.height = Math.max(420, Math.round(wrap.clientWidth * 0.55));
+}
+resizeCanvas();
+window.addEventListener('resize', () => { resizeCanvas(); initSpread(); });
+
+// People nodes
+let _nodes_2 = [];
+let _flows_2 = [];
+let _animFrame_2 = null;
+let _t_2 = 0;
+
+const PEOPLE = [
+  { label: 'Origin', sub: 'who was there', integrity: 1.0 },
+  { label: 'Colleague', sub: 'in the meeting', integrity: 0.82 },
+  { label: 'Half-listener', sub: 'in the meeting', integrity: 0.48 },
+  { label: 'Another team', sub: 'heard secondhand', integrity: 0.35 },
+  { label: 'Senior channel', sub: 'heard third-hand', integrity: 0.22 },
+  { label: 'New rep', sub: 'onboarding call', integrity: 0.15 },
+  { label: 'Different dept', sub: 'heard in passing', integrity: 0.28 },
+];
+
+// Edges: [from, to]
+const EDGES = [
+  [0,1],[0,2],[1,3],[2,3],[2,4],[3,5],[4,5],[4,6],[1,6]
+];
+
+function integrityColor(t) {
+  if (t > 0.7) return { r:167, g:219, b:120 };
+  if (t > 0.4) return { r:245, g:158, b:11 };
+  if (t > 0.2) return { r:249, g:115, b:22 };
+  return { r:239, g:68, b:68 };
+}
+
+function initSpread() {
+  if (_animFrame_2) cancelAnimationFrame(_animFrame_2);
+  _t_2 = 0;
+  _flows_2 = [];
+
+  const W = canvas.width, H = canvas.height;
+  const cx = W * 0.5, cy = H * 0.5;
+  const R = Math.min(W, H) * 0.34;
+
+  // Place nodes in a loose organic arrangement
+  const positions = [
+    { x: cx - R*0.8, y: cy - R*0.1 },   // 0 origin - left
+    { x: cx - R*0.2, y: cy - R*0.7 },   // 1 colleague - top
+    { x: cx - R*0.1, y: cy + R*0.5 },   // 2 half-listener - bottom left
+    { x: cx + R*0.4, y: cy - R*0.3 },   // 3 another team - top right
+    { x: cx + R*0.85, y: cy + R*0.1 },  // 4 senior - far right
+    { x: cx + R*0.3, y: cy + R*0.7 },   // 5 new rep - bottom right
+    { x: cx - R*0.35, y: cy + R*0.8 },  // 6 diff dept - bottom
+  ];
+
+  _nodes_2 = PEOPLE.map((p, i) => ({
+    ...p,
+    x: positions[i].x,
+    y: positions[i].y,
+    pulse: Math.random() * Math.PI * 2,
+    revealed: i === 0,
+    revealTime: i === 0 ? 0 : null,
+  }));
+
+  // Create flow _particles_2 along edges
+  EDGES.forEach(([from, to], ei) => {
+    const delay = 1.0 + ei * 1.5;
+    _flows_2.push({ from, to, progress: 0, delay, active: false, done: false });
+  });
+
+  // Speech bubbles all hidden
+  document.querySelectorAll('.speech-bubble').forEach(b => b.classList.remove('show'));
+  // reset timeline
+  document.getElementById('stl-fill').style.width = '0%';
+  document.getElementById('stl-cursor').style.left = '0%';
+  document.querySelectorAll('.stl-stop').forEach((s,i) => s.classList.toggle('active', i===0));
+
+  _animFrame_2 = requestAnimationFrame(drawSpread);
+}
+
+function drawSpread(ts) {
+  _t_2 += 0.0042;
+  _updateTimeline_2(_t_2);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Background
+  ctx.fillStyle = '#0a1a20';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Subtle dot grid
+  ctx.fillStyle = 'rgba(255,255,255,0.04)';
+  for (let x = 20; x < canvas.width; x += 36) {
+    for (let y = 20; y < canvas.height; y += 36) {
+      ctx.beginPath(); ctx.arc(x, y, 1, 0, Math.PI*2); ctx.fill();
+    }
+  }
+
+  // Draw edges
+  EDGES.forEach(([from, to]) => {
+    const a = _nodes_2[from], b = _nodes_2[to];
+    if (!a.revealed) return;
+    const c = integrityColor(a.integrity);
+    ctx.beginPath();
+    // Curved bezier
+    const mx = (a.x + b.x) / 2 + (Math.random() * 4 - 2);
+    const my = (a.y + b.y) / 2 - 20;
+    ctx.moveTo(a.x, a.y);
+    ctx.quadraticCurveTo(mx, my, b.x, b.y);
+    ctx.strokeStyle = `rgba(${c.r},${c.g},${c.b},0.18)`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  });
+
+  // Flow _particles_2
+  _flows_2.forEach(flow => {
+    if (_t_2 < flow.delay) return;
+    if (!flow.active) { flow.active = true; flow.progress = 0; }
+    if (flow.done) return;
+
+    flow.progress += 0.0071;
+    if (flow.progress >= 1) {
+      flow.done = true;
+      // Reveal destination node
+      const dest = _nodes_2[flow.to];
+      if (!dest.revealed) {
+        dest.revealed = true;
+        dest.revealTime = _t_2;
+        // Show speech bubble
+        showBubble(flow.to);
+      }
+      return;
+    }
+
+    const a = _nodes_2[flow.from], b = _nodes_2[flow.to];
+    const t = flow.progress;
+    // Quadratic bezier position
+    const mx = (a.x + b.x) / 2;
+    const my = (a.y + b.y) / 2 - 20;
+    const px = (1-t)*(1-t)*a.x + 2*(1-t)*t*mx + t*t*b.x;
+    const py = (1-t)*(1-t)*a.y + 2*(1-t)*t*my + t*t*b.y;
+
+    const integrity = a.integrity * (1 - t * 0.3) + b.integrity * t * 0.3;
+    const c = integrityColor(integrity);
+
+    // Glow trail
+    const grad = ctx.createRadialGradient(px, py, 0, px, py, 10);
+    grad.addColorStop(0, `rgba(${c.r},${c.g},${c.b},0.6)`);
+    grad.addColorStop(1, `rgba(${c.r},${c.g},${c.b},0)`);
+    ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI*2);
+    ctx.fillStyle = grad; ctx.fill();
+
+    ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI*2);
+    ctx.fillStyle = `rgb(${c.r},${c.g},${c.b})`;
+    ctx.shadowColor = `rgb(${c.r},${c.g},${c.b})`;
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  });
+
+  // Draw nodes
+  _nodes_2.forEach((node, i) => {
+    if (!node.revealed) return;
+    node.pulse += 0.04;
+    const scale = node.integrity;
+    const c = integrityColor(node.integrity);
+    const r = (i === 0 ? 18 : 14);
+
+    // Appear animation
+    const age = _t_2 - (node.revealTime || 0);
+    const appear = Math.min(1, age * 3);
+
+    // Outer glow ring
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, r + 10 + Math.sin(node.pulse) * 3, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(${c.r},${c.g},${c.b},${0.12 * appear})`;
+    ctx.lineWidth = 1; ctx.stroke();
+
+    // Node circle
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, r * appear, 0, Math.PI*2);
+    const grad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, r);
+    grad.addColorStop(0, `rgba(${c.r},${c.g},${c.b},0.4)`);
+    grad.addColorStop(1, `rgba(${c.r},${c.g},${c.b},0.1)`);
+    ctx.fillStyle = grad;
+    ctx.shadowColor = `rgb(${c.r},${c.g},${c.b})`;
+    ctx.shadowBlur = 12 * appear;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, r * appear, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(${c.r},${c.g},${c.b},${0.7 * appear})`;
+    ctx.lineWidth = 1.5; ctx.stroke();
+
+    // Integrity pct
+    const pct = Math.round(node.integrity * 100);
+    ctx.font = `700 ${i===0?11:10}px Sora, sans-serif`;
+    ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},${0.9 * appear})`;
+    ctx.textAlign = 'center';
+    ctx.fillText(pct + '%', node.x, node.y - r - 16);
+
+    ctx.font = `600 10px Sora, sans-serif`;
+    ctx.fillStyle = `rgba(255,255,255,${0.7 * appear})`;
+    ctx.fillText(node.label, node.x, node.y + r + 14);
+
+    ctx.font = `300 9px JetBrains Mono, monospace`;
+    ctx.fillStyle = `rgba(255,255,255,${0.35 * appear})`;
+    ctx.fillText(node.sub, node.x, node.y + r + 25);
+  });
+
+  _animFrame_2 = requestAnimationFrame(drawSpread);
+}
+
+const bubbleMap = { 1:'b0', 3:'b1', 4:'b2', 5:'b3', 6:'b4' };
+function showBubble(nodeIdx) {
+  const id = bubbleMap[nodeIdx];
+  if (!id) return;
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('show');
+  }, 400);
+}
+
+document.getElementById('spread-replay').addEventListener('click', initSpread);
+
+// Timeline sync
+function _updateTimeline_2(t) {
+  // total animation runs roughly 0 to ~18 in __t_2 units
+  const total = 18;
+  const pct = Math.min(100, (t / total) * 100);
+  document.getElementById('stl-fill').style.width = pct + '%';
+  document.getElementById('stl-cursor').style.left = pct + '%';
+  // color cursor based on progress
+  const colors = ['var(--lime)','var(--amber)','var(--orange)','var(--red)'];
+  const ci = pct < 25 ? 0 : pct < 50 ? 1 : pct < 75 ? 2 : 3;
+  document.getElementById('stl-cursor').style.borderColor = colors[ci];
+  // activate stops
+  const stops = [0, 4, 9, 14]; // __t_2 thresholds
+  stops.forEach((threshold, i) => {
+    document.getElementById('stl-' + i)?.classList.toggle('active', t >= threshold);
+  });
+}
+initSpread();
+
+
+// ══════════════════════════════════
+// PANEL B - SEDIMENT SCROLL REVEAL
+// ══════════════════════════════════
+const layerIds = ['ly1','ly2','ly3','ly4'];
+const cardIds = ['pc0','pc1','pc2','pc3'];
+const layerDelays = [0, 400, 800, 1300];
+const cardDelays = [200, 400, 650, 900];
+
+const __sedIo_2 = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    // Animate layers
+    layerIds.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id)?.classList.add('show');
+      }, layerDelays[i]);
+    });
+
+    // Animate cards
+    cardIds.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id)?.classList.add('show');
+      }, 1600 + cardDelays[i]);
+    });
+
+    // Truth block last
+    setTimeout(() => {
+      document.getElementById('truth-block')?.classList.add('show');
+    }, 2800);
+
+    __sedIo_2.disconnect();
+  });
+}, { threshold: 0.15 });
+
+const lw = document.getElementById('layers-wrap');
+if (lw) __sedIo_2.observe(lw);
+
+})();
+})();
+
+// == The Choice Point ==
+(function(){
+const _scs_3 = [
+  { icon:'📡', text:"Enlyft just flagged Client A expanding their AWS footprint. Real buying signal. Probably a 30-day window. Someone knows. What happens next?", eT:'Message someone about it', hT:'Route it through the system', eD:"Slack the BDR. Mention it in standup. Done in 60 seconds. Information moved.", hD:"Tag the account, score it, route to the morning queue, cross-reference history. A few minutes.", eR:'lands with one person, one channel - no guarantee it reaches the right person, or survives at all', hR:'reaches the right person with full context at 8am - still there even if the person who spotted it leaves' },
+  { icon:'🎫', text:"A CSP ticket for Client A just closed. Azure running hot - team resolved it cleanly. That resolution is also a signal: they're outgrowing their setup. What happens with that information?", eT:'Close the ticket, move on', hT:'Flag it as an expansion signal', eD:"Mark resolved. Job done. Completely reasonable - that's the job.", hD:"Ticket close triggers a flag. Account scored. BDR sees it tomorrow with context attached.", eR:'resolution logged. expansion signal invisible. BDR has no idea. window starts closing.', hR:'ticket closes and the signal routes forward automatically. one action, two outcomes.' },
+  { icon:'📞', text:"A client call just ended. Account mentioned their new CFO is reviewing vendors, team growing 40%, and they asked about your DevOps practice. Three signals in 45 minutes.", eT:'Email the account exec', hT:'Session captured during the call', eD:"Write up what you remember. Send it to whoever seems relevant.", hD:"Three signals extracted automatically. Routed to the right practice leads. No write-up needed.", eR:'some of it lands. the CFO detail probably doesn\'t survive the email chain. DevOps signal never reaches that team.', hR:'all three signals survive intact, routed to three people who can actually act on them.' },
+  { icon:'🤝', text:"A new client kickoff just wrapped. Two hours of context: technical requirements, political landscape, budget cycles, risks. All in the room. Most will evaporate by end of day.", eT:'Someone writes up notes', hT:'Session captured and structured', eD:"Best-effort notes in a doc. Whoever writes them shapes what's captured. Half the room remembers different things.", hD:"Full session captured. Decisions, actions, risks, signals, next steps. Searchable. Permanent.", eR:'six months from now, half this context is gone. the person who remembered the key budget detail left in March.', hR:'six months from now, every decision and risk is still on record. new hire has full context from day one.' }
+];
+
+function setSc(i) {
+  document.querySelectorAll('.stab').forEach((b,j) => b.classList.toggle('active', i===j));
+  const s = _scs_3[i];
+  document.getElementById('ctx-icon').textContent = s.icon;
+  document.getElementById('ctx-text').textContent = s.text;
+  document.getElementById('easy-title').textContent = s.eT;
+  document.getElementById('hard-title').textContent = s.hT;
+  document.getElementById('easy-desc').textContent = s.eD;
+  document.getElementById('hard-desc').textContent = s.hD;
+  document.getElementById('easy-result').textContent = '// ' + s.eR;
+  document.getElementById('hard-result').textContent = '// ' + s.hR;
+  document.getElementById('opt-easy').classList.remove('sel');
+  document.getElementById('opt-hard').classList.remove('sel');
+}
+function selOpt(w) {
+  document.getElementById('opt-easy').classList.toggle('sel', w==='easy');
+  document.getElementById('opt-hard').classList.toggle('sel', w==='hard');
+}
+const _io_3 = new IntersectionObserver(e => { e.forEach(x => { if (!x.isIntersecting) return; x.target.querySelectorAll('.rc').forEach((c,i) => setTimeout(() => c.classList.add('visible'), i*100)); }); }, {threshold:0.2});
+_io_3.observe(document.getElementById('reason-grid'));
+})();
+
+// == Where Things Stand ==
+(function(){
+const _stages_4 = {
+  now: {
+    btnClass: 'active-now',
+    labelColor: 'var(--amber)',
+    label: '// how it looks right now - mostly working, specific gaps',
+    flowClass: 'stage-now',
+    nodes: [
+      {cls:'ok', icon:'📡', title:'Signal exists', note:'Enlyft, CSP tickets, client calls'},
+      {cls:'ok', icon:'⚙️', title:'Work gets done', note:'Teams execute well in their lanes'},
+      {cls:'crack', icon:'💬', title:'Handoff is verbal', note:'Context degrades here'},
+      {cls:'broken', icon:'🕳️', title:'No routing layer', note:'Signal doesn\'t reach next person'},
+      {cls:'broken', icon:'📉', title:'Opportunity missed', note:'BDR works blind. Expansion unnoticed.'}
+    ],
+    connectors: ['ok','crack','crack','broken'],
+    changesTitle: '// what\'s in place right now',
+    changes: [
+      {cls:'pending', dot:'–', title:'Enlyft signals have nowhere to route', desc:'About to go live. The data will exist. Without an aggregation layer, it stays in the tool.'},
+      {cls:'pending', dot:'–', title:'CSP ticket resolutions don\'t generate next actions', desc:'Team resolves well. The expansion signal in that resolution doesn\'t travel to the BDR.'},
+      {cls:'pending', dot:'–', title:'Meeting context evaporates', desc:'Client calls, kickoffs, strategy sessions - context lives in notes or memory, not structured records.'},
+      {cls:'pending', dot:'–', title:'Practice teams have no shared account view', desc:'Infra, Cloud, Cybersecurity, DevOps - each knows something about an account the others don\'t.'}
+    ],
+    noteClass: 'now',
+    note: 'Things are working. Teams are delivering. The gaps are specific - and they\'re the difference between a signal that reaches someone and one that disappears into the handoff.'
+  },
+  fix1: {
+    btnClass: 'active-fix1',
+    labelColor: 'var(--teal)',
+    label: '// fix 01 in place - signal routing layer added',
+    flowClass: 'stage-fix1',
+    nodes: [
+      {cls:'ok', icon:'📡', title:'Signal exists', note:'Enlyft, CSP tickets, client calls'},
+      {cls:'ok', icon:'⚙️', title:'Work gets done', note:'Teams execute well in their lanes'},
+      {cls:'fixed', icon:'⚡', title:'Routing layer', note:'Radar aggregates and scores automatically'},
+      {cls:'fixed', icon:'☀️', title:'BDR queue', note:'Right person, right context, 8am'},
+      {cls:'crack', icon:'💬', title:'Meeting context', note:'Still verbal - sessions not yet captured'}
+    ],
+    connectors: ['ok','fixed','fixed','crack'],
+    changesTitle: '// what changed with fix 01',
+    changes: [
+      {cls:'done', dot:'✓', title:'Enlyft signals now route to BDR queue automatically', desc:'Scored, ranked, contextualised. The data Enlyft generates finally reaches the person who can act on it.'},
+      {cls:'done', dot:'✓', title:'CSP ticket close triggers expansion flag', desc:'Marcus resolves the ticket. BDR sees the signal at 8am tomorrow with the context attached.'},
+      {cls:'fixing', dot:'→', title:'Meeting context still evaporates', desc:'Fix 02 addresses this - session capture for calls, kickoffs, strategy sessions.'},
+      {cls:'pending', dot:'–', title:'Practice teams still siloed', desc:'Cross-practice account view improves once session capture is in place.'}
+    ],
+    noteClass: 'progress',
+    note: 'Signal routing is closed. Enlyft goes live and the data lands with the right people the next morning. One targeted fix - measurable difference from week one.'
+  },
+  fix2: {
+    btnClass: 'active-fix2',
+    labelColor: 'var(--lime-dark)',
+    label: '// fix 02 in place - session capture running',
+    flowClass: 'stage-fix2',
+    nodes: [
+      {cls:'ok', icon:'📡', title:'Signal exists', note:'Enlyft, CSP tickets, client calls'},
+      {cls:'fixed', icon:'🎙️', title:'Session captured', note:'Calls, kickoffs, strategy sessions - all structured'},
+      {cls:'fixed', icon:'⚡', title:'Routing layer', note:'Radar + AXIS signals combined'},
+      {cls:'fixed', icon:'☀️', title:'BDR queue', note:'All signals. Full context.'},
+      {cls:'fixed', icon:'🧠', title:'Knowledge stays', note:'Survives rep turnover. Survives acquisition.'}
+    ],
+    connectors: ['fixed','fixed','fixed','fixed'],
+    changesTitle: '// what changed with fix 02',
+    changes: [
+      {cls:'done', dot:'✓', title:'Signal routing in place', desc:'Enlyft and CSP ticket signals routing automatically.'},
+      {cls:'done', dot:'✓', title:'Session capture running', desc:'Every client call, kickoff, strategy session structured into seven categories. No manual write-up.'},
+      {cls:'done', dot:'✓', title:'Cross-practice account view emerging', desc:'Infra, Cloud, Cybersecurity sessions all feeding the same account record. BDR sees everything.'},
+      {cls:'done', dot:'✓', title:'Acquisition knowledge doesn\'t stay siloed', desc:'Ember River context enters the org record from day one. No six-month integration lag.'}
+    ],
+    noteClass: 'full',
+    note: 'Both fixes in place. The chain is closed. Every signal travels. Every meeting produces structured output. The compounding stops - and starts working in the other direction.'
+  },
+  full: {
+    btnClass: 'active-full',
+    labelColor: 'var(--lime-dark)',
+    label: '// fully in place - the chain as it should work',
+    flowClass: 'stage-full',
+    nodes: [
+      {cls:'fixed', icon:'📡', title:'Signal exists', note:'Every source captured'},
+      {cls:'fixed', icon:'⚡', title:'Aggregated & scored', note:'Radar synthesises automatically'},
+      {cls:'fixed', icon:'☀️', title:'Right person, 8am', note:'Context intact. Window open.'},
+      {cls:'fixed', icon:'🎯', title:'Action taken', note:'Outreach sent. Meeting booked.'},
+      {cls:'fixed', icon:'🔄', title:'Outcome feeds back', note:'System learns. Queue improves.'}
+    ],
+    connectors: ['fixed','fixed','fixed','fixed'],
+    changesTitle: '// what the chain looks like when it\'s working',
+    changes: [
+      {cls:'done', dot:'✓', title:'Every signal reaches the right person automatically', desc:'No one has to remember to tell anyone. No handoff required.'},
+      {cls:'done', dot:'✓', title:'Every meeting produces structured output', desc:'Decisions, actions, risks, context - all searchable. All permanent.'},
+      {cls:'done', dot:'✓', title:'Every practice shares a line of sight on every account', desc:'The BDR knows what Cloud knows. What Infra knows. What Cybersecurity knows.'},
+      {cls:'done', dot:'✓', title:'Rep turnover doesn\'t cost account context', desc:'The knowledge is in the system. Not in someone\'s head.'}
+    ],
+    noteClass: 'full',
+    note: 'This is what the operation looks like when the chain works. Not utopia - just a version of work where the right information is always with the right person, and the compounding works in your favour.'
+  }
+};
+
+function setStage(key) {
+  const s = _stages_4[key];
+  ['now','fix1','fix2','full'].forEach(k => {
+    document.getElementById('btn-'+k).className = 'stage-btn' + (k===key ? ' '+s.btnClass : '');
+  });
+
+  const fw = document.getElementById('flow-wrap');
+  fw.className = 'flow-diagram ' + s.flowClass;
+  document.getElementById('flow-stage-label').textContent = s.label;
+  document.getElementById('flow-stage-label').style.color = s.labelColor;
+
+  s.nodes.forEach((n,i) => {
+    const box = document.getElementById('fn'+i);
+    box.className = 'fn-box '+n.cls;
+    box.querySelector('.fn-icon').textContent = n.icon;
+    box.querySelector('.fn-title').textContent = n.title;
+    box.querySelector('.fn-note').textContent = n.note;
+  });
+
+  s.connectors.forEach((c,i) => {
+    const fc = document.getElementById('fc'+i);
+    fc.className = 'fc '+c;
+    const pkt = fc.querySelector('.fpkt');
+    if (pkt) pkt.className = 'fpkt '+c;
+  });
+
+  document.getElementById('changes-title').textContent = s.changesTitle;
+  const cl = document.getElementById('changes-list');
+  cl.innerHTML = '';
+  s.changes.forEach((c,i) => {
+    const div = document.createElement('div');
+    div.className = 'change-item '+c.cls;
+    div.innerHTML = `<div class="change-dot ${c.cls}">${c.dot}</div><div><div class="change-body-title">${c.title}</div><div class="change-body-desc">${c.desc}</div></div>`;
+    cl.appendChild(div);
+    setTimeout(() => div.classList.add('show'), i * 80);
+  });
+
+  const sn = document.getElementById('stage-note');
+  sn.className = 'stage-note ' + s.noteClass;
+  sn.textContent = s.note;
+}
+})();
+
+// == shared nav ==
+(function() {
+  var _navPills = document.querySelectorAll('.nav-pill');
+  var _navIds = ['path','telephone','choice','stands'];
+  var _navEls = _navIds.map(function(a){return document.getElementById(a);}).filter(Boolean);
+  var _navIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){var id=e.target.id;_navPills.forEach(function(p){p.classList.toggle('active',p.dataset.anchor===id);});}
+    });
+  },{threshold:0.25,rootMargin:'-60px 0px -40% 0px'});
+  _navEls.forEach(function(el){_navIo.observe(el);});
+})();
+
+</script>
+</body>
+</html>
+</template>
+<script>
+(function(){
+  var _p = "redapt21";
+  function attempt() {
+    var v = document.getElementById("pw").value;
+    if (v === _p) {
+      document.getElementById("gate").style.display = "none";
+      var c = document.getElementById("content");
+      c.style.display = "block";
+      var parser = new DOMParser();
+      var tmpl = document.getElementById("inner-html");
+      var doc = parser.parseFromString(tmpl.innerHTML, "text/html");
+      doc.head.querySelectorAll("style,link").forEach(function(n){document.head.appendChild(n.cloneNode(true));});
+      doc.body.childNodes.forEach(function(n){c.appendChild(n.cloneNode(true));});
+      c.querySelectorAll("script").forEach(function(s){var ns=document.createElement("script");ns.textContent=s.textContent;document.body.appendChild(ns);});
+    } else {
+      var inp = document.getElementById("pw");
+      var err = document.getElementById("g-err");
+      inp.classList.add("err");
+      err.classList.add("show");
+      setTimeout(function(){inp.classList.remove("err");inp.value="";err.classList.remove("show");},800);
+    }
+  }
+  document.getElementById("enter-btn").addEventListener("click", attempt);
+  document.getElementById("pw").addEventListener("keydown", function(e){if(e.key==="Enter")attempt();});
+})();
+</script>
+</body>
+</html>
