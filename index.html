@@ -460,6 +460,210 @@ body {
 
 .footer-links a:hover { color: var(--text-dim); }
 
+/* ===== TWO-COLUMN LAYOUTS ===== */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.anim-container {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 300 / 260;
+  margin: 0 auto;
+  position: relative;
+}
+
+.anim-container svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ===== SIGNAL FLOW ANIMATION ===== */
+.signal-flow-node {
+  fill: none;
+  stroke-width: 2;
+}
+
+.signal-flow-line {
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.signal-packet {
+  r: 4;
+  opacity: 0;
+}
+
+.anim-visible .signal-packet { opacity: 1; }
+
+.anim-visible .packet-1 {
+  animation: packet-move-1 6s ease-in-out infinite;
+}
+.anim-visible .packet-2 {
+  animation: packet-move-2 6s ease-in-out infinite;
+}
+.anim-visible .packet-3 {
+  animation: packet-move-3 6s ease-in-out infinite;
+}
+
+@keyframes packet-move-1 {
+  0% { offset-distance: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  20% { offset-distance: 100%; opacity: 1; }
+  25% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes packet-move-2 {
+  0%, 18% { offset-distance: 0%; opacity: 0; }
+  23% { opacity: 1; }
+  40% { offset-distance: 100%; opacity: 1; }
+  45% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes packet-move-3 {
+  0%, 38% { offset-distance: 0%; opacity: 0; }
+  43% { opacity: 0.7; }
+  48% { offset-distance: 30%; opacity: 0.4; }
+  53% { offset-distance: 45%; opacity: 0.15; }
+  58% { offset-distance: 50%; opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ===== NETWORK RESOLVE ANIMATION ===== */
+.net-resolve-node {
+  r: 6;
+  fill: rgba(167, 219, 120, 0.15);
+  stroke: rgba(167, 219, 120, 0.3);
+  stroke-width: 1.5;
+  transition: cx 1.5s ease, cy 1.5s ease, fill 1.5s ease 1s, stroke 1.5s ease 1s;
+}
+
+.net-resolve-line {
+  stroke: rgba(167, 219, 120, 0.08);
+  stroke-width: 1;
+  transition: stroke 1.5s ease 1.2s, stroke-opacity 1.5s ease 1.2s, x1 1.5s ease, y1 1.5s ease, x2 1.5s ease, y2 1.5s ease;
+}
+
+.anim-visible .net-resolve-node {
+  fill: rgba(167, 219, 120, 0.3);
+  stroke: var(--lime);
+}
+
+.anim-visible .net-resolve-line {
+  stroke: var(--lime);
+  stroke-opacity: 0.5;
+}
+
+/* Staggered transitions for resolve nodes */
+.net-resolve-node:nth-child(1) { transition-delay: 0s, 0s, 0.8s, 0.8s; }
+.net-resolve-node:nth-child(2) { transition-delay: 0.15s, 0.15s, 0.95s, 0.95s; }
+.net-resolve-node:nth-child(3) { transition-delay: 0.3s, 0.3s, 1.1s, 1.1s; }
+.net-resolve-node:nth-child(4) { transition-delay: 0.45s, 0.45s, 1.25s, 1.25s; }
+.net-resolve-node:nth-child(5) { transition-delay: 0.6s, 0.6s, 1.4s, 1.4s; }
+.net-resolve-node:nth-child(6) { transition-delay: 0.75s, 0.75s, 1.55s, 1.55s; }
+.net-resolve-node:nth-child(7) { transition-delay: 0.9s, 0.9s, 1.7s, 1.7s; }
+
+/* ===== SERVICE CARD ICONS ===== */
+.service-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.service-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Audit scan line */
+.audit-scanline {
+  animation: scanline-sweep 3s ease-in-out infinite;
+}
+
+@keyframes scanline-sweep {
+  0% { transform: translateX(-14px); opacity: 0; }
+  15% { opacity: 0.6; }
+  50% { transform: translateX(14px); opacity: 0.6; }
+  65% { opacity: 0; }
+  100% { transform: translateX(-14px); opacity: 0; }
+}
+
+/* Signal funnel dots */
+.funnel-dot-1, .funnel-dot-2, .funnel-dot-3 {
+  animation: funnel-converge 3.5s ease-in-out infinite;
+}
+.funnel-dot-2 { animation-delay: 0.15s; }
+.funnel-dot-3 { animation-delay: 0.3s; }
+
+@keyframes funnel-converge {
+  0% { opacity: 0.3; }
+  30% { opacity: 1; }
+  50% { opacity: 1; }
+  70% { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}
+
+.funnel-output {
+  animation: funnel-exit 3.5s ease-in-out infinite;
+}
+
+@keyframes funnel-exit {
+  0%, 50% { opacity: 0; transform: translateX(0); }
+  65% { opacity: 1; }
+  90% { opacity: 1; transform: translateX(5px); }
+  100% { opacity: 0; transform: translateX(8px); }
+}
+
+/* Session waveform */
+.wave-line {
+  animation: wave-to-blocks 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes wave-to-blocks {
+  0%, 30% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.block-row {
+  animation: blocks-appear 4s ease-in-out infinite;
+}
+
+@keyframes blocks-appear {
+  0%, 40% { opacity: 0; transform: translateY(3px); }
+  60% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.block-row:nth-child(2) { animation-delay: 0.1s; }
+.block-row:nth-child(3) { animation-delay: 0.2s; }
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .signal-packet,
+  .audit-scanline,
+  .funnel-dot-1, .funnel-dot-2, .funnel-dot-3,
+  .funnel-output,
+  .wave-line,
+  .block-row {
+    animation: none !important;
+  }
+  .net-resolve-node,
+  .net-resolve-line {
+    transition: none !important;
+  }
+  .signal-packet { opacity: 1; }
+  .block-row { opacity: 1; }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero { min-height: 85vh; padding-top: 5rem; }
@@ -467,6 +671,9 @@ body {
   .contact-inner { padding: 3rem 1.25rem; }
   .footer-inner { flex-direction: column; text-align: center; }
   .footer-links { justify-content: center; }
+  .section-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .section-grid .anim-container { max-width: 260px; }
+  .section-grid--anim-first .anim-container { order: -1; }
 }
 </style>
 </head>
@@ -501,10 +708,43 @@ body {
   <div class="section-light" id="problem">
     <div class="section-inner">
       <div class="section-label">// what we keep seeing</div>
-      <div class="problem-text">
-        <p>Most organisations we work with have the same shape of problem. Good people. Good tools. Reasonable processes. And yet, information stops travelling somewhere in the middle. A signal lands in one team and never reaches the person who could act on it. A meeting produces two hours of context that evaporates by end of day. A handoff degrades because the structured path takes three more steps than saying it out loud.</p>
-        <p>Nobody is doing anything wrong. The gaps are not dramatic. But they compound quietly over months and years into something harder to untangle: tribal knowledge, received wisdom, institutional blind spots that nobody remembers the origin of.</p>
-        <p>The cost is not a single failure. It is the slow accumulation of missed signals, duplicated effort, and decisions made on incomplete context. By the time it is visible, it has been compounding for a long time.</p>
+      <div class="section-grid">
+        <div class="problem-text">
+          <p>Most organisations we work with have the same shape of problem. Good people. Good tools. Reasonable processes. And yet, information stops travelling somewhere in the middle. A signal lands in one team and never reaches the person who could act on it. A meeting produces two hours of context that evaporates by end of day. A handoff degrades because the structured path takes three more steps than saying it out loud.</p>
+          <p>Nobody is doing anything wrong. The gaps are not dramatic. But they compound quietly over months and years into something harder to untangle: tribal knowledge, received wisdom, institutional blind spots that nobody remembers the origin of.</p>
+          <p>The cost is not a single failure. It is the slow accumulation of missed signals, duplicated effort, and decisions made on incomplete context. By the time it is visible, it has been compounding for a long time.</p>
+        </div>
+        <div class="anim-container" aria-hidden="true" data-anim="signal-flow">
+          <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Connection lines -->
+            <path id="sig-path-1" d="M50 80 L120 50" stroke="var(--lime)" stroke-width="1.5" opacity="0.4"/>
+            <path id="sig-path-2" d="M120 50 L190 90" stroke="var(--lime)" stroke-width="1.5" opacity="0.3"/>
+            <path id="sig-path-3" d="M190 90 L230 170" stroke="var(--amber)" stroke-width="1.5" opacity="0.2"/>
+            <path id="sig-path-4" d="M230 170 L260 210" stroke="var(--red)" stroke-width="1.5" opacity="0.1"/>
+
+            <!-- Nodes -->
+            <circle cx="50" cy="80" r="8" fill="rgba(167,219,120,0.15)" stroke="var(--lime)" stroke-width="2"/>
+            <circle cx="120" cy="50" r="8" fill="rgba(167,219,120,0.15)" stroke="var(--lime)" stroke-width="2"/>
+            <circle cx="190" cy="90" r="8" fill="rgba(167,219,120,0.1)" stroke="var(--lime)" stroke-width="2" opacity="0.7"/>
+            <circle cx="230" cy="170" r="7" fill="rgba(245,158,11,0.08)" stroke="var(--amber)" stroke-width="1.5" opacity="0.5"/>
+            <circle cx="260" cy="210" r="7" fill="rgba(239,68,68,0.06)" stroke="var(--red)" stroke-width="1.5" opacity="0.25"/>
+
+            <!-- Packets (travel along paths) -->
+            <circle class="signal-packet packet-1" r="4" fill="var(--lime)" style="offset-path: path('M50 80 L120 50');">
+            </circle>
+            <circle class="signal-packet packet-2" r="4" fill="var(--lime)" style="offset-path: path('M120 50 L190 90');">
+            </circle>
+            <circle class="signal-packet packet-3" r="3.5" fill="var(--amber)" style="offset-path: path('M190 90 L230 170');">
+            </circle>
+
+            <!-- Labels -->
+            <text x="50" y="108" text-anchor="middle" fill="var(--teal)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.5">signal</text>
+            <text x="120" y="32" text-anchor="middle" fill="var(--teal)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.5">team</text>
+            <text x="190" y="118" text-anchor="middle" fill="var(--teal)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.4">handoff</text>
+            <text x="230" y="198" text-anchor="middle" fill="var(--amber)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.3">degraded</text>
+            <text x="260" y="238" text-anchor="middle" fill="var(--red)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.2">lost</text>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
@@ -513,10 +753,39 @@ body {
   <div class="section-dark" id="approach">
     <div class="section-inner">
       <div class="section-label">// how we work</div>
-      <div class="approach-text">
-        <p>We start by listening. Not to leadership decks or strategy documents, but to the people doing the work. The handoffs they navigate every day. The workarounds they have built because the system does not quite fit. The things they know that are not written down anywhere.</p>
-        <p>We build a picture of how information actually moves through the organisation before we propose anything. The diagnosis matters more than the prescription. When we do act, the fixes are targeted and structural, not cultural mandates that revert within weeks.</p>
-        <p>We leave teams more capable, not more dependent. The goal is always the same: make the structured path feel as natural as the obvious one, so the right behaviour happens without anyone having to remember to do it.</p>
+      <div class="section-grid section-grid--anim-first">
+        <div class="anim-container" aria-hidden="true" data-anim="network-resolve">
+          <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Lines (connect scattered -> resolved positions) -->
+            <line class="net-resolve-line" data-x1s="30" data-y1s="40" data-x1r="60" data-y1r="60" data-x2s="180" data-y2s="20" data-x2r="150" data-y2r="50" x1="30" y1="40" x2="180" y2="20"/>
+            <line class="net-resolve-line" data-x1s="180" data-y1s="20" data-x1r="150" data-y1r="50" data-x2s="270" data-y2s="70" data-x2r="240" data-y2r="80" x1="180" y1="20" x2="270" y2="70"/>
+            <line class="net-resolve-line" data-x1s="30" data-y1s="40" data-x1r="60" data-y1r="60" data-x2s="80" data-y2s="180" data-x2r="100" data-y2r="140" x1="30" y1="40" x2="80" y2="180"/>
+            <line class="net-resolve-line" data-x1s="180" data-y1s="20" data-x1r="150" data-y1r="50" data-x2s="140" data-y2s="240" data-x2r="150" data-y2r="190" x1="180" y1="20" x2="140" y2="240"/>
+            <line class="net-resolve-line" data-x1s="270" data-y1s="70" data-x1r="240" data-y1r="80" data-x2s="250" data-y2s="200" data-x2r="230" data-y2r="170" x1="270" y1="70" x2="250" y2="200"/>
+            <line class="net-resolve-line" data-x1s="80" data-y1s="180" data-x1r="100" data-y1r="140" data-x2s="140" data-y2s="240" data-x2r="150" data-y2r="190" x1="80" y1="180" x2="140" y2="240"/>
+            <line class="net-resolve-line" data-x1s="140" data-y1s="240" data-x1r="150" data-y1r="190" data-x2s="250" data-y2s="200" data-x2r="230" data-y2r="170" x1="140" y1="240" x2="250" y2="200"/>
+            <line class="net-resolve-line" data-x1s="80" data-y1s="180" data-x1r="100" data-y1r="140" data-x2s="270" data-y2s="70" data-x2r="240" data-y2r="80" x1="80" y1="180" x2="270" y2="70"/>
+
+            <!-- Nodes (scattered -> resolved positions) -->
+            <circle class="net-resolve-node" data-cxs="30" data-cys="40" data-cxr="60" data-cyr="60" cx="30" cy="40"/>
+            <circle class="net-resolve-node" data-cxs="180" data-cys="20" data-cxr="150" data-cyr="50" cx="180" cy="20"/>
+            <circle class="net-resolve-node" data-cxs="270" data-cys="70" data-cxr="240" data-cyr="80" cx="270" cy="70"/>
+            <circle class="net-resolve-node" data-cxs="80" data-cys="180" data-cxr="100" data-cyr="140" cx="80" cy="180"/>
+            <circle class="net-resolve-node" data-cxs="140" data-cys="240" data-cxr="150" data-cyr="190" cx="140" cy="240"/>
+            <circle class="net-resolve-node" data-cxs="250" data-cys="200" data-cxr="230" data-cyr="170" cx="250" cy="200"/>
+
+            <!-- Labels (appear on resolve) -->
+            <text x="60" y="80" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2s;">listen</text>
+            <text x="150" y="35" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2.2s;">map</text>
+            <text x="240" y="100" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2.4s;">diagnose</text>
+            <text x="150" y="212" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2.6s;">fix</text>
+          </svg>
+        </div>
+        <div class="approach-text">
+          <p>We start by listening. Not to leadership decks or strategy documents, but to the people doing the work. The handoffs they navigate every day. The workarounds they have built because the system does not quite fit. The things they know that are not written down anywhere.</p>
+          <p>We build a picture of how information actually moves through the organisation before we propose anything. The diagnosis matters more than the prescription. When we do act, the fixes are targeted and structural, not cultural mandates that revert within weeks.</p>
+          <p>We leave teams more capable, not more dependent. The goal is always the same: make the structured path feel as natural as the obvious one, so the right behaviour happens without anyone having to remember to do it.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -528,16 +797,72 @@ body {
       <div class="services-grid">
 
         <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Mini network dots -->
+              <circle cx="18" cy="18" r="2" fill="var(--teal)" opacity="0.5"/>
+              <circle cx="30" cy="14" r="2" fill="var(--teal)" opacity="0.5"/>
+              <circle cx="24" cy="28" r="2" fill="var(--teal)" opacity="0.5"/>
+              <circle cx="14" cy="30" r="1.5" fill="var(--teal)" opacity="0.3"/>
+              <circle cx="34" cy="26" r="1.5" fill="var(--teal)" opacity="0.3"/>
+              <line x1="18" y1="18" x2="30" y2="14" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/>
+              <line x1="18" y1="18" x2="24" y2="28" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/>
+              <line x1="30" y1="14" x2="24" y2="28" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/>
+              <!-- Magnifying glass -->
+              <circle cx="24" cy="22" r="10" stroke="var(--teal)" stroke-width="1.5" fill="none" opacity="0.6"/>
+              <line x1="31" y1="29" x2="38" y2="36" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+              <!-- Scan line -->
+              <rect class="audit-scanline" x="16" y="14" width="2" height="16" rx="1" fill="var(--lime)" opacity="0"/>
+            </svg>
+          </div>
           <h3>Workflow & Systems Audit</h3>
           <p>For organisations that know something is off but cannot name it. We map how information actually moves through the org, where it stops, and what the compounding cost is. The output is a clear picture and a targeted plan, not a 90-page report.</p>
         </div>
 
         <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Scattered input dots -->
+              <circle class="funnel-dot-1" cx="8" cy="12" r="2.5" fill="var(--teal)"/>
+              <circle class="funnel-dot-2" cx="12" cy="28" r="2.5" fill="var(--teal)"/>
+              <circle class="funnel-dot-3" cx="6" cy="36" r="2.5" fill="var(--teal)"/>
+              <!-- Funnel shape -->
+              <path d="M16 8 L28 20 L28 28 L16 40 Z" stroke="var(--teal)" stroke-width="1" fill="rgba(0,87,112,0.06)" opacity="0.5"/>
+              <!-- Converging lines -->
+              <line x1="10" y1="12" x2="18" y2="20" stroke="var(--teal)" stroke-width="0.7" opacity="0.3" stroke-dasharray="2 2"/>
+              <line x1="14" y1="28" x2="20" y2="24" stroke="var(--teal)" stroke-width="0.7" opacity="0.3" stroke-dasharray="2 2"/>
+              <line x1="8" y1="36" x2="18" y2="28" stroke="var(--teal)" stroke-width="0.7" opacity="0.3" stroke-dasharray="2 2"/>
+              <!-- Output dot + target -->
+              <circle class="funnel-output" cx="34" cy="24" r="3" fill="var(--lime)"/>
+              <line x1="28" y1="24" x2="40" y2="24" stroke="var(--lime)" stroke-width="1" opacity="0.3"/>
+              <circle cx="42" cy="24" r="4" stroke="var(--lime)" stroke-width="1" fill="none" opacity="0.3"/>
+              <circle cx="42" cy="24" r="1.5" fill="var(--lime)" opacity="0.3"/>
+            </svg>
+          </div>
           <h3>AI Tooling: Signal to Action</h3>
           <p>For teams drowning in data with no layer to synthesise it. We design and build the aggregation and routing layer that turns raw signals into the right action for the right person at the right time. Custom built, not off-the-shelf.</p>
         </div>
 
         <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Waveform line -->
+              <polyline class="wave-line" points="4,24 8,18 12,30 16,16 20,32 24,20 28,28 32,14 36,26 40,22 44,24" stroke="var(--teal)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Structured blocks (appear as wave fades) -->
+              <g class="block-row">
+                <rect x="6" y="14" width="16" height="4" rx="1" fill="var(--lime)" opacity="0.6"/>
+                <rect x="24" y="14" width="8" height="4" rx="1" fill="var(--teal)" opacity="0.3"/>
+              </g>
+              <g class="block-row">
+                <rect x="6" y="22" width="10" height="4" rx="1" fill="var(--lime)" opacity="0.5"/>
+                <rect x="18" y="22" width="20" height="4" rx="1" fill="var(--teal)" opacity="0.25"/>
+              </g>
+              <g class="block-row">
+                <rect x="6" y="30" width="22" height="4" rx="1" fill="var(--lime)" opacity="0.4"/>
+                <rect x="30" y="30" width="12" height="4" rx="1" fill="var(--teal)" opacity="0.2"/>
+              </g>
+            </svg>
+          </div>
           <h3>Session Intelligence</h3>
           <p>For organisations losing institutional knowledge to turnover, acquisition integration lag, or verbal-only culture. Ambient capture and structured output that means context survives any individual leaving.</p>
         </div>
@@ -621,5 +946,138 @@ body {
   </div>
 </footer>
 
+<script>
+(function() {
+  // Respect reduced motion preference
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // IntersectionObserver for scroll-triggered animations
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('anim-visible');
+
+        // Network Resolve: move nodes/lines to resolved positions
+        if (entry.target.dataset.anim === 'network-resolve' && !prefersReduced) {
+          var nodes = entry.target.querySelectorAll('.net-resolve-node');
+          var lines = entry.target.querySelectorAll('.net-resolve-line');
+          var labels = entry.target.querySelectorAll('.net-resolve-label');
+
+          nodes.forEach(function(n) {
+            n.setAttribute('cx', n.dataset.cxr);
+            n.setAttribute('cy', n.dataset.cyr);
+          });
+
+          lines.forEach(function(l) {
+            l.setAttribute('x1', l.dataset.x1r);
+            l.setAttribute('y1', l.dataset.y1r);
+            l.setAttribute('x2', l.dataset.x2r);
+            l.setAttribute('y2', l.dataset.y2r);
+          });
+
+          labels.forEach(function(lb) {
+            lb.setAttribute('opacity', '0.5');
+          });
+
+          // Reset after pause to loop the animation
+          setTimeout(function() {
+            // Remove class to reset CSS-driven styles
+            entry.target.classList.remove('anim-visible');
+
+            nodes.forEach(function(n) {
+              n.style.transition = 'none';
+              n.setAttribute('cx', n.dataset.cxs);
+              n.setAttribute('cy', n.dataset.cys);
+            });
+            lines.forEach(function(l) {
+              l.style.transition = 'none';
+              l.setAttribute('x1', l.dataset.x1s);
+              l.setAttribute('y1', l.dataset.y1s);
+              l.setAttribute('x2', l.dataset.x2s);
+              l.setAttribute('y2', l.dataset.y2s);
+            });
+            labels.forEach(function(lb) {
+              lb.setAttribute('opacity', '0');
+            });
+
+            // Re-enable transitions and trigger resolve again
+            requestAnimationFrame(function() {
+              requestAnimationFrame(function() {
+                nodes.forEach(function(n) { n.style.transition = ''; });
+                lines.forEach(function(l) { l.style.transition = ''; });
+                entry.target.classList.add('anim-visible');
+
+                nodes.forEach(function(n) {
+                  n.setAttribute('cx', n.dataset.cxr);
+                  n.setAttribute('cy', n.dataset.cyr);
+                });
+                lines.forEach(function(l) {
+                  l.setAttribute('x1', l.dataset.x1r);
+                  l.setAttribute('y1', l.dataset.y1r);
+                  l.setAttribute('x2', l.dataset.x2r);
+                  l.setAttribute('y2', l.dataset.y2r);
+                });
+                labels.forEach(function(lb) {
+                  lb.setAttribute('opacity', '0.5');
+                });
+              });
+            });
+          }, 7000);
+
+          // Set up looping interval
+          setInterval(function() {
+            entry.target.classList.remove('anim-visible');
+            nodes.forEach(function(n) {
+              n.style.transition = 'none';
+              n.setAttribute('cx', n.dataset.cxs);
+              n.setAttribute('cy', n.dataset.cys);
+            });
+            lines.forEach(function(l) {
+              l.style.transition = 'none';
+              l.setAttribute('x1', l.dataset.x1s);
+              l.setAttribute('y1', l.dataset.y1s);
+              l.setAttribute('x2', l.dataset.x2s);
+              l.setAttribute('y2', l.dataset.y2s);
+            });
+            labels.forEach(function(lb) {
+              lb.setAttribute('opacity', '0');
+            });
+
+            requestAnimationFrame(function() {
+              requestAnimationFrame(function() {
+                nodes.forEach(function(n) { n.style.transition = ''; });
+                lines.forEach(function(l) { l.style.transition = ''; });
+                entry.target.classList.add('anim-visible');
+
+                nodes.forEach(function(n) {
+                  n.setAttribute('cx', n.dataset.cxr);
+                  n.setAttribute('cy', n.dataset.cyr);
+                });
+                lines.forEach(function(l) {
+                  l.setAttribute('x1', l.dataset.x1r);
+                  l.setAttribute('y1', l.dataset.y1r);
+                  l.setAttribute('x2', l.dataset.x2r);
+                  l.setAttribute('y2', l.dataset.y2r);
+                });
+                labels.forEach(function(lb) {
+                  lb.setAttribute('opacity', '0.5');
+                });
+              });
+            });
+          }, 14000);
+        }
+
+        // Only trigger once per element
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  // Observe all animation containers
+  document.querySelectorAll('.anim-container').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
 </body>
 </html>
