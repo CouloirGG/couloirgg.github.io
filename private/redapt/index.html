@@ -34,7 +34,7 @@ body{font-family:'Sora',sans-serif;background:#0a1a20;}
 <title>REDAPT - Visual Library - April 21</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--lime:#A7DB78;--lime-dark:#6a9c2a;--teal:#005770;--teal-dark:#003E47;--teal-pale:#e0eef2;--bg-dark:#0a1a20;--bg-light:#f5f7fa;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--dim:rgba(255,255,255,0.5);--faint:rgba(255,255,255,0.22);--charcoal:#1e293b;--red:#ef4444;--amber:#f59e0b;}
+:root{--lime:#A7DB78;--lime-dark:#6a9c2a;--teal:#005770;--teal-dark:#003E47;--teal-pale:#e0eef2;--bg-dark:#0a1a20;--bg-light:#f5f7fa;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--dim:rgba(255,255,255,0.5);--faint:rgba(255,255,255,0.22);--charcoal:#1e293b;--red:#ef4444;--amber:#f59e0b;--orange:#f97316;--blue:#4ac0ff;}
 *{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'Sora',sans-serif;}
 .master-header{background:var(--teal-dark);padding:14px 40px;position:sticky;top:0;z-index:1000;border-bottom:2px solid var(--lime);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .mh-brand{font-size:14px;font-weight:800;color:white;letter-spacing:-0.02em;}
@@ -56,28 +56,12 @@ body{font-family:'Sora',sans-serif;background:#0a1a20;}
 
 /* == 01: The Obvious Path == */
 
-:root {
-  --lime: #A7DB78; --lime-dark: #6a9c2a;
-  --teal: #005770; --teal-dark: #003E47;
-  --bg: #0a1a20; --card: rgba(255,255,255,0.04);
-  --border: rgba(255,255,255,0.08); --dim: rgba(255,255,255,0.5);
-  --faint: rgba(255,255,255,0.22); --red: #ef4444;
-  --amber: #f59e0b; --blue: #4ac0ff;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Sora', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; }
-
-header { background: rgba(0,62,71,0.9); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
-.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
-.brand-sub { font-size: 11px; color: var(--faint); margin-top: 2px; font-weight: 300; }
-.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(167,219,120,0.3); color: var(--lime); background: rgba(167,219,120,0.07); }
-
-.main { flex: 1; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 48px; }
-
+#path .main { padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 48px; }
+h1 { font-size: clamp(26px, 4vw, 46px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 16px; color: white; }
+h1 em { color: var(--lime); font-style: normal; }
+h2 { font-size: clamp(22px, 3vw, 36px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 10px; color: white; }
 .title-block { text-align: center; max-width: 680px; }
 .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
-h1 { font-size: clamp(26px, 4vw, 46px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 16px; }
-h1 em { color: var(--lime); font-style: normal; }
 .subtitle { font-size: 14px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 560px; margin: 0 auto; }
 
 .industry-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
@@ -135,24 +119,8 @@ h1 em { color: var(--lime); font-style: normal; }
 
 /* == 02: The Telephone Effect == */
 
-:root {
-  --lime: #A7DB78; --lime-dark: #6a9c2a;
-  --teal: #005770; --teal-dark: #003E47;
-  --bg: #0a1a20; --card: rgba(255,255,255,0.04);
-  --border: rgba(255,255,255,0.08); --dim: rgba(255,255,255,0.5);
-  --faint: rgba(255,255,255,0.22); --red: #ef4444; --amber: #f59e0b;
-  --orange: #f97316;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Sora', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; }
-
-header { background: rgba(0,62,71,0.9); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
-.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
-.brand-sub { font-size: 11px; color: var(--faint); margin-top: 2px; font-weight: 300; }
-.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(245,158,11,0.35); color: #fcd34d; background: rgba(245,158,11,0.07); }
-
-.main { flex: 1; padding: 48px 20px; display: flex; flex-direction: column; align-items: center; gap: 0; }
-@media (min-width:640px) { .main { padding: 48px 40px; } }
+#telephone .main { padding: 48px 20px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+@media (min-width:640px) { #telephone .main { padding: 48px 40px; } }
 
 /* ── PANEL HEADERS ── */
 .panel-intro { width: 100%; max-width: 960px; padding-bottom: 36px; }
@@ -346,28 +314,11 @@ h2 em { font-style: normal; }
 
 /* == 03: The Choice Point == */
 
-:root {
-  --lime: #A7DB78; --lime-dark: #6a9c2a;
-  --teal: #005770; --teal-dark: #003E47;
-  --bg: #0d1117; --card: rgba(255,255,255,0.03);
-  --border: rgba(255,255,255,0.07); --dim: rgba(255,255,255,0.5);
-  --faint: rgba(255,255,255,0.22); --red: #ef4444; --amber: #f59e0b;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Sora', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; }
-
-header { background: rgba(0,62,71,0.9); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
-.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
-.brand-sub { font-size: 11px; color: var(--faint); margin-top: 2px; font-weight: 300; }
-.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(245,158,11,0.35); color: #fcd34d; background: rgba(245,158,11,0.07); }
-
-.main { flex: 1; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 44px; }
-
-.title-block { text-align: center; max-width: 640px; }
-.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
-h1 { font-size: clamp(26px, 4vw, 44px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 14px; }
-h1 em { color: var(--amber); font-style: normal; }
-.subtitle { font-size: 14px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 520px; margin: 0 auto; }
+#choice .main { padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 44px; }
+#choice .title-block { text-align: center; max-width: 640px; }
+#choice h1 { font-size: clamp(26px, 4vw, 44px); margin-bottom: 14px; }
+#choice h1 em { color: var(--amber); font-style: normal; }
+#choice .subtitle { max-width: 520px; }
 
 /* SCENARIO TABS */
 .scenario-tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
@@ -429,28 +380,13 @@ h1 em { color: var(--amber); font-style: normal; }
 
 /* == 04: Where Things Stand == */
 
-:root {
-  --lime: #A7DB78; --lime-dark: #6a9c2a;
-  --teal: #005770; --teal-dark: #003E47; --teal-pale: #e0eef2;
-  --bg: #f5f7fa; --card: #ffffff; --border: #e2e8f0;
-  --dim: #64748b; --faint: #94a3b8; --charcoal: #1e293b;
-  --red: #ef4444; --amber: #f59e0b;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--charcoal); min-height: 100vh; display: flex; flex-direction: column; }
-
-header { background: var(--teal-dark); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--lime); }
-.brand { font-size: 13px; font-weight: 700; color: var(--lime); letter-spacing: 0.08em; text-transform: uppercase; }
-.brand-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; font-weight: 300; }
-.pill { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(167,219,120,0.4); color: var(--lime); background: rgba(167,219,120,0.08); }
-
-.main { flex: 1; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 48px; }
-
-.title-block { text-align: center; max-width: 680px; }
-.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
-h1 { font-size: clamp(26px, 3.5vw, 44px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 16px; color: var(--charcoal); }
-h1 em { color: var(--teal); font-style: normal; }
-.subtitle { font-size: 14px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 540px; margin: 0 auto; }
+#stands { --card: #ffffff; --border: #e2e8f0; --dim: #64748b; --faint: #94a3b8; color: var(--charcoal); }
+#stands .main { padding: 56px 40px; display: flex; flex-direction: column; align-items: center; gap: 48px; }
+#stands .title-block { text-align: center; max-width: 680px; }
+#stands .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+#stands h1 { font-size: clamp(26px, 3.5vw, 44px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.07; margin-bottom: 16px; color: var(--charcoal); }
+#stands h1 em { color: var(--teal); font-style: normal; }
+#stands .subtitle { font-size: 14px; color: var(--dim); font-weight: 300; line-height: 1.8; max-width: 540px; margin: 0 auto; }
 
 /* STAGE SELECTOR */
 .stage-wrap { display: flex; gap: 0; border-radius: 12px; border: 1.5px solid var(--border); overflow: hidden; background: var(--card); }
@@ -921,6 +857,7 @@ function setIndustry(idx) {
 const _io_1 = new IntersectionObserver(e => { e.forEach(x => { if(!x.isIntersecting) return; x.target.querySelectorAll('.compound-card').forEach((c,i) => setTimeout(() => c.classList.add('visible'), i*150)); }); }, {threshold:0.2});
 _io_1.observe(document.getElementById('compound-row'));
 _timer_1 = setInterval(() => { _current_1 = (_current_1+1)%3; setIndustry(_current_1); }, 5000);
+window.setIndustry = setIndustry;
 })();
 
 // == The Telephone Effect ==
@@ -1249,6 +1186,8 @@ function selOpt(w) {
 }
 const _io_3 = new IntersectionObserver(e => { e.forEach(x => { if (!x.isIntersecting) return; x.target.querySelectorAll('.rc').forEach((c,i) => setTimeout(() => c.classList.add('visible'), i*100)); }); }, {threshold:0.2});
 _io_3.observe(document.getElementById('reason-grid'));
+window.setSc = setSc;
+window.selOpt = selOpt;
 })();
 
 // == Where Things Stand ==
@@ -1389,6 +1328,7 @@ function setStage(key) {
   sn.className = 'stage-note ' + s.noteClass;
   sn.textContent = s.note;
 }
+window.setStage = setStage;
 })();
 
 // == shared nav ==

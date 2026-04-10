@@ -1,4 +1,4 @@
-# Session Log — CouloirGG Working Notes
+# Session Log - CouloirGG Working Notes
 
 > **Purpose:** Upload this file to any new Claude conversation to restore context instantly.
 > **Last Updated:** 2026-02-20
@@ -6,7 +6,7 @@
 ---
 
 ## Current Session
-- **Status:** Just started — restoring context after conversation drop.
+- **Status:** Just started. Restoring context after conversation drop.
 - **Active Project:** TBD
 
 ---

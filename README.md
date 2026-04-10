@@ -1,6 +1,6 @@
 # couloirgg.github.io
 
-Landing page for **Couloir** — an open source game dev studio building games and tools for the people.
+Landing page for **Couloir**, an open source game dev studio building games and tools for the people.
 
 Live at: [couloir.gg](https://couloir.gg)
 
@@ -8,7 +8,7 @@ Live at: [couloir.gg](https://couloir.gg)
 
 ## About
 
-Couloir is an independent studio built on 17+ years of AAA game development experience. Everything we make is open source under GPLv3 — community-first, ad-free, no strings attached.
+Couloir is an independent studio built on 17+ years of AAA game development experience. Everything we make is open source under GPLv3. Community-first, ad-free, no strings attached.
 
 ---
 
@@ -36,7 +36,7 @@ Couloir is an independent studio built on 17+ years of AAA game development expe
 - Status: **In Development**
 
 ### Retrofit
-- Autobattler — scavenge, salvage, and rebuild mechanical units
+- Autobattler. Scavenge, salvage, and rebuild mechanical units
 - 7-person team
 - Stack: Unity, C#, Wwise
 - Status: **In Development**
@@ -46,10 +46,10 @@ Couloir is an independent studio built on 17+ years of AAA game development expe
 ## Future Brands (Leavenworth, WA)
 
 ### Werkhaus
-German: "workshop" — CrossFit and strength training gym in Leavenworth's Bavarian village.
+German: "workshop". CrossFit and strength training gym in Leavenworth's Bavarian village.
 
 ### Spielhalle
-German: "game hall" — Retro arcade and gaming lounge with community game nights.
+German: "game hall". Retro arcade and gaming lounge with community game nights.
 
 ---
 
@@ -78,7 +78,7 @@ couloirgg.github.io/
 ```bash
 git clone https://github.com/CouloirGG/couloirgg.github.io.git
 cd couloirgg.github.io
-# Open index.html in browser directly — no build step needed
+# Open index.html in browser directly. No build step needed
 ```
 
 ### Deployment
@@ -88,6 +88,6 @@ The site is hosted on **GitHub Pages** and auto-deploys on every push to `main`.
 
 ## Notes
 
-- The site is intentionally a **single HTML file** — all CSS and JS is inline. No frameworks, no build pipeline.
+- The site is intentionally a **single HTML file**. All CSS and JS is inline. No frameworks, no build pipeline.
 - Do not associate the studio with real name in public-facing content.
-- Ko-fi (`ko-fi.com/calschuss`) is the public support/donation link. PayPal is connected on the backend via Ko-fi — do not link the PayPal dashboard directly.
+- Ko-fi (`ko-fi.com/calschuss`) is the public support/donation link. PayPal is connected on the backend via Ko-fi. Do not link the PayPal dashboard directly.
