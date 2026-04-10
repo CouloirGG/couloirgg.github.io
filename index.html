@@ -6,14 +6,14 @@
 <title>CouloirGG | Systems Architecture & Operational Consulting</title>
 <meta name="description" content="CouloirGG helps organisations figure out why their smart people and good tools aren't producing the results they should. Then fixes it. Systems architecture, workflow design, AI-assisted tooling.">
 <meta property="og:title" content="CouloirGG | Systems Architecture & Operational Consulting">
-<meta property="og:description" content="We help organisations figure out why their smart people and good tools aren't producing the results they should. Then fix it.">
+<meta property="og:description" content="Your systems work. Your signals don't. We find where information stops travelling and design the structural fix.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://couloir.gg">
 <meta property="og:site_name" content="CouloirGG">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@CouloirGG">
 <meta name="twitter:title" content="CouloirGG | Systems Architecture & Operational Consulting">
-<meta name="twitter:description" content="We help organisations figure out why their smart people and good tools aren't producing the results they should. Then fix it.">
+<meta name="twitter:description" content="Your systems work. Your signals don't. We find where information stops travelling and design the structural fix.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -177,6 +177,10 @@ body {
   max-width: 900px;
   margin: 0 auto;
   padding: 5rem 2rem;
+}
+
+.section-inner--wide {
+  max-width: 1060px;
 }
 
 .section-label {
@@ -460,18 +464,22 @@ body {
 
 .footer-links a:hover { color: var(--text-dim); }
 
-/* ===== TWO-COLUMN LAYOUTS ===== */
+/* ===== TWO-COLUMN SECTION GRID ===== */
 .section-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.15fr 1fr;
   gap: 3rem;
   align-items: center;
 }
 
+.section-grid--anim-first {
+  grid-template-columns: 1fr 1.15fr;
+}
+
 .anim-container {
   width: 100%;
-  max-width: 340px;
-  aspect-ratio: 300 / 260;
+  max-width: 380px;
+  aspect-ratio: 320 / 220;
   margin: 0 auto;
   position: relative;
 }
@@ -480,94 +488,97 @@ body {
   width: 100%;
   height: 100%;
   display: block;
+  overflow: visible;
 }
 
 /* ===== SIGNAL FLOW ANIMATION ===== */
-.signal-flow-node {
-  fill: none;
-  stroke-width: 2;
+
+/* Origin node breathing glow */
+.sf-glow {
+  opacity: 0;
+}
+.anim-visible .sf-glow {
+  animation: sf-breathe 3s ease-in-out infinite;
+}
+@keyframes sf-breathe {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.08; }
 }
 
-.signal-flow-line {
-  stroke-width: 1.5;
-  fill: none;
+/* Last node dim pulse (starving for data) */
+.sf-starve {
+  opacity: 0;
+}
+.anim-visible .sf-starve {
+  animation: sf-starve-pulse 4s ease-in-out infinite;
+}
+@keyframes sf-starve-pulse {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.08; }
 }
 
-.signal-packet {
-  r: 4;
+/* Packets travelling along paths via offset-path */
+.sf-packet {
+  offset-rotate: 0deg;
   opacity: 0;
 }
 
-.anim-visible .signal-packet { opacity: 1; }
-
-.anim-visible .packet-1 {
-  animation: packet-move-1 6s ease-in-out infinite;
+.anim-visible .sf-packet-1 {
+  animation: sf-p1 6s ease-in-out infinite;
 }
-.anim-visible .packet-2 {
-  animation: packet-move-2 6s ease-in-out infinite;
+.anim-visible .sf-packet-2 {
+  animation: sf-p2 6s ease-in-out infinite;
 }
-.anim-visible .packet-3 {
-  animation: packet-move-3 6s ease-in-out infinite;
+.anim-visible .sf-packet-3 {
+  animation: sf-p3 6s ease-in-out infinite;
 }
 
-@keyframes packet-move-1 {
-  0% { offset-distance: 0%; opacity: 0; }
-  5% { opacity: 1; }
-  20% { offset-distance: 100%; opacity: 1; }
-  25% { opacity: 0; }
-  100% { opacity: 0; }
+@keyframes sf-p1 {
+  0%   { offset-distance: 0%;   opacity: 0; }
+  4%   { opacity: 1; }
+  22%  { offset-distance: 100%; opacity: 1; }
+  28%  { opacity: 0; }
+  100% { opacity: 0; offset-distance: 100%; }
 }
 
-@keyframes packet-move-2 {
-  0%, 18% { offset-distance: 0%; opacity: 0; }
-  23% { opacity: 1; }
-  40% { offset-distance: 100%; opacity: 1; }
-  45% { opacity: 0; }
-  100% { opacity: 0; }
+@keyframes sf-p2 {
+  0%, 20% { offset-distance: 0%; opacity: 0; }
+  24%     { opacity: 0.85; }
+  44%     { offset-distance: 100%; opacity: 0.8; }
+  50%     { opacity: 0; }
+  100%    { opacity: 0; offset-distance: 100%; }
 }
 
-@keyframes packet-move-3 {
-  0%, 38% { offset-distance: 0%; opacity: 0; }
-  43% { opacity: 0.7; }
-  48% { offset-distance: 30%; opacity: 0.4; }
-  53% { offset-distance: 45%; opacity: 0.15; }
-  58% { offset-distance: 50%; opacity: 0; }
-  100% { opacity: 0; }
+@keyframes sf-p3 {
+  0%, 42%  { offset-distance: 0%;  opacity: 0; }
+  46%      { opacity: 0.55; }
+  56%      { offset-distance: 22%; opacity: 0.3; }
+  64%      { offset-distance: 32%; opacity: 0.12; }
+  70%      { offset-distance: 35%; opacity: 0; }
+  100%     { opacity: 0; offset-distance: 35%; }
 }
 
 /* ===== NETWORK RESOLVE ANIMATION ===== */
-.net-resolve-node {
-  r: 6;
-  fill: rgba(167, 219, 120, 0.15);
-  stroke: rgba(167, 219, 120, 0.3);
-  stroke-width: 1.5;
-  transition: cx 1.5s ease, cy 1.5s ease, fill 1.5s ease 1s, stroke 1.5s ease 1s;
-}
 
-.net-resolve-line {
-  stroke: rgba(167, 219, 120, 0.08);
+.nr-line {
   stroke-width: 1;
-  transition: stroke 1.5s ease 1.2s, stroke-opacity 1.5s ease 1.2s, x1 1.5s ease, y1 1.5s ease, x2 1.5s ease, y2 1.5s ease;
+  stroke-linecap: round;
 }
 
-.anim-visible .net-resolve-node {
-  fill: rgba(167, 219, 120, 0.3);
-  stroke: var(--lime);
+.nr-node {
+  stroke-width: 1.5;
 }
 
-.anim-visible .net-resolve-line {
-  stroke: var(--lime);
-  stroke-opacity: 0.5;
+.nr-label {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
 }
 
-/* Staggered transitions for resolve nodes */
-.net-resolve-node:nth-child(1) { transition-delay: 0s, 0s, 0.8s, 0.8s; }
-.net-resolve-node:nth-child(2) { transition-delay: 0.15s, 0.15s, 0.95s, 0.95s; }
-.net-resolve-node:nth-child(3) { transition-delay: 0.3s, 0.3s, 1.1s, 1.1s; }
-.net-resolve-node:nth-child(4) { transition-delay: 0.45s, 0.45s, 1.25s, 1.25s; }
-.net-resolve-node:nth-child(5) { transition-delay: 0.6s, 0.6s, 1.4s, 1.4s; }
-.net-resolve-node:nth-child(6) { transition-delay: 0.75s, 0.75s, 1.55s, 1.55s; }
-.net-resolve-node:nth-child(7) { transition-delay: 0.9s, 0.9s, 1.7s, 1.7s; }
+.nr-hub-glow {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
 
 /* ===== SERVICE CARD ICONS ===== */
 .service-icon {
@@ -580,88 +591,88 @@ body {
 .service-icon svg {
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
-/* Audit scan line */
-.audit-scanline {
-  animation: scanline-sweep 3s ease-in-out infinite;
+/* Audit: scanning beam sweeps across network */
+.si-beam {
+  animation: si-scan 3.5s ease-in-out infinite;
 }
 
-@keyframes scanline-sweep {
-  0% { transform: translateX(-14px); opacity: 0; }
-  15% { opacity: 0.6; }
-  50% { transform: translateX(14px); opacity: 0.6; }
-  65% { opacity: 0; }
-  100% { transform: translateX(-14px); opacity: 0; }
+@keyframes si-scan {
+  0%   { transform: translateX(-12px); opacity: 0; }
+  15%  { opacity: 0.8; }
+  50%  { transform: translateX(12px); opacity: 0.8; }
+  65%  { opacity: 0; }
+  100% { transform: translateX(-12px); opacity: 0; }
 }
 
-/* Signal funnel dots */
-.funnel-dot-1, .funnel-dot-2, .funnel-dot-3 {
-  animation: funnel-converge 3.5s ease-in-out infinite;
+/* Signal to Action: dots converge then arrow fires */
+.si-dot {
+  animation: si-dot-pulse 3.5s ease-in-out infinite;
 }
-.funnel-dot-2 { animation-delay: 0.15s; }
-.funnel-dot-3 { animation-delay: 0.3s; }
+.si-dot:nth-child(2) { animation-delay: 0.12s; }
+.si-dot:nth-child(3) { animation-delay: 0.24s; }
 
-@keyframes funnel-converge {
-  0% { opacity: 0.3; }
-  30% { opacity: 1; }
-  50% { opacity: 1; }
-  70% { opacity: 0.6; }
-  100% { opacity: 0.3; }
-}
-
-.funnel-output {
-  animation: funnel-exit 3.5s ease-in-out infinite;
+@keyframes si-dot-pulse {
+  0%, 100% { opacity: 0.3; }
+  35%      { opacity: 1; }
+  50%      { opacity: 0.8; }
+  65%      { opacity: 0; }
 }
 
-@keyframes funnel-exit {
-  0%, 50% { opacity: 0; transform: translateX(0); }
-  65% { opacity: 1; }
-  90% { opacity: 1; transform: translateX(5px); }
-  100% { opacity: 0; transform: translateX(8px); }
+.si-arrow-dot {
+  animation: si-arrow-fire 3.5s ease-out infinite;
 }
 
-/* Session waveform */
-.wave-line {
-  animation: wave-to-blocks 4s ease-in-out infinite;
-  transform-origin: center;
+@keyframes si-arrow-fire {
+  0%, 55% { opacity: 0; transform: translateX(0); }
+  65%     { opacity: 1; transform: translateX(0); }
+  90%     { opacity: 1; transform: translateX(5px); }
+  100%    { opacity: 0; transform: translateX(7px); }
 }
 
-@keyframes wave-to-blocks {
-  0%, 30% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 0; }
+/* Session Intelligence: waveform fades, blocks appear */
+.si-wave {
+  animation: si-wave-cycle 5s ease-in-out infinite;
 }
 
-.block-row {
-  animation: blocks-appear 4s ease-in-out infinite;
+@keyframes si-wave-cycle {
+  0%, 30%  { opacity: 0.7; }
+  45%      { opacity: 0; }
+  85%      { opacity: 0; }
+  100%     { opacity: 0.7; }
 }
 
-@keyframes blocks-appear {
-  0%, 40% { opacity: 0; transform: translateY(3px); }
-  60% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 1; transform: translateY(0); }
+.si-block {
+  transform-origin: left center;
+  animation: si-block-in 5s ease-out infinite;
 }
 
-.block-row:nth-child(2) { animation-delay: 0.1s; }
-.block-row:nth-child(3) { animation-delay: 0.2s; }
+.si-block:nth-child(2) { animation-delay: 0.1s; }
+.si-block:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes si-block-in {
+  0%, 40%  { opacity: 0; transform: scaleX(0) translateY(2px); }
+  55%      { opacity: 1; transform: scaleX(1) translateY(0); }
+  80%      { opacity: 1; transform: scaleX(1) translateY(0); }
+  95%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
-  .signal-packet,
-  .audit-scanline,
-  .funnel-dot-1, .funnel-dot-2, .funnel-dot-3,
-  .funnel-output,
-  .wave-line,
-  .block-row {
+  .sf-packet, .sf-glow, .sf-starve,
+  .si-beam, .si-dot, .si-arrow-dot,
+  .si-wave, .si-block {
     animation: none !important;
   }
-  .net-resolve-node,
-  .net-resolve-line {
-    transition: none !important;
-  }
-  .signal-packet { opacity: 1; }
-  .block-row { opacity: 1; }
+  .sf-packet { opacity: 0; }
+  .sf-glow { opacity: 0.15; }
+  .si-block { opacity: 1; transform: none; }
+  .si-wave { opacity: 0; }
+  .nr-label { transition: none !important; }
+  .nr-hub-glow { transition: none !important; }
 }
 
 /* ===== RESPONSIVE ===== */
@@ -671,9 +682,14 @@ body {
   .contact-inner { padding: 3rem 1.25rem; }
   .footer-inner { flex-direction: column; text-align: center; }
   .footer-links { justify-content: center; }
-  .section-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .section-grid .anim-container { max-width: 260px; }
-  .section-grid--anim-first .anim-container { order: -1; }
+  .section-grid,
+  .section-grid--anim-first {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .section-grid .anim-container { max-width: 280px; order: 1; }
+  .section-grid .problem-text,
+  .section-grid .approach-text { order: 0; }
 }
 </style>
 </head>
@@ -699,14 +715,13 @@ body {
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="hero-label">Systems Architecture & Operational Consulting</div>
-    <!-- TODO: Wordsmith this positioning statement. This is placeholder framing. -->
-    <h1>We help organisations figure out why their smart people and good tools <em>aren't producing the results they should.</em></h1>
-    <p class="hero-body">Then we fix it. Not by changing how people work, but by designing the conditions where the right information reaches the right person automatically, and the compounding starts working in your favour.</p>
+    <h1>Your systems work. <em>Your signals don't.</em></h1>
+    <p class="hero-body">We help organisations figure out why their smart people and good tools aren't producing the results they should. Then we fix it. Not by changing how people work, but by designing the conditions where the right information reaches the right person automatically.</p>
   </section>
 
   <!-- THE PROBLEM -->
   <div class="section-light" id="problem">
-    <div class="section-inner">
+    <div class="section-inner section-inner--wide">
       <div class="section-label">// what we keep seeing</div>
       <div class="section-grid">
         <div class="problem-text">
@@ -715,34 +730,60 @@ body {
           <p>The cost is not a single failure. It is the slow accumulation of missed signals, duplicated effort, and decisions made on incomplete context. By the time it is visible, it has been compounding for a long time.</p>
         </div>
         <div class="anim-container" aria-hidden="true" data-anim="signal-flow">
-          <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Connection lines -->
-            <path id="sig-path-1" d="M50 80 L120 50" stroke="var(--lime)" stroke-width="1.5" opacity="0.4"/>
-            <path id="sig-path-2" d="M120 50 L190 90" stroke="var(--lime)" stroke-width="1.5" opacity="0.3"/>
-            <path id="sig-path-3" d="M190 90 L230 170" stroke="var(--amber)" stroke-width="1.5" opacity="0.2"/>
-            <path id="sig-path-4" d="M230 170 L260 210" stroke="var(--red)" stroke-width="1.5" opacity="0.1"/>
+          <svg viewBox="0 0 320 220" fill="none">
+            <defs>
+              <!-- Dot grid background -->
+              <pattern id="sf-dots" width="16" height="16" patternUnits="userSpaceOnUse">
+                <circle cx="8" cy="8" r="0.6" fill="#005770" opacity="0.2"/>
+              </pattern>
+              <!-- Green glow -->
+              <filter id="glow-g" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
 
-            <!-- Nodes -->
-            <circle cx="50" cy="80" r="8" fill="rgba(167,219,120,0.15)" stroke="var(--lime)" stroke-width="2"/>
-            <circle cx="120" cy="50" r="8" fill="rgba(167,219,120,0.15)" stroke="var(--lime)" stroke-width="2"/>
-            <circle cx="190" cy="90" r="8" fill="rgba(167,219,120,0.1)" stroke="var(--lime)" stroke-width="2" opacity="0.7"/>
-            <circle cx="230" cy="170" r="7" fill="rgba(245,158,11,0.08)" stroke="var(--amber)" stroke-width="1.5" opacity="0.5"/>
-            <circle cx="260" cy="210" r="7" fill="rgba(239,68,68,0.06)" stroke="var(--red)" stroke-width="1.5" opacity="0.25"/>
+            <rect width="320" height="220" fill="url(#sf-dots)" rx="8"/>
 
-            <!-- Packets (travel along paths) -->
-            <circle class="signal-packet packet-1" r="4" fill="var(--lime)" style="offset-path: path('M50 80 L120 50');">
-            </circle>
-            <circle class="signal-packet packet-2" r="4" fill="var(--lime)" style="offset-path: path('M120 50 L190 90');">
-            </circle>
-            <circle class="signal-packet packet-3" r="3.5" fill="var(--amber)" style="offset-path: path('M190 90 L230 170');">
-            </circle>
+            <!-- Connection curves -->
+            <path id="sf-c1" d="M48,108 Q78,52 118,58" stroke="#A7DB78" stroke-width="1.5" opacity="0.45" fill="none"/>
+            <path id="sf-c2" d="M118,58 Q148,62 175,100" stroke="#A7DB78" stroke-width="1.5" opacity="0.3" fill="none"/>
+            <path id="sf-c3" d="M175,100 Q198,128 228,118" stroke="#f59e0b" stroke-width="1.2" opacity="0.18" fill="none" stroke-dasharray="5 4"/>
+            <path id="sf-c4" d="M228,118 Q252,110 275,140" stroke="#ef4444" stroke-width="1" opacity="0.08" fill="none" stroke-dasharray="3 5"/>
+
+            <!-- Node 1: Origin (healthy, glowing) -->
+            <circle class="sf-glow" cx="48" cy="108" r="18" fill="#A7DB78" opacity="0"/>
+            <circle cx="48" cy="108" r="10" fill="rgba(167,219,120,0.12)" stroke="#A7DB78" stroke-width="2"/>
+            <circle cx="48" cy="108" r="3" fill="#A7DB78" opacity="0.5"/>
+
+            <!-- Node 2: Team (healthy) -->
+            <circle cx="118" cy="58" r="9" fill="rgba(167,219,120,0.08)" stroke="#A7DB78" stroke-width="1.8"/>
+            <circle cx="118" cy="58" r="2.5" fill="#A7DB78" opacity="0.35"/>
+
+            <!-- Node 3: Handoff (fading) -->
+            <circle cx="175" cy="100" r="8" fill="rgba(167,219,120,0.04)" stroke="#A7DB78" stroke-width="1.5" opacity="0.5"/>
+
+            <!-- Node 4: Degraded -->
+            <circle cx="228" cy="118" r="7" fill="rgba(245,158,11,0.04)" stroke="#f59e0b" stroke-width="1.2" opacity="0.3"/>
+
+            <!-- Node 5: Lost (starving pulse) -->
+            <circle class="sf-starve" cx="275" cy="140" r="14" fill="#ef4444" opacity="0"/>
+            <circle cx="275" cy="140" r="6.5" fill="rgba(239,68,68,0.02)" stroke="#ef4444" stroke-width="1" opacity="0.15"/>
 
             <!-- Labels -->
-            <text x="50" y="108" text-anchor="middle" fill="var(--teal)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.5">signal</text>
-            <text x="120" y="32" text-anchor="middle" fill="var(--teal)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.5">team</text>
-            <text x="190" y="118" text-anchor="middle" fill="var(--teal)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.4">handoff</text>
-            <text x="230" y="198" text-anchor="middle" fill="var(--amber)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.3">degraded</text>
-            <text x="260" y="238" text-anchor="middle" fill="var(--red)" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.2">lost</text>
+            <text x="48" y="132" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#005770" opacity="0.55">origin</text>
+            <text x="118" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#005770" opacity="0.45">team</text>
+            <text x="175" y="82" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#005770" opacity="0.3">handoff</text>
+            <text x="228" y="142" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f59e0b" opacity="0.28">degraded</text>
+            <text x="275" y="164" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#ef4444" opacity="0.18">lost</text>
+
+            <!-- Travelling packets -->
+            <circle class="sf-packet sf-packet-1" r="4.5" fill="#A7DB78" filter="url(#glow-g)"
+              style="offset-path: path('M48,108 Q78,52 118,58');"/>
+            <circle class="sf-packet sf-packet-2" r="3.5" fill="#A7DB78"
+              style="offset-path: path('M118,58 Q148,62 175,100');"/>
+            <circle class="sf-packet sf-packet-3" r="3" fill="#f59e0b"
+              style="offset-path: path('M175,100 Q198,128 228,118');"/>
           </svg>
         </div>
       </div>
@@ -751,34 +792,59 @@ body {
 
   <!-- HOW WE WORK -->
   <div class="section-dark" id="approach">
-    <div class="section-inner">
+    <div class="section-inner section-inner--wide">
       <div class="section-label">// how we work</div>
       <div class="section-grid section-grid--anim-first">
         <div class="anim-container" aria-hidden="true" data-anim="network-resolve">
-          <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Lines (connect scattered -> resolved positions) -->
-            <line class="net-resolve-line" data-x1s="30" data-y1s="40" data-x1r="60" data-y1r="60" data-x2s="180" data-y2s="20" data-x2r="150" data-y2r="50" x1="30" y1="40" x2="180" y2="20"/>
-            <line class="net-resolve-line" data-x1s="180" data-y1s="20" data-x1r="150" data-y1r="50" data-x2s="270" data-y2s="70" data-x2r="240" data-y2r="80" x1="180" y1="20" x2="270" y2="70"/>
-            <line class="net-resolve-line" data-x1s="30" data-y1s="40" data-x1r="60" data-y1r="60" data-x2s="80" data-y2s="180" data-x2r="100" data-y2r="140" x1="30" y1="40" x2="80" y2="180"/>
-            <line class="net-resolve-line" data-x1s="180" data-y1s="20" data-x1r="150" data-y1r="50" data-x2s="140" data-y2s="240" data-x2r="150" data-y2r="190" x1="180" y1="20" x2="140" y2="240"/>
-            <line class="net-resolve-line" data-x1s="270" data-y1s="70" data-x1r="240" data-y1r="80" data-x2s="250" data-y2s="200" data-x2r="230" data-y2r="170" x1="270" y1="70" x2="250" y2="200"/>
-            <line class="net-resolve-line" data-x1s="80" data-y1s="180" data-x1r="100" data-y1r="140" data-x2s="140" data-y2s="240" data-x2r="150" data-y2r="190" x1="80" y1="180" x2="140" y2="240"/>
-            <line class="net-resolve-line" data-x1s="140" data-y1s="240" data-x1r="150" data-y1r="190" data-x2s="250" data-y2s="200" data-x2r="230" data-y2r="170" x1="140" y1="240" x2="250" y2="200"/>
-            <line class="net-resolve-line" data-x1s="80" data-y1s="180" data-x1r="100" data-y1r="140" data-x2s="270" data-y2s="70" data-x2r="240" data-y2r="80" x1="80" y1="180" x2="270" y2="70"/>
+          <svg viewBox="0 0 320 220" fill="none">
+            <defs>
+              <pattern id="nr-dots" width="16" height="16" patternUnits="userSpaceOnUse">
+                <circle cx="8" cy="8" r="0.5" fill="#A7DB78" opacity="0.08"/>
+              </pattern>
+              <filter id="glow-l" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
 
-            <!-- Nodes (scattered -> resolved positions) -->
-            <circle class="net-resolve-node" data-cxs="30" data-cys="40" data-cxr="60" data-cyr="60" cx="30" cy="40"/>
-            <circle class="net-resolve-node" data-cxs="180" data-cys="20" data-cxr="150" data-cyr="50" cx="180" cy="20"/>
-            <circle class="net-resolve-node" data-cxs="270" data-cys="70" data-cxr="240" data-cyr="80" cx="270" cy="70"/>
-            <circle class="net-resolve-node" data-cxs="80" data-cys="180" data-cxr="100" data-cyr="140" cx="80" cy="180"/>
-            <circle class="net-resolve-node" data-cxs="140" data-cys="240" data-cxr="150" data-cyr="190" cx="140" cy="240"/>
-            <circle class="net-resolve-node" data-cxs="250" data-cys="200" data-cxr="230" data-cyr="170" cx="250" cy="200"/>
+            <rect width="320" height="220" fill="url(#nr-dots)" rx="8"/>
 
-            <!-- Labels (appear on resolve) -->
-            <text x="60" y="80" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2s;">listen</text>
-            <text x="150" y="35" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2.2s;">map</text>
-            <text x="240" y="100" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2.4s;">diagnose</text>
-            <text x="150" y="212" text-anchor="middle" fill="var(--lime)" font-family="JetBrains Mono, monospace" font-size="7" opacity="0" class="net-resolve-label" style="transition: opacity 1s ease 2.6s;">fix</text>
+            <!-- Hub glow (appears on resolve) -->
+            <circle class="nr-hub-glow" cx="160" cy="110" r="20" fill="#A7DB78" filter="url(#glow-l)"/>
+
+            <!-- Connection lines (animated by JS) -->
+            <line class="nr-line" data-ax="80" data-ay="50" data-bx="160" data-by="32"/>
+            <line class="nr-line" data-ax="160" data-ay="32" data-bx="240" data-by="50"/>
+            <line class="nr-line" data-ax="80" data-ay="50" data-bx="160" data-by="110"/>
+            <line class="nr-line" data-ax="160" data-ay="32" data-bx="160" data-by="110"/>
+            <line class="nr-line" data-ax="240" data-ay="50" data-bx="160" data-by="110"/>
+            <line class="nr-line" data-ax="80" data-ay="170" data-bx="160" data-by="110"/>
+            <line class="nr-line" data-ax="160" data-ay="188" data-bx="160" data-by="110"/>
+            <line class="nr-line" data-ax="240" data-ay="170" data-bx="160" data-by="110"/>
+            <line class="nr-line" data-ax="80" data-ay="170" data-bx="160" data-by="188"/>
+            <line class="nr-line" data-ax="160" data-ay="188" data-bx="240" data-by="170"/>
+            <line class="nr-line" data-ax="80" data-ay="50" data-bx="80" data-by="170"/>
+            <line class="nr-line" data-ax="240" data-ay="50" data-bx="240" data-by="170"/>
+
+            <!-- Nodes (animated by JS) -->
+            <!-- Scattered start positions stored in data attrs, resolved positions are the data-rx/ry -->
+            <circle class="nr-node" r="7" data-sx="18" data-sy="28" data-rx="80" data-ry="50"/>
+            <circle class="nr-node" r="7" data-sx="195" data-sy="12" data-rx="160" data-ry="32"/>
+            <circle class="nr-node" r="7" data-sx="295" data-sy="55" data-rx="240" data-ry="50"/>
+            <circle class="nr-node" r="7" data-sx="42" data-sy="200" data-rx="80" data-ry="170"/>
+            <circle class="nr-node" r="7" data-sx="155" data-sy="208" data-rx="160" data-ry="188"/>
+            <circle class="nr-node" r="7" data-sx="280" data-sy="190" data-rx="240" data-ry="170"/>
+            <!-- Center hub node -->
+            <circle class="nr-node nr-node--hub" r="9" data-sx="130" data-sy="120" data-rx="160" data-ry="110"/>
+
+            <!-- Labels (appear after resolve) -->
+            <text class="nr-label" x="80" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78">listen</text>
+            <text class="nr-label" x="160" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78">map</text>
+            <text class="nr-label" x="240" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78">diagnose</text>
+            <text class="nr-label" x="160" y="130" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#A7DB78" font-weight="600">resolve</text>
+            <text class="nr-label" x="80" y="195" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78">design</text>
+            <text class="nr-label" x="160" y="210" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78">build</text>
+            <text class="nr-label" x="240" y="195" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78">ship</text>
           </svg>
         </div>
         <div class="approach-text">
@@ -798,21 +864,23 @@ body {
 
         <div class="service-card">
           <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Mini network dots -->
-              <circle cx="18" cy="18" r="2" fill="var(--teal)" opacity="0.5"/>
-              <circle cx="30" cy="14" r="2" fill="var(--teal)" opacity="0.5"/>
-              <circle cx="24" cy="28" r="2" fill="var(--teal)" opacity="0.5"/>
-              <circle cx="14" cy="30" r="1.5" fill="var(--teal)" opacity="0.3"/>
-              <circle cx="34" cy="26" r="1.5" fill="var(--teal)" opacity="0.3"/>
-              <line x1="18" y1="18" x2="30" y2="14" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/>
-              <line x1="18" y1="18" x2="24" y2="28" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/>
-              <line x1="30" y1="14" x2="24" y2="28" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/>
+            <svg viewBox="0 0 48 48" fill="none">
+              <!-- Network dots inside lens area -->
+              <circle cx="19" cy="19" r="1.5" fill="#005770" opacity="0.4"/>
+              <circle cx="28" cy="16" r="1.5" fill="#005770" opacity="0.4"/>
+              <circle cx="23" cy="26" r="1.5" fill="#005770" opacity="0.4"/>
+              <circle cx="15" cy="26" r="1.2" fill="#005770" opacity="0.25"/>
+              <circle cx="30" cy="24" r="1.2" fill="#005770" opacity="0.25"/>
+              <line x1="19" y1="19" x2="28" y2="16" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
+              <line x1="19" y1="19" x2="23" y2="26" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
+              <line x1="28" y1="16" x2="23" y2="26" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
+              <line x1="15" y1="26" x2="19" y2="19" stroke="#005770" stroke-width="0.5" opacity="0.15"/>
+              <line x1="30" y1="24" x2="28" y2="16" stroke="#005770" stroke-width="0.5" opacity="0.15"/>
               <!-- Magnifying glass -->
-              <circle cx="24" cy="22" r="10" stroke="var(--teal)" stroke-width="1.5" fill="none" opacity="0.6"/>
-              <line x1="31" y1="29" x2="38" y2="36" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-              <!-- Scan line -->
-              <rect class="audit-scanline" x="16" y="14" width="2" height="16" rx="1" fill="var(--lime)" opacity="0"/>
+              <circle cx="22" cy="21" r="11" stroke="#005770" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <line x1="30" y1="29" x2="38" y2="37" stroke="#005770" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+              <!-- Scanning beam -->
+              <rect class="si-beam" x="14" y="12" width="2" height="18" rx="1" fill="#A7DB78" opacity="0"/>
             </svg>
           </div>
           <h3>Workflow & Systems Audit</h3>
@@ -821,22 +889,24 @@ body {
 
         <div class="service-card">
           <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Scattered input dots -->
-              <circle class="funnel-dot-1" cx="8" cy="12" r="2.5" fill="var(--teal)"/>
-              <circle class="funnel-dot-2" cx="12" cy="28" r="2.5" fill="var(--teal)"/>
-              <circle class="funnel-dot-3" cx="6" cy="36" r="2.5" fill="var(--teal)"/>
-              <!-- Funnel shape -->
-              <path d="M16 8 L28 20 L28 28 L16 40 Z" stroke="var(--teal)" stroke-width="1" fill="rgba(0,87,112,0.06)" opacity="0.5"/>
-              <!-- Converging lines -->
-              <line x1="10" y1="12" x2="18" y2="20" stroke="var(--teal)" stroke-width="0.7" opacity="0.3" stroke-dasharray="2 2"/>
-              <line x1="14" y1="28" x2="20" y2="24" stroke="var(--teal)" stroke-width="0.7" opacity="0.3" stroke-dasharray="2 2"/>
-              <line x1="8" y1="36" x2="18" y2="28" stroke="var(--teal)" stroke-width="0.7" opacity="0.3" stroke-dasharray="2 2"/>
-              <!-- Output dot + target -->
-              <circle class="funnel-output" cx="34" cy="24" r="3" fill="var(--lime)"/>
-              <line x1="28" y1="24" x2="40" y2="24" stroke="var(--lime)" stroke-width="1" opacity="0.3"/>
-              <circle cx="42" cy="24" r="4" stroke="var(--lime)" stroke-width="1" fill="none" opacity="0.3"/>
-              <circle cx="42" cy="24" r="1.5" fill="var(--lime)" opacity="0.3"/>
+            <svg viewBox="0 0 48 48" fill="none">
+              <!-- Scattered input signals -->
+              <circle class="si-dot" cx="7" cy="14" r="2.5" fill="#005770" opacity="0.3"/>
+              <circle class="si-dot" cx="10" cy="24" r="2.5" fill="#005770" opacity="0.3"/>
+              <circle class="si-dot" cx="5" cy="34" r="2.5" fill="#005770" opacity="0.3"/>
+              <!-- Converge lines -->
+              <line x1="9" y1="14" x2="20" y2="21" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <line x1="12" y1="24" x2="20" y2="24" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <line x1="7" y1="34" x2="20" y2="27" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <!-- Chevron/funnel -->
+              <polyline points="20,14 28,24 20,34" stroke="#005770" stroke-width="1.2" fill="none" opacity="0.3" stroke-linejoin="round"/>
+              <!-- Output arrow line -->
+              <line x1="28" y1="24" x2="42" y2="24" stroke="#A7DB78" stroke-width="1" opacity="0.25"/>
+              <!-- Output dot -->
+              <circle class="si-arrow-dot" cx="34" cy="24" r="3" fill="#A7DB78" opacity="0"/>
+              <!-- Target -->
+              <circle cx="42" cy="24" r="3.5" stroke="#A7DB78" stroke-width="1" fill="none" opacity="0.25"/>
+              <circle cx="42" cy="24" r="1" fill="#A7DB78" opacity="0.35"/>
             </svg>
           </div>
           <h3>AI Tooling: Signal to Action</h3>
@@ -845,21 +915,21 @@ body {
 
         <div class="service-card">
           <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Waveform line -->
-              <polyline class="wave-line" points="4,24 8,18 12,30 16,16 20,32 24,20 28,28 32,14 36,26 40,22 44,24" stroke="var(--teal)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Structured blocks (appear as wave fades) -->
-              <g class="block-row">
-                <rect x="6" y="14" width="16" height="4" rx="1" fill="var(--lime)" opacity="0.6"/>
-                <rect x="24" y="14" width="8" height="4" rx="1" fill="var(--teal)" opacity="0.3"/>
+            <svg viewBox="0 0 48 48" fill="none">
+              <!-- Waveform -->
+              <polyline class="si-wave" points="4,24 8,17 12,31 16,14 20,33 24,19 28,29 32,13 36,27 40,21 44,24" stroke="#005770" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+              <!-- Structured blocks -->
+              <g class="si-block">
+                <rect x="6" y="14" width="18" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.55"/>
+                <rect x="26" y="14" width="10" height="3.5" rx="1.5" fill="#005770" opacity="0.2"/>
               </g>
-              <g class="block-row">
-                <rect x="6" y="22" width="10" height="4" rx="1" fill="var(--lime)" opacity="0.5"/>
-                <rect x="18" y="22" width="20" height="4" rx="1" fill="var(--teal)" opacity="0.25"/>
+              <g class="si-block">
+                <rect x="6" y="22" width="12" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.45"/>
+                <rect x="20" y="22" width="20" height="3.5" rx="1.5" fill="#005770" opacity="0.15"/>
               </g>
-              <g class="block-row">
-                <rect x="6" y="30" width="22" height="4" rx="1" fill="var(--lime)" opacity="0.4"/>
-                <rect x="30" y="30" width="12" height="4" rx="1" fill="var(--teal)" opacity="0.2"/>
+              <g class="si-block">
+                <rect x="6" y="30" width="24" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.35"/>
+                <rect x="32" y="30" width="8" height="3.5" rx="1.5" fill="#005770" opacity="0.12"/>
               </g>
             </svg>
           </div>
@@ -948,132 +1018,175 @@ body {
 
 <script>
 (function() {
-  // Respect reduced motion preference
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // IntersectionObserver for scroll-triggered animations
+  /* ---- Easing helper ---- */
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  /* ---- lerp ---- */
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  /* ---- Network Resolve Animation ---- */
+  function initNetworkResolve(container) {
+    var nodes = container.querySelectorAll('.nr-node');
+    var lines = container.querySelectorAll('.nr-line');
+    var labels = container.querySelectorAll('.nr-label');
+    var hubGlow = container.querySelector('.nr-hub-glow');
+
+    // Build node-to-line mapping so lines track their connected nodes
+    var resolvedPositions = [];
+    nodes.forEach(function(n) {
+      resolvedPositions.push({ x: +n.dataset.rx, y: +n.dataset.ry });
+    });
+
+    var lineNodeMap = [];
+    lines.forEach(function(l) {
+      var ax = +l.dataset.ax, ay = +l.dataset.ay, bx = +l.dataset.bx, by = +l.dataset.by;
+      var aIdx = -1, bIdx = -1;
+      resolvedPositions.forEach(function(p, i) {
+        if (p.x === ax && p.y === ay) aIdx = i;
+        if (p.x === bx && p.y === by) bIdx = i;
+      });
+      lineNodeMap.push({ a: aIdx, b: bIdx });
+    });
+
+    function scatter() {
+      nodes.forEach(function(n) {
+        n.setAttribute('cx', n.dataset.sx);
+        n.setAttribute('cy', n.dataset.sy);
+        n.setAttribute('fill', 'rgba(167,219,120,0.08)');
+        n.setAttribute('stroke', 'rgba(167,219,120,0.2)');
+      });
+      lines.forEach(function(l, i) {
+        var map = lineNodeMap[i];
+        if (map.a >= 0 && map.b >= 0) {
+          l.setAttribute('x1', nodes[map.a].getAttribute('cx'));
+          l.setAttribute('y1', nodes[map.a].getAttribute('cy'));
+          l.setAttribute('x2', nodes[map.b].getAttribute('cx'));
+          l.setAttribute('y2', nodes[map.b].getAttribute('cy'));
+        }
+        l.setAttribute('stroke', 'rgba(167,219,120,0.06)');
+        l.setAttribute('stroke-width', '0.5');
+      });
+      labels.forEach(function(lb) { lb.style.opacity = '0'; });
+      if (hubGlow) hubGlow.style.opacity = '0';
+    }
+
+    function animateResolve() {
+      // Store scattered start positions
+      var startPositions = [];
+      nodes.forEach(function(n) {
+        startPositions.push({ x: +n.getAttribute('cx'), y: +n.getAttribute('cy') });
+      });
+
+      var startLinePositions = [];
+      lines.forEach(function(l) {
+        startLinePositions.push({
+          x1: +l.getAttribute('x1'), y1: +l.getAttribute('y1'),
+          x2: +l.getAttribute('x2'), y2: +l.getAttribute('y2')
+        });
+      });
+
+      var duration = 2500;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var elapsed = timestamp - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        var t = easeInOutCubic(progress);
+
+        // Animate nodes
+        nodes.forEach(function(n, i) {
+          var rx = +n.dataset.rx, ry = +n.dataset.ry;
+          var cx = lerp(startPositions[i].x, rx, t);
+          var cy = lerp(startPositions[i].y, ry, t);
+          n.setAttribute('cx', cx);
+          n.setAttribute('cy', cy);
+
+          // Color transition (scattered=dim, resolved=bright)
+          var fillOpacity = lerp(0.08, 0.2, t);
+          var strokeOpacity = lerp(0.2, 0.8, t);
+          n.setAttribute('fill', 'rgba(167,219,120,' + fillOpacity.toFixed(3) + ')');
+          n.setAttribute('stroke', 'rgba(167,219,120,' + strokeOpacity.toFixed(3) + ')');
+        });
+
+        // Animate lines to follow their connected nodes
+        lines.forEach(function(l, i) {
+          var map = lineNodeMap[i];
+          if (map.a >= 0 && map.b >= 0) {
+            var nodeA = nodes[map.a], nodeB = nodes[map.b];
+            l.setAttribute('x1', nodeA.getAttribute('cx'));
+            l.setAttribute('y1', nodeA.getAttribute('cy'));
+            l.setAttribute('x2', nodeB.getAttribute('cx'));
+            l.setAttribute('y2', nodeB.getAttribute('cy'));
+          }
+          var lineOpacity = lerp(0.06, 0.35, t);
+          var lineWidth = lerp(0.5, 1, t);
+          l.setAttribute('stroke', 'rgba(167,219,120,' + lineOpacity.toFixed(3) + ')');
+          l.setAttribute('stroke-width', lineWidth.toFixed(2));
+        });
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          // Resolved: show labels and hub glow
+          labels.forEach(function(lb, i) {
+            setTimeout(function() { lb.style.opacity = '0.5'; }, i * 120);
+          });
+          if (hubGlow) {
+            hubGlow.style.opacity = '0.2';
+          }
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    function runCycle() {
+      scatter();
+
+      // Brief pause in scattered state
+      setTimeout(function() {
+        animateResolve();
+
+        // Hold resolved state, then reset
+        setTimeout(function() {
+          runCycle();
+        }, 5000);
+      }, 800);
+    }
+
+    // Start
+    scatter();
+    setTimeout(function() {
+      animateResolve();
+      // After first resolve, start looping
+      setTimeout(function() {
+        runCycle();
+      }, 5000);
+    }, 300);
+  }
+
+  /* ---- IntersectionObserver ---- */
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('anim-visible');
+      if (!entry.isIntersecting) return;
 
-        // Network Resolve: move nodes/lines to resolved positions
-        if (entry.target.dataset.anim === 'network-resolve' && !prefersReduced) {
-          var nodes = entry.target.querySelectorAll('.net-resolve-node');
-          var lines = entry.target.querySelectorAll('.net-resolve-line');
-          var labels = entry.target.querySelectorAll('.net-resolve-label');
+      entry.target.classList.add('anim-visible');
 
-          nodes.forEach(function(n) {
-            n.setAttribute('cx', n.dataset.cxr);
-            n.setAttribute('cy', n.dataset.cyr);
-          });
-
-          lines.forEach(function(l) {
-            l.setAttribute('x1', l.dataset.x1r);
-            l.setAttribute('y1', l.dataset.y1r);
-            l.setAttribute('x2', l.dataset.x2r);
-            l.setAttribute('y2', l.dataset.y2r);
-          });
-
-          labels.forEach(function(lb) {
-            lb.setAttribute('opacity', '0.5');
-          });
-
-          // Reset after pause to loop the animation
-          setTimeout(function() {
-            // Remove class to reset CSS-driven styles
-            entry.target.classList.remove('anim-visible');
-
-            nodes.forEach(function(n) {
-              n.style.transition = 'none';
-              n.setAttribute('cx', n.dataset.cxs);
-              n.setAttribute('cy', n.dataset.cys);
-            });
-            lines.forEach(function(l) {
-              l.style.transition = 'none';
-              l.setAttribute('x1', l.dataset.x1s);
-              l.setAttribute('y1', l.dataset.y1s);
-              l.setAttribute('x2', l.dataset.x2s);
-              l.setAttribute('y2', l.dataset.y2s);
-            });
-            labels.forEach(function(lb) {
-              lb.setAttribute('opacity', '0');
-            });
-
-            // Re-enable transitions and trigger resolve again
-            requestAnimationFrame(function() {
-              requestAnimationFrame(function() {
-                nodes.forEach(function(n) { n.style.transition = ''; });
-                lines.forEach(function(l) { l.style.transition = ''; });
-                entry.target.classList.add('anim-visible');
-
-                nodes.forEach(function(n) {
-                  n.setAttribute('cx', n.dataset.cxr);
-                  n.setAttribute('cy', n.dataset.cyr);
-                });
-                lines.forEach(function(l) {
-                  l.setAttribute('x1', l.dataset.x1r);
-                  l.setAttribute('y1', l.dataset.y1r);
-                  l.setAttribute('x2', l.dataset.x2r);
-                  l.setAttribute('y2', l.dataset.y2r);
-                });
-                labels.forEach(function(lb) {
-                  lb.setAttribute('opacity', '0.5');
-                });
-              });
-            });
-          }, 7000);
-
-          // Set up looping interval
-          setInterval(function() {
-            entry.target.classList.remove('anim-visible');
-            nodes.forEach(function(n) {
-              n.style.transition = 'none';
-              n.setAttribute('cx', n.dataset.cxs);
-              n.setAttribute('cy', n.dataset.cys);
-            });
-            lines.forEach(function(l) {
-              l.style.transition = 'none';
-              l.setAttribute('x1', l.dataset.x1s);
-              l.setAttribute('y1', l.dataset.y1s);
-              l.setAttribute('x2', l.dataset.x2s);
-              l.setAttribute('y2', l.dataset.y2s);
-            });
-            labels.forEach(function(lb) {
-              lb.setAttribute('opacity', '0');
-            });
-
-            requestAnimationFrame(function() {
-              requestAnimationFrame(function() {
-                nodes.forEach(function(n) { n.style.transition = ''; });
-                lines.forEach(function(l) { l.style.transition = ''; });
-                entry.target.classList.add('anim-visible');
-
-                nodes.forEach(function(n) {
-                  n.setAttribute('cx', n.dataset.cxr);
-                  n.setAttribute('cy', n.dataset.cyr);
-                });
-                lines.forEach(function(l) {
-                  l.setAttribute('x1', l.dataset.x1r);
-                  l.setAttribute('y1', l.dataset.y1r);
-                  l.setAttribute('x2', l.dataset.x2r);
-                  l.setAttribute('y2', l.dataset.y2r);
-                });
-                labels.forEach(function(lb) {
-                  lb.setAttribute('opacity', '0.5');
-                });
-              });
-            });
-          }, 14000);
-        }
-
-        // Only trigger once per element
-        observer.unobserve(entry.target);
+      if (entry.target.dataset.anim === 'network-resolve' && !prefersReduced) {
+        initNetworkResolve(entry.target);
       }
-    });
-  }, { threshold: 0.3 });
 
-  // Observe all animation containers
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.25 });
+
   document.querySelectorAll('.anim-container').forEach(function(el) {
     observer.observe(el);
   });
