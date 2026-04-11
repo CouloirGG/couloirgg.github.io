@@ -678,8 +678,6 @@ body {
             </g>
             <path d="M165,62 L165,88" stroke="#ef4444" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
             <circle cx="165" cy="91" r="2.5" fill="#ef4444" opacity="0.15"/>
-            <text class="sf-pct" x="290" y="52" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#ef4444" opacity="0"></text>
-            <text class="sf-pct-label" x="290" y="65" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#ef4444" opacity="0">signals lost</text>
 
             <!-- === ROW 2: Employees  y=120 === -->
             <text x="8" y="124" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">employees</text>
@@ -691,8 +689,6 @@ body {
             </g>
             <path d="M183,127 L183,153" stroke="#ef4444" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
             <circle cx="183" cy="156" r="2.5" fill="#ef4444" opacity="0.15"/>
-            <text class="sf-pct" x="290" y="117" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#ef4444" opacity="0"></text>
-            <text class="sf-pct-label" x="290" y="130" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#ef4444" opacity="0">context lost</text>
 
             <!-- === ROW 3: Leads  y=185 === -->
             <text x="8" y="189" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">leads</text>
@@ -704,8 +700,6 @@ body {
             </g>
             <path d="M150,192 L150,218" stroke="#f59e0b" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
             <circle cx="150" cy="221" r="2.5" fill="#f59e0b" opacity="0.15"/>
-            <text class="sf-pct" x="290" y="182" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#f59e0b" opacity="0"></text>
-            <text class="sf-pct-label" x="290" y="195" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f59e0b" opacity="0">dropped</text>
 
             <!-- Bottom -->
             <text x="190" y="248" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#005770" opacity="0.15">compounding daily across every channel</text>
@@ -743,35 +737,32 @@ body {
             <!-- Subtle background panel -->
             <rect width="380" height="260" fill="rgba(167,219,120,0.015)" rx="10"/>
 
-            <!-- === ROW 1: Customers  y=55 === -->
+            <!-- === ROW 1: Customers  y=55 — gap FIXED (auto-route) === -->
             <text x="8" y="59" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">customers</text>
             <line class="nr-pipe" x1="82" y1="55" x2="158" y2="55" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
-            <line class="nr-pipe" x1="172" y1="55" x2="260" y2="55" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-pipe-post" x1="172" y1="55" x2="260" y2="55" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
             <line class="nr-gap-mark" x1="165" y1="42" x2="165" y2="68" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
-            <path class="nr-bridge" d="M155,55 Q165,35 175,55" stroke="#A7DB78" stroke-width="2.5" fill="none" opacity="0" filter="url(#glow-l)"/>
-            <text class="nr-fix-label" x="165" y="28" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">auto-route</text>
-            <text class="nr-success" x="290" y="52" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#A7DB78" opacity="0">100%</text>
-            <text class="nr-success-label" x="290" y="65" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">routed</text>
+            <line class="nr-fill" x1="155" y1="55" x2="175" y2="55" stroke="#A7DB78" stroke-width="2.5" opacity="0"/>
+            <text class="nr-diagnosis" x="165" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f59e0b" opacity="0">signal dies at handoff</text>
+            <text class="nr-fix-label" x="165" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">auto-route added</text>
 
-            <!-- === ROW 2: Employees  y=120 === -->
+            <!-- === ROW 2: Employees  y=120 — gap ELIMINATED === -->
             <text x="8" y="124" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">employees</text>
             <line class="nr-pipe" x1="82" y1="120" x2="175" y2="120" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
-            <line class="nr-pipe" x1="192" y1="120" x2="260" y2="120" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-pipe-post" x1="192" y1="120" x2="260" y2="120" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
             <line class="nr-gap-mark" x1="183" y1="107" x2="183" y2="133" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
-            <path class="nr-bridge" d="M172,120 Q183,100 194,120" stroke="#A7DB78" stroke-width="2.5" fill="none" opacity="0" filter="url(#glow-l)"/>
-            <text class="nr-fix-label" x="183" y="93" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">auto-capture</text>
-            <text class="nr-success" x="290" y="117" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#A7DB78" opacity="0">100%</text>
-            <text class="nr-success-label" x="290" y="130" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">captured</text>
+            <line class="nr-fill" x1="172" y1="120" x2="195" y2="120" stroke="#A7DB78" stroke-width="2.5" opacity="0"/>
+            <text class="nr-diagnosis" x="183" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f59e0b" opacity="0">unnecessary step</text>
+            <text class="nr-fix-label" x="183" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">step removed</text>
 
-            <!-- === ROW 3: Leads  y=185 === -->
+            <!-- === ROW 3: Leads  y=185 — gap FIXED (structured intake) === -->
             <text x="8" y="189" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">leads</text>
             <line class="nr-pipe" x1="82" y1="185" x2="142" y2="185" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
-            <line class="nr-pipe" x1="158" y1="185" x2="260" y2="185" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-pipe-post" x1="158" y1="185" x2="260" y2="185" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
             <line class="nr-gap-mark" x1="150" y1="172" x2="150" y2="198" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
-            <path class="nr-bridge" d="M139,185 Q150,165 161,185" stroke="#A7DB78" stroke-width="2.5" fill="none" opacity="0" filter="url(#glow-l)"/>
-            <text class="nr-fix-label" x="150" y="158" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">structured handoff</text>
-            <text class="nr-success" x="290" y="182" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#A7DB78" opacity="0">100%</text>
-            <text class="nr-success-label" x="290" y="195" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">routed</text>
+            <line class="nr-fill" x1="139" y1="185" x2="161" y2="185" stroke="#A7DB78" stroke-width="2.5" opacity="0"/>
+            <text class="nr-diagnosis" x="150" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f59e0b" opacity="0">no structured path</text>
+            <text class="nr-fix-label" x="150" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">structured intake</text>
 
             <!-- Phase narration (updated by JS) -->
             <text class="nr-phase" x="190" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#A7DB78" opacity="0"></text>
@@ -987,18 +978,16 @@ body {
      ================================================================ */
   function initSignalFlow(container) {
     var pkts = container.querySelectorAll('.sf-pkt');
-    var pctTexts = container.querySelectorAll('.sf-pct');
-    var pctLabels = container.querySelectorAll('.sf-pct-label');
     var industryLabel = container.querySelector('.sf-industry');
 
     var cycle = 7000;
     var stagger = 350;
 
-    /* Industry scenarios with different loss profiles */
+    /* Industry scenarios */
     var industries = [
-      { name: '// saas', pcts: [40, 60, 25] },
-      { name: '// agencies', pcts: [35, 50, 45] },
-      { name: '// manufacturing', pcts: [30, 65, 20] }
+      { name: '// saas' },
+      { name: '// agencies' },
+      { name: '// manufacturing' }
     ];
     var industryIdx = 0;
 
@@ -1068,8 +1057,6 @@ body {
 
       /* Reset */
       pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
-      pctTexts.forEach(function(el) { el.textContent = ''; el.setAttribute('opacity', '0'); });
-      pctLabels.forEach(function(el) { el.setAttribute('opacity', '0'); });
 
       var t0 = performance.now();
 
@@ -1104,18 +1091,6 @@ body {
           p.setAttribute('opacity', Math.max(0, op).toFixed(3));
         });
 
-        /* Count up loss percentages with stagger per row */
-        for (var r = 0; r < 3; r++) {
-          var lossDelay = 1200 + r * 500;
-          if (elapsed > lossDelay && pctTexts[r]) {
-            var fadeT = Math.min((elapsed - lossDelay) / 1000, 1);
-            var currentPct = Math.round(ind.pcts[r] * easeInOutCubic(fadeT));
-            pctTexts[r].textContent = currentPct + '%';
-            pctTexts[r].setAttribute('opacity', (Math.min(fadeT * 2, 1) * 0.85).toFixed(3));
-            if (pctLabels[r]) pctLabels[r].setAttribute('opacity', (Math.min(fadeT * 2, 1) * 0.45).toFixed(3));
-          }
-        }
-
         requestAnimationFrame(frame);
       }
       requestAnimationFrame(frame);
@@ -1127,31 +1102,29 @@ body {
   /* ================================================================
      NETWORK RESOLVE (Approach section)
      Three lanes matching problem layout.
-     Phase 0: broken hold
-     Phase 1: identify gaps (gap marks pulse amber)
-     Phase 2: bridges appear with fix labels
-     Phase 3: packets flow through all rows
-     Phase 4: success indicators light up
-     Phase 5: hold resolved
+     Phase 0: broken hold with leak packets (same problem)
+     Phase 1: diagnose - identify root causes
+     Phase 2: fix - fill gaps, pipes solidify
+     Phase 3: packets flow through repaired paths
+     Phase 4: hold resolved
      ================================================================ */
   function initNetworkResolve(container) {
     var pipes = container.querySelectorAll('.nr-pipe');
+    var pipesPost = container.querySelectorAll('.nr-pipe-post');
     var gapMarks = container.querySelectorAll('.nr-gap-mark');
-    var bridges = container.querySelectorAll('.nr-bridge');
+    var fills = container.querySelectorAll('.nr-fill');
+    var diagLabels = container.querySelectorAll('.nr-diagnosis');
     var fixLabels = container.querySelectorAll('.nr-fix-label');
-    var successTexts = container.querySelectorAll('.nr-success');
-    var successLabels = container.querySelectorAll('.nr-success-label');
     var phaseText = container.querySelector('.nr-phase');
     var pkts = container.querySelectorAll('.nr-pkt');
 
     /* Phase durations (ms) */
-    var P0 = 2000;   /* broken hold */
-    var P1 = 1500;   /* identify gaps */
-    var P2 = 1500;   /* bridges appear */
-    var P3 = 3000;   /* packets flow */
-    var P4 = 1000;   /* success */
-    var P5 = 2500;   /* hold */
-    var totalCycle = P0 + P1 + P2 + P3 + P4 + P5;
+    var P0 = 2500;   /* broken hold with leak packets */
+    var P1 = 2000;   /* diagnose */
+    var P2 = 2000;   /* fix - fill gaps, solidify pipes */
+    var P3 = 2500;   /* packets flow */
+    var P4 = 2000;   /* hold resolved */
+    var totalCycle = P0 + P1 + P2 + P3 + P4;
 
     /* Row definitions (matching problem SVG positions) */
     var rows = [
@@ -1159,6 +1132,15 @@ body {
       { y: 120, gapX: 183, lineStart: 82, lineEnd: 260 },
       { y: 185, gapX: 150, lineStart: 82, lineEnd: 260 }
     ];
+
+    function leakPath(row) {
+      return [
+        { x: row.lineStart, y: row.y, t: 0 },
+        { x: row.gapX - 3, y: row.y, t: 0.5 },
+        { x: row.gapX, y: row.y + 8, t: 0.65 },
+        { x: row.gapX + 4, y: row.y + 40, t: 1.0 }
+      ];
+    }
 
     function fullPath(row) {
       return [
@@ -1169,26 +1151,26 @@ body {
       ];
     }
 
-    var pktStagger = 220;
-
     function reset() {
-      pipes.forEach(function(p, i) {
-        /* Even-indexed = solid pre-gap, odd = dashed post-gap */
-        if (i % 2 === 0) {
-          p.setAttribute('stroke', 'rgba(167,219,120,0.12)');
-        } else {
-          p.setAttribute('stroke', 'rgba(167,219,120,0.06)');
-        }
+      pipes.forEach(function(p) { p.setAttribute('stroke', 'rgba(167,219,120,0.12)'); });
+      pipesPost.forEach(function(p) {
+        p.setAttribute('stroke', 'rgba(167,219,120,0.06)');
+        p.setAttribute('stroke-dasharray', '4 3');
+        p.setAttribute('stroke-width', '1.5');
       });
       gapMarks.forEach(function(g) {
         g.setAttribute('stroke', 'rgba(167,219,120,0.1)');
+        g.setAttribute('opacity', '1');
       });
-      bridges.forEach(function(b) { b.setAttribute('opacity', '0'); });
+      fills.forEach(function(f) { f.setAttribute('opacity', '0'); });
+      diagLabels.forEach(function(d) { d.setAttribute('opacity', '0'); });
       fixLabels.forEach(function(f) { f.setAttribute('opacity', '0'); });
-      successTexts.forEach(function(s) { s.setAttribute('opacity', '0'); });
-      successLabels.forEach(function(s) { s.setAttribute('opacity', '0'); });
       if (phaseText) { phaseText.textContent = ''; phaseText.setAttribute('opacity', '0'); }
-      pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
+      pkts.forEach(function(p) {
+        p.setAttribute('opacity', '0');
+        p.setAttribute('fill', '#A7DB78');
+        p.setAttribute('filter', 'url(#glow-l)');
+      });
     }
 
     function setPhaseText(txt, op) {
@@ -1205,18 +1187,47 @@ body {
         var elapsed = now - t0;
         if (elapsed > totalCycle) { runCycle(); return; }
 
-        /* ---- Phase 0: broken hold ---- */
+        /* ---- Phase 0: broken hold with leak packets ---- */
         if (elapsed < P0) {
+          var leakDur = 1800;
+          for (var r = 0; r < 3; r++) {
+            var pkt = pkts[r];
+            if (!pkt) continue;
+            var delay = r * 200;
+            var local = (elapsed - delay) / leakDur;
+            if (local < 0 || local > 1.1) {
+              if (local > 1) pkt.setAttribute('opacity', '0');
+              continue;
+            }
+            local = Math.min(local, 1);
+            var path = leakPath(rows[r]);
+            var pos = waypointPos(path, easeInOutCubic(local));
+            pkt.setAttribute('cx', pos.x.toFixed(1));
+            pkt.setAttribute('cy', pos.y.toFixed(1));
+            var falling = pos.y > rows[r].y + 5;
+            pkt.setAttribute('fill', falling ? '#ef4444' : '#A7DB78');
+            pkt.setAttribute('filter', falling ? '' : 'url(#glow-l)');
+            var op = local < 0.05 ? local / 0.05 : (falling ? Math.max(0, 1 - (pos.y - rows[r].y - 5) / 36) : 1);
+            pkt.setAttribute('opacity', (op * 0.8).toFixed(3));
+          }
           requestAnimationFrame(frame);
           return;
         }
+        /* Reset leak packets */
+        for (var r = 0; r < 3; r++) {
+          if (pkts[r]) {
+            pkts[r].setAttribute('opacity', '0');
+            pkts[r].setAttribute('fill', '#A7DB78');
+            pkts[r].setAttribute('filter', 'url(#glow-l)');
+          }
+        }
 
-        /* ---- Phase 1: identify gaps ---- */
+        /* ---- Phase 1: diagnose ---- */
         var p1e = elapsed - P0;
         if (p1e <= P1) {
           var t = p1e / P1;
-          var fadeIn = t < 0.15 ? t / 0.15 : 1;
-          setPhaseText('mapping signal flow', fadeIn * 0.5);
+          var fadeIn = t < 0.2 ? t / 0.2 : 1;
+          setPhaseText('mapping how signals actually move', fadeIn * 0.5);
 
           /* Pulse gap marks amber */
           var pulse = Math.sin(t * Math.PI * 3) * 0.2 + 0.35;
@@ -1224,53 +1235,85 @@ body {
             g.setAttribute('stroke', 'rgba(245,158,11,' + pulse.toFixed(3) + ')');
           });
 
+          /* Diagnosis labels fade in with stagger */
+          diagLabels.forEach(function(d, i) {
+            var s = 0.1 + i * 0.15;
+            var lt = Math.max(0, Math.min((t - s) / 0.3, 1));
+            d.setAttribute('opacity', (lt * 0.65).toFixed(3));
+          });
+
           requestAnimationFrame(frame);
           return;
         }
-        gapMarks.forEach(function(g) {
-          g.setAttribute('stroke', 'rgba(167,219,120,0.1)');
-        });
 
-        /* ---- Phase 2: bridges appear ---- */
+        /* ---- Phase 2: fix - fill gaps, solidify pipes ---- */
         var p2e = elapsed - P0 - P1;
         if (p2e <= P2) {
           var t = easeInOutCubic(p2e / P2);
-          setPhaseText('simple structural fix', 0.6);
+          setPhaseText('the fix is often simple', 0.5);
 
-          /* Bridges fade in with stagger */
-          bridges.forEach(function(b, i) {
-            var s = i * 0.15;
-            var lt = Math.max(0, Math.min((t - s) / 0.5, 1));
-            b.setAttribute('opacity', lt.toFixed(3));
+          /* Diagnosis labels fade out */
+          diagLabels.forEach(function(d) {
+            d.setAttribute('opacity', Math.max(0, 0.65 * (1 - t * 2.5)).toFixed(3));
           });
+
+          /* Gap marks fade out */
+          gapMarks.forEach(function(g) {
+            g.setAttribute('stroke', 'rgba(245,158,11,' + (0.35 * (1 - t)).toFixed(3) + ')');
+            g.setAttribute('opacity', (1 - t).toFixed(3));
+          });
+
+          /* Fill lines appear with stagger */
+          fills.forEach(function(f, i) {
+            var s = i * 0.15;
+            var lt = Math.max(0, Math.min((t - s) / 0.4, 1));
+            f.setAttribute('opacity', lt.toFixed(3));
+          });
+
+          /* Fix labels appear after fills */
           fixLabels.forEach(function(f, i) {
-            var s = i * 0.15;
-            var lt = Math.max(0, Math.min((t - s - 0.2) / 0.4, 1));
-            f.setAttribute('opacity', (lt * 0.7).toFixed(3));
+            var s = 0.25 + i * 0.15;
+            var lt = Math.max(0, Math.min((t - s) / 0.3, 1));
+            f.setAttribute('opacity', (lt * 0.6).toFixed(3));
           });
 
-          /* Brighten pipes */
+          /* Pre-gap pipes brighten */
           pipes.forEach(function(p) {
-            p.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.1, 0.35, t).toFixed(3) + ')');
+            p.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.12, 0.4, t).toFixed(3) + ')');
+          });
+
+          /* Post-gap pipes solidify: dashed becomes solid, brighter */
+          pipesPost.forEach(function(p) {
+            p.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.06, 0.4, t).toFixed(3) + ')');
+            if (t > 0.5) {
+              p.setAttribute('stroke-dasharray', 'none');
+              p.setAttribute('stroke-width', '2.5');
+            }
           });
 
           requestAnimationFrame(frame);
           return;
         }
 
-        /* Ensure bridges fully visible */
-        bridges.forEach(function(b) { b.setAttribute('opacity', '1'); });
-        fixLabels.forEach(function(f) { f.setAttribute('opacity', '0.7'); });
-        pipes.forEach(function(p) {
-          p.setAttribute('stroke', 'rgba(167,219,120,0.35)');
+        /* Ensure fix state fully applied */
+        gapMarks.forEach(function(g) { g.setAttribute('opacity', '0'); });
+        diagLabels.forEach(function(d) { d.setAttribute('opacity', '0'); });
+        fills.forEach(function(f) { f.setAttribute('opacity', '1'); });
+        fixLabels.forEach(function(f) { f.setAttribute('opacity', '0.6'); });
+        pipes.forEach(function(p) { p.setAttribute('stroke', 'rgba(167,219,120,0.4)'); });
+        pipesPost.forEach(function(p) {
+          p.setAttribute('stroke', 'rgba(167,219,120,0.4)');
+          p.setAttribute('stroke-dasharray', 'none');
+          p.setAttribute('stroke-width', '2.5');
         });
 
-        /* ---- Phase 3: packets flow ---- */
+        /* ---- Phase 3: packets flow through repaired paths ---- */
         var p3e = elapsed - P0 - P1 - P2;
         if (p3e <= P3) {
-          setPhaseText('signals flowing', 0.6);
+          setPhaseText('signals flow without workarounds', 0.5);
 
-          var flowDur = 2200;
+          var flowDur = 1800;
+          var pktStagger = 220;
           pkts.forEach(function(pkt, i) {
             var rowIdx = Math.floor(i / 3);
             var pktIdx = i % 3;
@@ -1294,25 +1337,8 @@ body {
         }
         pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
 
-        /* ---- Phase 4: success indicators ---- */
-        var p4e = elapsed - P0 - P1 - P2 - P3;
-        if (p4e <= P4) {
-          var t = easeInOutCubic(p4e / P4);
-          setPhaseText('every signal delivered', 0.6);
-
-          successTexts.forEach(function(s) { s.setAttribute('opacity', lerp(0, 0.85, t).toFixed(3)); });
-          successLabels.forEach(function(s) { s.setAttribute('opacity', lerp(0, 0.45, t).toFixed(3)); });
-
-          requestAnimationFrame(frame);
-          return;
-        }
-
-        /* Ensure success visible */
-        successTexts.forEach(function(s) { s.setAttribute('opacity', '0.85'); });
-        successLabels.forEach(function(s) { s.setAttribute('opacity', '0.45'); });
-        setPhaseText('every signal delivered', 0.6);
-
-        /* ---- Phase 5: hold ---- */
+        /* ---- Phase 4: hold resolved ---- */
+        setPhaseText('every signal arrives', 0.5);
         requestAnimationFrame(frame);
       }
 
