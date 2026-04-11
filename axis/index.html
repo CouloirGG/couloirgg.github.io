@@ -180,17 +180,27 @@
     opacity: 1;
   }
 
-  /* Annotations */
+  /* Annotations (flow system) */
   .ss-annotation {
     position: absolute;
-    border: 2px solid rgba(74, 192, 255, 0.5);
+    border: 2px solid rgba(74, 192, 255, 0);
     border-radius: 4px;
     pointer-events: none;
     opacity: 0;
     z-index: 1;
+    transition: opacity 0.4s ease, border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
   }
-  .ss-card.anim-visible .ss-annotation {
-    animation: annotation-pulse 2.4s ease-in-out infinite;
+  .ss-annotation.ss-ann-active {
+    opacity: 1;
+    border-color: rgba(74, 192, 255, 0.7);
+    background: rgba(74, 192, 255, 0.06);
+    box-shadow: 0 0 12px rgba(74, 192, 255, 0.2), inset 0 0 8px rgba(74, 192, 255, 0.05);
+  }
+  .ss-annotation.ss-ann-visited {
+    opacity: 1;
+    border-color: rgba(74, 192, 255, 0.25);
+    background: transparent;
+    box-shadow: none;
   }
   .ss-annotation-label {
     position: absolute;
@@ -201,10 +211,34 @@
     white-space: nowrap;
     text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
-  @keyframes annotation-pulse {
-    0%, 100% { opacity: 0; }
-    30%, 70% { opacity: 0.85; }
+  .ss-ann-active .ss-annotation-label,
+  .ss-ann-visited .ss-annotation-label {
+    opacity: 1;
+  }
+  /* Flow SVG overlay */
+  .ss-flow-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .ss-flow-line {
+    stroke: rgba(74, 192, 255, 0.25);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 3;
+    fill: none;
+  }
+  .ss-flow-dot {
+    fill: #4ac0ff;
+    opacity: 0;
+  }
+  .ss-flow-arrow {
+    fill: rgba(74, 192, 255, 0.35);
   }
 
   /* Lightbox */
@@ -337,6 +371,118 @@
     color: #475569;
   }
 
+  /* Workflow animation */
+  .workflow-anim {
+    max-width: 700px;
+    margin: 12px auto 0;
+  }
+  .workflow-anim svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .wf-zone-label {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 11px;
+    fill: #94a3b8;
+    text-anchor: middle;
+  }
+  /* Sound wave arcs */
+  .wf-wave {
+    opacity: 0;
+    animation: wf-wave-pulse 8s ease-in-out infinite;
+  }
+  .wf-wave:nth-child(2) { animation-delay: 0.3s; }
+  .wf-wave:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes wf-wave-pulse {
+    0%, 8% { opacity: 0; transform: translateX(-4px); }
+    4%, 6% { opacity: 0.7; transform: translateX(0); }
+    12%, 100% { opacity: 0; transform: translateX(4px); }
+  }
+  /* Mic pulse */
+  .wf-mic-glow {
+    opacity: 0;
+    animation: wf-mic-pulse 8s ease-in-out infinite;
+  }
+  @keyframes wf-mic-pulse {
+    0%, 18% { opacity: 0; }
+    25%, 38% { opacity: 0.6; }
+    45%, 100% { opacity: 0; }
+  }
+  /* Waveform bars */
+  .wf-bar {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transform: scaleY(0.3);
+    animation: wf-bar-bounce 8s ease-in-out infinite;
+  }
+  .wf-bar:nth-child(1) { animation-delay: 1.8s; }
+  .wf-bar:nth-child(2) { animation-delay: 1.9s; }
+  .wf-bar:nth-child(3) { animation-delay: 2.0s; }
+  .wf-bar:nth-child(4) { animation-delay: 2.1s; }
+  .wf-bar:nth-child(5) { animation-delay: 2.2s; }
+  @keyframes wf-bar-bounce {
+    0%, 18% { transform: scaleY(0.3); }
+    25% { transform: scaleY(1); }
+    30% { transform: scaleY(0.5); }
+    35% { transform: scaleY(0.9); }
+    42%, 100% { transform: scaleY(0.3); }
+  }
+  /* Analyze zone: orbiting dots */
+  .wf-orbit-dot {
+    animation: wf-orbit 8s linear infinite;
+    transform-box: fill-box;
+    transform-origin: 80px 60px;
+  }
+  .wf-orbit-dot:nth-child(1) { animation-delay: 3.0s; }
+  .wf-orbit-dot:nth-child(2) { animation-delay: 3.5s; }
+  .wf-orbit-dot:nth-child(3) { animation-delay: 4.0s; }
+  @keyframes wf-orbit {
+    0%, 45% { opacity: 0; }
+    50% { opacity: 0.8; transform: rotate(0deg); }
+    68% { opacity: 0.8; transform: rotate(360deg); }
+    75%, 100% { opacity: 0; }
+  }
+  /* Scan line */
+  .wf-scan {
+    opacity: 0;
+    animation: wf-scan-sweep 8s ease-in-out infinite;
+  }
+  @keyframes wf-scan-sweep {
+    0%, 45% { opacity: 0; transform: translateX(0); }
+    50% { opacity: 0.6; transform: translateX(0); }
+    65% { opacity: 0.6; transform: translateX(140px); }
+    70%, 100% { opacity: 0; transform: translateX(140px); }
+  }
+  /* Output cards slide in */
+  .wf-card {
+    opacity: 0;
+    animation: wf-card-in 8s ease-out infinite;
+  }
+  .wf-card:nth-child(1) { animation-delay: 0s; }
+  .wf-card:nth-child(2) { animation-delay: 0.2s; }
+  .wf-card:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes wf-card-in {
+    0%, 70% { opacity: 0; transform: translateY(10px); }
+    78% { opacity: 1; transform: translateY(0); }
+    92%, 100% { opacity: 0; }
+  }
+  /* Flow packet (glowing dot along dashed lines) */
+  .wf-packet {
+    opacity: 0;
+    animation: wf-packet-move 8s ease-in-out infinite;
+  }
+  .wf-packet-1 { animation-delay: 0s; }
+  .wf-packet-2 { animation-delay: 2.5s; }
+  .wf-packet-3 { animation-delay: 5.0s; }
+  @keyframes wf-packet-move {
+    0% { opacity: 0; transform: translateX(0); }
+    2% { opacity: 1; }
+    10% { opacity: 1; transform: translateX(200px); }
+    12% { opacity: 0; transform: translateX(200px); }
+    100% { opacity: 0; }
+  }
+
   @media (max-width: 600px) {
     .features, .trust-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 1.8rem; }
@@ -358,11 +504,23 @@
     }
     .ss-card:hover { transform: none; }
     .ss-card::after { display: none; }
-    .ss-card.anim-visible .ss-annotation {
-      animation: none;
-      opacity: 0.5;
+    .ss-annotation {
+      opacity: 0.5 !important;
+      border-color: rgba(74, 192, 255, 0.3) !important;
+      transition: none !important;
     }
+    .ss-annotation-label { opacity: 1 !important; }
+    .ss-flow-line { opacity: 0.5; }
+    .ss-flow-dot { display: none; }
     .lb-overlay { transition: none; }
+    /* Workflow animation: static fallback */
+    .wf-wave { animation: none !important; opacity: 0.25; }
+    .wf-mic-glow { animation: none !important; opacity: 0.4; }
+    .wf-bar { animation: none !important; transform: scaleY(0.6); }
+    .wf-orbit-dot { animation: none !important; opacity: 0.5; }
+    .wf-scan { animation: none !important; opacity: 0; }
+    .wf-card { animation: none !important; opacity: 1; transform: none; }
+    .wf-packet { animation: none !important; opacity: 0; }
   }
 </style>
 </head>
@@ -372,7 +530,117 @@
 
   <div class="hero">
     <h1><span>AXIS</span> Producer</h1>
-    <p class="subtitle">AI-powered session intelligence. Capture meetings, design sessions, and working conversations, and get structured notes, action items, and communication insights automatically.</p>
+    <div class="workflow-anim">
+      <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow: conversation to capture to analysis to structured output">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Zone 1: Conversation (x: 0-180) -->
+        <g transform="translate(0,20)">
+          <!-- Person 1 -->
+          <circle cx="50" cy="50" r="14" fill="#94a3b8" opacity="0.6"/>
+          <ellipse cx="50" cy="82" rx="18" ry="12" fill="#94a3b8" opacity="0.4"/>
+          <!-- Person 2 -->
+          <circle cx="95" cy="38" r="14" fill="#94a3b8" opacity="0.6"/>
+          <ellipse cx="95" cy="70" rx="18" ry="12" fill="#94a3b8" opacity="0.4"/>
+          <!-- Person 3 -->
+          <circle cx="140" cy="54" r="14" fill="#94a3b8" opacity="0.6"/>
+          <ellipse cx="140" cy="86" rx="18" ry="12" fill="#94a3b8" opacity="0.4"/>
+          <!-- Sound waves -->
+          <g class="wf-wave" style="animation-delay:0s">
+            <path d="M162,55 Q172,45 172,60 Q172,75 162,65" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.6"/>
+          </g>
+          <g class="wf-wave" style="animation-delay:0.3s">
+            <path d="M170,50 Q183,38 183,62 Q183,86 170,74" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.45"/>
+          </g>
+          <g class="wf-wave" style="animation-delay:0.6s">
+            <path d="M178,45 Q194,30 194,62 Q194,94 178,79" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.3"/>
+          </g>
+        </g>
+        <text class="wf-zone-label" x="90" y="210">conversation</text>
+
+        <!-- Dashed connector 1->2 -->
+        <line x1="188" y1="90" x2="218" y2="90" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <!-- Flow packet 1 -->
+        <circle class="wf-packet wf-packet-1" cx="188" cy="90" r="3" fill="#4ac0ff" filter="url(#glow)"/>
+
+        <!-- Zone 2: Capture (x: 210-375) -->
+        <g transform="translate(210,25)">
+          <!-- Device frame -->
+          <rect x="10" y="10" width="150" height="110" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Mic icon -->
+          <rect x="72" y="30" width="18" height="32" rx="9" fill="none" stroke="#4ac0ff" stroke-width="1.8"/>
+          <line x1="81" y1="68" x2="81" y2="80" stroke="#4ac0ff" stroke-width="1.8"/>
+          <path d="M68,62 Q68,76 81,76 Q94,76 94,62" fill="none" stroke="#4ac0ff" stroke-width="1.5"/>
+          <!-- Mic glow -->
+          <circle class="wf-mic-glow" cx="81" cy="48" r="22" fill="#4ac0ff" opacity="0"/>
+          <!-- Waveform bars -->
+          <g transform="translate(30,90)">
+            <rect class="wf-bar" x="0" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
+            <rect class="wf-bar" x="10" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
+            <rect class="wf-bar" x="20" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
+            <rect class="wf-bar" x="30" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
+            <rect class="wf-bar" x="40" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
+          </g>
+        </g>
+        <text class="wf-zone-label" x="293" y="210">capture</text>
+
+        <!-- Dashed connector 2->3 -->
+        <line x1="383" y1="90" x2="418" y2="90" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <!-- Flow packet 2 -->
+        <circle class="wf-packet wf-packet-2" cx="383" cy="90" r="3" fill="#4ac0ff" filter="url(#glow)"/>
+
+        <!-- Zone 3: Analyze (x: 410-575) -->
+        <g transform="translate(410,25)">
+          <!-- Frame -->
+          <rect x="10" y="10" width="150" height="110" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Orbiting dots -->
+          <circle class="wf-orbit-dot" cx="45" cy="45" r="4" fill="#4ac0ff" opacity="0"/>
+          <circle class="wf-orbit-dot" cx="120" cy="45" r="4" fill="#34d399" opacity="0"/>
+          <circle class="wf-orbit-dot" cx="80" cy="95" r="4" fill="#fbbf24" opacity="0"/>
+          <!-- Scan line -->
+          <rect class="wf-scan" x="18" y="20" width="2" height="90" rx="1" fill="#4ac0ff" opacity="0"/>
+          <!-- AI label -->
+          <text x="80" y="72" text-anchor="middle" fill="#475569" font-size="14" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
+        </g>
+        <text class="wf-zone-label" x="493" y="210">analyze</text>
+
+        <!-- Dashed connector 3->4 -->
+        <line x1="583" y1="90" x2="628" y2="90" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <!-- Flow packet 3 -->
+        <circle class="wf-packet wf-packet-3" cx="583" cy="90" r="3" fill="#4ac0ff" filter="url(#glow)"/>
+
+        <!-- Zone 4: Structured Output (x: 625-800) -->
+        <g transform="translate(625,25)">
+          <!-- Card 1: Decision (cyan) -->
+          <g class="wf-card" style="animation-delay:0s">
+            <rect x="10" y="12" width="160" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="26" cy="26" r="5" fill="#4ac0ff"/>
+            <rect x="38" y="21" width="60" height="4" rx="2" fill="#1e293b"/>
+            <rect x="38" y="28" width="40" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
+          </g>
+          <!-- Card 2: Action (amber) -->
+          <g class="wf-card" style="animation-delay:0.2s">
+            <rect x="10" y="48" width="160" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="26" cy="62" r="5" fill="#fbbf24"/>
+            <rect x="38" y="57" width="70" height="4" rx="2" fill="#1e293b"/>
+            <rect x="38" y="64" width="45" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
+          </g>
+          <!-- Card 3: Blocker (red) -->
+          <g class="wf-card" style="animation-delay:0.4s">
+            <rect x="10" y="84" width="160" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="26" cy="98" r="5" fill="#ef4444"/>
+            <rect x="38" y="93" width="55" height="4" rx="2" fill="#1e293b"/>
+            <rect x="38" y="100" width="35" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
+          </g>
+        </g>
+        <text class="wf-zone-label" x="713" y="210">structured output</text>
+      </svg>
+    </div>
   </div>
 
   <div class="section">
@@ -588,35 +856,62 @@
 (function() {
   /* ---- Annotation data keyed by image filename ---- */
   var annotations = {
-    'phone_briefing.jpg': [
-      { label: 'Critical items', top: 18, left: 6, w: 88, h: 14, delay: 0 },
-      { label: 'Action items', top: 44, left: 6, w: 88, h: 14, delay: 0.4 },
-      { label: 'Blockers', top: 70, left: 6, w: 88, h: 14, delay: 0.8 }
-    ],
-    'phone_briefing_expanded.jpg': [
-      { label: 'Blocker details', top: 22, left: 6, w: 88, h: 20, delay: 0 },
-      { label: 'Open questions', top: 60, left: 6, w: 88, h: 18, delay: 0.5 }
-    ],
-    'phone_action_detail.jpg': [
-      { label: 'AI-generated ideas', top: 14, left: 6, w: 88, h: 22, delay: 0 },
-      { label: 'Resolved items', top: 54, left: 6, w: 88, h: 22, delay: 0.5 }
-    ],
-    'phone_activity.jpg': [
-      { label: 'AI source tag', top: 26, left: 50, w: 40, h: 8, delay: 0 },
-      { label: 'Mic source', top: 44, left: 50, w: 40, h: 8, delay: 0.5 }
-    ],
-    'tablet_briefing.jpg': [
-      { label: 'Critical items', top: 16, left: 4, w: 44, h: 32, delay: 0 },
-      { label: 'Session overview', top: 16, left: 52, w: 44, h: 32, delay: 0.5 }
-    ],
-    'tablet_briefing_detail.jpg': [
-      { label: 'Expanded details', top: 16, left: 4, w: 55, h: 45, delay: 0 },
-      { label: 'Action items', top: 16, left: 62, w: 34, h: 30, delay: 0.5 }
-    ],
-    'tablet_action.jpg': [
-      { label: 'Session actions', top: 18, left: 4, w: 92, h: 38, delay: 0 }
-    ]
+    'phone_briefing.jpg': {
+      items: [
+        { label: 'Critical items', top: 18, left: 6, w: 88, h: 14 },
+        { label: 'Action items', top: 44, left: 6, w: 88, h: 14 },
+        { label: 'Blockers', top: 70, left: 6, w: 88, h: 14 }
+      ],
+      flow: [0, 1, 2]
+    },
+    'phone_briefing_expanded.jpg': {
+      items: [
+        { label: 'Blocker details', top: 22, left: 6, w: 88, h: 20 },
+        { label: 'Open questions', top: 60, left: 6, w: 88, h: 18 }
+      ],
+      flow: [0, 1]
+    },
+    'phone_action_detail.jpg': {
+      items: [
+        { label: 'AI-generated ideas', top: 14, left: 6, w: 88, h: 22 },
+        { label: 'Resolved items', top: 54, left: 6, w: 88, h: 22 }
+      ],
+      flow: [0, 1]
+    },
+    'phone_activity.jpg': {
+      items: [
+        { label: 'AI source tag', top: 26, left: 50, w: 40, h: 8 },
+        { label: 'Mic source', top: 44, left: 50, w: 40, h: 8 }
+      ],
+      flow: [0, 1]
+    },
+    'tablet_briefing.jpg': {
+      items: [
+        { label: 'Critical items', top: 16, left: 4, w: 44, h: 32 },
+        { label: 'Session overview', top: 16, left: 52, w: 44, h: 32 }
+      ],
+      flow: [0, 1]
+    },
+    'tablet_briefing_detail.jpg': {
+      items: [
+        { label: 'Expanded details', top: 16, left: 4, w: 55, h: 45 },
+        { label: 'Action items', top: 16, left: 62, w: 34, h: 30 }
+      ],
+      flow: [0, 1]
+    },
+    'tablet_action.jpg': {
+      items: [
+        { label: 'Session actions', top: 18, left: 4, w: 92, h: 38 }
+      ],
+      flow: [0]
+    }
   };
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
 
   /* ---- Tab switching ---- */
   document.querySelectorAll('.ss-tab').forEach(function(tab) {
@@ -626,7 +921,6 @@
       var target = tab.dataset.target;
       document.getElementById('ss-phone').style.display = target === 'phone' ? '' : 'none';
       document.getElementById('ss-tablet').style.display = target === 'tablet' ? '' : 'none';
-      /* Re-observe newly-visible cards */
       observeCards();
     });
   });
@@ -658,27 +952,207 @@
     });
   }
 
+  function isHorizontalFlow(filename) {
+    return filename.indexOf('tablet_') === 0;
+  }
+
   function addAnnotations(card) {
     var img = card.querySelector('.ss-img-wrap img');
     if (!img) return;
     var filename = img.src.split('/').pop();
     var data = annotations[filename];
-    if (!data) return;
+    if (!data || !data.items) return;
     var wrap = card.querySelector('.ss-img-wrap');
-    data.forEach(function(a) {
+    var horizontal = isHorizontalFlow(filename);
+    var annEls = [];
+
+    /* Create annotation divs */
+    data.items.forEach(function(a) {
       var el = document.createElement('div');
       el.className = 'ss-annotation';
       el.style.top = a.top + '%';
       el.style.left = a.left + '%';
       el.style.width = a.w + '%';
       el.style.height = a.h + '%';
-      el.style.animationDelay = a.delay + 's';
       var lbl = document.createElement('span');
       lbl.className = 'ss-annotation-label';
       lbl.textContent = a.label;
       el.appendChild(lbl);
       wrap.appendChild(el);
+      annEls.push(el);
     });
+
+    /* Create SVG overlay for connection lines */
+    if (data.flow.length > 1) {
+      var svgNS = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('class', 'ss-flow-svg');
+      svg.setAttribute('viewBox', '0 0 100 100');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      var lines = [];
+      var dots = [];
+
+      for (var i = 0; i < data.flow.length - 1; i++) {
+        var fromIdx = data.flow[i];
+        var toIdx = data.flow[i + 1];
+        var from = data.items[fromIdx];
+        var to = data.items[toIdx];
+        var x1, y1, x2, y2;
+
+        if (horizontal) {
+          x1 = from.left + from.w;
+          y1 = from.top + from.h / 2;
+          x2 = to.left;
+          y2 = to.top + to.h / 2;
+        } else {
+          x1 = from.left + from.w / 2;
+          y1 = from.top + from.h;
+          x2 = to.left + to.w / 2;
+          y2 = to.top;
+        }
+
+        var line = document.createElementNS(svgNS, 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('class', 'ss-flow-line');
+        svg.appendChild(line);
+        lines.push({ x1: x1, y1: y1, x2: x2, y2: y2 });
+
+        /* Arrow at endpoint */
+        var angle = Math.atan2(y2 - y1, x2 - x1);
+        var arrowSize = 1.5;
+        var ax = x2 - Math.cos(angle) * arrowSize;
+        var ay = y2 - Math.sin(angle) * arrowSize;
+        var al = document.createElementNS(svgNS, 'polygon');
+        var p1x = x2, p1y = y2;
+        var p2x = ax - Math.cos(angle - 0.5) * arrowSize * 0.6;
+        var p2y = ay - Math.sin(angle - 0.5) * arrowSize * 0.6;
+        var p3x = ax - Math.cos(angle + 0.5) * arrowSize * 0.6;
+        var p3y = ay - Math.sin(angle + 0.5) * arrowSize * 0.6;
+        al.setAttribute('points', p1x+','+p1y+' '+p2x+','+p2y+' '+p3x+','+p3y);
+        al.setAttribute('class', 'ss-flow-arrow');
+        svg.appendChild(al);
+
+        /* Traveling dot */
+        var dot = document.createElementNS(svgNS, 'circle');
+        dot.setAttribute('r', '1.2');
+        dot.setAttribute('cx', x1);
+        dot.setAttribute('cy', y1);
+        dot.setAttribute('class', 'ss-flow-dot');
+        svg.appendChild(dot);
+        dots.push({ el: dot, x1: x1, y1: y1, x2: x2, y2: y2 });
+      }
+
+      wrap.appendChild(svg);
+
+      if (!prefersReducedMotion) {
+        animateFlow(annEls, data.flow, dots);
+      }
+    } else if (data.flow.length === 1 && !prefersReducedMotion) {
+      /* Single annotation: just pulse it */
+      animateFlow(annEls, data.flow, []);
+    }
+
+    /* Reduced motion: show all annotations statically */
+    if (prefersReducedMotion) {
+      annEls.forEach(function(el) {
+        el.classList.add('ss-ann-visited');
+      });
+    }
+  }
+
+  function animateFlow(annEls, flow, dots) {
+    var HIGHLIGHT_MS = 1200;
+    var TRAVEL_MS = 600;
+    var PAUSE_MS = 2000;
+    var totalSteps = flow.length;
+    var cycleDuration = totalSteps * HIGHLIGHT_MS + (totalSteps - 1) * TRAVEL_MS + PAUSE_MS;
+    var startTime = null;
+    var rafId;
+
+    function tick(now) {
+      if (!startTime) startTime = now;
+      var elapsed = (now - startTime) % cycleDuration;
+
+      /* Reset all annotations at cycle start */
+      var phase = 0;
+      var timeAcc = 0;
+
+      /* Determine which step we're on */
+      var currentStep = -1;
+      var stepPhase = 'idle'; /* 'highlight' | 'travel' | 'idle' */
+      var travelProgress = 0;
+      var activeDotIdx = -1;
+
+      for (var s = 0; s < totalSteps; s++) {
+        var highlightEnd = timeAcc + HIGHLIGHT_MS;
+        if (elapsed >= timeAcc && elapsed < highlightEnd) {
+          currentStep = s;
+          stepPhase = 'highlight';
+          break;
+        }
+        timeAcc = highlightEnd;
+        if (s < totalSteps - 1) {
+          var travelEnd = timeAcc + TRAVEL_MS;
+          if (elapsed >= timeAcc && elapsed < travelEnd) {
+            currentStep = s;
+            stepPhase = 'travel';
+            travelProgress = (elapsed - timeAcc) / TRAVEL_MS;
+            activeDotIdx = s;
+            break;
+          }
+          timeAcc = travelEnd;
+        }
+      }
+
+      /* Apply classes */
+      annEls.forEach(function(el) {
+        el.classList.remove('ss-ann-active', 'ss-ann-visited');
+      });
+
+      for (var i = 0; i < totalSteps; i++) {
+        var annIdx = flow[i];
+        if (i < currentStep || (i === currentStep && stepPhase === 'travel')) {
+          annEls[annIdx].classList.add('ss-ann-visited');
+        } else if (i === currentStep && stepPhase === 'highlight') {
+          annEls[annIdx].classList.add('ss-ann-active');
+          /* Also mark earlier ones as visited */
+          for (var j = 0; j < i; j++) {
+            annEls[flow[j]].classList.add('ss-ann-visited');
+          }
+        }
+      }
+
+      /* If in pause phase (after all steps), show all as visited */
+      if (currentStep === -1 && elapsed > 0) {
+        annEls.forEach(function(el) {
+          el.classList.add('ss-ann-visited');
+        });
+      }
+
+      /* Update dot positions */
+      dots.forEach(function(d, idx) {
+        if (idx === activeDotIdx && stepPhase === 'travel') {
+          var t = easeInOutCubic(travelProgress);
+          var cx = d.x1 + (d.x2 - d.x1) * t;
+          var cy = d.y1 + (d.y2 - d.y1) * t;
+          d.el.setAttribute('cx', cx);
+          d.el.setAttribute('cy', cy);
+          d.el.style.opacity = '1';
+        } else {
+          d.el.style.opacity = '0';
+        }
+      });
+
+      /* Check if card is still visible */
+      if (annEls[0] && annEls[0].parentElement) {
+        rafId = requestAnimationFrame(tick);
+      }
+    }
+
+    rafId = requestAnimationFrame(tick);
   }
 
   observeCards();
