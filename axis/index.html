@@ -71,7 +71,7 @@
   .screenshots { margin: 48px 0; }
   .screenshots h2 { font-size: 1.4rem; font-weight: 600; color: #e2e8f0; margin-bottom: 16px; border-left: 3px solid #4ac0ff; padding-left: 12px; }
   .screenshots p { color: #94a3b8; margin-bottom: 16px; }
-  .ss-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .ss-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
   .ss-tab {
     background: #111827;
     border: 1px solid #1e293b;
@@ -81,51 +81,288 @@
     color: #64748b;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: inherit;
   }
   .ss-tab.active { background: #1e293b; color: #4ac0ff; border-color: #4ac0ff; }
-  .ss-track {
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 12px;
-    scrollbar-width: thin;
-    scrollbar-color: #1e293b transparent;
+
+  /* Screenshot grids */
+  .ss-grid-phone {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
-  .ss-track::-webkit-scrollbar { height: 6px; }
-  .ss-track::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-  .ss-item {
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #1e293b;
+  .ss-grid-tablet {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 800px;
+  }
+
+  /* Screenshot cards */
+  .ss-card {
     background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
     position: relative;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
   }
-  .ss-item img {
-    display: block;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+  .ss-card.anim-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
-  .ss-item.phone { height: 380px; width: 175px; }
-  .ss-item.tablet { height: 280px; width: 505px; }
-  .ss-label {
+  .ss-card:hover {
+    border-color: rgba(74, 192, 255, 0.35);
+    box-shadow: 0 8px 24px rgba(74, 192, 255, 0.08);
+  }
+  .ss-card.anim-visible:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Sheen effect */
+  .ss-card::after {
+    content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 6px 10px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    font-size: 0.72rem;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 55%, transparent 60%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .ss-card:hover::after {
+    animation: sheen-sweep 0.7s ease-out forwards;
+  }
+  @keyframes sheen-sweep {
+    to { left: 125%; }
+  }
+
+  /* Image wrapper */
+  .ss-img-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+  .ss-img-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Card label */
+  .ss-card-label {
+    padding: 10px 14px;
+    font-size: 0.82rem;
     color: #94a3b8;
+    background: #111827;
+    border-top: 1px solid #1e293b;
+  }
+
+  /* Expand hint */
+  .ss-expand-hint {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #94a3b8;
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .ss-card:hover .ss-expand-hint {
+    opacity: 1;
+  }
+
+  /* Annotations */
+  .ss-annotation {
+    position: absolute;
+    border: 2px solid rgba(74, 192, 255, 0.5);
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1;
+  }
+  .ss-card.anim-visible .ss-annotation {
+    animation: annotation-pulse 2.4s ease-in-out infinite;
+  }
+  .ss-annotation-label {
+    position: absolute;
+    top: -18px;
+    left: 4px;
+    font-size: 0.6rem;
+    color: #4ac0ff;
+    white-space: nowrap;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    letter-spacing: 0.02em;
+  }
+  @keyframes annotation-pulse {
+    0%, 100% { opacity: 0; }
+    30%, 70% { opacity: 0.85; }
+  }
+
+  /* Lightbox */
+  .lb-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+  }
+  .lb-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .lb-overlay img {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    user-select: none;
+  }
+  .lb-overlay img.lb-phone {
+    max-width: min(484px, 90vw);
+  }
+  .lb-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #e2e8f0;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 1001;
+  }
+  .lb-close:hover { background: rgba(255,255,255,0.2); }
+  .lb-prev, .lb-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #e2e8f0;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 1001;
+  }
+  .lb-prev { left: 16px; }
+  .lb-next { right: 16px; }
+  .lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.2); }
+  .lb-caption {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #94a3b8;
+    font-size: 0.85rem;
+    text-align: center;
+    max-width: 80vw;
+  }
+  .lb-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #475569;
+    font-size: 0.75rem;
+  }
+
+  /* CTA section */
+  .cta-section {
+    margin: 40px 0;
+    text-align: center;
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 36px 24px;
+  }
+  .cta-section h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 16px;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .store-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid #1e293b;
+    background: #1e293b;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: default;
+  }
+  .store-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .store-btn.coming-soon {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .cta-note {
+    margin-top: 10px;
+    font-size: 0.78rem;
+    color: #475569;
   }
 
   @media (max-width: 600px) {
     .features, .trust-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 1.8rem; }
-    .ss-item.phone { height: 320px; width: 147px; }
-    .ss-item.tablet { height: 220px; width: 396px; }
+    .ss-grid-phone { grid-template-columns: 1fr; }
+    .lb-overlay img { max-width: 85vw; }
+    .lb-overlay img.lb-phone { max-width: 85vw; }
+    .lb-prev, .lb-next { width: 36px; height: 36px; font-size: 1rem; }
+    .lb-prev { left: 8px; }
+    .lb-next { right: 8px; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .ss-annotation-label { font-size: 0.55rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ss-card {
+      opacity: 1;
+      transform: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .ss-card:hover { transform: none; }
+    .ss-card::after { display: none; }
+    .ss-card.anim-visible .ss-annotation {
+      animation: none;
+      opacity: 0.5;
+    }
+    .lb-overlay { transition: none; }
   }
 </style>
 </head>
@@ -151,38 +388,85 @@
       <button class="ss-tab active" data-target="phone">Phone</button>
       <button class="ss-tab" data-target="tablet">Tablet</button>
     </div>
-    <div class="ss-track" id="ss-phone">
-      <div class="ss-item phone">
-        <img src="/assets/axis/screenshots/phone_briefing.jpg" alt="Briefing view" loading="lazy">
-        <div class="ss-label">Briefing: critical items, actions, blockers at a glance</div>
+    <div class="ss-grid-phone" id="ss-phone">
+      <div class="ss-card" data-label="Briefing: critical items, actions, blockers at a glance">
+        <div class="ss-img-wrap">
+          <img src="/assets/axis/screenshots/phone_briefing.jpg" alt="Briefing view" loading="lazy">
+          <span class="ss-expand-hint">Click to expand</span>
+        </div>
+        <div class="ss-card-label">Briefing: critical items, actions, blockers at a glance</div>
       </div>
-      <div class="ss-item phone">
-        <img src="/assets/axis/screenshots/phone_briefing_expanded.jpg" alt="Expanded briefing" loading="lazy">
-        <div class="ss-label">Expanded view: blockers, actions, open questions</div>
+      <div class="ss-card" data-label="Expanded view: blockers, actions, open questions">
+        <div class="ss-img-wrap">
+          <img src="/assets/axis/screenshots/phone_briefing_expanded.jpg" alt="Expanded briefing" loading="lazy">
+          <span class="ss-expand-hint">Click to expand</span>
+        </div>
+        <div class="ss-card-label">Expanded view: blockers, actions, open questions</div>
       </div>
-      <div class="ss-item phone">
-        <img src="/assets/axis/screenshots/phone_action_detail.jpg" alt="Action items" loading="lazy">
-        <div class="ss-label">AI-generated ideas, action items, resolved items</div>
+      <div class="ss-card" data-label="AI-generated ideas, action items, resolved items">
+        <div class="ss-img-wrap">
+          <img src="/assets/axis/screenshots/phone_action_detail.jpg" alt="Action items" loading="lazy">
+          <span class="ss-expand-hint">Click to expand</span>
+        </div>
+        <div class="ss-card-label">AI-generated ideas, action items, resolved items</div>
       </div>
-      <div class="ss-item phone">
-        <img src="/assets/axis/screenshots/phone_activity.jpg" alt="Activity feed" loading="lazy">
-        <div class="ss-label">Live activity feed with AI and mic sources</div>
-      </div>
-    </div>
-    <div class="ss-track" id="ss-tablet" style="display:none;">
-      <div class="ss-item tablet">
-        <img src="/assets/axis/screenshots/tablet_briefing.jpg" alt="Tablet briefing" loading="lazy">
-        <div class="ss-label">Tablet briefing: wide layout for critical items</div>
-      </div>
-      <div class="ss-item tablet">
-        <img src="/assets/axis/screenshots/tablet_briefing_detail.jpg" alt="Tablet briefing detail" loading="lazy">
-        <div class="ss-label">Expanded card: blockers, actions, open questions</div>
-      </div>
-      <div class="ss-item tablet">
-        <img src="/assets/axis/screenshots/tablet_action.jpg" alt="Tablet action items" loading="lazy">
-        <div class="ss-label">Action tab with session items</div>
+      <div class="ss-card" data-label="Live activity feed with AI and mic sources">
+        <div class="ss-img-wrap">
+          <img src="/assets/axis/screenshots/phone_activity.jpg" alt="Activity feed" loading="lazy">
+          <span class="ss-expand-hint">Click to expand</span>
+        </div>
+        <div class="ss-card-label">Live activity feed with AI and mic sources</div>
       </div>
     </div>
+    <div class="ss-grid-tablet" id="ss-tablet" style="display:none;">
+      <div class="ss-card" data-label="Tablet briefing: wide layout for critical items">
+        <div class="ss-img-wrap">
+          <img src="/assets/axis/screenshots/tablet_briefing.jpg" alt="Tablet briefing" loading="lazy">
+          <span class="ss-expand-hint">Click to expand</span>
+        </div>
+        <div class="ss-card-label">Tablet briefing: wide layout for critical items</div>
+      </div>
+      <div class="ss-card" data-label="Expanded card: blockers, actions, open questions">
+        <div class="ss-img-wrap">
+          <img src="/assets/axis/screenshots/tablet_briefing_detail.jpg" alt="Tablet briefing detail" loading="lazy">
+          <span class="ss-expand-hint">Click to expand</span>
+        </div>
+        <div class="ss-card-label">Expanded card: blockers, actions, open questions</div>
+      </div>
+      <div class="ss-card" data-label="Action tab with session items">
+        <div class="ss-img-wrap">
+          <img src="/assets/axis/screenshots/tablet_action.jpg" alt="Tablet action items" loading="lazy">
+          <span class="ss-expand-hint">Click to expand</span>
+        </div>
+        <div class="ss-card-label">Action tab with session items</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lb-overlay" id="lightbox">
+    <button class="lb-close" aria-label="Close">&times;</button>
+    <button class="lb-prev" aria-label="Previous">&#8249;</button>
+    <button class="lb-next" aria-label="Next">&#8250;</button>
+    <img src="" alt="" id="lb-img">
+    <div class="lb-caption" id="lb-caption"></div>
+    <div class="lb-counter" id="lb-counter"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h3>Get AXIS Producer</h3>
+    <div class="cta-buttons">
+      <span class="store-btn coming-soon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        App Store
+      </span>
+      <span class="store-btn coming-soon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.67L14.25 12.6 3.18.33a.84.84 0 0 0-.18.53v22.28c0 .2.06.38.18.53zm1.42.8l12.36-6.9-2.88-2.87L4.6 24.47zm15.15-11.04L17.2 11.6l3.18 3.18a.84.84 0 0 0 0-1.35zM4.6-.67L15.08 9.1l2.88-2.87L4.6-.67z"/></svg>
+        Google Play
+      </span>
+    </div>
+    <p class="cta-note">Coming Soon</p>
   </div>
 
   <div class="section">
@@ -295,21 +579,191 @@
 
   <div class="footer">
     <p>&copy; 2026 CouloirGG. All rights reserved.</p>
-    <p><a href="https://couloir.gg">couloir.gg</a> &bull; <a href="https://couloir.gg/axis">AXIS Producer</a> &bull; <a href="https://couloir.gg/axis/download">Download</a></p>
+    <p><a href="https://couloir.gg">couloir.gg</a> &bull; <a href="https://couloir.gg/axis">AXIS Producer</a> &bull; Coming Soon</p>
   </div>
 
 </div>
 
 <script>
-document.querySelectorAll('.ss-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.ss-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const target = tab.dataset.target;
-    document.getElementById('ss-phone').style.display = target === 'phone' ? '' : 'none';
-    document.getElementById('ss-tablet').style.display = target === 'tablet' ? '' : 'none';
+(function() {
+  /* ---- Annotation data keyed by image filename ---- */
+  var annotations = {
+    'phone_briefing.jpg': [
+      { label: 'Critical items', top: 18, left: 6, w: 88, h: 14, delay: 0 },
+      { label: 'Action items', top: 44, left: 6, w: 88, h: 14, delay: 0.4 },
+      { label: 'Blockers', top: 70, left: 6, w: 88, h: 14, delay: 0.8 }
+    ],
+    'phone_briefing_expanded.jpg': [
+      { label: 'Blocker details', top: 22, left: 6, w: 88, h: 20, delay: 0 },
+      { label: 'Open questions', top: 60, left: 6, w: 88, h: 18, delay: 0.5 }
+    ],
+    'phone_action_detail.jpg': [
+      { label: 'AI-generated ideas', top: 14, left: 6, w: 88, h: 22, delay: 0 },
+      { label: 'Resolved items', top: 54, left: 6, w: 88, h: 22, delay: 0.5 }
+    ],
+    'phone_activity.jpg': [
+      { label: 'AI source tag', top: 26, left: 50, w: 40, h: 8, delay: 0 },
+      { label: 'Mic source', top: 44, left: 50, w: 40, h: 8, delay: 0.5 }
+    ],
+    'tablet_briefing.jpg': [
+      { label: 'Critical items', top: 16, left: 4, w: 44, h: 32, delay: 0 },
+      { label: 'Session overview', top: 16, left: 52, w: 44, h: 32, delay: 0.5 }
+    ],
+    'tablet_briefing_detail.jpg': [
+      { label: 'Expanded details', top: 16, left: 4, w: 55, h: 45, delay: 0 },
+      { label: 'Action items', top: 16, left: 62, w: 34, h: 30, delay: 0.5 }
+    ],
+    'tablet_action.jpg': [
+      { label: 'Session actions', top: 18, left: 4, w: 92, h: 38, delay: 0 }
+    ]
+  };
+
+  /* ---- Tab switching ---- */
+  document.querySelectorAll('.ss-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.ss-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      var target = tab.dataset.target;
+      document.getElementById('ss-phone').style.display = target === 'phone' ? '' : 'none';
+      document.getElementById('ss-tablet').style.display = target === 'tablet' ? '' : 'none';
+      /* Re-observe newly-visible cards */
+      observeCards();
+    });
   });
-});
+
+  /* ---- IntersectionObserver: card entrance + annotations ---- */
+  var observed = new WeakSet();
+
+  function observeCards() {
+    var cards = document.querySelectorAll('.ss-card');
+    var delay = 0;
+    cards.forEach(function(card) {
+      if (observed.has(card)) return;
+      if (card.closest('[style*="display:none"]') || card.closest('[style*="display: none"]')) return;
+      observed.add(card);
+      var d = delay;
+      delay += 0.12;
+      card.style.transitionDelay = d + 's';
+
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('anim-visible');
+            addAnnotations(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      io.observe(card);
+    });
+  }
+
+  function addAnnotations(card) {
+    var img = card.querySelector('.ss-img-wrap img');
+    if (!img) return;
+    var filename = img.src.split('/').pop();
+    var data = annotations[filename];
+    if (!data) return;
+    var wrap = card.querySelector('.ss-img-wrap');
+    data.forEach(function(a) {
+      var el = document.createElement('div');
+      el.className = 'ss-annotation';
+      el.style.top = a.top + '%';
+      el.style.left = a.left + '%';
+      el.style.width = a.w + '%';
+      el.style.height = a.h + '%';
+      el.style.animationDelay = a.delay + 's';
+      var lbl = document.createElement('span');
+      lbl.className = 'ss-annotation-label';
+      lbl.textContent = a.label;
+      el.appendChild(lbl);
+      wrap.appendChild(el);
+    });
+  }
+
+  observeCards();
+
+  /* ---- Lightbox ---- */
+  var overlay = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCaption = document.getElementById('lb-caption');
+  var lbCounter = document.getElementById('lb-counter');
+  var currentItems = [];
+  var currentIndex = 0;
+
+  function getActiveCards() {
+    var phoneGrid = document.getElementById('ss-phone');
+    var grid = phoneGrid.style.display === 'none'
+      ? document.getElementById('ss-tablet')
+      : phoneGrid;
+    return Array.from(grid.querySelectorAll('.ss-card'));
+  }
+
+  function isPhoneTab() {
+    return document.getElementById('ss-phone').style.display !== 'none';
+  }
+
+  function openLightbox(index) {
+    currentItems = getActiveCards();
+    currentIndex = index;
+    showSlide();
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function showSlide() {
+    var card = currentItems[currentIndex];
+    if (!card) return;
+    var img = card.querySelector('.ss-img-wrap img');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbImg.className = isPhoneTab() ? 'lb-phone' : '';
+    lbCaption.textContent = card.dataset.label || '';
+    lbCounter.textContent = (currentIndex + 1) + ' / ' + currentItems.length;
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % currentItems.length;
+    showSlide();
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + currentItems.length) % currentItems.length;
+    showSlide();
+  }
+
+  /* Card click -> open lightbox */
+  document.querySelectorAll('.ss-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var cards = getActiveCards();
+      var idx = cards.indexOf(card);
+      if (idx !== -1) openLightbox(idx);
+    });
+  });
+
+  /* Lightbox controls */
+  overlay.querySelector('.lb-close').addEventListener('click', closeLightbox);
+  overlay.querySelector('.lb-prev').addEventListener('click', function(e) { e.stopPropagation(); prevSlide(); });
+  overlay.querySelector('.lb-next').addEventListener('click', function(e) { e.stopPropagation(); nextSlide(); });
+
+  /* Click backdrop to close */
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeLightbox();
+  });
+
+  /* Keyboard navigation */
+  document.addEventListener('keydown', function(e) {
+    if (!overlay.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+})();
 </script>
 
 </body>
