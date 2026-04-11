@@ -478,8 +478,8 @@ body {
 
 .anim-container {
   width: 100%;
-  max-width: 420px;
-  aspect-ratio: 360 / 240;
+  max-width: 460px;
+  aspect-ratio: 380 / 260;
   margin: 0 auto;
   position: relative;
 }
@@ -526,30 +526,8 @@ body {
   50% { opacity: 0.05; }
 }
 
-/* ===== NETWORK RESOLVE ANIMATION (JS-driven) ===== */
-
-.nr-line {
-  stroke-width: 1;
-  stroke-linecap: round;
-}
-
-.nr-node {
-  stroke-width: 2;
-}
-
-.nr-label {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.nr-hub-glow {
-  opacity: 0;
-}
-
-/* Scan line for approach animation */
-.nr-scan-line {
-  opacity: 0;
-}
+/* ===== APPROACH ANIMATION (JS-driven) ===== */
+/* All elements positioned/styled by JS; minimal CSS defaults */
 
 /* ===== SERVICE CARD ICONS ===== */
 .service-icon {
@@ -699,79 +677,63 @@ body {
           <p>The cost is not a single failure. It is the slow accumulation of missed signals, duplicated effort, and decisions made on incomplete context. By the time it is visible, it has been compounding for a long time.</p>
         </div>
         <div class="anim-container" aria-hidden="true" data-anim="signal-flow">
-          <svg viewBox="0 0 360 240" fill="none">
+          <svg viewBox="0 0 380 260" fill="none">
             <defs>
               <pattern id="sf-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="10" cy="10" r="0.6" fill="#005770" opacity="0.12"/>
+                <circle cx="10" cy="10" r="0.6" fill="#005770" opacity="0.1"/>
               </pattern>
               <filter id="glow-g" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="4" result="b"/>
                 <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
-              <filter id="glow-r" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
             </defs>
 
-            <rect width="360" height="240" fill="url(#sf-dots)" rx="8"/>
+            <rect width="380" height="260" fill="url(#sf-dots)" rx="8"/>
 
-            <!-- Connection paths -->
-            <!-- signal → team A (healthy, solid) -->
-            <path d="M52,80 Q88,32 140,48" stroke="#005770" stroke-width="2.5" opacity="0.4" fill="none"/>
-            <!-- signal → team B (healthy, solid) -->
-            <path d="M52,80 Q88,150 140,170" stroke="#005770" stroke-width="2.5" opacity="0.4" fill="none"/>
-            <!-- team A → handoff (weakening) -->
-            <path d="M158,48 Q190,48 218,72" stroke="#005770" stroke-width="2" opacity="0.2" fill="none"/>
-            <!-- handoff → decision (BROKEN, dashed) -->
-            <path d="M238,78 Q272,92 305,115" stroke="#ef4444" stroke-width="1.5" opacity="0.12" fill="none" stroke-dasharray="6 5"/>
-            <!-- team B → decision (context evaporates, dashed) -->
-            <path d="M158,170 Q235,162 305,120" stroke="#ef4444" stroke-width="1.5" opacity="0.08" fill="none" stroke-dasharray="4 6"/>
+            <!-- Pipeline: horizontal flow left to right -->
+            <line x1="56" y1="80" x2="132" y2="80" stroke="#005770" stroke-width="3" opacity="0.35"/>
+            <line x1="158" y1="80" x2="237" y2="80" stroke="#f59e0b" stroke-width="2" opacity="0.15"/>
+            <line x1="263" y1="80" x2="326" y2="80" stroke="#ef4444" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 5"/>
 
-            <!-- Break indicators -->
-            <g class="sf-break-x" transform="translate(268, 92)">
-              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
-            </g>
-            <g class="sf-break-x" transform="translate(230, 155)">
-              <line x1="-4" y1="-4" x2="4" y2="4" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-              <line x1="4" y1="-4" x2="-4" y2="4" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-            </g>
+            <!-- Gap 1: verbal handoff -->
+            <line x1="145" y1="67" x2="145" y2="93" stroke="#f59e0b" stroke-width="2" opacity="0.3" stroke-dasharray="3 2"/>
+            <path d="M139,96 L145,108 L151,96" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.2"/>
 
-            <!-- Node: Signal (origin, glowing) -->
+            <!-- Gap 2: context lost -->
+            <line x1="250" y1="67" x2="250" y2="93" stroke="#ef4444" stroke-width="2" opacity="0.3" stroke-dasharray="3 2"/>
+            <path d="M244,96 L250,108 L256,96" stroke="#ef4444" stroke-width="1.5" fill="none" opacity="0.2"/>
+
+            <!-- Source node (glowing, healthy) -->
             <circle class="sf-glow" cx="42" cy="80" r="22" fill="#A7DB78" filter="url(#glow-g)" opacity="0"/>
             <circle cx="42" cy="80" r="14" fill="rgba(167,219,120,0.1)" stroke="#005770" stroke-width="2.5"/>
-            <circle cx="42" cy="80" r="4" fill="#A7DB78" opacity="0.5"/>
+            <circle cx="42" cy="80" r="4.5" fill="#A7DB78" opacity="0.5"/>
 
-            <!-- Node: Team A -->
-            <circle cx="148" cy="48" r="12" fill="rgba(0,87,112,0.05)" stroke="#005770" stroke-width="2.5"/>
-            <circle cx="148" cy="48" r="3.5" fill="#005770" opacity="0.25"/>
+            <!-- Gap 1 node -->
+            <circle cx="145" cy="80" r="10" fill="rgba(245,158,11,0.04)" stroke="#f59e0b" stroke-width="2" opacity="0.4"/>
 
-            <!-- Node: Team B -->
-            <circle cx="148" cy="170" r="12" fill="rgba(0,87,112,0.05)" stroke="#005770" stroke-width="2.5"/>
-            <circle cx="148" cy="170" r="3.5" fill="#005770" opacity="0.25"/>
+            <!-- Gap 2 node -->
+            <circle cx="250" cy="80" r="10" fill="rgba(239,68,68,0.03)" stroke="#ef4444" stroke-width="2" opacity="0.3"/>
 
-            <!-- Node: Handoff (amber warning) -->
-            <circle cx="228" cy="75" r="10" fill="rgba(245,158,11,0.05)" stroke="#f59e0b" stroke-width="2" opacity="0.45"/>
-
-            <!-- Node: Decision (waiting, dim, with ?) -->
-            <circle class="sf-waiting" cx="315" cy="118" r="22" fill="#ef4444" filter="url(#glow-r)" opacity="0"/>
-            <circle cx="315" cy="118" r="14" fill="rgba(239,68,68,0.02)" stroke="#ef4444" stroke-width="2" opacity="0.2"/>
-            <text x="315" y="123" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#ef4444" opacity="0.12" font-weight="600">?</text>
+            <!-- Decision node (empty, waiting) -->
+            <circle class="sf-waiting" cx="340" cy="80" r="20" fill="#ef4444" opacity="0"/>
+            <circle cx="340" cy="80" r="14" fill="rgba(239,68,68,0.02)" stroke="#ef4444" stroke-width="2" opacity="0.18"/>
+            <text x="340" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#ef4444" opacity="0.1" font-weight="600">?</text>
 
             <!-- Labels -->
-            <text x="42" y="108" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#005770" opacity="0.5">signal</text>
-            <text x="148" y="28" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#005770" opacity="0.45">team A</text>
-            <text x="148" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#005770" opacity="0.45">team B</text>
-            <text x="228" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#f59e0b" opacity="0.35">handoff</text>
-            <text x="315" y="148" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ef4444" opacity="0.2">decision</text>
+            <text x="42" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#005770" opacity="0.5">signal</text>
+            <text x="145" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f59e0b" opacity="0.4">verbal handoff</text>
+            <text x="250" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#ef4444" opacity="0.35">context lost</text>
+            <text x="340" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#ef4444" opacity="0.2">decision</text>
 
-            <!-- Animated packets (moved by JS) -->
-            <circle class="sf-pkt" r="5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#f59e0b" opacity="0"/>
-            <circle class="sf-pkt" r="3.5" fill="#ef4444" opacity="0"/>
-            <circle class="sf-pkt" r="3.5" fill="#005770" opacity="0"/>
+            <!-- Bottom: accumulated loss -->
+            <text x="190" y="238" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#005770" opacity="0.12">missed signals accumulate quietly</text>
+
+            <!-- 5 animated packets (JS moves them, colours change per segment) -->
+            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
           </svg>
         </div>
       </div>
@@ -784,66 +746,62 @@ body {
       <div class="section-label">// how we work</div>
       <div class="section-grid section-grid--anim-first">
         <div class="anim-container" aria-hidden="true" data-anim="network-resolve">
-          <svg viewBox="0 0 360 240" fill="none">
+          <svg viewBox="0 0 380 260" fill="none">
             <defs>
               <pattern id="nr-dots" width="20" height="20" patternUnits="userSpaceOnUse">
                 <circle cx="10" cy="10" r="0.5" fill="#A7DB78" opacity="0.06"/>
               </pattern>
               <filter id="glow-l" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="6" result="b"/>
+                <feGaussianBlur stdDeviation="5" result="b"/>
                 <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
             </defs>
 
-            <rect width="360" height="240" fill="url(#nr-dots)" rx="8"/>
+            <rect width="380" height="260" fill="url(#nr-dots)" rx="8"/>
 
-            <!-- Hub glow (appears when resolved) -->
-            <circle class="nr-hub-glow" cx="180" cy="120" r="28" fill="#A7DB78" filter="url(#glow-l)" opacity="0"/>
+            <!-- Same pipeline layout as problem (mirrors it) -->
+            <line class="nr-pipe" x1="56" y1="80" x2="132" y2="80" stroke="rgba(167,219,120,0.08)" stroke-width="3"/>
+            <line class="nr-pipe" x1="158" y1="80" x2="237" y2="80" stroke="rgba(167,219,120,0.05)" stroke-width="2"/>
+            <line class="nr-pipe" x1="263" y1="80" x2="326" y2="80" stroke="rgba(167,219,120,0.03)" stroke-width="1.5" stroke-dasharray="4 5"/>
 
-            <!-- Scan line (sweeps during mapping phase) -->
-            <line class="nr-scan-line" x1="0" y1="0" x2="0" y2="240" stroke="#A7DB78" stroke-width="2" opacity="0"/>
+            <!-- Gap marks (same positions as problem) -->
+            <line class="nr-gap-mark" x1="145" y1="67" x2="145" y2="93" stroke="rgba(167,219,120,0.08)" stroke-width="2" stroke-dasharray="3 2"/>
+            <line class="nr-gap-mark" x1="250" y1="67" x2="250" y2="93" stroke="rgba(167,219,120,0.08)" stroke-width="2" stroke-dasharray="3 2"/>
 
-            <!-- Connection lines (positioned by JS) -->
-            <line class="nr-line" data-ax="50" data-ay="60" data-bx="130" data-by="40"/>
-            <line class="nr-line" data-ax="130" data-ay="40" data-bx="230" data-by="40"/>
-            <line class="nr-line" data-ax="230" data-ay="40" data-bx="310" data-by="60"/>
-            <line class="nr-line" data-ax="50" data-ay="60" data-bx="180" data-by="120"/>
-            <line class="nr-line" data-ax="130" data-ay="40" data-bx="180" data-by="120"/>
-            <line class="nr-line" data-ax="230" data-ay="40" data-bx="180" data-by="120"/>
-            <line class="nr-line" data-ax="310" data-ay="60" data-bx="180" data-by="120"/>
-            <line class="nr-line" data-ax="180" data-ay="120" data-bx="50" data-by="185"/>
-            <line class="nr-line" data-ax="180" data-ay="120" data-bx="180" data-by="200"/>
-            <line class="nr-line" data-ax="180" data-ay="120" data-bx="310" data-by="185"/>
-            <line class="nr-line" data-ax="50" data-ay="185" data-bx="180" data-by="200"/>
-            <line class="nr-line" data-ax="180" data-ay="200" data-bx="310" data-by="185"/>
-            <line class="nr-line" data-ax="50" data-ay="60" data-bx="50" data-by="185"/>
-            <line class="nr-line" data-ax="310" data-ay="60" data-bx="310" data-by="185"/>
+            <!-- Bridge fixes (hidden initially, appear during fix phase) -->
+            <path class="nr-bridge" d="M130,80 Q145,55 160,80" stroke="#A7DB78" stroke-width="3" fill="none" opacity="0" filter="url(#glow-l)"/>
+            <path class="nr-bridge" d="M235,80 Q250,55 265,80" stroke="#A7DB78" stroke-width="3" fill="none" opacity="0" filter="url(#glow-l)"/>
 
-            <!-- Nodes (positioned by JS; scattered → resolved) -->
-            <circle class="nr-node" r="8" data-sx="15" data-sy="25" data-rx="50" data-ry="60"/>
-            <circle class="nr-node" r="8" data-sx="155" data-sy="8" data-rx="130" data-ry="40"/>
-            <circle class="nr-node" r="8" data-sx="280" data-sy="15" data-rx="230" data-ry="40"/>
-            <circle class="nr-node" r="8" data-sx="340" data-sy="80" data-rx="310" data-ry="60"/>
-            <circle class="nr-node" r="8" data-sx="25" data-sy="210" data-rx="50" data-ry="185"/>
-            <circle class="nr-node" r="8" data-sx="200" data-sy="225" data-rx="180" data-ry="200"/>
-            <circle class="nr-node" r="8" data-sx="330" data-sy="200" data-rx="310" data-ry="185"/>
-            <!-- Center hub (CouloirGG) -->
-            <circle class="nr-node nr-node--hub" r="11" data-sx="160" data-sy="130" data-rx="180" data-ry="120"/>
+            <!-- Fix labels (appear with bridges) -->
+            <text class="nr-fix-label" x="145" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">structural fix</text>
+            <text class="nr-fix-label" x="250" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">structural fix</text>
 
-            <!-- Labels (appear after resolve) -->
-            <text class="nr-label" x="50" y="48" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78">listen</text>
-            <text class="nr-label" x="130" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78">map</text>
-            <text class="nr-label" x="230" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78">diagnose</text>
-            <text class="nr-label" x="310" y="48" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78">target</text>
-            <text class="nr-label" x="180" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#A7DB78" font-weight="600">CouloirGG</text>
-            <text class="nr-label" x="50" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78">design</text>
-            <text class="nr-label" x="180" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78">build</text>
-            <text class="nr-label" x="310" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78">ship</text>
+            <!-- Source node -->
+            <circle class="nr-src" cx="42" cy="80" r="14" fill="rgba(167,219,120,0.05)" stroke="rgba(167,219,120,0.15)" stroke-width="2.5"/>
+            <circle class="nr-src-dot" cx="42" cy="80" r="4.5" fill="#A7DB78" opacity="0.12"/>
 
-            <!-- Flow packets (appear in final phase, moved by JS) -->
-            <circle class="nr-flow-pkt" r="4" fill="#A7DB78" opacity="0"/>
-            <circle class="nr-flow-pkt" r="4" fill="#A7DB78" opacity="0"/>
-            <circle class="nr-flow-pkt" r="4" fill="#A7DB78" opacity="0"/>
+            <!-- Mid nodes (at gap positions) -->
+            <circle class="nr-mid" cx="145" cy="80" r="10" fill="rgba(167,219,120,0.02)" stroke="rgba(167,219,120,0.08)" stroke-width="2"/>
+            <circle class="nr-mid" cx="250" cy="80" r="10" fill="rgba(167,219,120,0.02)" stroke="rgba(167,219,120,0.08)" stroke-width="2"/>
+
+            <!-- Result node (lights up at the end) -->
+            <circle class="nr-result-glow" cx="340" cy="80" r="24" fill="#A7DB78" filter="url(#glow-l)" opacity="0"/>
+            <circle class="nr-result" cx="340" cy="80" r="14" fill="rgba(167,219,120,0.02)" stroke="rgba(167,219,120,0.08)" stroke-width="2.5"/>
+            <text class="nr-result-check" x="340" y="87" text-anchor="middle" font-family="Sora, sans-serif" font-size="18" fill="#A7DB78" opacity="0" font-weight="700">&#10003;</text>
+
+            <!-- Static labels -->
+            <text x="42" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#A7DB78" opacity="0.25">signal</text>
+            <text x="340" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#A7DB78" opacity="0.25">decision</text>
+
+            <!-- Phase narration (updated by JS) -->
+            <text class="nr-phase" x="190" y="160" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#A7DB78" opacity="0"></text>
+
+            <!-- 5 flow packets -->
+            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
           </svg>
         </div>
         <div class="approach-text">
@@ -1025,81 +983,90 @@ body {
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
-  /* Evaluate point on a quadratic bezier */
-  function quadBez(p0, p1, p2, t) {
-    var m = 1 - t;
-    return {
-      x: m * m * p0.x + 2 * m * t * p1.x + t * t * p2.x,
-      y: m * m * p0.y + 2 * m * t * p1.y + t * t * p2.y
-    };
+  /* Interpolate position along a waypoint path [{x,y,t}, ...] */
+  function waypointPos(pts, t) {
+    if (t <= pts[0].t) return { x: pts[0].x, y: pts[0].y };
+    for (var i = 1; i < pts.length; i++) {
+      if (t <= pts[i].t) {
+        var s = (t - pts[i - 1].t) / (pts[i].t - pts[i - 1].t);
+        return { x: lerp(pts[i - 1].x, pts[i].x, s), y: lerp(pts[i - 1].y, pts[i].y, s) };
+      }
+    }
+    return { x: pts[pts.length - 1].x, y: pts[pts.length - 1].y };
   }
 
   /* ================================================================
      SIGNAL FLOW (Problem section)
-     Shows: signal splits to two teams, handoff degrades, decision starves
+     5 packets enter pipeline. 2 leak at gap1, 3 leak at gap2.
+     Nothing reaches the decision node.
      ================================================================ */
   function initSignalFlow(container) {
     var pkts = container.querySelectorAll('.sf-pkt');
+    var cycle = 6500;
+    var stagger = 300;
 
-    /* Path definitions matching the SVG curves */
-    var paths = [
-      /* 0: signal → team A */  { p0:{x:42,y:80},  p1:{x:88,y:32},  p2:{x:148,y:48} },
-      /* 1: signal → team B */  { p0:{x:42,y:80},  p1:{x:88,y:150}, p2:{x:148,y:170} },
-      /* 2: team A → handoff */ { p0:{x:158,y:48}, p1:{x:190,y:48}, p2:{x:228,y:75} },
-      /* 3: handoff → decision (broken) */ { p0:{x:238,y:78}, p1:{x:272,y:92}, p2:{x:315,y:118} },
-      /* 4: team B → decision (evaporates) */ { p0:{x:158,y:170}, p1:{x:235,y:162}, p2:{x:315,y:120} }
+    /* Waypoints for packets that leak at gap 1 (verbal handoff) */
+    var pathGap1 = [
+      { x: 42, y: 80, t: 0 },
+      { x: 130, y: 80, t: 0.45 },
+      { x: 140, y: 80, t: 0.55 },
+      { x: 143, y: 92, t: 0.68 },
+      { x: 148, y: 155, t: 1.0 }
     ];
 
-    /*
-     * Timeline: each entry moves one packet along one path.
-     * pkt: which <circle> to move (index into pkts)
-     * path: which path (index into paths)
-     * start/dur: timing in ms within the cycle
-     * maxT: how far along the path (1 = full, 0.35 = dies at 35%)
-     * peakOpacity: max brightness (broken paths are dimmer)
-     */
-    var timeline = [
-      { pkt:0, path:0, start:0,    dur:1100, maxT:1,    peakOpacity:1 },
-      { pkt:1, path:1, start:100,  dur:1100, maxT:1,    peakOpacity:1 },
-      { pkt:2, path:2, start:1400, dur:900,  maxT:1,    peakOpacity:0.8 },
-      { pkt:3, path:3, start:2600, dur:1600, maxT:0.35, peakOpacity:0.45 },
-      { pkt:4, path:4, start:2600, dur:1800, maxT:0.4,  peakOpacity:0.35 }
+    /* Waypoints for packets that leak at gap 2 (context lost) */
+    var pathGap2 = [
+      { x: 42, y: 80, t: 0 },
+      { x: 130, y: 80, t: 0.22 },
+      { x: 158, y: 80, t: 0.33 },
+      { x: 235, y: 80, t: 0.56 },
+      { x: 247, y: 80, t: 0.65 },
+      { x: 250, y: 92, t: 0.76 },
+      { x: 253, y: 155, t: 1.0 }
     ];
 
-    var cycle = 7000;
-    var running = true;
+    /* pkt 0-2: make it past gap1, leak at gap2.  pkt 3-4: leak at gap1 */
+    var defs = [
+      { path: pathGap2, dur: 3400, delay: 0 },
+      { path: pathGap2, dur: 3400, delay: stagger },
+      { path: pathGap2, dur: 3400, delay: stagger * 2 },
+      { path: pathGap1, dur: 2200, delay: stagger * 3 },
+      { path: pathGap1, dur: 2200, delay: stagger * 4 }
+    ];
+
+    function pktColor(x) {
+      if (x < 136) return '#A7DB78';
+      if (x < 244) return '#f59e0b';
+      return '#ef4444';
+    }
 
     function runCycle() {
-      if (!running) return;
       var t0 = performance.now();
       pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
 
       function frame(now) {
-        if (!running) return;
         var elapsed = now - t0;
         if (elapsed > cycle) { runCycle(); return; }
 
-        timeline.forEach(function(tl) {
-          var p = pkts[tl.pkt];
-          var local = (elapsed - tl.start) / tl.dur;
-          if (local < 0 || local > 1.15) {
+        defs.forEach(function(d, i) {
+          var p = pkts[i];
+          var local = (elapsed - d.delay) / d.dur;
+          if (local < 0 || local > 1.08) {
             if (local > 1) p.setAttribute('opacity', '0');
             return;
           }
           local = Math.min(local, 1);
 
-          var pathT = easeInOutCubic(local) * tl.maxT;
-          var pos = quadBez(paths[tl.path].p0, paths[tl.path].p1, paths[tl.path].p2, pathT);
-          p.setAttribute('cx', pos.x);
-          p.setAttribute('cy', pos.y);
+          var pos = waypointPos(d.path, easeInOutCubic(local));
+          p.setAttribute('cx', pos.x.toFixed(1));
+          p.setAttribute('cy', pos.y.toFixed(1));
+          p.setAttribute('fill', pktColor(pos.x));
 
-          /* Fade in quickly, hold, then fade out near end */
-          var opacity;
-          if (local < 0.1) opacity = (local / 0.1) * tl.peakOpacity;
-          else if (local > 0.75) opacity = (1 - (local - 0.75) / 0.25) * tl.peakOpacity;
-          else opacity = tl.peakOpacity;
-
-          p.setAttribute('opacity', Math.max(0, opacity).toFixed(3));
+          /* Fade in quickly, fade out when falling */
+          var op = 1;
+          if (local < 0.06) op = local / 0.06;
+          else if (pos.y > 88) op = Math.max(0, 1 - (pos.y - 88) / 55);
+          p.setAttribute('opacity', op.toFixed(3));
         });
 
         requestAnimationFrame(frame);
@@ -1112,219 +1079,221 @@ body {
 
   /* ================================================================
      NETWORK RESOLVE (Approach section)
-     Phase 1: scattered/broken (1.5s)
-     Phase 2: nodes glide to positions, scan line sweeps (3s)
-     Phase 3: connections light up, labels appear (1.5s)
-     Phase 4: flow packets travel the network (3s)
-     Phase 5: hold resolved (3s)
-     Then loop
+     Same pipeline as problem, but bridges fix the gaps.
+     Phase 0: broken hold (mirrors problem)
+     Phase 1: scan identifies gaps
+     Phase 2: bridge fixes appear
+     Phase 3: packets flow full pipeline
+     Phase 4: result lights up
+     Phase 5: hold resolved, then loop
      ================================================================ */
   function initNetworkResolve(container) {
-    var nodes = container.querySelectorAll('.nr-node');
-    var lines = container.querySelectorAll('.nr-line');
-    var labels = container.querySelectorAll('.nr-label');
-    var hubGlow = container.querySelector('.nr-hub-glow');
-    var scanLine = container.querySelector('.nr-scan-line');
-    var flowPkts = container.querySelectorAll('.nr-flow-pkt');
+    var pipes = container.querySelectorAll('.nr-pipe');
+    var gapMarks = container.querySelectorAll('.nr-gap-mark');
+    var bridges = container.querySelectorAll('.nr-bridge');
+    var fixLabels = container.querySelectorAll('.nr-fix-label');
+    var src = container.querySelector('.nr-src');
+    var srcDot = container.querySelector('.nr-src-dot');
+    var mids = container.querySelectorAll('.nr-mid');
+    var result = container.querySelector('.nr-result');
+    var resultGlow = container.querySelector('.nr-result-glow');
+    var resultCheck = container.querySelector('.nr-result-check');
+    var phaseText = container.querySelector('.nr-phase');
+    var pkts = container.querySelectorAll('.nr-pkt');
 
-    /* Build node-to-line mapping */
-    var resolvedPos = [];
-    nodes.forEach(function(n) {
-      resolvedPos.push({ x: +n.dataset.rx, y: +n.dataset.ry });
-    });
+    /* Phase durations (ms) */
+    var P0 = 2000;   /* broken hold */
+    var P1 = 1500;   /* scan / identify gaps */
+    var P2 = 1300;   /* bridges appear */
+    var P3 = 2800;   /* packets flow */
+    var P4 = 800;    /* result lights up */
+    var P5 = 3000;   /* hold resolved */
+    var totalCycle = P0 + P1 + P2 + P3 + P4 + P5;
 
-    var lineMap = [];
-    lines.forEach(function(l) {
-      var ax = +l.dataset.ax, ay = +l.dataset.ay, bx = +l.dataset.bx, by = +l.dataset.by;
-      var ai = -1, bi = -1;
-      resolvedPos.forEach(function(p, i) {
-        if (p.x === ax && p.y === ay) ai = i;
-        if (p.x === bx && p.y === by) bi = i;
-      });
-      lineMap.push({ a: ai, b: bi });
-    });
-
-    /* Flow paths for final phase (packets travel between resolved nodes) */
-    var flowPaths = [
-      /* top-left → hub */
-      { fromNode: 0, toNode: 7 },
-      /* hub → bottom-center */
-      { fromNode: 7, toNode: 5 },
-      /* top-right → hub */
-      { fromNode: 3, toNode: 7 }
+    /* Full pipeline waypoints (source to decision, no leaks) */
+    var fullPath = [
+      { x: 42,  y: 80, t: 0 },
+      { x: 130, y: 80, t: 0.22 },
+      { x: 160, y: 80, t: 0.33 },
+      { x: 235, y: 80, t: 0.56 },
+      { x: 265, y: 80, t: 0.67 },
+      { x: 326, y: 80, t: 0.88 },
+      { x: 340, y: 80, t: 1.0 }
     ];
+    var pktStagger = 240;
 
-    function setScattered() {
-      nodes.forEach(function(n) {
-        n.setAttribute('cx', n.dataset.sx);
-        n.setAttribute('cy', n.dataset.sy);
-        n.setAttribute('fill', 'rgba(167,219,120,0.06)');
-        n.setAttribute('stroke', 'rgba(167,219,120,0.15)');
+    function reset() {
+      pipes.forEach(function(p, i) {
+        var ops = [0.08, 0.05, 0.03];
+        p.setAttribute('stroke', 'rgba(167,219,120,' + (ops[i] || 0.05) + ')');
+        p.setAttribute('stroke-width', i === 0 ? '3' : i === 1 ? '2' : '1.5');
       });
-      lines.forEach(function(l, i) {
-        var m = lineMap[i];
-        if (m.a >= 0 && m.b >= 0) {
-          l.setAttribute('x1', nodes[m.a].getAttribute('cx'));
-          l.setAttribute('y1', nodes[m.a].getAttribute('cy'));
-          l.setAttribute('x2', nodes[m.b].getAttribute('cx'));
-          l.setAttribute('y2', nodes[m.b].getAttribute('cy'));
-        }
-        l.setAttribute('stroke', 'rgba(167,219,120,0.04)');
-        l.setAttribute('stroke-width', '0.5');
+      gapMarks.forEach(function(g) {
+        g.setAttribute('stroke', 'rgba(167,219,120,0.08)');
       });
-      labels.forEach(function(lb) { lb.style.opacity = '0'; });
-      if (hubGlow) hubGlow.style.opacity = '0';
-      if (scanLine) { scanLine.style.opacity = '0'; }
-      flowPkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
+      bridges.forEach(function(b) { b.setAttribute('opacity', '0'); });
+      fixLabels.forEach(function(f) { f.setAttribute('opacity', '0'); });
+      if (src) {
+        src.setAttribute('fill', 'rgba(167,219,120,0.05)');
+        src.setAttribute('stroke', 'rgba(167,219,120,0.15)');
+      }
+      if (srcDot) srcDot.setAttribute('opacity', '0.12');
+      mids.forEach(function(m) {
+        m.setAttribute('fill', 'rgba(167,219,120,0.02)');
+        m.setAttribute('stroke', 'rgba(167,219,120,0.08)');
+      });
+      if (result) {
+        result.setAttribute('fill', 'rgba(167,219,120,0.02)');
+        result.setAttribute('stroke', 'rgba(167,219,120,0.08)');
+      }
+      if (resultGlow) resultGlow.setAttribute('opacity', '0');
+      if (resultCheck) resultCheck.setAttribute('opacity', '0');
+      if (phaseText) {
+        phaseText.textContent = '';
+        phaseText.setAttribute('opacity', '0');
+      }
+      pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
+    }
+
+    function setPhaseText(txt, op) {
+      if (!phaseText) return;
+      phaseText.textContent = txt;
+      phaseText.setAttribute('opacity', op.toFixed(3));
     }
 
     function runCycle() {
-      setScattered();
-
-      var startPos = [];
-      nodes.forEach(function(n) {
-        startPos.push({ x: +n.getAttribute('cx'), y: +n.getAttribute('cy') });
-      });
-
-      var phaseStart = performance.now();
-
-      /* Phase timings (ms) */
-      var P1 = 1500;  /* scattered hold */
-      var P2 = 3000;  /* glide to resolved + scan */
-      var P3 = 1500;  /* connections brighten + labels */
-      var P4 = 3000;  /* flow packets */
-      var P5 = 3000;  /* hold resolved */
-      var totalCycle = P1 + P2 + P3 + P4 + P5;
+      reset();
+      var t0 = performance.now();
 
       function frame(now) {
-        var elapsed = now - phaseStart;
+        var elapsed = now - t0;
+        if (elapsed > totalCycle) { runCycle(); return; }
 
-        if (elapsed > totalCycle) {
-          runCycle();
-          return;
-        }
-
-        /* ---- Phase 1: scattered hold ---- */
-        if (elapsed < P1) {
+        /* ---- Phase 0: broken hold ---- */
+        if (elapsed < P0) {
           requestAnimationFrame(frame);
           return;
         }
 
-        /* ---- Phase 2: glide to resolved positions ---- */
-        var p2elapsed = elapsed - P1;
-        if (p2elapsed <= P2) {
-          var t = easeInOutCubic(Math.min(p2elapsed / P2, 1));
+        /* ---- Phase 1: scan / identify gaps ---- */
+        var p1e = elapsed - P0;
+        if (p1e <= P1) {
+          var t = p1e / P1;
+          var fadeIn = t < 0.15 ? t / 0.15 : 1;
+          setPhaseText('identifying gaps', fadeIn * 0.5);
 
-          nodes.forEach(function(n, i) {
-            var cx = lerp(startPos[i].x, +n.dataset.rx, t);
-            var cy = lerp(startPos[i].y, +n.dataset.ry, t);
-            n.setAttribute('cx', cx);
-            n.setAttribute('cy', cy);
-            n.setAttribute('fill', 'rgba(167,219,120,' + lerp(0.06, 0.18, t).toFixed(3) + ')');
-            n.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.15, 0.7, t).toFixed(3) + ')');
+          /* Pulse gap marks amber to highlight them */
+          var pulse = Math.sin(t * Math.PI * 3) * 0.25 + 0.3;
+          gapMarks.forEach(function(g) {
+            g.setAttribute('stroke', 'rgba(245,158,11,' + pulse.toFixed(3) + ')');
           });
-
-          lines.forEach(function(l, i) {
-            var m = lineMap[i];
-            if (m.a >= 0 && m.b >= 0) {
-              l.setAttribute('x1', nodes[m.a].getAttribute('cx'));
-              l.setAttribute('y1', nodes[m.a].getAttribute('cy'));
-              l.setAttribute('x2', nodes[m.b].getAttribute('cx'));
-              l.setAttribute('y2', nodes[m.b].getAttribute('cy'));
-            }
-            l.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.04, 0.15, t).toFixed(3) + ')');
-            l.setAttribute('stroke-width', lerp(0.5, 1.2, t).toFixed(2));
-          });
-
-          /* Scan line sweeps left to right */
-          if (scanLine) {
-            var scanT = p2elapsed / P2;
-            var scanX = lerp(-10, 370, scanT);
-            scanLine.setAttribute('x1', scanX);
-            scanLine.setAttribute('x2', scanX);
-            var scanOp = scanT < 0.1 ? scanT / 0.1 : scanT > 0.9 ? (1 - scanT) / 0.1 : 1;
-            scanLine.style.opacity = (scanOp * 0.35).toFixed(3);
-          }
 
           requestAnimationFrame(frame);
           return;
         }
-
-        /* Ensure nodes at final resolved positions */
-        nodes.forEach(function(n) {
-          n.setAttribute('cx', n.dataset.rx);
-          n.setAttribute('cy', n.dataset.ry);
-          n.setAttribute('fill', 'rgba(167,219,120,0.18)');
-          n.setAttribute('stroke', 'rgba(167,219,120,0.7)');
+        gapMarks.forEach(function(g) {
+          g.setAttribute('stroke', 'rgba(167,219,120,0.08)');
         });
-        lines.forEach(function(l, i) {
-          var m = lineMap[i];
-          if (m.a >= 0 && m.b >= 0) {
-            l.setAttribute('x1', resolvedPos[m.a].x);
-            l.setAttribute('y1', resolvedPos[m.a].y);
-            l.setAttribute('x2', resolvedPos[m.b].x);
-            l.setAttribute('y2', resolvedPos[m.b].y);
-          }
-        });
-        if (scanLine) scanLine.style.opacity = '0';
 
-        /* ---- Phase 3: connections brighten + labels appear ---- */
-        var p3elapsed = elapsed - P1 - P2;
-        if (p3elapsed <= P3) {
-          var t3 = Math.min(p3elapsed / P3, 1);
+        /* ---- Phase 2: bridges appear ---- */
+        var p2e = elapsed - P0 - P1;
+        if (p2e <= P2) {
+          var t = easeInOutCubic(p2e / P2);
+          setPhaseText('targeted structural fix', 0.6);
 
-          lines.forEach(function(l, i) {
-            var stagger = i / lines.length;
-            var lt = Math.max(0, Math.min((t3 - stagger * 0.5) / 0.5, 1));
-            l.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.15, 0.4, lt).toFixed(3) + ')');
-            l.setAttribute('stroke-width', lerp(1.2, 1.5, lt).toFixed(2));
+          /* Bridges fade in with stagger */
+          bridges.forEach(function(b, i) {
+            var s = i * 0.2;
+            var lt = Math.max(0, Math.min((t - s) / 0.6, 1));
+            b.setAttribute('opacity', lt.toFixed(3));
+          });
+          fixLabels.forEach(function(f, i) {
+            var s = i * 0.2;
+            var lt = Math.max(0, Math.min((t - s - 0.25) / 0.5, 1));
+            f.setAttribute('opacity', (lt * 0.7).toFixed(3));
           });
 
-          labels.forEach(function(lb, i) {
-            var delay = i * 0.08;
-            var lt = Math.max(0, Math.min((t3 - delay) / 0.3, 1));
-            lb.style.opacity = (lt * 0.6).toFixed(3);
+          /* Brighten pipeline as bridges connect */
+          pipes.forEach(function(p) {
+            p.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.08, 0.3, t).toFixed(3) + ')');
+            p.setAttribute('stroke-width', lerp(2, 2.5, t).toFixed(1));
           });
-
-          if (hubGlow && t3 > 0.5) {
-            hubGlow.style.opacity = lerp(0, 0.25, (t3 - 0.5) / 0.5).toFixed(3);
-          }
+          if (src) src.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.15, 0.5, t).toFixed(3) + ')');
+          if (srcDot) srcDot.setAttribute('opacity', lerp(0.12, 0.5, t).toFixed(3));
+          mids.forEach(function(m) {
+            m.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.08, 0.35, t).toFixed(3) + ')');
+          });
 
           requestAnimationFrame(frame);
           return;
         }
 
-        /* Ensure final label/glow state */
-        labels.forEach(function(lb) { lb.style.opacity = '0.6'; });
-        if (hubGlow) hubGlow.style.opacity = '0.25';
+        /* Ensure bridges fully visible */
+        bridges.forEach(function(b) { b.setAttribute('opacity', '1'); });
+        fixLabels.forEach(function(f) { f.setAttribute('opacity', '0.7'); });
+        pipes.forEach(function(p) {
+          p.setAttribute('stroke', 'rgba(167,219,120,0.3)');
+          p.setAttribute('stroke-width', '2.5');
+        });
+        if (src) src.setAttribute('stroke', 'rgba(167,219,120,0.5)');
+        if (srcDot) srcDot.setAttribute('opacity', '0.5');
+        mids.forEach(function(m) {
+          m.setAttribute('stroke', 'rgba(167,219,120,0.35)');
+        });
 
-        /* ---- Phase 4: flow packets travel the network ---- */
-        var p4elapsed = elapsed - P1 - P2 - P3;
-        if (p4elapsed <= P4) {
-          flowPkts.forEach(function(pkt, i) {
-            var fp = flowPaths[i];
-            var from = resolvedPos[fp.fromNode];
-            var to = resolvedPos[fp.toNode];
-            var stagger = i * 600;
-            var local = (p4elapsed - stagger) / 1200;
-            if (local < 0 || local > 1.2) {
+        /* ---- Phase 3: packets flow full pipeline ---- */
+        var p3e = elapsed - P0 - P1 - P2;
+        if (p3e <= P3) {
+          setPhaseText('signals flowing', 0.6);
+
+          var flowDur = P3 - 4 * pktStagger;
+          pkts.forEach(function(pkt, i) {
+            var delay = i * pktStagger;
+            var local = (p3e - delay) / flowDur;
+            if (local < 0 || local > 1.08) {
               pkt.setAttribute('opacity', '0');
               return;
             }
             local = Math.min(local, 1);
-            var et = easeInOutCubic(local);
-            pkt.setAttribute('cx', lerp(from.x, to.x, et));
-            pkt.setAttribute('cy', lerp(from.y, to.y, et));
-            var op = local < 0.1 ? local / 0.1 : local > 0.8 ? (1 - local) / 0.2 : 1;
-            pkt.setAttribute('opacity', (op * 0.7).toFixed(3));
+            var pos = waypointPos(fullPath, easeInOutCubic(local));
+            pkt.setAttribute('cx', pos.x.toFixed(1));
+            pkt.setAttribute('cy', pos.y.toFixed(1));
+            var op = local < 0.05 ? local / 0.05 : local > 0.9 ? (1 - local) / 0.1 : 1;
+            pkt.setAttribute('opacity', (op * 0.9).toFixed(3));
           });
 
           requestAnimationFrame(frame);
           return;
         }
+        pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
+
+        /* ---- Phase 4: result lights up ---- */
+        var p4e = elapsed - P0 - P1 - P2 - P3;
+        if (p4e <= P4) {
+          var t = easeInOutCubic(p4e / P4);
+          setPhaseText('decision reached', 0.6);
+
+          if (result) {
+            result.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.35, 0.8, t).toFixed(3) + ')');
+            result.setAttribute('fill', 'rgba(167,219,120,' + lerp(0.02, 0.15, t).toFixed(3) + ')');
+          }
+          if (resultGlow) resultGlow.setAttribute('opacity', lerp(0, 0.3, t).toFixed(3));
+          if (resultCheck) resultCheck.setAttribute('opacity', lerp(0, 1, t).toFixed(3));
+
+          requestAnimationFrame(frame);
+          return;
+        }
+
+        /* Ensure result fully lit */
+        if (result) {
+          result.setAttribute('stroke', 'rgba(167,219,120,0.8)');
+          result.setAttribute('fill', 'rgba(167,219,120,0.15)');
+        }
+        if (resultGlow) resultGlow.setAttribute('opacity', '0.3');
+        if (resultCheck) resultCheck.setAttribute('opacity', '1');
+        setPhaseText('decision reached', 0.6);
 
         /* ---- Phase 5: hold resolved ---- */
-        flowPkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
         requestAnimationFrame(frame);
       }
 
