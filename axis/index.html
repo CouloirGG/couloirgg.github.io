@@ -67,9 +67,65 @@
   .legal h2 { font-size: 1.1rem; }
   .legal p, .legal li { font-size: 0.85rem; color: #64748b; }
 
+  /* Screenshots */
+  .screenshots { margin: 48px 0; }
+  .screenshots h2 { font-size: 1.4rem; font-weight: 600; color: #e2e8f0; margin-bottom: 16px; border-left: 3px solid #4ac0ff; padding-left: 12px; }
+  .screenshots p { color: #94a3b8; margin-bottom: 16px; }
+  .ss-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .ss-tab {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ss-tab.active { background: #1e293b; color: #4ac0ff; border-color: #4ac0ff; }
+  .ss-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #1e293b transparent;
+  }
+  .ss-track::-webkit-scrollbar { height: 6px; }
+  .ss-track::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+  .ss-item {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+    background: #111827;
+    position: relative;
+  }
+  .ss-item img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .ss-item.phone { height: 380px; width: 175px; }
+  .ss-item.tablet { height: 280px; width: 505px; }
+  .ss-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 6px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    font-size: 0.72rem;
+    color: #94a3b8;
+  }
+
   @media (max-width: 600px) {
     .features, .trust-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 1.8rem; }
+    .ss-item.phone { height: 320px; width: 147px; }
+    .ss-item.tablet { height: 220px; width: 396px; }
   }
 </style>
 </head>
@@ -86,6 +142,47 @@
     <h2>What AXIS Does</h2>
     <p>AXIS Producer is a desktop productivity tool that records your team's work sessions and uses AI to extract what matters: decisions made, action items committed, blockers identified, and open questions raised.</p>
     <p>After each session, AXIS generates a deep analysis report. Not just what was said, but how the team communicated: where they agreed, where they talked past each other, and what to do differently next time.</p>
+  </div>
+
+  <div class="screenshots">
+    <h2>See It In Action</h2>
+    <p>AXIS runs on phone and tablet, giving you session intelligence wherever you work.</p>
+    <div class="ss-tabs">
+      <button class="ss-tab active" data-target="phone">Phone</button>
+      <button class="ss-tab" data-target="tablet">Tablet</button>
+    </div>
+    <div class="ss-track" id="ss-phone">
+      <div class="ss-item phone">
+        <img src="/assets/axis/screenshots/phone_briefing.jpg" alt="Briefing view" loading="lazy">
+        <div class="ss-label">Briefing: critical items, actions, blockers at a glance</div>
+      </div>
+      <div class="ss-item phone">
+        <img src="/assets/axis/screenshots/phone_briefing_expanded.jpg" alt="Expanded briefing" loading="lazy">
+        <div class="ss-label">Expanded view: blockers, actions, open questions</div>
+      </div>
+      <div class="ss-item phone">
+        <img src="/assets/axis/screenshots/phone_action_detail.jpg" alt="Action items" loading="lazy">
+        <div class="ss-label">AI-generated ideas, action items, resolved items</div>
+      </div>
+      <div class="ss-item phone">
+        <img src="/assets/axis/screenshots/phone_activity.jpg" alt="Activity feed" loading="lazy">
+        <div class="ss-label">Live activity feed with AI and mic sources</div>
+      </div>
+    </div>
+    <div class="ss-track" id="ss-tablet" style="display:none;">
+      <div class="ss-item tablet">
+        <img src="/assets/axis/screenshots/tablet_briefing.jpg" alt="Tablet briefing" loading="lazy">
+        <div class="ss-label">Tablet briefing: wide layout for critical items</div>
+      </div>
+      <div class="ss-item tablet">
+        <img src="/assets/axis/screenshots/tablet_briefing_detail.jpg" alt="Tablet briefing detail" loading="lazy">
+        <div class="ss-label">Expanded card: blockers, actions, open questions</div>
+      </div>
+      <div class="ss-item tablet">
+        <img src="/assets/axis/screenshots/tablet_action.jpg" alt="Tablet action items" loading="lazy">
+        <div class="ss-label">Action tab with session items</div>
+      </div>
+    </div>
   </div>
 
   <div class="section">
@@ -202,6 +299,18 @@
   </div>
 
 </div>
+
+<script>
+document.querySelectorAll('.ss-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.ss-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const target = tab.dataset.target;
+    document.getElementById('ss-phone').style.display = target === 'phone' ? '' : 'none';
+    document.getElementById('ss-tablet').style.display = target === 'tablet' ? '' : 'none';
+  });
+});
+</script>
 
 </body>
 </html>
