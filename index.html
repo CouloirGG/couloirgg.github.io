@@ -493,17 +493,6 @@ body {
 
 /* ===== SIGNAL FLOW ANIMATION (JS-driven) ===== */
 
-.sf-glow {
-  opacity: 0;
-}
-.anim-visible .sf-glow {
-  animation: sf-breathe 2.5s ease-in-out infinite;
-}
-@keyframes sf-breathe {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 0.1; }
-}
-
 .sf-break-x {
   opacity: 0;
 }
@@ -511,46 +500,12 @@ body {
   animation: sf-break-pulse 2s ease-in-out infinite;
 }
 @keyframes sf-break-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.2; }
-}
-
-.sf-waiting {
-  opacity: 0;
-}
-.anim-visible .sf-waiting {
-  animation: sf-wait-pulse 3s ease-in-out infinite;
-}
-@keyframes sf-wait-pulse {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.05; }
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.25; }
 }
 
 /* ===== APPROACH ANIMATION (JS-driven) ===== */
 /* All elements positioned/styled by JS; minimal CSS defaults */
-
-/* Pool dot bobbing animation (Signal Flow leak pools) */
-.sf-pool-dot { opacity: 0; }
-.anim-visible .sf-pool-dot {
-  animation: sf-pool-bob 3s ease-in-out infinite;
-}
-@keyframes sf-pool-bob {
-  0%, 100% { opacity: 0.35; transform: translateY(0); }
-  50% { opacity: 0.55; transform: translateY(-2px); }
-}
-
-/* Network Resolve scan line */
-.nr-scan { opacity: 0; }
-
-/* Network Resolve pulse rings */
-.nr-pulse-ring { opacity: 0; }
-
-/* Network Resolve throughput bar */
-.nr-throughput { opacity: 0; }
-
-/* Network Resolve output branches */
-.nr-output-branch { opacity: 0; }
-.nr-output-dest { opacity: 0; }
 
 /* ===== SERVICE CARD ICONS ===== */
 .service-icon {
@@ -634,17 +589,12 @@ body {
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
-  .sf-glow, .sf-break-x, .sf-waiting,
-  .sf-pool-dot,
-  .nr-scan, .nr-pulse-ring,
+  .sf-break-x,
   .si-beam, .si-dot, .si-arrow-dot,
   .si-wave, .si-block {
     animation: none !important;
   }
-  .sf-glow { opacity: 0.15; }
-  .sf-break-x { opacity: 0.3; }
-  .sf-pool-dot { opacity: 0 !important; }
-  .nr-scan, .nr-pulse-ring { opacity: 0 !important; }
+  .sf-break-x { opacity: 0.4; }
   .si-block { opacity: 1; transform: none; }
   .si-wave { opacity: 0; }
 }
@@ -706,141 +656,70 @@ body {
         <div class="anim-container" aria-hidden="true" data-anim="signal-flow">
           <svg viewBox="0 0 380 260" fill="none">
             <defs>
-              <!-- Layer 1: Radial gradient (warm green near source, neutral toward decision) -->
-              <radialGradient id="sf-bg-grad" cx="0.1" cy="0.35" r="0.85">
-                <stop offset="0%" stop-color="#1a3a20" stop-opacity="0.4"/>
-                <stop offset="60%" stop-color="#0f2028" stop-opacity="0.15"/>
-                <stop offset="100%" stop-color="#0a1a20" stop-opacity="0"/>
-              </radialGradient>
-              <!-- Layer 2: Circuit-style grid pattern -->
-              <pattern id="sf-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="40" y2="0" stroke="#005770" stroke-width="0.3" opacity="0.06"/>
-                <line x1="0" y1="0" x2="0" y2="40" stroke="#005770" stroke-width="0.3" opacity="0.06"/>
-              </pattern>
               <filter id="glow-g" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="4" result="b"/>
                 <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
             </defs>
 
-            <!-- Background layers -->
-            <rect width="380" height="260" fill="url(#sf-bg-grad)" rx="8"/>
-            <rect width="380" height="260" fill="url(#sf-grid)" rx="8"/>
+            <!-- Subtle background panel -->
+            <rect width="380" height="260" fill="rgba(0,87,112,0.02)" rx="10"/>
 
-            <!-- Layer 3: Scattered network mesh (system topology backdrop) -->
-            <g opacity="0.08" stroke="#005770" stroke-width="0.5" fill="none">
-              <circle cx="30" cy="30" r="2.5" fill="#005770" opacity="0.3"/>
-              <circle cx="85" cy="25" r="2" fill="#005770" opacity="0.25"/>
-              <circle cx="160" cy="35" r="2.5" fill="#005770" opacity="0.3"/>
-              <circle cx="225" cy="22" r="2" fill="#005770" opacity="0.2"/>
-              <circle cx="290" cy="30" r="2.5" fill="#005770" opacity="0.25"/>
-              <circle cx="350" cy="28" r="2" fill="#005770" opacity="0.2"/>
-              <circle cx="20" cy="175" r="2.5" fill="#005770" opacity="0.25"/>
-              <circle cx="75" cy="190" r="2" fill="#005770" opacity="0.3"/>
-              <circle cx="140" cy="178" r="2.5" fill="#005770" opacity="0.2"/>
-              <circle cx="210" cy="195" r="2" fill="#005770" opacity="0.25"/>
-              <circle cx="280" cy="180" r="2.5" fill="#005770" opacity="0.3"/>
-              <circle cx="330" cy="185" r="2" fill="#005770" opacity="0.2"/>
-              <circle cx="185" cy="215" r="2" fill="#005770" opacity="0.2"/>
-              <!-- Hairline connections -->
-              <line x1="30" y1="30" x2="85" y2="25"/>
-              <line x1="85" y1="25" x2="160" y2="35"/>
-              <line x1="160" y1="35" x2="225" y2="22"/>
-              <line x1="225" y1="22" x2="290" y2="30"/>
-              <line x1="290" y1="30" x2="350" y2="28"/>
-              <line x1="20" y1="175" x2="75" y2="190"/>
-              <line x1="75" y1="190" x2="140" y2="178"/>
-              <line x1="140" y1="178" x2="210" y2="195"/>
-              <line x1="210" y1="195" x2="280" y2="180"/>
-              <line x1="280" y1="180" x2="330" y2="185"/>
-              <line x1="140" y1="178" x2="185" y2="215"/>
-              <line x1="210" y1="195" x2="185" y2="215"/>
-              <line x1="30" y1="30" x2="20" y2="175"/>
-              <line x1="350" y1="28" x2="330" y2="185"/>
+            <!-- Industry label (cycles via JS) -->
+            <text class="sf-industry" x="375" y="18" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#005770" opacity="0.3">// saas</text>
+
+            <!-- === ROW 1: Customers  y=55 === -->
+            <text x="8" y="59" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">customers</text>
+            <line x1="82" y1="55" x2="158" y2="55" stroke="#005770" stroke-width="2.5" opacity="0.3"/>
+            <line x1="172" y1="55" x2="260" y2="55" stroke="#005770" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 3"/>
+            <g class="sf-break-x" transform="translate(165,55)">
+              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+              <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
             </g>
+            <path d="M165,62 L165,88" stroke="#ef4444" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
+            <circle cx="165" cy="91" r="2.5" fill="#ef4444" opacity="0.15"/>
+            <text class="sf-pct" x="290" y="52" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#ef4444" opacity="0"></text>
+            <text class="sf-pct-label" x="290" y="65" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#ef4444" opacity="0">signals lost</text>
 
-            <!-- Input feed stubs: 2 faint lines converging into source -->
-            <line x1="8" y1="50" x2="32" y2="72" stroke="#005770" stroke-width="1" opacity="0.12"/>
-            <line x1="12" y1="65" x2="30" y2="76" stroke="#005770" stroke-width="0.8" opacity="0.1"/>
-
-            <!-- Pipeline: horizontal flow left to right -->
-            <line x1="56" y1="80" x2="132" y2="80" stroke="#005770" stroke-width="3" opacity="0.35"/>
-            <line x1="158" y1="80" x2="237" y2="80" stroke="#f59e0b" stroke-width="2" opacity="0.15"/>
-            <line x1="263" y1="80" x2="326" y2="80" stroke="#ef4444" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 5"/>
-
-            <!-- Dead-end stub past decision node -->
-            <line x1="354" y1="80" x2="375" y2="80" stroke="#ef4444" stroke-width="0.8" opacity="0.06" stroke-dasharray="3 4"/>
-
-            <!-- Gap 1: verbal handoff -->
-            <line x1="145" y1="67" x2="145" y2="93" stroke="#f59e0b" stroke-width="2" opacity="0.3" stroke-dasharray="3 2"/>
-            <path d="M139,96 L145,108 L151,96" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.2"/>
-
-            <!-- Gap 1: Break X marker -->
-            <g class="sf-break-x" transform="translate(145,80)">
-              <line x1="-4" y1="-4" x2="4" y2="4" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
-              <line x1="4" y1="-4" x2="-4" y2="4" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- === ROW 2: Employees  y=120 === -->
+            <text x="8" y="124" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">employees</text>
+            <line x1="82" y1="120" x2="175" y2="120" stroke="#005770" stroke-width="2.5" opacity="0.3"/>
+            <line x1="192" y1="120" x2="260" y2="120" stroke="#005770" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 3"/>
+            <g class="sf-break-x" transform="translate(183,120)">
+              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+              <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
             </g>
+            <path d="M183,127 L183,153" stroke="#ef4444" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
+            <circle cx="183" cy="156" r="2.5" fill="#ef4444" opacity="0.15"/>
+            <text class="sf-pct" x="290" y="117" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#ef4444" opacity="0"></text>
+            <text class="sf-pct-label" x="290" y="130" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#ef4444" opacity="0">context lost</text>
 
-            <!-- Gap 2: context lost -->
-            <line x1="250" y1="67" x2="250" y2="93" stroke="#ef4444" stroke-width="2" opacity="0.3" stroke-dasharray="3 2"/>
-            <path d="M244,96 L250,108 L256,96" stroke="#ef4444" stroke-width="1.5" fill="none" opacity="0.2"/>
-
-            <!-- Gap 2: Break X marker -->
-            <g class="sf-break-x" transform="translate(250,80)">
-              <line x1="-4" y1="-4" x2="4" y2="4" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
-              <line x1="4" y1="-4" x2="-4" y2="4" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- === ROW 3: Leads  y=185 === -->
+            <text x="8" y="189" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">leads</text>
+            <line x1="82" y1="185" x2="142" y2="185" stroke="#005770" stroke-width="2.5" opacity="0.3"/>
+            <line x1="158" y1="185" x2="260" y2="185" stroke="#005770" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 3"/>
+            <g class="sf-break-x" transform="translate(150,185)">
+              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+              <line x1="5" y1="-5" x2="-5" y2="5" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
             </g>
+            <path d="M150,192 L150,218" stroke="#f59e0b" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
+            <circle cx="150" cy="221" r="2.5" fill="#f59e0b" opacity="0.15"/>
+            <text class="sf-pct" x="290" y="182" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#f59e0b" opacity="0"></text>
+            <text class="sf-pct-label" x="290" y="195" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f59e0b" opacity="0">dropped</text>
 
-            <!-- Leak pool 1 (below gap 1) -->
-            <ellipse cx="145" cy="145" rx="22" ry="6" fill="#f59e0b" opacity="0.06"/>
-            <ellipse cx="145" cy="145" rx="16" ry="4" fill="none" stroke="#f59e0b" stroke-width="0.5" opacity="0.12"/>
-            <text x="145" y="158" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#f59e0b" opacity="0.25">leaked</text>
-            <circle class="sf-pool-dot" cx="140" cy="143" r="2" fill="#f59e0b"/>
-            <circle class="sf-pool-dot" cx="148" cy="141" r="1.8" fill="#f59e0b"/>
-            <circle class="sf-pool-dot" cx="144" cy="147" r="1.5" fill="#f59e0b"/>
+            <!-- Bottom -->
+            <text x="190" y="248" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#005770" opacity="0.15">compounding daily across every channel</text>
 
-            <!-- Leak pool 2 (below gap 2) -->
-            <ellipse cx="250" cy="145" rx="22" ry="6" fill="#ef4444" opacity="0.05"/>
-            <ellipse cx="250" cy="145" rx="16" ry="4" fill="none" stroke="#ef4444" stroke-width="0.5" opacity="0.1"/>
-            <text x="250" y="158" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#ef4444" opacity="0.2">lost</text>
-            <circle class="sf-pool-dot" cx="245" cy="143" r="2" fill="#ef4444"/>
-            <circle class="sf-pool-dot" cx="253" cy="141" r="1.8" fill="#ef4444"/>
-            <circle class="sf-pool-dot" cx="249" cy="147" r="1.5" fill="#ef4444"/>
-
-            <!-- Source node (glowing, healthy) -->
-            <circle class="sf-glow" cx="42" cy="80" r="22" fill="#A7DB78" filter="url(#glow-g)" opacity="0"/>
-            <circle cx="42" cy="80" r="14" fill="rgba(167,219,120,0.1)" stroke="#005770" stroke-width="2.5"/>
-            <circle cx="42" cy="80" r="4.5" fill="#A7DB78" opacity="0.5"/>
-
-            <!-- Gap 1 node -->
-            <circle cx="145" cy="80" r="10" fill="rgba(245,158,11,0.04)" stroke="#f59e0b" stroke-width="2" opacity="0.4"/>
-
-            <!-- Gap 2 node -->
-            <circle cx="250" cy="80" r="10" fill="rgba(239,68,68,0.03)" stroke="#ef4444" stroke-width="2" opacity="0.3"/>
-
-            <!-- Decision node (empty, waiting) -->
-            <circle class="sf-waiting" cx="340" cy="80" r="20" fill="#ef4444" opacity="0"/>
-            <circle cx="340" cy="80" r="14" fill="rgba(239,68,68,0.02)" stroke="#ef4444" stroke-width="2" opacity="0.18"/>
-            <text x="340" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#ef4444" opacity="0.1" font-weight="600">?</text>
-
-            <!-- Labels -->
-            <text x="42" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#005770" opacity="0.5">signal</text>
-            <text x="145" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f59e0b" opacity="0.4">verbal handoff</text>
-            <text x="250" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#ef4444" opacity="0.35">context lost</text>
-            <text x="340" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#ef4444" opacity="0.2">decision</text>
-
-            <!-- Counter text (JS-driven) -->
-            <text class="sf-counter" x="340" y="125" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#ef4444" opacity="0"></text>
-
-            <!-- Bottom: accumulated loss -->
-            <text x="190" y="238" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#005770" opacity="0.12">missed signals accumulate quietly</text>
-
-            <!-- 5 animated packets (JS moves them, colours change per segment) -->
-            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <!-- 9 animated packets (3 per row, JS-driven) -->
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
+            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
           </svg>
         </div>
       </div>
@@ -855,127 +734,58 @@ body {
         <div class="anim-container" aria-hidden="true" data-anim="network-resolve">
           <svg viewBox="0 0 380 260" fill="none">
             <defs>
-              <!-- Layer 1: Radial gradient (dark green tint near source fading to bg-dark) -->
-              <radialGradient id="nr-bg-grad" cx="0.1" cy="0.35" r="0.85">
-                <stop offset="0%" stop-color="#142e1a" stop-opacity="0.35"/>
-                <stop offset="60%" stop-color="#0d1f22" stop-opacity="0.12"/>
-                <stop offset="100%" stop-color="#0a1a20" stop-opacity="0"/>
-              </radialGradient>
-              <!-- Layer 2: Circuit-style grid pattern -->
-              <pattern id="nr-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="40" y2="0" stroke="#A7DB78" stroke-width="0.3" opacity="0.04"/>
-                <line x1="0" y1="0" x2="0" y2="40" stroke="#A7DB78" stroke-width="0.3" opacity="0.04"/>
-              </pattern>
               <filter id="glow-l" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="5" result="b"/>
                 <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
             </defs>
 
-            <!-- Background layers -->
-            <rect width="380" height="260" fill="url(#nr-bg-grad)" rx="8"/>
-            <rect width="380" height="260" fill="url(#nr-grid)" rx="8"/>
+            <!-- Subtle background panel -->
+            <rect width="380" height="260" fill="rgba(167,219,120,0.015)" rx="10"/>
 
-            <!-- Layer 3: Scattered network mesh (same positions as Signal Flow) -->
-            <g opacity="0.06" stroke="#A7DB78" stroke-width="0.5" fill="none">
-              <circle cx="30" cy="30" r="2.5" fill="#A7DB78" opacity="0.25"/>
-              <circle cx="85" cy="25" r="2" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="160" cy="35" r="2.5" fill="#A7DB78" opacity="0.25"/>
-              <circle cx="225" cy="22" r="2" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="290" cy="30" r="2.5" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="350" cy="28" r="2" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="20" cy="175" r="2.5" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="75" cy="190" r="2" fill="#A7DB78" opacity="0.25"/>
-              <circle cx="140" cy="178" r="2.5" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="210" cy="195" r="2" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="280" cy="180" r="2.5" fill="#A7DB78" opacity="0.25"/>
-              <circle cx="330" cy="185" r="2" fill="#A7DB78" opacity="0.2"/>
-              <circle cx="185" cy="215" r="2" fill="#A7DB78" opacity="0.2"/>
-              <!-- Hairline connections -->
-              <line x1="30" y1="30" x2="85" y2="25"/>
-              <line x1="85" y1="25" x2="160" y2="35"/>
-              <line x1="160" y1="35" x2="225" y2="22"/>
-              <line x1="225" y1="22" x2="290" y2="30"/>
-              <line x1="290" y1="30" x2="350" y2="28"/>
-              <line x1="20" y1="175" x2="75" y2="190"/>
-              <line x1="75" y1="190" x2="140" y2="178"/>
-              <line x1="140" y1="178" x2="210" y2="195"/>
-              <line x1="210" y1="195" x2="280" y2="180"/>
-              <line x1="280" y1="180" x2="330" y2="185"/>
-              <line x1="140" y1="178" x2="185" y2="215"/>
-              <line x1="210" y1="195" x2="185" y2="215"/>
-              <line x1="30" y1="30" x2="20" y2="175"/>
-              <line x1="350" y1="28" x2="330" y2="185"/>
-            </g>
+            <!-- === ROW 1: Customers  y=55 === -->
+            <text x="8" y="59" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">customers</text>
+            <line class="nr-pipe" x1="82" y1="55" x2="158" y2="55" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
+            <line class="nr-pipe" x1="172" y1="55" x2="260" y2="55" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-gap-mark" x1="165" y1="42" x2="165" y2="68" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <path class="nr-bridge" d="M155,55 Q165,35 175,55" stroke="#A7DB78" stroke-width="2.5" fill="none" opacity="0" filter="url(#glow-l)"/>
+            <text class="nr-fix-label" x="165" y="28" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">auto-route</text>
+            <text class="nr-success" x="290" y="52" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#A7DB78" opacity="0">100%</text>
+            <text class="nr-success-label" x="290" y="65" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">routed</text>
 
-            <!-- Input feed stubs: matching Signal Flow layout -->
-            <line x1="8" y1="50" x2="32" y2="72" stroke="#A7DB78" stroke-width="1" opacity="0.08"/>
-            <line x1="12" y1="65" x2="30" y2="76" stroke="#A7DB78" stroke-width="0.8" opacity="0.06"/>
+            <!-- === ROW 2: Employees  y=120 === -->
+            <text x="8" y="124" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">employees</text>
+            <line class="nr-pipe" x1="82" y1="120" x2="175" y2="120" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
+            <line class="nr-pipe" x1="192" y1="120" x2="260" y2="120" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-gap-mark" x1="183" y1="107" x2="183" y2="133" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <path class="nr-bridge" d="M172,120 Q183,100 194,120" stroke="#A7DB78" stroke-width="2.5" fill="none" opacity="0" filter="url(#glow-l)"/>
+            <text class="nr-fix-label" x="183" y="93" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">auto-capture</text>
+            <text class="nr-success" x="290" y="117" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#A7DB78" opacity="0">100%</text>
+            <text class="nr-success-label" x="290" y="130" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">captured</text>
 
-            <!-- Same pipeline layout as problem (mirrors it) -->
-            <line class="nr-pipe" x1="56" y1="80" x2="132" y2="80" stroke="rgba(167,219,120,0.08)" stroke-width="3"/>
-            <line class="nr-pipe" x1="158" y1="80" x2="237" y2="80" stroke="rgba(167,219,120,0.05)" stroke-width="2"/>
-            <line class="nr-pipe" x1="263" y1="80" x2="326" y2="80" stroke="rgba(167,219,120,0.03)" stroke-width="1.5" stroke-dasharray="4 5"/>
-
-            <!-- Gap marks (same positions as problem) -->
-            <line class="nr-gap-mark" x1="145" y1="67" x2="145" y2="93" stroke="rgba(167,219,120,0.08)" stroke-width="2" stroke-dasharray="3 2"/>
-            <line class="nr-gap-mark" x1="250" y1="67" x2="250" y2="93" stroke="rgba(167,219,120,0.08)" stroke-width="2" stroke-dasharray="3 2"/>
-
-            <!-- Scan line (sweeps horizontally during Phase 1) -->
-            <line class="nr-scan" x1="42" y1="55" x2="42" y2="105" stroke="#A7DB78" stroke-width="1" opacity="0"/>
-
-            <!-- Pulse rings (expand at gap positions when bridges appear) -->
-            <circle class="nr-pulse-ring" cx="145" cy="80" r="10" fill="none" stroke="#A7DB78" stroke-width="1" opacity="0"/>
-            <circle class="nr-pulse-ring" cx="250" cy="80" r="10" fill="none" stroke="#A7DB78" stroke-width="1" opacity="0"/>
-
-            <!-- Bridge fixes (hidden initially, appear during fix phase) -->
-            <path class="nr-bridge" d="M130,80 Q145,55 160,80" stroke="#A7DB78" stroke-width="3" fill="none" opacity="0" filter="url(#glow-l)"/>
-            <path class="nr-bridge" d="M235,80 Q250,55 265,80" stroke="#A7DB78" stroke-width="3" fill="none" opacity="0" filter="url(#glow-l)"/>
-
-            <!-- Fix labels (appear with bridges) -->
-            <text class="nr-fix-label" x="145" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">structural fix</text>
-            <text class="nr-fix-label" x="250" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">structural fix</text>
-
-            <!-- Source node -->
-            <circle class="nr-src" cx="42" cy="80" r="14" fill="rgba(167,219,120,0.05)" stroke="rgba(167,219,120,0.15)" stroke-width="2.5"/>
-            <circle class="nr-src-dot" cx="42" cy="80" r="4.5" fill="#A7DB78" opacity="0.12"/>
-
-            <!-- Mid nodes (at gap positions) -->
-            <circle class="nr-mid" cx="145" cy="80" r="10" fill="rgba(167,219,120,0.02)" stroke="rgba(167,219,120,0.08)" stroke-width="2"/>
-            <circle class="nr-mid" cx="250" cy="80" r="10" fill="rgba(167,219,120,0.02)" stroke="rgba(167,219,120,0.08)" stroke-width="2"/>
-
-            <!-- Result node (lights up at the end) -->
-            <circle class="nr-result-glow" cx="340" cy="80" r="24" fill="#A7DB78" filter="url(#glow-l)" opacity="0"/>
-            <circle class="nr-result" cx="340" cy="80" r="14" fill="rgba(167,219,120,0.02)" stroke="rgba(167,219,120,0.08)" stroke-width="2.5"/>
-            <text class="nr-result-check" x="340" y="87" text-anchor="middle" font-family="Sora, sans-serif" font-size="18" fill="#A7DB78" opacity="0" font-weight="700">&#10003;</text>
-
-            <!-- Output branches (appear in Phase 4 when result lights up) -->
-            <line class="nr-output-branch" x1="352" y1="72" x2="372" y2="56" stroke="#A7DB78" stroke-width="1" opacity="0"/>
-            <line class="nr-output-branch" x1="352" y1="88" x2="372" y2="104" stroke="#A7DB78" stroke-width="1" opacity="0"/>
-            <circle class="nr-output-dest" cx="374" cy="54" r="3" fill="none" stroke="#A7DB78" stroke-width="1" opacity="0"/>
-            <circle class="nr-output-dest" cx="374" cy="106" r="3" fill="none" stroke="#A7DB78" stroke-width="1" opacity="0"/>
-
-            <!-- Static labels -->
-            <text x="42" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#A7DB78" opacity="0.25">signal</text>
-            <text x="340" y="110" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#A7DB78" opacity="0.25">decision</text>
-
-            <!-- Counter text (JS-driven) -->
-            <text class="nr-counter" x="340" y="125" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0"></text>
-
-            <!-- Throughput bar (fills as packets flow) -->
-            <rect x="120" y="170" width="140" height="3" rx="1.5" fill="rgba(167,219,120,0.06)" stroke="rgba(167,219,120,0.08)" stroke-width="0.5"/>
-            <rect class="nr-throughput" x="120" y="170" width="0" height="3" rx="1.5" fill="#A7DB78" opacity="0"/>
-            <text x="119" y="183" font-family="JetBrains Mono, monospace" font-size="6" fill="#A7DB78" opacity="0.15">throughput</text>
+            <!-- === ROW 3: Leads  y=185 === -->
+            <text x="8" y="189" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">leads</text>
+            <line class="nr-pipe" x1="82" y1="185" x2="142" y2="185" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
+            <line class="nr-pipe" x1="158" y1="185" x2="260" y2="185" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-gap-mark" x1="150" y1="172" x2="150" y2="198" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <path class="nr-bridge" d="M139,185 Q150,165 161,185" stroke="#A7DB78" stroke-width="2.5" fill="none" opacity="0" filter="url(#glow-l)"/>
+            <text class="nr-fix-label" x="150" y="158" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">structured handoff</text>
+            <text class="nr-success" x="290" y="182" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#A7DB78" opacity="0">100%</text>
+            <text class="nr-success-label" x="290" y="195" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#A7DB78" opacity="0">routed</text>
 
             <!-- Phase narration (updated by JS) -->
-            <text class="nr-phase" x="190" y="200" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#A7DB78" opacity="0"></text>
+            <text class="nr-phase" x="190" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#A7DB78" opacity="0"></text>
 
-            <!-- 5 flow packets -->
-            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
-            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
-            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
-            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
-            <circle class="nr-pkt" r="5.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <!-- 9 flow packets (3 per row, JS-driven) -->
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
+            <circle class="nr-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-l)"/>
           </svg>
         </div>
         <div class="approach-text">
@@ -1171,81 +981,109 @@ body {
 
   /* ================================================================
      SIGNAL FLOW (Problem section)
-     5 packets enter pipeline. 2 leak at gap1, 3 leak at gap2.
-     Nothing reaches the decision node.
+     Three lanes: customers, employees, leads.
+     Packets leak at gap points per row.
+     Loss percentages count up. Industry label cycles.
      ================================================================ */
   function initSignalFlow(container) {
     var pkts = container.querySelectorAll('.sf-pkt');
-    var poolDots = container.querySelectorAll('.sf-pool-dot');
-    var counter = container.querySelector('.sf-counter');
-    var cycle = 6500;
-    var stagger = 300;
+    var pctTexts = container.querySelectorAll('.sf-pct');
+    var pctLabels = container.querySelectorAll('.sf-pct-label');
+    var industryLabel = container.querySelector('.sf-industry');
 
-    /* Pool dots grouped by gap: first 3 are gap1, next 3 are gap2 */
-    var pool1Dots = [poolDots[0], poolDots[1], poolDots[2]];
-    var pool2Dots = [poolDots[3], poolDots[4], poolDots[5]];
+    var cycle = 7000;
+    var stagger = 350;
 
-    /* Waypoints for packets that leak at gap 1 (verbal handoff) */
-    var pathGap1 = [
-      { x: 42, y: 80, t: 0 },
-      { x: 130, y: 80, t: 0.45 },
-      { x: 140, y: 80, t: 0.55 },
-      { x: 143, y: 92, t: 0.68 },
-      { x: 148, y: 155, t: 1.0 }
+    /* Industry scenarios with different loss profiles */
+    var industries = [
+      { name: '// saas', pcts: [40, 60, 25] },
+      { name: '// agencies', pcts: [35, 50, 45] },
+      { name: '// manufacturing', pcts: [30, 65, 20] }
+    ];
+    var industryIdx = 0;
+
+    /* Row definitions matching SVG layout */
+    var rows = [
+      { y: 55, gapX: 165, lineStart: 82, lineEnd: 260 },
+      { y: 120, gapX: 183, lineStart: 82, lineEnd: 260 },
+      { y: 185, gapX: 150, lineStart: 82, lineEnd: 260 }
     ];
 
-    /* Waypoints for packets that leak at gap 2 (context lost) */
-    var pathGap2 = [
-      { x: 42, y: 80, t: 0 },
-      { x: 130, y: 80, t: 0.22 },
-      { x: 158, y: 80, t: 0.33 },
-      { x: 235, y: 80, t: 0.56 },
-      { x: 247, y: 80, t: 0.65 },
-      { x: 250, y: 92, t: 0.76 },
-      { x: 253, y: 155, t: 1.0 }
+    /* Which packets pass vs fall per row:
+       Row 0 (customers): 1 passes, 2 fall
+       Row 1 (employees): all fall
+       Row 2 (leads): 2 pass, 1 falls */
+    var passMap = [
+      [true, false, false],
+      [false, false, false],
+      [true, true, false]
     ];
 
-    /* pkt 0-2: make it past gap1, leak at gap2.  pkt 3-4: leak at gap1 */
-    var defs = [
-      { path: pathGap2, dur: 3400, delay: 0, pool: 2 },
-      { path: pathGap2, dur: 3400, delay: stagger, pool: 2 },
-      { path: pathGap2, dur: 3400, delay: stagger * 2, pool: 2 },
-      { path: pathGap1, dur: 2200, delay: stagger * 3, pool: 1 },
-      { path: pathGap1, dur: 2200, delay: stagger * 4, pool: 1 }
-    ];
+    var lossColors = ['#ef4444', '#ef4444', '#f59e0b'];
 
-    /* Track which pool dots have been revealed */
-    var pool1Count = 0;
-    var pool2Count = 0;
+    function buildPath(row, passes) {
+      if (passes) {
+        return [
+          { x: row.lineStart, y: row.y, t: 0 },
+          { x: row.gapX - 10, y: row.y, t: 0.45 },
+          { x: row.gapX + 10, y: row.y, t: 0.6 },
+          { x: row.lineEnd, y: row.y, t: 1.0 }
+        ];
+      } else {
+        return [
+          { x: row.lineStart, y: row.y, t: 0 },
+          { x: row.gapX - 3, y: row.y, t: 0.5 },
+          { x: row.gapX, y: row.y + 8, t: 0.65 },
+          { x: row.gapX + 4, y: row.y + 45, t: 1.0 }
+        ];
+      }
+    }
 
-    function pktColor(x) {
-      if (x < 136) return '#A7DB78';
-      if (x < 244) return '#f59e0b';
-      return '#ef4444';
+    /* Build packet definitions: 3 packets x 3 rows = 9 total */
+    var pktDefs = [];
+    for (var r = 0; r < 3; r++) {
+      for (var p = 0; p < 3; p++) {
+        pktDefs.push({
+          path: buildPath(rows[r], passMap[r][p]),
+          dur: 3200,
+          delay: r * 150 + p * stagger,
+          passes: passMap[r][p],
+          rowIdx: r
+        });
+      }
+    }
+
+    function pktColor(def, pos) {
+      if (pos.y > rows[def.rowIdx].y + 5) return lossColors[def.rowIdx];
+      if (def.passes && pos.x > rows[def.rowIdx].gapX) return '#f59e0b';
+      return '#A7DB78';
     }
 
     function runCycle() {
-      var t0 = performance.now();
-      pool1Count = 0;
-      pool2Count = 0;
+      var ind = industries[industryIdx % industries.length];
+      industryIdx++;
+
+      /* Update industry label */
+      if (industryLabel) industryLabel.textContent = ind.name;
+
+      /* Reset */
       pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
-      poolDots.forEach(function(d) { d.setAttribute('opacity', '0'); d.classList.remove('anim-visible'); });
-      if (counter) { counter.setAttribute('opacity', '0'); counter.textContent = ''; }
+      pctTexts.forEach(function(el) { el.textContent = ''; el.setAttribute('opacity', '0'); });
+      pctLabels.forEach(function(el) { el.setAttribute('opacity', '0'); });
+
+      var t0 = performance.now();
 
       function frame(now) {
         var elapsed = now - t0;
         if (elapsed > cycle) { runCycle(); return; }
 
-        var leaked = 0;
-
-        defs.forEach(function(d, i) {
+        /* Animate packets */
+        pktDefs.forEach(function(d, i) {
           var p = pkts[i];
+          if (!p) return;
           var local = (elapsed - d.delay) / d.dur;
-          if (local < 0 || local > 1.08) {
-            if (local > 1) {
-              p.setAttribute('opacity', '0');
-              leaked++;
-            }
+          if (local < 0 || local > 1.1) {
+            if (local > 1) p.setAttribute('opacity', '0');
             return;
           }
           local = Math.min(local, 1);
@@ -1253,32 +1091,29 @@ body {
           var pos = waypointPos(d.path, easeInOutCubic(local));
           p.setAttribute('cx', pos.x.toFixed(1));
           p.setAttribute('cy', pos.y.toFixed(1));
-          p.setAttribute('fill', pktColor(pos.x));
+          p.setAttribute('fill', pktColor(d, pos));
 
-          /* Fade in quickly, fade out when falling */
+          /* Opacity: fade in, fade out when falling or reaching end */
           var op = 1;
-          if (local < 0.06) op = local / 0.06;
-          else if (pos.y > 88) op = Math.max(0, 1 - (pos.y - 88) / 55);
-          p.setAttribute('opacity', op.toFixed(3));
-
-          /* Reveal pool dots as packets fall past y=120 */
-          if (pos.y > 120) {
-            if (d.pool === 1 && pool1Count < 3) {
-              pool1Dots[pool1Count].setAttribute('opacity', '0.4');
-              pool1Count++;
-            } else if (d.pool === 2 && pool2Count < 3) {
-              pool2Dots[pool2Count].setAttribute('opacity', '0.4');
-              pool2Count++;
-            }
-            leaked++;
+          if (local < 0.05) op = local / 0.05;
+          else if (!d.passes && pos.y > rows[d.rowIdx].y + 8) {
+            op = Math.max(0, 1 - (pos.y - rows[d.rowIdx].y - 8) / 38);
+          } else if (d.passes && local > 0.88) {
+            op = (1 - local) / 0.12;
           }
+          p.setAttribute('opacity', Math.max(0, op).toFixed(3));
         });
 
-        /* Show counter near end of cycle */
-        if (elapsed > cycle * 0.7 && counter) {
-          counter.textContent = '0/5 delivered';
-          var fadeT = Math.min((elapsed - cycle * 0.7) / 800, 1);
-          counter.setAttribute('opacity', (fadeT * 0.45).toFixed(3));
+        /* Count up loss percentages with stagger per row */
+        for (var r = 0; r < 3; r++) {
+          var lossDelay = 1200 + r * 500;
+          if (elapsed > lossDelay && pctTexts[r]) {
+            var fadeT = Math.min((elapsed - lossDelay) / 1000, 1);
+            var currentPct = Math.round(ind.pcts[r] * easeInOutCubic(fadeT));
+            pctTexts[r].textContent = currentPct + '%';
+            pctTexts[r].setAttribute('opacity', (Math.min(fadeT * 2, 1) * 0.85).toFixed(3));
+            if (pctLabels[r]) pctLabels[r].setAttribute('opacity', (Math.min(fadeT * 2, 1) * 0.45).toFixed(3));
+          }
         }
 
         requestAnimationFrame(frame);
@@ -1291,93 +1126,69 @@ body {
 
   /* ================================================================
      NETWORK RESOLVE (Approach section)
-     Same pipeline as problem, but bridges fix the gaps.
-     Phase 0: broken hold (mirrors problem)
-     Phase 1: scan identifies gaps
-     Phase 2: bridge fixes appear
-     Phase 3: packets flow full pipeline
-     Phase 4: result lights up
-     Phase 5: hold resolved, then loop
+     Three lanes matching problem layout.
+     Phase 0: broken hold
+     Phase 1: identify gaps (gap marks pulse amber)
+     Phase 2: bridges appear with fix labels
+     Phase 3: packets flow through all rows
+     Phase 4: success indicators light up
+     Phase 5: hold resolved
      ================================================================ */
   function initNetworkResolve(container) {
     var pipes = container.querySelectorAll('.nr-pipe');
     var gapMarks = container.querySelectorAll('.nr-gap-mark');
     var bridges = container.querySelectorAll('.nr-bridge');
     var fixLabels = container.querySelectorAll('.nr-fix-label');
-    var src = container.querySelector('.nr-src');
-    var srcDot = container.querySelector('.nr-src-dot');
-    var mids = container.querySelectorAll('.nr-mid');
-    var result = container.querySelector('.nr-result');
-    var resultGlow = container.querySelector('.nr-result-glow');
-    var resultCheck = container.querySelector('.nr-result-check');
+    var successTexts = container.querySelectorAll('.nr-success');
+    var successLabels = container.querySelectorAll('.nr-success-label');
     var phaseText = container.querySelector('.nr-phase');
     var pkts = container.querySelectorAll('.nr-pkt');
-    var scanLine = container.querySelector('.nr-scan');
-    var pulseRings = container.querySelectorAll('.nr-pulse-ring');
-    var outputBranches = container.querySelectorAll('.nr-output-branch');
-    var outputDests = container.querySelectorAll('.nr-output-dest');
-    var counterText = container.querySelector('.nr-counter');
-    var throughputBar = container.querySelector('.nr-throughput');
 
     /* Phase durations (ms) */
     var P0 = 2000;   /* broken hold */
-    var P1 = 1500;   /* scan / identify gaps */
-    var P2 = 1300;   /* bridges appear */
-    var P3 = 2800;   /* packets flow */
-    var P4 = 800;    /* result lights up */
-    var P5 = 3000;   /* hold resolved */
+    var P1 = 1500;   /* identify gaps */
+    var P2 = 1500;   /* bridges appear */
+    var P3 = 3000;   /* packets flow */
+    var P4 = 1000;   /* success */
+    var P5 = 2500;   /* hold */
     var totalCycle = P0 + P1 + P2 + P3 + P4 + P5;
 
-    /* Full pipeline waypoints (source to decision, no leaks) */
-    var fullPath = [
-      { x: 42,  y: 80, t: 0 },
-      { x: 130, y: 80, t: 0.22 },
-      { x: 160, y: 80, t: 0.33 },
-      { x: 235, y: 80, t: 0.56 },
-      { x: 265, y: 80, t: 0.67 },
-      { x: 326, y: 80, t: 0.88 },
-      { x: 340, y: 80, t: 1.0 }
+    /* Row definitions (matching problem SVG positions) */
+    var rows = [
+      { y: 55, gapX: 165, lineStart: 82, lineEnd: 260 },
+      { y: 120, gapX: 183, lineStart: 82, lineEnd: 260 },
+      { y: 185, gapX: 150, lineStart: 82, lineEnd: 260 }
     ];
-    var pktStagger = 240;
+
+    function fullPath(row) {
+      return [
+        { x: row.lineStart, y: row.y, t: 0 },
+        { x: row.gapX - 10, y: row.y, t: 0.35 },
+        { x: row.gapX + 10, y: row.y, t: 0.5 },
+        { x: row.lineEnd, y: row.y, t: 1.0 }
+      ];
+    }
+
+    var pktStagger = 220;
 
     function reset() {
       pipes.forEach(function(p, i) {
-        var ops = [0.08, 0.05, 0.03];
-        p.setAttribute('stroke', 'rgba(167,219,120,' + (ops[i] || 0.05) + ')');
-        p.setAttribute('stroke-width', i === 0 ? '3' : i === 1 ? '2' : '1.5');
+        /* Even-indexed = solid pre-gap, odd = dashed post-gap */
+        if (i % 2 === 0) {
+          p.setAttribute('stroke', 'rgba(167,219,120,0.12)');
+        } else {
+          p.setAttribute('stroke', 'rgba(167,219,120,0.06)');
+        }
       });
       gapMarks.forEach(function(g) {
-        g.setAttribute('stroke', 'rgba(167,219,120,0.08)');
+        g.setAttribute('stroke', 'rgba(167,219,120,0.1)');
       });
       bridges.forEach(function(b) { b.setAttribute('opacity', '0'); });
       fixLabels.forEach(function(f) { f.setAttribute('opacity', '0'); });
-      if (src) {
-        src.setAttribute('fill', 'rgba(167,219,120,0.05)');
-        src.setAttribute('stroke', 'rgba(167,219,120,0.15)');
-      }
-      if (srcDot) srcDot.setAttribute('opacity', '0.12');
-      mids.forEach(function(m) {
-        m.setAttribute('fill', 'rgba(167,219,120,0.02)');
-        m.setAttribute('stroke', 'rgba(167,219,120,0.08)');
-      });
-      if (result) {
-        result.setAttribute('fill', 'rgba(167,219,120,0.02)');
-        result.setAttribute('stroke', 'rgba(167,219,120,0.08)');
-      }
-      if (resultGlow) resultGlow.setAttribute('opacity', '0');
-      if (resultCheck) resultCheck.setAttribute('opacity', '0');
-      if (phaseText) {
-        phaseText.textContent = '';
-        phaseText.setAttribute('opacity', '0');
-      }
+      successTexts.forEach(function(s) { s.setAttribute('opacity', '0'); });
+      successLabels.forEach(function(s) { s.setAttribute('opacity', '0'); });
+      if (phaseText) { phaseText.textContent = ''; phaseText.setAttribute('opacity', '0'); }
       pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
-      /* Reset new elements */
-      if (scanLine) { scanLine.setAttribute('opacity', '0'); scanLine.setAttribute('x1', '42'); scanLine.setAttribute('x2', '42'); }
-      pulseRings.forEach(function(r) { r.setAttribute('opacity', '0'); r.setAttribute('r', '10'); });
-      outputBranches.forEach(function(b) { b.setAttribute('opacity', '0'); });
-      outputDests.forEach(function(d) { d.setAttribute('opacity', '0'); });
-      if (counterText) { counterText.textContent = ''; counterText.setAttribute('opacity', '0'); }
-      if (throughputBar) { throughputBar.setAttribute('width', '0'); throughputBar.setAttribute('opacity', '0'); }
     }
 
     function setPhaseText(txt, op) {
@@ -1400,24 +1211,15 @@ body {
           return;
         }
 
-        /* ---- Phase 1: scan / identify gaps ---- */
+        /* ---- Phase 1: identify gaps ---- */
         var p1e = elapsed - P0;
         if (p1e <= P1) {
           var t = p1e / P1;
           var fadeIn = t < 0.15 ? t / 0.15 : 1;
-          setPhaseText('identifying gaps', fadeIn * 0.5);
+          setPhaseText('mapping signal flow', fadeIn * 0.5);
 
-          /* Scan line sweeps from x=42 to x=340 */
-          if (scanLine) {
-            var scanX = lerp(42, 340, t);
-            scanLine.setAttribute('x1', scanX.toFixed(1));
-            scanLine.setAttribute('x2', scanX.toFixed(1));
-            var scanOp = t < 0.1 ? t / 0.1 : t > 0.85 ? (1 - t) / 0.15 : 1;
-            scanLine.setAttribute('opacity', (scanOp * 0.4).toFixed(3));
-          }
-
-          /* Pulse gap marks amber to highlight them */
-          var pulse = Math.sin(t * Math.PI * 3) * 0.25 + 0.3;
+          /* Pulse gap marks amber */
+          var pulse = Math.sin(t * Math.PI * 3) * 0.2 + 0.35;
           gapMarks.forEach(function(g) {
             g.setAttribute('stroke', 'rgba(245,158,11,' + pulse.toFixed(3) + ')');
           });
@@ -1426,148 +1228,91 @@ body {
           return;
         }
         gapMarks.forEach(function(g) {
-          g.setAttribute('stroke', 'rgba(167,219,120,0.08)');
+          g.setAttribute('stroke', 'rgba(167,219,120,0.1)');
         });
-        if (scanLine) scanLine.setAttribute('opacity', '0');
 
         /* ---- Phase 2: bridges appear ---- */
         var p2e = elapsed - P0 - P1;
         if (p2e <= P2) {
           var t = easeInOutCubic(p2e / P2);
-          setPhaseText('targeted structural fix', 0.6);
+          setPhaseText('simple structural fix', 0.6);
 
           /* Bridges fade in with stagger */
           bridges.forEach(function(b, i) {
-            var s = i * 0.2;
-            var lt = Math.max(0, Math.min((t - s) / 0.6, 1));
+            var s = i * 0.15;
+            var lt = Math.max(0, Math.min((t - s) / 0.5, 1));
             b.setAttribute('opacity', lt.toFixed(3));
           });
           fixLabels.forEach(function(f, i) {
-            var s = i * 0.2;
-            var lt = Math.max(0, Math.min((t - s - 0.25) / 0.5, 1));
+            var s = i * 0.15;
+            var lt = Math.max(0, Math.min((t - s - 0.2) / 0.4, 1));
             f.setAttribute('opacity', (lt * 0.7).toFixed(3));
           });
 
-          /* Pulse rings expand at gap positions when bridges appear */
-          pulseRings.forEach(function(ring, i) {
-            var s = i * 0.2;
-            var lt = Math.max(0, Math.min((t - s) / 0.7, 1));
-            if (lt > 0) {
-              var r = lerp(10, 35, lt);
-              var op = lt < 0.3 ? lt / 0.3 : (1 - lt) * 1.4;
-              ring.setAttribute('r', r.toFixed(1));
-              ring.setAttribute('opacity', Math.max(0, op * 0.5).toFixed(3));
-            }
-          });
-
-          /* Brighten pipeline as bridges connect */
+          /* Brighten pipes */
           pipes.forEach(function(p) {
-            p.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.08, 0.3, t).toFixed(3) + ')');
-            p.setAttribute('stroke-width', lerp(2, 2.5, t).toFixed(1));
-          });
-          if (src) src.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.15, 0.5, t).toFixed(3) + ')');
-          if (srcDot) srcDot.setAttribute('opacity', lerp(0.12, 0.5, t).toFixed(3));
-          mids.forEach(function(m) {
-            m.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.08, 0.35, t).toFixed(3) + ')');
+            p.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.1, 0.35, t).toFixed(3) + ')');
           });
 
           requestAnimationFrame(frame);
           return;
         }
 
-        /* Ensure bridges fully visible, pulse rings done */
+        /* Ensure bridges fully visible */
         bridges.forEach(function(b) { b.setAttribute('opacity', '1'); });
         fixLabels.forEach(function(f) { f.setAttribute('opacity', '0.7'); });
-        pulseRings.forEach(function(r) { r.setAttribute('opacity', '0'); });
         pipes.forEach(function(p) {
-          p.setAttribute('stroke', 'rgba(167,219,120,0.3)');
-          p.setAttribute('stroke-width', '2.5');
-        });
-        if (src) src.setAttribute('stroke', 'rgba(167,219,120,0.5)');
-        if (srcDot) srcDot.setAttribute('opacity', '0.5');
-        mids.forEach(function(m) {
-          m.setAttribute('stroke', 'rgba(167,219,120,0.35)');
+          p.setAttribute('stroke', 'rgba(167,219,120,0.35)');
         });
 
-        /* ---- Phase 3: packets flow full pipeline ---- */
+        /* ---- Phase 3: packets flow ---- */
         var p3e = elapsed - P0 - P1 - P2;
         if (p3e <= P3) {
           setPhaseText('signals flowing', 0.6);
 
-          var flowDur = P3 - 4 * pktStagger;
-          var arrived = 0;
-
+          var flowDur = 2200;
           pkts.forEach(function(pkt, i) {
-            var delay = i * pktStagger;
+            var rowIdx = Math.floor(i / 3);
+            var pktIdx = i % 3;
+            var delay = rowIdx * 100 + pktIdx * pktStagger;
             var local = (p3e - delay) / flowDur;
-            if (local < 0 || local > 1.08) {
-              if (local > 1) { pkt.setAttribute('opacity', '0'); arrived++; }
+            if (local < 0 || local > 1.1) {
+              if (local > 1) pkt.setAttribute('opacity', '0');
               return;
             }
             local = Math.min(local, 1);
-            var pos = waypointPos(fullPath, easeInOutCubic(local));
+            var path = fullPath(rows[rowIdx]);
+            var pos = waypointPos(path, easeInOutCubic(local));
             pkt.setAttribute('cx', pos.x.toFixed(1));
             pkt.setAttribute('cy', pos.y.toFixed(1));
             var op = local < 0.05 ? local / 0.05 : local > 0.9 ? (1 - local) / 0.1 : 1;
             pkt.setAttribute('opacity', (op * 0.9).toFixed(3));
-            if (local >= 1) arrived++;
           });
-
-          /* Counter increments as packets arrive */
-          if (counterText && arrived > 0) {
-            counterText.textContent = arrived + '/5 delivered';
-            counterText.setAttribute('opacity', '0.5');
-          }
-
-          /* Throughput bar fills as packets flow */
-          if (throughputBar) {
-            var progress = Math.min(arrived / 5, 1);
-            throughputBar.setAttribute('width', (140 * progress).toFixed(1));
-            throughputBar.setAttribute('opacity', progress > 0 ? '0.45' : '0');
-          }
 
           requestAnimationFrame(frame);
           return;
         }
         pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
 
-        /* Ensure counter and throughput at final state */
-        if (counterText) { counterText.textContent = '5/5 delivered'; counterText.setAttribute('opacity', '0.5'); }
-        if (throughputBar) { throughputBar.setAttribute('width', '140'); throughputBar.setAttribute('opacity', '0.45'); }
-
-        /* ---- Phase 4: result lights up ---- */
+        /* ---- Phase 4: success indicators ---- */
         var p4e = elapsed - P0 - P1 - P2 - P3;
         if (p4e <= P4) {
           var t = easeInOutCubic(p4e / P4);
-          setPhaseText('decision reached', 0.6);
+          setPhaseText('every signal delivered', 0.6);
 
-          if (result) {
-            result.setAttribute('stroke', 'rgba(167,219,120,' + lerp(0.35, 0.8, t).toFixed(3) + ')');
-            result.setAttribute('fill', 'rgba(167,219,120,' + lerp(0.02, 0.15, t).toFixed(3) + ')');
-          }
-          if (resultGlow) resultGlow.setAttribute('opacity', lerp(0, 0.3, t).toFixed(3));
-          if (resultCheck) resultCheck.setAttribute('opacity', lerp(0, 1, t).toFixed(3));
-
-          /* Output branches fade in */
-          outputBranches.forEach(function(b) { b.setAttribute('opacity', lerp(0, 0.35, t).toFixed(3)); });
-          outputDests.forEach(function(d) { d.setAttribute('opacity', lerp(0, 0.3, t).toFixed(3)); });
+          successTexts.forEach(function(s) { s.setAttribute('opacity', lerp(0, 0.85, t).toFixed(3)); });
+          successLabels.forEach(function(s) { s.setAttribute('opacity', lerp(0, 0.45, t).toFixed(3)); });
 
           requestAnimationFrame(frame);
           return;
         }
 
-        /* Ensure result fully lit */
-        if (result) {
-          result.setAttribute('stroke', 'rgba(167,219,120,0.8)');
-          result.setAttribute('fill', 'rgba(167,219,120,0.15)');
-        }
-        if (resultGlow) resultGlow.setAttribute('opacity', '0.3');
-        if (resultCheck) resultCheck.setAttribute('opacity', '1');
-        outputBranches.forEach(function(b) { b.setAttribute('opacity', '0.35'); });
-        outputDests.forEach(function(d) { d.setAttribute('opacity', '0.3'); });
-        setPhaseText('decision reached', 0.6);
+        /* Ensure success visible */
+        successTexts.forEach(function(s) { s.setAttribute('opacity', '0.85'); });
+        successLabels.forEach(function(s) { s.setAttribute('opacity', '0.45'); });
+        setPhaseText('every signal delivered', 0.6);
 
-        /* ---- Phase 5: hold resolved ---- */
+        /* ---- Phase 5: hold ---- */
         requestAnimationFrame(frame);
       }
 
