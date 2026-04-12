@@ -514,9 +514,9 @@
   .wf-sources-ticker {
     display: flex;
     justify-content: center;
-    gap: 18px;
-    margin-top: 10px;
-    overflow: hidden;
+    gap: 12px 16px;
+    margin-top: 12px;
+    padding: 0 20px;
     flex-wrap: wrap;
     align-items: center;
   }
@@ -524,24 +524,22 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: #475569;
     letter-spacing: 0.03em;
     animation: wf-ticker-fade 6s ease-in-out infinite;
   }
   .wf-sources-ticker span svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
     flex-shrink: 0;
   }
-  .wf-sources-ticker span:nth-child(1) { animation-delay: 0s; }
-  .wf-sources-ticker span:nth-child(2) { animation-delay: 0.3s; }
-  .wf-sources-ticker span:nth-child(3) { animation-delay: 0.6s; }
-  .wf-sources-ticker span:nth-child(4) { animation-delay: 0.9s; }
-  .wf-sources-ticker span:nth-child(5) { animation-delay: 1.2s; }
-  .wf-sources-ticker span:nth-child(6) { animation-delay: 1.5s; }
-  .wf-sources-ticker span:nth-child(7) { animation-delay: 1.8s; }
-  .wf-sources-ticker span:nth-child(8) { animation-delay: 2.1s; }
+  .wf-sources-ticker span:nth-child(6n+1) { animation-delay: 0s; }
+  .wf-sources-ticker span:nth-child(6n+2) { animation-delay: 0.4s; }
+  .wf-sources-ticker span:nth-child(6n+3) { animation-delay: 0.8s; }
+  .wf-sources-ticker span:nth-child(6n+4) { animation-delay: 1.2s; }
+  .wf-sources-ticker span:nth-child(6n+5) { animation-delay: 1.6s; }
+  .wf-sources-ticker span:nth-child(6n) { animation-delay: 2s; }
   @keyframes wf-ticker-fade {
     0%, 100% { color: #475569; }
     50% { color: #94a3b8; }
@@ -866,7 +864,33 @@
         <text class="wf-zone-label" x="716" y="192">summary</text>
       </svg>
       <div class="wf-sources-ticker">
-        <span><svg viewBox="0 0 16 16" fill="none"><rect x="4" y="2" width="8" height="11" rx="4" stroke="currentColor" stroke-width="1.4"/><path d="M2 9c0 4 6 6 6 6s6-2 6-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="8" y1="15" x2="8" y2="13" stroke="currentColor" stroke-width="1.2"/></svg>voice</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.2"/><text x="8" y="11.5" text-anchor="middle" fill="currentColor" font-size="9" font-family="monospace" font-weight="700">#</text></svg>Slack</span><span><svg viewBox="0 0 16 16" fill="none"><path d="M3 4c2-1.5 4-2 5-2s3 .5 5 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M3 4c0 6 2 8 5 10 3-2 5-4 5-10" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="8" r="1.3" fill="currentColor"/><circle cx="10" cy="8" r="1.3" fill="currentColor"/></svg>Discord</span><span><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L9.2 5.5 13 6.5 10 9 11 13 8 10.8 5 13 6 9 3 6.5 6.8 5.5Z" fill="currentColor" opacity="0.7"/></svg>Claude Code</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 4.5L8 9 13.5 4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>email</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/><line x1="2" y1="6.5" x2="14" y2="6.5" stroke="currentColor" stroke-width="1"/><line x1="6" y1="3" x2="6" y2="6.5" stroke="currentColor" stroke-width="0.8"/><line x1="10" y1="3" x2="10" y2="6.5" stroke="currentColor" stroke-width="0.8"/><circle cx="5.5" cy="9.5" r="0.8" fill="currentColor"/><circle cx="8" cy="9.5" r="0.8" fill="currentColor"/><circle cx="10.5" cy="9.5" r="0.8" fill="currentColor"/><circle cx="5.5" cy="12" r="0.8" fill="currentColor"/><circle cx="8" cy="12" r="0.8" fill="currentColor"/></svg>calendar</span><span><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="11.5" r="2.2" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="9.3" x2="8" y2="2" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="4" r="2" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="4" x2="8" y2="5.5" stroke="currentColor" stroke-width="1.2"/></svg>Git</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/><rect x="5.5" y="2" width="5" height="3.5" rx="1" stroke="currentColor" stroke-width="1.1"/><line x1="6" y1="8.5" x2="10" y2="8.5" stroke="currentColor" stroke-width="0.9"/><line x1="6" y1="11" x2="9" y2="11" stroke="currentColor" stroke-width="0.9"/></svg>clipboard</span>
+        <!-- Communication -->
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="4" y="2" width="8" height="11" rx="4" stroke="currentColor" stroke-width="1.4"/><path d="M2 9c0 4 6 6 6 6s6-2 6-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="8" y1="15" x2="8" y2="13" stroke="currentColor" stroke-width="1.2"/></svg>voice</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.2"/><text x="8" y="11.5" text-anchor="middle" fill="currentColor" font-size="9" font-family="monospace" font-weight="700">#</text></svg>Slack</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M3 4c2-1.5 4-2 5-2s3 .5 5 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M3 4c0 6 2 8 5 10 3-2 5-4 5-10" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="8" r="1.3" fill="currentColor"/><circle cx="10" cy="8" r="1.3" fill="currentColor"/></svg>Discord</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.1"/><text x="8" y="11.5" text-anchor="middle" fill="currentColor" font-size="9" font-weight="600" font-family="sans-serif">T</text></svg>Teams</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 4.5L8 9 13.5 4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>email</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1" fill="none"/></svg>Outlook</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M8 2C4.7 2 2 4.5 2 7.5c0 1.3.5 2.5 1.3 3.4L2.5 14l3.2-1c.7.3 1.5.5 2.3.5 3.3 0 6-2.5 6-5.5S11.3 2 8 2z" stroke="currentColor" stroke-width="1.1"/></svg>WhatsApp</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M2 8l12-5-3 10-4-3z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><line x1="14" y1="3" x2="7" y2="10" stroke="currentColor" stroke-width="0.9"/></svg>Telegram</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="9" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M10 6.5l4-2v7l-4-2z" stroke="currentColor" stroke-width="1"/></svg>Zoom</span>
+        <!-- Dev tools -->
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L9.2 5.5 13 6.5 10 9 11 13 8 10.8 5 13 6 9 3 6.5 6.8 5.5Z" fill="currentColor" opacity="0.7"/></svg>Claude Code</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M5 3L2 8l3 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 3l3 5-3 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>VS Code</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="9" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M4.5 5L3 2M11.5 5L13 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>GitHub</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="11.5" r="2.2" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="9.3" x2="8" y2="2" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="4" r="2" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="4" x2="8" y2="5.5" stroke="currentColor" stroke-width="1.2"/></svg>Git</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M8 2l5.5 6-5.5 6-5.5-6z" stroke="currentColor" stroke-width="1.2"/></svg>Jira</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M4 12L12 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Linear</span>
+        <!-- Productivity -->
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.1"/><text x="8" y="11.5" text-anchor="middle" fill="currentColor" font-size="9" font-weight="600" font-family="sans-serif">N</text></svg>Notion</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M4 1h6l3 3v11H4z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M10 1v3h3" stroke="currentColor" stroke-width="0.9"/><line x1="6" y1="7" x2="11" y2="7" stroke="currentColor" stroke-width="0.8"/><line x1="6" y1="9.5" x2="11" y2="9.5" stroke="currentColor" stroke-width="0.8"/><line x1="6" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="0.8"/></svg>Google Docs</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M3 3h4v4H3zM9 3h4v4h-4z" stroke="currentColor" stroke-width="1"/><path d="M3 9h4v4H3z" stroke="currentColor" stroke-width="1"/><circle cx="11" cy="11" r="2" stroke="currentColor" stroke-width="1"/></svg>Figma</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/><line x1="2" y1="6.5" x2="14" y2="6.5" stroke="currentColor" stroke-width="1"/><line x1="6" y1="3" x2="6" y2="6.5" stroke="currentColor" stroke-width="0.8"/><line x1="10" y1="3" x2="10" y2="6.5" stroke="currentColor" stroke-width="0.8"/><circle cx="5.5" cy="9.5" r="0.8" fill="currentColor"/><circle cx="8" cy="9.5" r="0.8" fill="currentColor"/><circle cx="10.5" cy="9.5" r="0.8" fill="currentColor"/><circle cx="5.5" cy="12" r="0.8" fill="currentColor"/><circle cx="8" cy="12" r="0.8" fill="currentColor"/></svg>calendar</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/><rect x="5.5" y="2" width="5" height="3.5" rx="1" stroke="currentColor" stroke-width="1.1"/><line x1="6" y1="8.5" x2="10" y2="8.5" stroke="currentColor" stroke-width="0.9"/><line x1="6" y1="11" x2="9" y2="11" stroke="currentColor" stroke-width="0.9"/></svg>clipboard</span>
+        <!-- Engines & integrations -->
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M8 1l6 3.5v7L8 15l-6-3.5v-7z" stroke="currentColor" stroke-width="1.1"/><line x1="8" y1="8" x2="8" y2="15" stroke="currentColor" stroke-width="0.7"/><line x1="2" y1="4.5" x2="8" y2="8" stroke="currentColor" stroke-width="0.7"/><line x1="14" y1="4.5" x2="8" y2="8" stroke="currentColor" stroke-width="0.7"/></svg>Unity</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M4 3v6c0 3 2 5 4 5s4-2 4-5V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Unreal</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><path d="M7 4c0-1.5 1-2.5 2.5-2.5S12 2.5 12 4v3c0 1.5-1 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M9 12c0 1.5-1 2.5-2.5 2.5S4 13.5 4 12V9c0-1.5 1-2.5 2.5-2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Webhooks</span>
       </div>
     </div>
   </div>
