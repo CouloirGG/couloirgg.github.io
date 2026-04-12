@@ -71,7 +71,7 @@
   .screenshots { margin: 48px 0; }
   .screenshots h2 { font-size: 1.4rem; font-weight: 600; color: #e2e8f0; margin-bottom: 16px; border-left: 3px solid #4ac0ff; padding-left: 12px; }
   .screenshots p { color: #94a3b8; margin-bottom: 16px; }
-  .ss-tabs { display: flex; gap: 8px; margin-bottom: 14px; margin-top: 0; }
+  .ss-tabs { display: flex; gap: 8px; margin: 4px 0 0; justify-content: center; padding-bottom: 12px; }
   .ss-tab {
     background: #111827;
     border: 1px solid #1e293b;
@@ -183,12 +183,12 @@
   /* Team-working scene */
   .sc-scene {
     max-width: 680px;
-    margin: 0 auto 0;
+    margin: 0 auto 16px;
     background: rgba(17, 24, 39, 0.5);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(30, 41, 59, 0.3);
     border-radius: 16px;
-    padding: 16px 12px 4px;
+    padding: 16px 12px 0;
   }
   .sc-scene svg {
     width: 100%;
@@ -1044,7 +1044,7 @@
   <div class="screenshots">
     <h2>See It In Action</h2>
     <div class="sc-scene">
-      <svg viewBox="0 0 800 248" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Team activity flows into AXIS capture, AI analyzes, produces briefings">
+      <svg viewBox="0 0 800 222" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Team activity flows into AXIS capture, AI analyzes, produces briefings">
         <defs>
           <filter id="sc-glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           <linearGradient id="sc-shimmer-grad" x1="0" y1="0" x2="1" y2="0">
@@ -1127,8 +1127,6 @@
           <line class="sc-pulse-line" x1="180" y1="105" x2="268" y2="85" stroke="#4ac0ff" stroke-width="1.5" stroke-linecap="round" opacity="0.4" style="animation-delay:-0.6s"/>
           <!-- Arrow head -->
           <polygon points="268,64 276,72 268,80" fill="#4ac0ff" opacity="0.35"/>
-          <!-- Glowing junction dot -->
-          <circle class="sc-glow-dot" cx="272" cy="72" r="4" fill="#4ac0ff"/>
         </g>
 
         <!-- MIDDLE ZONE: Passive Capture (x: 280-440) -->
@@ -1240,20 +1238,18 @@
         <!-- DOWN-ARROW: centered connector to screenshot grid -->
         <g class="sc-arrow">
           <!-- Flow from output zone down and left to center -->
-          <path class="sc-pulse-line" d="M580,126 C580,148 400,140 400,160" fill="none" stroke="#4ac0ff" stroke-width="1.8" stroke-linecap="round" style="animation-delay:-0.5s"/>
-          <!-- Prominent centered down-arrow -->
-          <line class="sc-pulse-line" x1="400" y1="160" x2="400" y2="200" stroke="#4ac0ff" stroke-width="2" stroke-linecap="round" style="animation-delay:-0.8s"/>
-          <polygon points="390,196 400,212 410,196" fill="#4ac0ff" opacity="0.7"/>
+          <path class="sc-pulse-line" d="M580,126 C580,145 400,138 400,155" fill="none" stroke="#4ac0ff" stroke-width="1.8" stroke-linecap="round" style="animation-delay:-0.5s"/>
+          <!-- Centered down-arrow -->
+          <line class="sc-pulse-line" x1="400" y1="155" x2="400" y2="195" stroke="#4ac0ff" stroke-width="2" stroke-linecap="round" style="animation-delay:-0.8s"/>
+          <polygon points="392,191 400,206 408,191" fill="#4ac0ff" opacity="0.7"/>
           <!-- Glow dot at arrow tip -->
-          <circle cx="400" cy="210" r="5" fill="#4ac0ff" opacity="0.5" filter="url(#sc-glow)"/>
+          <circle cx="400" cy="204" r="4.5" fill="#4ac0ff" opacity="0.5" filter="url(#sc-glow)"/>
         </g>
-        <!-- Centered subtitle inside SVG -->
-        <text x="400" y="238" text-anchor="middle" fill="#64748b" font-size="11" font-family="'Outfit',sans-serif" opacity="0.7">here's what you get</text>
       </svg>
-    </div>
-    <div class="ss-tabs">
-      <button class="ss-tab active" data-target="phone">Phone</button>
-      <button class="ss-tab" data-target="tablet">Tablet</button>
+      <div class="ss-tabs">
+        <button class="ss-tab active" data-target="phone">Phone</button>
+        <button class="ss-tab" data-target="tablet">Tablet</button>
+      </div>
     </div>
     <div class="ss-grid-phone" id="ss-phone">
       <div class="ss-card" data-label="Briefing: critical items, actions, blockers at a glance">
