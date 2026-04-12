@@ -386,128 +386,132 @@
   }
   .wf-zone-label {
     font-family: 'Outfit', system-ui, sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     fill: #94a3b8;
     text-anchor: middle;
   }
-  /* Sound wave arcs - active 0-18% (0-1.4s) */
+  /*
+   * 12s cycle (more time for summary to be readable):
+   *   0-2s    Zone 1: sources animate in
+   *   1.5-2.5s  Packet 1 travels
+   *   2-5s    Zone 2: capture (text flows + voice records)
+   *   4.5-5.5s  Packet 2 travels
+   *   5-7.5s  Zone 3: analyze
+   *   7-8s    Packet 3 travels
+   *   7.5-11s Zone 4: summary fills in and stays readable
+   *   11-12s  Pause, fade, restart
+   */
+
+  /* Source feed-in lines */
   .wf-wave {
     opacity: 0;
-    animation: wf-wave-pulse 8s ease-in-out infinite;
+    animation: wf-wave-pulse 12s ease-in-out infinite;
   }
-  .wf-wave:nth-child(2) { animation-delay: 0.2s; }
-  .wf-wave:nth-child(3) { animation-delay: 0.4s; }
   @keyframes wf-wave-pulse {
     0% { opacity: 0; }
-    4% { opacity: 0.7; }
-    14% { opacity: 0.5; }
-    20%, 100% { opacity: 0; }
+    3%, 12% { opacity: 0.7; }
+    16%, 100% { opacity: 0; }
   }
-  /* Mic pulse - active 18-42% (1.4-3.4s) */
+  /* Text input animation (lines appearing) */
+  .wf-text-in {
+    opacity: 0;
+    animation: wf-text-flow 12s ease-in-out infinite;
+  }
+  @keyframes wf-text-flow {
+    0%, 15% { opacity: 0; transform: translateX(-6px); }
+    20% { opacity: 0.6; transform: translateX(0); }
+    35% { opacity: 0.4; transform: translateX(0); }
+    40%, 100% { opacity: 0; }
+  }
+  /* Mic pulse */
   .wf-mic-glow {
     opacity: 0;
-    animation: wf-mic-pulse 8s ease-in-out infinite;
+    animation: wf-mic-pulse 12s ease-in-out infinite;
   }
   @keyframes wf-mic-pulse {
-    0%, 18% { opacity: 0; }
-    24%, 36% { opacity: 0.5; }
-    42%, 100% { opacity: 0; }
+    0%, 15% { opacity: 0; }
+    20%, 35% { opacity: 0.5; }
+    40%, 100% { opacity: 0; }
   }
-  /* Waveform bars - active 20-40% (1.6-3.2s) */
+  /* Waveform bars */
   .wf-bar {
     transform-box: fill-box;
     transform-origin: center bottom;
     transform: scaleY(0.3);
-    animation: wf-bar-bounce 8s ease-in-out infinite;
+    animation: wf-bar-bounce 12s ease-in-out infinite;
   }
   .wf-bar:nth-child(1) { animation-delay: 0s; }
-  .wf-bar:nth-child(2) { animation-delay: 0.08s; }
-  .wf-bar:nth-child(3) { animation-delay: 0.16s; }
-  .wf-bar:nth-child(4) { animation-delay: 0.24s; }
-  .wf-bar:nth-child(5) { animation-delay: 0.32s; }
-  .wf-bar:nth-child(6) { animation-delay: 0.40s; }
-  .wf-bar:nth-child(7) { animation-delay: 0.48s; }
+  .wf-bar:nth-child(2) { animation-delay: 0.1s; }
+  .wf-bar:nth-child(3) { animation-delay: 0.2s; }
+  .wf-bar:nth-child(4) { animation-delay: 0.3s; }
+  .wf-bar:nth-child(5) { animation-delay: 0.4s; }
   @keyframes wf-bar-bounce {
-    0%, 20% { transform: scaleY(0.3); }
-    26% { transform: scaleY(1); }
-    30% { transform: scaleY(0.5); }
-    34% { transform: scaleY(0.85); }
-    40%, 100% { transform: scaleY(0.3); }
+    0%, 16% { transform: scaleY(0.3); }
+    22% { transform: scaleY(1); }
+    26% { transform: scaleY(0.5); }
+    30% { transform: scaleY(0.9); }
+    38%, 100% { transform: scaleY(0.3); }
   }
-  /*
-   * 8s cycle timing plan (sequential left-to-right):
-   *   0.0-1.5s  Zone 1: conversation (waves + bubbles)
-   *   1.2-1.8s  Packet 1 travels conv -> capture
-   *   1.5-3.5s  Zone 2: capture (mic glow + waveform)
-   *   3.2-3.8s  Packet 2 travels capture -> analyze
-   *   3.5-5.5s  Zone 3: analyze (scan line + pulse)
-   *   5.2-5.8s  Packet 3 travels analyze -> output
-   *   5.5-7.5s  Zone 4: output cards appear
-   *   7.5-8.0s  Pause, everything fades, cycle restarts
-   */
-
-  /* Analyze zone: pulsing ring around AI */
+  /* Analyze: pulsing ring */
   .wf-ai-ring {
     opacity: 0;
     transform-box: fill-box;
     transform-origin: center;
-    animation: wf-ring-pulse 8s ease-in-out infinite;
+    animation: wf-ring-pulse 12s ease-in-out infinite;
   }
   @keyframes wf-ring-pulse {
-    0%, 42% { opacity: 0; transform: scale(0.8); }
-    48% { opacity: 0.5; transform: scale(1); }
-    54% { opacity: 0.2; transform: scale(1.15); }
-    58% { opacity: 0.5; transform: scale(1); }
-    64% { opacity: 0.2; transform: scale(1.1); }
-    68%, 100% { opacity: 0; transform: scale(1.2); }
+    0%, 40% { opacity: 0; transform: scale(0.8); }
+    45% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.2; transform: scale(1.15); }
+    55% { opacity: 0.5; transform: scale(1); }
+    60% { opacity: 0.2; transform: scale(1.1); }
+    65%, 100% { opacity: 0; transform: scale(1.2); }
   }
-  /* Scan line sweeps across analyze box */
+  /* Scan line */
   .wf-scan {
     opacity: 0;
-    animation: wf-scan-sweep 8s ease-in-out infinite;
+    animation: wf-scan-sweep 12s ease-in-out infinite;
   }
   @keyframes wf-scan-sweep {
-    0%, 42% { opacity: 0; transform: translateX(0); }
-    46% { opacity: 0.7; transform: translateX(0); }
-    60% { opacity: 0.5; transform: translateX(130px); }
-    64%, 100% { opacity: 0; transform: translateX(130px); }
+    0%, 40% { opacity: 0; transform: translateX(0); }
+    44% { opacity: 0.7; transform: translateX(0); }
+    56% { opacity: 0.5; transform: translateX(130px); }
+    60%, 100% { opacity: 0; transform: translateX(130px); }
   }
-  /* Processing nodes: data points being analyzed */
+  /* Processing labels */
   .wf-process-dot {
     opacity: 0;
-    animation: wf-pdot 8s ease-in-out infinite;
+    animation: wf-pdot 12s ease-in-out infinite;
   }
   .wf-process-dot:nth-child(1) { animation-delay: 0s; }
   .wf-process-dot:nth-child(2) { animation-delay: 0.2s; }
   .wf-process-dot:nth-child(3) { animation-delay: 0.4s; }
-  .wf-process-dot:nth-child(4) { animation-delay: 0.1s; }
-  .wf-process-dot:nth-child(5) { animation-delay: 0.3s; }
   @keyframes wf-pdot {
-    0%, 44% { opacity: 0; }
-    50% { opacity: 0.8; }
-    56% { opacity: 0.25; }
-    60% { opacity: 0.8; }
-    66%, 100% { opacity: 0; }
+    0%, 42% { opacity: 0; }
+    48% { opacity: 0.8; }
+    54% { opacity: 0.25; }
+    58% { opacity: 0.8; }
+    63%, 100% { opacity: 0; }
   }
-  /* Connecting lines between process dots */
+  /* Connecting lines */
   .wf-process-line {
     opacity: 0;
-    animation: wf-pline 8s ease-in-out infinite;
+    animation: wf-pline 12s ease-in-out infinite;
   }
   @keyframes wf-pline {
-    0%, 48% { opacity: 0; }
-    54%, 62% { opacity: 0.3; }
-    68%, 100% { opacity: 0; }
+    0%, 44% { opacity: 0; }
+    50%, 58% { opacity: 0.3; }
+    64%, 100% { opacity: 0; }
   }
-  /* Output: content rows animate inside static summary frame */
+  /* Summary: rows appear and STAY for 3+ seconds */
   .wf-card {
     opacity: 0;
-    animation: wf-card-in 8s ease-out infinite;
+    animation: wf-card-in 12s ease-out infinite;
   }
   @keyframes wf-card-in {
-    0%, 66% { opacity: 0; transform: translateX(-4px); }
-    72% { opacity: 1; transform: translateX(0); }
-    96%, 100% { opacity: 0; }
+    0%, 58% { opacity: 0; transform: translateX(-4px); }
+    63% { opacity: 1; transform: translateX(0); }
+    92%, 100% { opacity: 0; }
   }
   /* Source ticker below SVG */
   .wf-sources-ticker {
@@ -522,7 +526,7 @@
     font-size: 0.72rem;
     color: #475569;
     letter-spacing: 0.03em;
-    animation: wf-ticker-fade 4s ease-in-out infinite;
+    animation: wf-ticker-fade 6s ease-in-out infinite;
   }
   .wf-sources-ticker span:nth-child(1) { animation-delay: 0s; }
   .wf-sources-ticker span:nth-child(2) { animation-delay: 0.3s; }
@@ -541,33 +545,33 @@
     opacity: 0;
   }
   .wf-packet-1 {
-    animation: wf-pkt1 8s ease-in-out infinite;
+    animation: wf-pkt1 12s ease-in-out infinite;
   }
   @keyframes wf-pkt1 {
-    0%, 14% { opacity: 0; transform: translateX(0); }
-    16% { opacity: 1; transform: translateX(0); }
-    22% { opacity: 1; transform: translateX(42px); }
-    24% { opacity: 0; transform: translateX(42px); }
+    0%, 10% { opacity: 0; transform: translateX(0); }
+    12% { opacity: 1; transform: translateX(0); }
+    18% { opacity: 1; transform: translateX(42px); }
+    20% { opacity: 0; transform: translateX(42px); }
     100% { opacity: 0; }
   }
   .wf-packet-2 {
-    animation: wf-pkt2 8s ease-in-out infinite;
+    animation: wf-pkt2 12s ease-in-out infinite;
   }
   @keyframes wf-pkt2 {
-    0%, 38% { opacity: 0; transform: translateX(0); }
-    40% { opacity: 1; transform: translateX(0); }
-    46% { opacity: 1; transform: translateX(42px); }
-    48% { opacity: 0; transform: translateX(42px); }
+    0%, 34% { opacity: 0; transform: translateX(0); }
+    36% { opacity: 1; transform: translateX(0); }
+    42% { opacity: 1; transform: translateX(42px); }
+    44% { opacity: 0; transform: translateX(42px); }
     100% { opacity: 0; }
   }
   .wf-packet-3 {
-    animation: wf-pkt3 8s ease-in-out infinite;
+    animation: wf-pkt3 12s ease-in-out infinite;
   }
   @keyframes wf-pkt3 {
-    0%, 62% { opacity: 0; transform: translateX(0); }
-    64% { opacity: 1; transform: translateX(0); }
-    70% { opacity: 1; transform: translateX(42px); }
-    72% { opacity: 0; transform: translateX(42px); }
+    0%, 56% { opacity: 0; transform: translateX(0); }
+    58% { opacity: 1; transform: translateX(0); }
+    64% { opacity: 1; transform: translateX(42px); }
+    66% { opacity: 0; transform: translateX(42px); }
     100% { opacity: 0; }
   }
 
@@ -603,6 +607,7 @@
     .lb-overlay { transition: none; }
     /* Workflow animation: static fallback */
     .wf-wave { animation: none !important; opacity: 0.25; }
+    .wf-text-in { animation: none !important; opacity: 0.5; }
     .wf-mic-glow { animation: none !important; opacity: 0.4; }
     .wf-bar { animation: none !important; transform: scaleY(0.6); }
     .wf-ai-ring { animation: none !important; opacity: 0.3; }
@@ -637,7 +642,7 @@
             <g opacity="0.5"><circle cx="14" cy="10" r="7" fill="#94a3b8"/><path d="M14,18 C7,18 4,24 4,28 L4,34 C4,35 5,36 6,36 L22,36 C23,36 24,35 24,34 L24,28 C24,24 21,18 14,18Z" fill="#94a3b8"/></g>
             <g opacity="0.65"><circle cx="38" cy="6" r="8" fill="#c8d0e0"/><path d="M38,15 C30,15 27,22 27,27 L27,34 C27,35 28,36 29,36 L47,36 C48,36 49,35 49,34 L49,27 C49,22 46,15 38,15Z" fill="#c8d0e0"/></g>
             <g opacity="0.5"><circle cx="62" cy="10" r="7" fill="#94a3b8"/><path d="M62,18 C55,18 52,24 52,28 L52,34 C52,35 53,36 54,36 L70,36 C71,36 72,35 72,34 L72,28 C72,24 69,18 62,18Z" fill="#94a3b8"/></g>
-            <text x="38" y="50" text-anchor="middle" fill="#475569" font-size="7" font-family="'Outfit',sans-serif">team</text>
+            <text x="38" y="50" text-anchor="middle" fill="#475569" font-size="9" font-family="'Outfit',sans-serif">team</text>
           </g>
 
           <!-- Source 2: Single person + device -->
@@ -646,13 +651,13 @@
             <!-- Small phone icon next to person -->
             <rect x="40" y="10" width="14" height="22" rx="3" fill="none" stroke="#64748b" stroke-width="1" opacity="0.5"/>
             <rect x="45" y="26" width="4" height="2" rx="1" fill="#64748b" opacity="0.4"/>
-            <text x="32" y="50" text-anchor="middle" fill="#475569" font-size="7" font-family="'Outfit',sans-serif">solo</text>
+            <text x="32" y="50" text-anchor="middle" fill="#475569" font-size="9" font-family="'Outfit',sans-serif">solo</text>
           </g>
 
           <!-- Source 3: Cloud/internet icon -->
           <g transform="translate(14,130)">
             <path d="M18,18 C18,10 26,4 36,4 C44,4 50,8 52,14 C58,14 64,20 64,28 C64,34 58,38 52,38 L22,38 C14,38 8,32 8,24 C8,18 12,14 18,18Z" fill="none" stroke="#64748b" stroke-width="1.2" opacity="0.5"/>
-            <text x="36" y="52" text-anchor="middle" fill="#475569" font-size="7" font-family="'Outfit',sans-serif">apps</text>
+            <text x="36" y="52" text-anchor="middle" fill="#475569" font-size="9" font-family="'Outfit',sans-serif">apps</text>
           </g>
 
           <!-- Feed-in lines from each source -->
@@ -674,53 +679,57 @@
         </g>
         <circle class="wf-packet wf-packet-1" cx="138" cy="80" r="3" fill="#4ac0ff" filter="url(#glow)"/>
 
-        <!-- Zone 2: Capture (x: 193-370) - split box: text + voice -->
+        <!-- Zone 2: Capture (x: 193-370) - horizontal: text | voice -->
         <g transform="translate(193,14)">
           <!-- Outer frame -->
           <rect x="10" y="0" width="168" height="140" rx="14" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
-          <!-- Divider -->
-          <line x1="94" y1="10" x2="94" y2="130" stroke="#1e293b" stroke-width="1"/>
+          <!-- Subtle divider -->
+          <line x1="94" y1="14" x2="94" y2="126" stroke="#1e293b" stroke-width="0.75" opacity="0.5"/>
 
-          <!-- Left half: Passive Text -->
-          <text x="52" y="18" text-anchor="middle" fill="#475569" font-size="7" font-family="'Outfit',sans-serif">text</text>
-          <!-- Chat bubble icon -->
-          <rect x="32" y="28" width="40" height="26" rx="8" fill="none" stroke="#64748b" stroke-width="1.2" opacity="0.5"/>
-          <path d="M38,54 L42,62 L48,54" fill="none" stroke="#64748b" stroke-width="1.2" opacity="0.5"/>
-          <rect x="38" y="36" width="20" height="2.5" rx="1" fill="#64748b" opacity="0.35"/>
-          <rect x="38" y="42" width="14" height="2.5" rx="1" fill="#64748b" opacity="0.25"/>
-          <!-- Incoming text lines (animated) -->
-          <g class="wf-wave" style="animation-delay:0.1s">
-            <rect x="22" y="74" width="56" height="3" rx="1.5" fill="#4ac0ff" opacity="0.2"/>
+          <!-- Left: TEXT -->
+          <text x="52" y="20" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif" font-weight="500">TEXT</text>
+          <!-- Document icon -->
+          <rect x="34" y="28" width="36" height="24" rx="5" fill="none" stroke="#64748b" stroke-width="1.2" opacity="0.55"/>
+          <rect x="40" y="34" width="20" height="2.5" rx="1" fill="#64748b" opacity="0.4"/>
+          <rect x="40" y="40" width="14" height="2.5" rx="1" fill="#64748b" opacity="0.3"/>
+          <!-- Animated source labels flowing in -->
+          <g class="wf-text-in" style="animation-delay:0s">
+            <text x="22" y="68" fill="#4ac0ff" font-size="8" font-family="'Outfit',sans-serif" opacity="0.7">Slack</text>
+            <rect x="22" y="71" width="56" height="2.5" rx="1" fill="#4ac0ff" opacity="0.2"/>
           </g>
-          <g class="wf-wave" style="animation-delay:0.4s">
-            <rect x="22" y="82" width="42" height="3" rx="1.5" fill="#4ac0ff" opacity="0.15"/>
+          <g class="wf-text-in" style="animation-delay:0.5s">
+            <text x="22" y="84" fill="#4ac0ff" font-size="8" font-family="'Outfit',sans-serif" opacity="0.7">email</text>
+            <rect x="22" y="87" width="44" height="2.5" rx="1" fill="#4ac0ff" opacity="0.15"/>
           </g>
-          <g class="wf-wave" style="animation-delay:0.7s">
-            <rect x="22" y="90" width="50" height="3" rx="1.5" fill="#4ac0ff" opacity="0.12"/>
+          <g class="wf-text-in" style="animation-delay:1.0s">
+            <text x="22" y="100" fill="#4ac0ff" font-size="8" font-family="'Outfit',sans-serif" opacity="0.7">Git</text>
+            <rect x="22" y="103" width="50" height="2.5" rx="1" fill="#4ac0ff" opacity="0.15"/>
           </g>
-          <!-- Source labels -->
-          <text x="52" y="110" text-anchor="middle" fill="#475569" font-size="6" font-family="'Outfit',sans-serif" opacity="0.6">Slack / email / Git</text>
-          <text x="52" y="120" text-anchor="middle" fill="#475569" font-size="6" font-family="'Outfit',sans-serif" opacity="0.6">clipboard / Claude</text>
+          <g class="wf-text-in" style="animation-delay:1.5s">
+            <text x="22" y="116" fill="#4ac0ff" font-size="8" font-family="'Outfit',sans-serif" opacity="0.7">clipboard</text>
+            <rect x="22" y="119" width="38" height="2.5" rx="1" fill="#4ac0ff" opacity="0.12"/>
+          </g>
 
-          <!-- Right half: Active Voice -->
-          <text x="136" y="18" text-anchor="middle" fill="#475569" font-size="7" font-family="'Outfit',sans-serif">voice</text>
+          <!-- Right: VOICE -->
+          <text x="136" y="20" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif" font-weight="500">VOICE</text>
           <!-- Mic icon -->
-          <rect x="128" y="28" width="16" height="24" rx="8" fill="none" stroke="#4ac0ff" stroke-width="1.8"/>
-          <path d="M122,48 C122,58 136,62 136,62 C136,62 150,58 150,48" fill="none" stroke="#4ac0ff" stroke-width="1.3"/>
-          <line x1="136" y1="62" x2="136" y2="70" stroke="#4ac0ff" stroke-width="1.3"/>
-          <line x1="130" y1="70" x2="142" y2="70" stroke="#4ac0ff" stroke-width="1.3" stroke-linecap="round"/>
+          <rect x="128" y="30" width="16" height="22" rx="8" fill="none" stroke="#4ac0ff" stroke-width="1.8"/>
+          <path d="M122,48 C122,56 136,60 136,60 C136,60 150,56 150,48" fill="none" stroke="#4ac0ff" stroke-width="1.3"/>
+          <line x1="136" y1="60" x2="136" y2="66" stroke="#4ac0ff" stroke-width="1.3"/>
+          <line x1="130" y1="66" x2="142" y2="66" stroke="#4ac0ff" stroke-width="1.3" stroke-linecap="round"/>
           <!-- Mic glow -->
-          <circle class="wf-mic-glow" cx="136" cy="42" r="20" fill="#4ac0ff" opacity="0"/>
+          <circle class="wf-mic-glow" cx="136" cy="42" r="16" fill="#4ac0ff" opacity="0"/>
           <!-- Waveform bars -->
-          <g transform="translate(106,96)">
-            <rect class="wf-bar" x="0" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="9" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="18" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="27" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="36" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="45" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="54" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
+          <g transform="translate(106,78)">
+            <rect class="wf-bar" x="0" y="0" width="6" height="16" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="9" y="0" width="6" height="16" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="18" y="0" width="6" height="16" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="27" y="0" width="6" height="16" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="36" y="0" width="6" height="16" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="45" y="0" width="6" height="16" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="54" y="0" width="6" height="16" rx="2" fill="#4ac0ff" opacity="0.45"/>
           </g>
+          <text x="136" y="110" text-anchor="middle" fill="#475569" font-size="8" font-family="'Outfit',sans-serif" opacity="0.5">mic / call</text>
         </g>
         <text class="wf-zone-label" x="278" y="192">capture</text>
 
@@ -742,9 +751,9 @@
           <!-- AI label -->
           <text x="85" y="61" text-anchor="middle" fill="#64748b" font-size="18" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
           <!-- Service labels around ring -->
-          <text class="wf-process-dot" x="85" y="18" text-anchor="middle" fill="#4ac0ff" font-size="8" font-family="'Outfit',sans-serif">Claude</text>
-          <text class="wf-process-dot" x="140" y="42" text-anchor="start" fill="#34d399" font-size="8" font-family="'Outfit',sans-serif">Whisper</text>
-          <text class="wf-process-dot" x="85" y="100" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="'Outfit',sans-serif">Groq</text>
+          <text class="wf-process-dot" x="85" y="18" text-anchor="middle" fill="#4ac0ff" font-size="10" font-family="'Outfit',sans-serif">Claude</text>
+          <text class="wf-process-dot" x="140" y="42" text-anchor="start" fill="#34d399" font-size="10" font-family="'Outfit',sans-serif">Whisper</text>
+          <text class="wf-process-dot" x="85" y="100" text-anchor="middle" fill="#fbbf24" font-size="10" font-family="'Outfit',sans-serif">Groq</text>
           <!-- Connection lines from labels to ring -->
           <line class="wf-process-line" x1="85" y1="22" x2="85" y2="30" stroke="#4ac0ff" stroke-width="0.75"/>
           <line class="wf-process-line" x1="138" y1="44" x2="112" y2="50" stroke="#34d399" stroke-width="0.75"/>
@@ -765,40 +774,38 @@
 
         <!-- Zone 4: Summary Output (x: 634-800) -->
         <g transform="translate(634,10)">
-          <!-- Static frame (always visible, like capture/analyze boxes) -->
+          <!-- Static frame (always visible) -->
           <rect x="0" y="0" width="162" height="155" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
-          <rect x="0" y="0" width="162" height="24" rx="10" fill="#1e293b"/>
-          <text x="14" y="16" fill="#64748b" font-size="8" font-family="'Outfit',sans-serif" font-weight="500">Session Briefing</text>
-          <circle cx="148" cy="12" r="3" fill="#1e293b" stroke="#334155" stroke-width="0.75"/>
-          <!-- Animated content fills in -->
-          <g class="wf-card" style="animation-delay:0.1s">
-            <circle cx="16" cy="38" r="4" fill="#4ac0ff"/>
-            <text x="26" y="36" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">DECISION</text>
-            <rect x="26" y="40" width="110" height="3" rx="1.5" fill="#334155"/>
-            <!-- Active indicator on header -->
-            <circle cx="148" cy="12" r="3" fill="#34d399"/>
-          </g>
-          <g class="wf-card" style="animation-delay:0.25s">
-            <circle cx="16" cy="56" r="4" fill="#fbbf24"/>
-            <text x="26" y="54" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">ACTION</text>
-            <rect x="26" y="58" width="95" height="3" rx="1.5" fill="#334155"/>
+          <rect x="0" y="0" width="162" height="26" rx="10" fill="#1e293b"/>
+          <text x="14" y="17" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif" font-weight="500">Session Briefing</text>
+          <circle cx="148" cy="13" r="3" fill="#1e293b" stroke="#334155" stroke-width="0.75"/>
+          <!-- Animated content rows - spread delays for readability -->
+          <g class="wf-card" style="animation-delay:0s">
+            <circle cx="16" cy="42" r="4" fill="#4ac0ff"/>
+            <text x="26" y="40" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif">DECISION</text>
+            <rect x="26" y="44" width="110" height="3" rx="1.5" fill="#334155"/>
+            <circle cx="148" cy="13" r="3" fill="#34d399"/>
           </g>
           <g class="wf-card" style="animation-delay:0.4s">
-            <circle cx="16" cy="74" r="4" fill="#ef4444"/>
-            <text x="26" y="72" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">BLOCKER</text>
-            <rect x="26" y="76" width="80" height="3" rx="1.5" fill="#334155"/>
+            <circle cx="16" cy="60" r="4" fill="#fbbf24"/>
+            <text x="26" y="58" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif">ACTION</text>
+            <rect x="26" y="62" width="95" height="3" rx="1.5" fill="#334155"/>
           </g>
-          <g class="wf-card" style="animation-delay:0.55s">
-            <line x1="10" y1="88" x2="152" y2="88" stroke="#334155" stroke-width="0.75"/>
+          <g class="wf-card" style="animation-delay:0.8s">
+            <circle cx="16" cy="78" r="4" fill="#ef4444"/>
+            <text x="26" y="76" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif">BLOCKER</text>
+            <rect x="26" y="80" width="80" height="3" rx="1.5" fill="#334155"/>
           </g>
-          <g class="wf-card" style="animation-delay:0.6s">
-            <text x="14" y="100" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">INSIGHTS</text>
-            <rect x="14" y="104" width="130" height="3" rx="1.5" fill="#1e293b" opacity="0.6"/>
-            <rect x="14" y="111" width="100" height="3" rx="1.5" fill="#1e293b" opacity="0.45"/>
-            <rect x="14" y="118" width="120" height="3" rx="1.5" fill="#1e293b" opacity="0.35"/>
+          <g class="wf-card" style="animation-delay:1.2s">
+            <line x1="10" y1="92" x2="152" y2="92" stroke="#334155" stroke-width="0.75"/>
           </g>
-          <g class="wf-card" style="animation-delay:0.75s">
-            <text x="14" y="132" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">OPEN QUESTIONS</text>
+          <g class="wf-card" style="animation-delay:1.4s">
+            <text x="14" y="106" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif">INSIGHTS</text>
+            <rect x="14" y="110" width="130" height="3" rx="1.5" fill="#1e293b" opacity="0.6"/>
+            <rect x="14" y="117" width="100" height="3" rx="1.5" fill="#1e293b" opacity="0.45"/>
+          </g>
+          <g class="wf-card" style="animation-delay:1.8s">
+            <text x="14" y="132" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif">OPEN QUESTIONS</text>
             <rect x="14" y="136" width="90" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
             <rect x="14" y="143" width="110" height="3" rx="1.5" fill="#1e293b" opacity="0.3"/>
           </g>
