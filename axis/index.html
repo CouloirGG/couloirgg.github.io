@@ -218,27 +218,30 @@
   .ss-ann-visited .ss-annotation-label {
     opacity: 1;
   }
-  /* Flow SVG overlay */
-  .ss-flow-svg {
+  /* Flow connector line (div-based, no SVG distortion) */
+  .ss-flow-line {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
     pointer-events: none;
     z-index: 2;
   }
-  .ss-flow-line {
-    stroke: rgba(74, 192, 255, 0.25);
-    stroke-width: 1.5;
-    stroke-dasharray: 4 3;
-    fill: none;
+  .ss-flow-line-v {
+    width: 2px;
+    border-left: 2px dashed rgba(74, 192, 255, 0.2);
+  }
+  .ss-flow-line-h {
+    height: 2px;
+    border-top: 2px dashed rgba(74, 192, 255, 0.2);
   }
   .ss-flow-dot {
-    fill: #4ac0ff;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ac0ff;
+    box-shadow: 0 0 8px rgba(74, 192, 255, 0.6);
+    pointer-events: none;
+    z-index: 3;
     opacity: 0;
-  }
-  .ss-flow-arrow {
-    fill: rgba(74, 192, 255, 0.35);
   }
 
   /* Lightbox */
@@ -510,8 +513,8 @@
       transition: none !important;
     }
     .ss-annotation-label { opacity: 1 !important; }
-    .ss-flow-line { opacity: 0.5; }
-    .ss-flow-dot { display: none; }
+    .ss-flow-line { opacity: 0.4; }
+    .ss-flow-dot { display: none !important; }
     .lb-overlay { transition: none; }
     /* Workflow animation: static fallback */
     .wf-wave { animation: none !important; opacity: 0.25; }
@@ -895,53 +898,53 @@
 <script>
 (function() {
   /* ---- Annotation data keyed by image filename ---- */
+  /* Coordinates are % of image dimensions, measured from actual screenshots */
   var annotations = {
     'phone_briefing.jpg': {
       items: [
-        { label: 'Critical items', top: 18, left: 6, w: 88, h: 14 },
-        { label: 'Action items', top: 44, left: 6, w: 88, h: 14 },
-        { label: 'Blockers', top: 70, left: 6, w: 88, h: 14 }
+        { label: 'Critical items', top: 7, left: 2, w: 96, h: 33 },
+        { label: 'Action items',   top: 47, left: 2, w: 96, h: 24 },
+        { label: 'Blockers',       top: 74, left: 2, w: 96, h: 20 }
       ],
       flow: [0, 1, 2]
     },
     'phone_briefing_expanded.jpg': {
       items: [
-        { label: 'Blocker details', top: 22, left: 6, w: 88, h: 20 },
-        { label: 'Open questions', top: 60, left: 6, w: 88, h: 18 }
+        { label: 'Blocker details', top: 6, left: 2, w: 96, h: 30 },
+        { label: 'Open questions',  top: 55, left: 2, w: 96, h: 30 }
       ],
       flow: [0, 1]
     },
     'phone_action_detail.jpg': {
       items: [
-        { label: 'AI-generated ideas', top: 14, left: 6, w: 88, h: 22 },
-        { label: 'Resolved items', top: 54, left: 6, w: 88, h: 22 }
+        { label: 'AI-generated ideas', top: 8, left: 2, w: 96, h: 12 },
+        { label: 'Action items',       top: 20, left: 2, w: 96, h: 68 }
       ],
       flow: [0, 1]
     },
     'phone_activity.jpg': {
       items: [
-        { label: 'AI source tag', top: 26, left: 50, w: 40, h: 8 },
-        { label: 'Mic source', top: 44, left: 50, w: 40, h: 8 }
+        { label: 'AI source',  top: 14, left: 2, w: 96, h: 36 },
+        { label: 'Mic source', top: 54, left: 2, w: 96, h: 18 }
       ],
       flow: [0, 1]
     },
     'tablet_briefing.jpg': {
       items: [
-        { label: 'Critical items', top: 16, left: 4, w: 44, h: 32 },
-        { label: 'Session overview', top: 16, left: 52, w: 44, h: 32 }
+        { label: 'Critical items', top: 10, left: 1, w: 98, h: 84 }
       ],
-      flow: [0, 1]
+      flow: [0]
     },
     'tablet_briefing_detail.jpg': {
       items: [
-        { label: 'Expanded details', top: 16, left: 4, w: 55, h: 45 },
-        { label: 'Action items', top: 16, left: 62, w: 34, h: 30 }
+        { label: 'Expanded card',  top: 8, left: 1, w: 98, h: 44 },
+        { label: 'Actions & Questions', top: 55, left: 1, w: 98, h: 32 }
       ],
       flow: [0, 1]
     },
     'tablet_action.jpg': {
       items: [
-        { label: 'Session actions', top: 18, left: 4, w: 92, h: 38 }
+        { label: 'Session actions', top: 12, left: 1, w: 98, h: 82 }
       ],
       flow: [0]
     }
@@ -992,10 +995,6 @@
     });
   }
 
-  function isHorizontalFlow(filename) {
-    return filename.indexOf('tablet_') === 0;
-  }
-
   function addAnnotations(card) {
     var img = card.querySelector('.ss-img-wrap img');
     if (!img) return;
@@ -1003,7 +1002,6 @@
     var data = annotations[filename];
     if (!data || !data.items) return;
     var wrap = card.querySelector('.ss-img-wrap');
-    var horizontal = isHorizontalFlow(filename);
     var annEls = [];
 
     /* Create annotation divs */
@@ -1022,80 +1020,46 @@
       annEls.push(el);
     });
 
-    /* Create SVG overlay for connection lines */
+    /* Create div-based connection lines between flow steps */
+    var dots = [];
     if (data.flow.length > 1) {
-      var svgNS = 'http://www.w3.org/2000/svg';
-      var svg = document.createElementNS(svgNS, 'svg');
-      svg.setAttribute('class', 'ss-flow-svg');
-      svg.setAttribute('viewBox', '0 0 100 100');
-      svg.setAttribute('preserveAspectRatio', 'none');
-      var lines = [];
-      var dots = [];
-
       for (var i = 0; i < data.flow.length - 1; i++) {
-        var fromIdx = data.flow[i];
-        var toIdx = data.flow[i + 1];
-        var from = data.items[fromIdx];
-        var to = data.items[toIdx];
-        var x1, y1, x2, y2;
+        var from = data.items[data.flow[i]];
+        var to = data.items[data.flow[i + 1]];
 
-        if (horizontal) {
-          x1 = from.left + from.w;
-          y1 = from.top + from.h / 2;
-          x2 = to.left;
-          y2 = to.top + to.h / 2;
-        } else {
-          x1 = from.left + from.w / 2;
-          y1 = from.top + from.h;
-          x2 = to.left + to.w / 2;
-          y2 = to.top;
+        /* Vertical connector: from bottom of 'from' to top of 'to' */
+        var lineTop = from.top + from.h;
+        var lineHeight = to.top - lineTop;
+        var lineLeft = from.left + from.w / 2;
+
+        if (lineHeight > 0.5) {
+          var line = document.createElement('div');
+          line.className = 'ss-flow-line ss-flow-line-v';
+          line.style.top = lineTop + '%';
+          line.style.left = lineLeft + '%';
+          line.style.height = lineHeight + '%';
+          wrap.appendChild(line);
         }
 
-        var line = document.createElementNS(svgNS, 'line');
-        line.setAttribute('x1', x1);
-        line.setAttribute('y1', y1);
-        line.setAttribute('x2', x2);
-        line.setAttribute('y2', y2);
-        line.setAttribute('class', 'ss-flow-line');
-        svg.appendChild(line);
-        lines.push({ x1: x1, y1: y1, x2: x2, y2: y2 });
-
-        /* Arrow at endpoint */
-        var angle = Math.atan2(y2 - y1, x2 - x1);
-        var arrowSize = 1.5;
-        var ax = x2 - Math.cos(angle) * arrowSize;
-        var ay = y2 - Math.sin(angle) * arrowSize;
-        var al = document.createElementNS(svgNS, 'polygon');
-        var p1x = x2, p1y = y2;
-        var p2x = ax - Math.cos(angle - 0.5) * arrowSize * 0.6;
-        var p2y = ay - Math.sin(angle - 0.5) * arrowSize * 0.6;
-        var p3x = ax - Math.cos(angle + 0.5) * arrowSize * 0.6;
-        var p3y = ay - Math.sin(angle + 0.5) * arrowSize * 0.6;
-        al.setAttribute('points', p1x+','+p1y+' '+p2x+','+p2y+' '+p3x+','+p3y);
-        al.setAttribute('class', 'ss-flow-arrow');
-        svg.appendChild(al);
-
         /* Traveling dot */
-        var dot = document.createElementNS(svgNS, 'circle');
-        dot.setAttribute('r', '1.2');
-        dot.setAttribute('cx', x1);
-        dot.setAttribute('cy', y1);
-        dot.setAttribute('class', 'ss-flow-dot');
-        svg.appendChild(dot);
-        dots.push({ el: dot, x1: x1, y1: y1, x2: x2, y2: y2 });
+        var dot = document.createElement('div');
+        dot.className = 'ss-flow-dot';
+        wrap.appendChild(dot);
+        dots.push({
+          el: dot,
+          x: lineLeft,
+          y1: lineTop,
+          y2: to.top
+        });
       }
-
-      wrap.appendChild(svg);
 
       if (!prefersReducedMotion) {
         animateFlow(annEls, data.flow, dots);
       }
     } else if (data.flow.length === 1 && !prefersReducedMotion) {
-      /* Single annotation: just pulse it */
       animateFlow(annEls, data.flow, []);
     }
 
-    /* Reduced motion: show all annotations statically */
     if (prefersReducedMotion) {
       annEls.forEach(function(el) {
         el.classList.add('ss-ann-visited');
@@ -1172,14 +1136,13 @@
         });
       }
 
-      /* Update dot positions */
+      /* Update dot positions (div-based, using % positioning) */
       dots.forEach(function(d, idx) {
         if (idx === activeDotIdx && stepPhase === 'travel') {
           var t = easeInOutCubic(travelProgress);
-          var cx = d.x1 + (d.x2 - d.x1) * t;
           var cy = d.y1 + (d.y2 - d.y1) * t;
-          d.el.setAttribute('cx', cx);
-          d.el.setAttribute('cy', cy);
+          d.el.style.left = d.x + '%';
+          d.el.style.top = cy + '%';
           d.el.style.opacity = '1';
         } else {
           d.el.style.opacity = '0';
