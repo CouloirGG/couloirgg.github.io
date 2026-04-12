@@ -390,99 +390,134 @@
     fill: #94a3b8;
     text-anchor: middle;
   }
-  /* Sound wave arcs */
+  /* Sound wave arcs - active 0-18% (0-1.4s) */
   .wf-wave {
     opacity: 0;
     animation: wf-wave-pulse 8s ease-in-out infinite;
   }
-  .wf-wave:nth-child(2) { animation-delay: 0.3s; }
-  .wf-wave:nth-child(3) { animation-delay: 0.6s; }
+  .wf-wave:nth-child(2) { animation-delay: 0.2s; }
+  .wf-wave:nth-child(3) { animation-delay: 0.4s; }
   @keyframes wf-wave-pulse {
-    0%, 8% { opacity: 0; transform: translateX(-4px); }
-    4%, 6% { opacity: 0.7; transform: translateX(0); }
-    12%, 100% { opacity: 0; transform: translateX(4px); }
+    0% { opacity: 0; }
+    4% { opacity: 0.7; }
+    14% { opacity: 0.5; }
+    20%, 100% { opacity: 0; }
   }
-  /* Mic pulse */
+  /* Mic pulse - active 18-42% (1.4-3.4s) */
   .wf-mic-glow {
     opacity: 0;
     animation: wf-mic-pulse 8s ease-in-out infinite;
   }
   @keyframes wf-mic-pulse {
     0%, 18% { opacity: 0; }
-    25%, 38% { opacity: 0.6; }
-    45%, 100% { opacity: 0; }
+    24%, 36% { opacity: 0.5; }
+    42%, 100% { opacity: 0; }
   }
-  /* Waveform bars */
+  /* Waveform bars - active 20-40% (1.6-3.2s) */
   .wf-bar {
     transform-box: fill-box;
     transform-origin: center bottom;
     transform: scaleY(0.3);
     animation: wf-bar-bounce 8s ease-in-out infinite;
   }
-  .wf-bar:nth-child(1) { animation-delay: 1.8s; }
-  .wf-bar:nth-child(2) { animation-delay: 1.9s; }
-  .wf-bar:nth-child(3) { animation-delay: 2.0s; }
-  .wf-bar:nth-child(4) { animation-delay: 2.1s; }
-  .wf-bar:nth-child(5) { animation-delay: 2.2s; }
+  .wf-bar:nth-child(1) { animation-delay: 0s; }
+  .wf-bar:nth-child(2) { animation-delay: 0.08s; }
+  .wf-bar:nth-child(3) { animation-delay: 0.16s; }
+  .wf-bar:nth-child(4) { animation-delay: 0.24s; }
+  .wf-bar:nth-child(5) { animation-delay: 0.32s; }
+  .wf-bar:nth-child(6) { animation-delay: 0.40s; }
+  .wf-bar:nth-child(7) { animation-delay: 0.48s; }
   @keyframes wf-bar-bounce {
-    0%, 18% { transform: scaleY(0.3); }
-    25% { transform: scaleY(1); }
+    0%, 20% { transform: scaleY(0.3); }
+    26% { transform: scaleY(1); }
     30% { transform: scaleY(0.5); }
-    35% { transform: scaleY(0.9); }
-    42%, 100% { transform: scaleY(0.3); }
+    34% { transform: scaleY(0.85); }
+    40%, 100% { transform: scaleY(0.3); }
   }
-  /* Analyze zone: orbiting dots */
-  .wf-orbit-dot {
-    animation: wf-orbit 8s linear infinite;
-    transform-box: fill-box;
-    transform-origin: 85px 55px;
-  }
-  .wf-orbit-dot:nth-child(1) { animation-delay: 3.0s; }
-  .wf-orbit-dot:nth-child(2) { animation-delay: 3.5s; }
-  .wf-orbit-dot:nth-child(3) { animation-delay: 4.0s; }
-  @keyframes wf-orbit {
-    0%, 45% { opacity: 0; }
-    50% { opacity: 0.8; transform: rotate(0deg); }
-    68% { opacity: 0.8; transform: rotate(360deg); }
-    75%, 100% { opacity: 0; }
-  }
-  /* Scan line */
+  /*
+   * 8s cycle timing plan (sequential left-to-right):
+   *   0.0-1.5s  Zone 1: conversation (waves + bubbles)
+   *   1.2-1.8s  Packet 1 travels conv -> capture
+   *   1.5-3.5s  Zone 2: capture (mic glow + waveform)
+   *   3.2-3.8s  Packet 2 travels capture -> analyze
+   *   3.5-5.5s  Zone 3: analyze (scan line + pulse)
+   *   5.2-5.8s  Packet 3 travels analyze -> output
+   *   5.5-7.5s  Zone 4: output cards appear
+   *   7.5-8.0s  Pause, everything fades, cycle restarts
+   */
+
+  /* Analyze zone: scan line sweeps then processing dots pulse */
   .wf-scan {
     opacity: 0;
     animation: wf-scan-sweep 8s ease-in-out infinite;
   }
   @keyframes wf-scan-sweep {
-    0%, 45% { opacity: 0; transform: translateX(0); }
-    50% { opacity: 0.6; transform: translateX(0); }
-    65% { opacity: 0.6; transform: translateX(140px); }
-    70%, 100% { opacity: 0; transform: translateX(140px); }
+    0%, 42% { opacity: 0; transform: translateX(0); }
+    46% { opacity: 0.7; transform: translateX(0); }
+    60% { opacity: 0.5; transform: translateX(130px); }
+    64%, 100% { opacity: 0; transform: translateX(130px); }
   }
-  /* Output cards slide in */
+  /* Processing dots: fade in during analyze window, pulse */
+  .wf-process-dot {
+    opacity: 0;
+    animation: wf-pdot 8s ease-in-out infinite;
+  }
+  .wf-process-dot:nth-child(1) { animation-delay: 0s; }
+  .wf-process-dot:nth-child(2) { animation-delay: 0.25s; }
+  .wf-process-dot:nth-child(3) { animation-delay: 0.5s; }
+  @keyframes wf-pdot {
+    0%, 46% { opacity: 0; }
+    52% { opacity: 0.9; }
+    56% { opacity: 0.3; }
+    60% { opacity: 0.9; }
+    64% { opacity: 0.3; }
+    68%, 100% { opacity: 0; }
+  }
+  /* Output cards slide in after packet 3 arrives */
   .wf-card {
     opacity: 0;
     animation: wf-card-in 8s ease-out infinite;
   }
   .wf-card:nth-child(1) { animation-delay: 0s; }
-  .wf-card:nth-child(2) { animation-delay: 0.2s; }
-  .wf-card:nth-child(3) { animation-delay: 0.4s; }
+  .wf-card:nth-child(2) { animation-delay: 0.15s; }
+  .wf-card:nth-child(3) { animation-delay: 0.3s; }
   @keyframes wf-card-in {
-    0%, 70% { opacity: 0; transform: translateY(10px); }
-    78% { opacity: 1; transform: translateY(0); }
-    92%, 100% { opacity: 0; }
+    0%, 68% { opacity: 0; transform: translateY(8px); }
+    74% { opacity: 1; transform: translateY(0); }
+    90%, 100% { opacity: 0; }
   }
-  /* Flow packet (glowing dot along dashed lines) */
+  /* Flow packets travel between zones */
   .wf-packet {
     opacity: 0;
-    animation: wf-packet-move 8s ease-in-out infinite;
   }
-  .wf-packet-1 { animation-delay: 0s; }
-  .wf-packet-2 { animation-delay: 2.5s; }
-  .wf-packet-3 { animation-delay: 5.0s; }
-  @keyframes wf-packet-move {
-    0% { opacity: 0; transform: translateX(0); }
-    2% { opacity: 1; }
-    10% { opacity: 1; transform: translateX(200px); }
-    12% { opacity: 0; transform: translateX(200px); }
+  .wf-packet-1 {
+    animation: wf-pkt1 8s ease-in-out infinite;
+  }
+  @keyframes wf-pkt1 {
+    0%, 14% { opacity: 0; transform: translateX(0); }
+    16% { opacity: 1; transform: translateX(0); }
+    22% { opacity: 1; transform: translateX(42px); }
+    24% { opacity: 0; transform: translateX(42px); }
+    100% { opacity: 0; }
+  }
+  .wf-packet-2 {
+    animation: wf-pkt2 8s ease-in-out infinite;
+  }
+  @keyframes wf-pkt2 {
+    0%, 38% { opacity: 0; transform: translateX(0); }
+    40% { opacity: 1; transform: translateX(0); }
+    46% { opacity: 1; transform: translateX(42px); }
+    48% { opacity: 0; transform: translateX(42px); }
+    100% { opacity: 0; }
+  }
+  .wf-packet-3 {
+    animation: wf-pkt3 8s ease-in-out infinite;
+  }
+  @keyframes wf-pkt3 {
+    0%, 62% { opacity: 0; transform: translateX(0); }
+    64% { opacity: 1; transform: translateX(0); }
+    70% { opacity: 1; transform: translateX(42px); }
+    72% { opacity: 0; transform: translateX(42px); }
     100% { opacity: 0; }
   }
 
@@ -520,7 +555,7 @@
     .wf-wave { animation: none !important; opacity: 0.25; }
     .wf-mic-glow { animation: none !important; opacity: 0.4; }
     .wf-bar { animation: none !important; transform: scaleY(0.6); }
-    .wf-orbit-dot { animation: none !important; opacity: 0.5; }
+    .wf-process-dot { animation: none !important; opacity: 0.5; }
     .wf-scan { animation: none !important; opacity: 0; }
     .wf-card { animation: none !important; opacity: 1; transform: none; }
     .wf-packet { animation: none !important; opacity: 0; }
@@ -629,21 +664,18 @@
         <g transform="translate(420,14)">
           <!-- Processing box -->
           <rect x="10" y="0" width="150" height="140" rx="14" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
-          <!-- Brain/circuit pattern -->
-          <circle cx="85" cy="55" r="30" fill="none" stroke="#1e293b" stroke-width="1"/>
-          <circle cx="85" cy="55" r="18" fill="none" stroke="#1e293b" stroke-width="0.75"/>
-          <!-- Orbiting processing dots -->
-          <circle class="wf-orbit-dot" cx="55" cy="40" r="4.5" fill="#4ac0ff" opacity="0"/>
-          <circle class="wf-orbit-dot" cx="115" cy="40" r="4.5" fill="#34d399" opacity="0"/>
-          <circle class="wf-orbit-dot" cx="85" cy="90" r="4.5" fill="#fbbf24" opacity="0"/>
           <!-- Scan line -->
           <rect class="wf-scan" x="18" y="10" width="2" height="120" rx="1" fill="#4ac0ff" opacity="0"/>
           <!-- AI label -->
-          <text x="85" y="60" text-anchor="middle" fill="#475569" font-size="16" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
-          <!-- Small processing text -->
-          <rect x="40" y="105" width="40" height="3" rx="1.5" fill="#1e293b" opacity="0.6"/>
-          <rect x="85" y="105" width="30" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
-          <rect x="50" y="115" width="60" height="3" rx="1.5" fill="#1e293b" opacity="0.3"/>
+          <text x="85" y="58" text-anchor="middle" fill="#475569" font-size="18" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
+          <!-- Processing dots (three dots below AI text, pulse sequentially) -->
+          <circle class="wf-process-dot" cx="68" cy="80" r="5" fill="#4ac0ff"/>
+          <circle class="wf-process-dot" cx="85" cy="80" r="5" fill="#4ac0ff"/>
+          <circle class="wf-process-dot" cx="102" cy="80" r="5" fill="#4ac0ff"/>
+          <!-- Text line placeholders below -->
+          <rect x="40" y="105" width="40" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
+          <rect x="85" y="105" width="30" height="3" rx="1.5" fill="#1e293b" opacity="0.35"/>
+          <rect x="50" y="115" width="60" height="3" rx="1.5" fill="#1e293b" opacity="0.25"/>
         </g>
         <text class="wf-zone-label" x="495" y="190">analyze</text>
 
