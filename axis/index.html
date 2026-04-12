@@ -499,16 +499,7 @@
     54%, 62% { opacity: 0.3; }
     68%, 100% { opacity: 0; }
   }
-  /* Output: summary frame appears first, then rows fill in, stays until end */
-  .wf-card-frame {
-    opacity: 0;
-    animation: wf-frame-in 8s ease-out infinite;
-  }
-  @keyframes wf-frame-in {
-    0%, 62% { opacity: 0; }
-    68% { opacity: 1; }
-    96%, 100% { opacity: 0; }
-  }
+  /* Output: content rows animate inside static summary frame */
   .wf-card {
     opacity: 0;
     animation: wf-card-in 8s ease-out infinite;
@@ -618,7 +609,6 @@
     .wf-process-dot { animation: none !important; opacity: 0.5; }
     .wf-process-line { animation: none !important; opacity: 0.2; }
     .wf-scan { animation: none !important; opacity: 0; }
-    .wf-card-frame { animation: none !important; opacity: 1; }
     .wf-card { animation: none !important; opacity: 1; transform: none; }
     .wf-packet { animation: none !important; opacity: 0; }
     .wf-sources-ticker span { animation: none !important; color: #64748b; }
@@ -684,30 +674,52 @@
         </g>
         <circle class="wf-packet wf-packet-1" cx="138" cy="80" r="3" fill="#4ac0ff" filter="url(#glow)"/>
 
-        <!-- Zone 2: Capture (x: 193-360) -->
+        <!-- Zone 2: Capture (x: 193-370) - split box: text + voice -->
         <g transform="translate(193,14)">
-          <!-- Phone frame -->
-          <rect x="20" y="0" width="130" height="140" rx="14" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
-          <!-- Screen area -->
-          <rect x="28" y="10" width="114" height="120" rx="8" fill="#0f172a"/>
-          <!-- Top notch -->
-          <rect x="65" y="3" width="40" height="5" rx="2.5" fill="#1e293b"/>
+          <!-- Outer frame -->
+          <rect x="10" y="0" width="168" height="140" rx="14" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Divider -->
+          <line x1="94" y1="10" x2="94" y2="130" stroke="#1e293b" stroke-width="1"/>
+
+          <!-- Left half: Passive Text -->
+          <text x="52" y="18" text-anchor="middle" fill="#475569" font-size="7" font-family="'Outfit',sans-serif">text</text>
+          <!-- Chat bubble icon -->
+          <rect x="32" y="28" width="40" height="26" rx="8" fill="none" stroke="#64748b" stroke-width="1.2" opacity="0.5"/>
+          <path d="M38,54 L42,62 L48,54" fill="none" stroke="#64748b" stroke-width="1.2" opacity="0.5"/>
+          <rect x="38" y="36" width="20" height="2.5" rx="1" fill="#64748b" opacity="0.35"/>
+          <rect x="38" y="42" width="14" height="2.5" rx="1" fill="#64748b" opacity="0.25"/>
+          <!-- Incoming text lines (animated) -->
+          <g class="wf-wave" style="animation-delay:0.1s">
+            <rect x="22" y="74" width="56" height="3" rx="1.5" fill="#4ac0ff" opacity="0.2"/>
+          </g>
+          <g class="wf-wave" style="animation-delay:0.4s">
+            <rect x="22" y="82" width="42" height="3" rx="1.5" fill="#4ac0ff" opacity="0.15"/>
+          </g>
+          <g class="wf-wave" style="animation-delay:0.7s">
+            <rect x="22" y="90" width="50" height="3" rx="1.5" fill="#4ac0ff" opacity="0.12"/>
+          </g>
+          <!-- Source labels -->
+          <text x="52" y="110" text-anchor="middle" fill="#475569" font-size="6" font-family="'Outfit',sans-serif" opacity="0.6">Slack / email / Git</text>
+          <text x="52" y="120" text-anchor="middle" fill="#475569" font-size="6" font-family="'Outfit',sans-serif" opacity="0.6">clipboard / Claude</text>
+
+          <!-- Right half: Active Voice -->
+          <text x="136" y="18" text-anchor="middle" fill="#475569" font-size="7" font-family="'Outfit',sans-serif">voice</text>
           <!-- Mic icon -->
-          <rect x="76" y="32" width="18" height="28" rx="9" fill="none" stroke="#4ac0ff" stroke-width="2"/>
-          <path d="M70,55 C70,68 85,72 85,72 C85,72 100,68 100,55" fill="none" stroke="#4ac0ff" stroke-width="1.5"/>
-          <line x1="85" y1="72" x2="85" y2="82" stroke="#4ac0ff" stroke-width="1.5"/>
-          <line x1="77" y1="82" x2="93" y2="82" stroke="#4ac0ff" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="128" y="28" width="16" height="24" rx="8" fill="none" stroke="#4ac0ff" stroke-width="1.8"/>
+          <path d="M122,48 C122,58 136,62 136,62 C136,62 150,58 150,48" fill="none" stroke="#4ac0ff" stroke-width="1.3"/>
+          <line x1="136" y1="62" x2="136" y2="70" stroke="#4ac0ff" stroke-width="1.3"/>
+          <line x1="130" y1="70" x2="142" y2="70" stroke="#4ac0ff" stroke-width="1.3" stroke-linecap="round"/>
           <!-- Mic glow -->
-          <circle class="wf-mic-glow" cx="85" cy="48" r="24" fill="#4ac0ff" opacity="0"/>
+          <circle class="wf-mic-glow" cx="136" cy="42" r="20" fill="#4ac0ff" opacity="0"/>
           <!-- Waveform bars -->
-          <g transform="translate(40,100)">
-            <rect class="wf-bar" x="0" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="12" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="24" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="36" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="48" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="60" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
-            <rect class="wf-bar" x="72" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
+          <g transform="translate(106,96)">
+            <rect class="wf-bar" x="0" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="9" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="18" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="27" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="36" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="45" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="54" y="0" width="6" height="18" rx="2" fill="#4ac0ff" opacity="0.45"/>
           </g>
         </g>
         <text class="wf-zone-label" x="278" y="192">capture</text>
@@ -753,18 +765,18 @@
 
         <!-- Zone 4: Summary Output (x: 634-800) -->
         <g transform="translate(634,10)">
-          <!-- Card frame appears first, stays visible -->
-          <g class="wf-card-frame">
-            <rect x="0" y="0" width="162" height="155" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
-            <rect x="0" y="0" width="162" height="24" rx="10" fill="#1e293b"/>
-            <text x="14" y="16" fill="#c8d0e0" font-size="8" font-family="'Outfit',sans-serif" font-weight="500">Session Briefing</text>
-            <circle cx="148" cy="12" r="3" fill="#34d399"/>
-          </g>
-          <!-- Rows fill in sequentially with tight delays -->
+          <!-- Static frame (always visible, like capture/analyze boxes) -->
+          <rect x="0" y="0" width="162" height="155" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="0" y="0" width="162" height="24" rx="10" fill="#1e293b"/>
+          <text x="14" y="16" fill="#64748b" font-size="8" font-family="'Outfit',sans-serif" font-weight="500">Session Briefing</text>
+          <circle cx="148" cy="12" r="3" fill="#1e293b" stroke="#334155" stroke-width="0.75"/>
+          <!-- Animated content fills in -->
           <g class="wf-card" style="animation-delay:0.1s">
             <circle cx="16" cy="38" r="4" fill="#4ac0ff"/>
             <text x="26" y="36" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">DECISION</text>
             <rect x="26" y="40" width="110" height="3" rx="1.5" fill="#334155"/>
+            <!-- Active indicator on header -->
+            <circle cx="148" cy="12" r="3" fill="#34d399"/>
           </g>
           <g class="wf-card" style="animation-delay:0.25s">
             <circle cx="16" cy="56" r="4" fill="#fbbf24"/>
@@ -777,7 +789,7 @@
             <rect x="26" y="76" width="80" height="3" rx="1.5" fill="#334155"/>
           </g>
           <g class="wf-card" style="animation-delay:0.55s">
-            <line x1="10" y1="88" x2="152" y2="88" stroke="#1e293b" stroke-width="0.75"/>
+            <line x1="10" y1="88" x2="152" y2="88" stroke="#334155" stroke-width="0.75"/>
           </g>
           <g class="wf-card" style="animation-delay:0.6s">
             <text x="14" y="100" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">INSIGHTS</text>
