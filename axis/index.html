@@ -71,7 +71,7 @@
   .screenshots { margin: 48px 0; }
   .screenshots h2 { font-size: 1.4rem; font-weight: 600; color: #e2e8f0; margin-bottom: 16px; border-left: 3px solid #4ac0ff; padding-left: 12px; }
   .screenshots p { color: #94a3b8; margin-bottom: 16px; }
-  .ss-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .ss-tabs { display: flex; gap: 8px; margin-bottom: 14px; margin-top: 0; }
   .ss-tab {
     background: #111827;
     border: 1px solid #1e293b;
@@ -183,7 +183,7 @@
   /* Team-working scene */
   .sc-scene {
     max-width: 650px;
-    margin: 0 auto 12px;
+    margin: 0 auto 0;
   }
   .sc-scene svg {
     width: 100%;
@@ -311,6 +311,28 @@
     75% { opacity: 0.7; }
     88% { opacity: 0.6; }
     92%, 100% { opacity: 0.1; }
+  }
+  /* Scene subtitle (integrated, tight spacing) */
+  .sc-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.82rem;
+    margin: 2px 0 10px;
+    letter-spacing: 0.02em;
+  }
+  /* Synced glow on screenshot grid when output phase fires */
+  .ss-grid-phone, .ss-grid-tablet {
+    border-radius: 16px;
+    padding: 4px;
+    margin: -4px;
+    animation: sc-grid-glow 10s ease-in-out infinite;
+  }
+  @keyframes sc-grid-glow {
+    0%, 68% { box-shadow: none; }
+    74% { box-shadow: 0 0 20px rgba(74, 192, 255, 0.08), inset 0 0 12px rgba(74, 192, 255, 0.03); }
+    82% { box-shadow: 0 0 30px rgba(74, 192, 255, 0.12), inset 0 0 16px rgba(74, 192, 255, 0.04); }
+    90% { box-shadow: 0 0 15px rgba(74, 192, 255, 0.06); }
+    95%, 100% { box-shadow: none; }
   }
 
   /* Lightbox */
@@ -691,6 +713,7 @@
     .sc-process { animation: none !important; opacity: 0.3; transform: none; }
     .sc-output { animation: none !important; opacity: 0.5; }
     .sc-arrow { animation: none !important; opacity: 0.3; }
+    .ss-grid-phone, .ss-grid-tablet { animation: none !important; box-shadow: none; }
   }
 </style>
 </head>
@@ -974,7 +997,7 @@
   <div class="screenshots">
     <h2>See It In Action</h2>
     <div class="sc-scene">
-      <svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Team activity flows into AXIS capture, AI analyzes, produces briefings">
+      <svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Team activity flows into AXIS capture, AI analyzes, produces briefings">
         <defs>
           <filter id="sc-glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
@@ -1153,14 +1176,20 @@
         </g>
         <text x="580" y="120" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif">your briefing</text>
 
-        <!-- DOWN-ARROW: connects to screenshot grid below -->
+        <!-- DOWN-ARROW: centered connector to screenshot grid -->
         <g class="sc-arrow">
-          <line x1="580" y1="128" x2="580" y2="165" stroke="#4ac0ff" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
-          <polygon points="574,162 580,172 586,162" fill="#4ac0ff" opacity="0.6"/>
+          <!-- Flow from output zone down and left to center -->
+          <path d="M580,126 C580,148 400,140 400,160" fill="none" stroke="#4ac0ff" stroke-width="1.5" stroke-dasharray="5,4" stroke-linecap="round"/>
+          <!-- Prominent centered down-arrow -->
+          <line x1="400" y1="160" x2="400" y2="198" stroke="#4ac0ff" stroke-width="1.8" stroke-dasharray="5,4" stroke-linecap="round"/>
+          <polygon points="392,194 400,208 408,194" fill="#4ac0ff" opacity="0.7"/>
+          <!-- Glow dot at arrow tip -->
+          <circle cx="400" cy="206" r="3" fill="#4ac0ff" opacity="0.4" filter="url(#sc-glow)"/>
         </g>
+        <!-- Centered subtitle inside SVG -->
+        <text x="400" y="226" text-anchor="middle" fill="#64748b" font-size="11" font-family="'Outfit',sans-serif" opacity="0.7">here's what you get</text>
       </svg>
     </div>
-    <p style="text-align:center;color:#94a3b8;margin-bottom:20px;font-size:0.95rem;">Your team works. AXIS listens. Here's what you get.</p>
     <div class="ss-tabs">
       <button class="ss-tab active" data-target="phone">Phone</button>
       <button class="ss-tab" data-target="tablet">Tablet</button>
