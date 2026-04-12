@@ -55,6 +55,7 @@ body {
   opacity: 0.85;
   transition: transform 0.3s ease;
   cursor: pointer;
+  filter: drop-shadow(0 0 6px rgba(10, 26, 32, 0.9));
 }
 .mascot:hover { transform: rotate(-8deg) scale(1.05); }
 
@@ -135,7 +136,7 @@ h1 {
 
 <a class="brand" href="/">couloir<span>.gg</span></a>
 
-<img class="mascot" id="frank" src="/assets/mascot/mascot_look.png" alt="Frank the llama looking around" onclick="this.src='/assets/mascot/mascot_silly.png'">
+<img class="mascot" id="frank" src="/assets/mascot/mascot_look.png" alt="Frank the llama looking around">
 
 <div class="code">404</div>
 <h1>Wrong couloir.</h1>
@@ -151,6 +152,13 @@ h1 {
 
 <script>
 document.getElementById('path').textContent = window.location.pathname;
+var frank = document.getElementById('frank');
+var silly = false;
+frank.addEventListener('click', function() {
+  silly = !silly;
+  frank.src = silly ? '/assets/mascot/mascot_silly.png' : '/assets/mascot/mascot_look.png';
+  frank.alt = silly ? 'Frank the llama being silly' : 'Frank the llama looking around';
+});
 </script>
 
 </body>
