@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 | CouloirGG</title>
+<link rel="icon" type="image/png" href="/couloir_avatar.png">
+<link rel="apple-touch-icon" href="/couloir_avatar.png">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --lime: #A7DB78;
+  --teal: #005770;
+  --teal-dark: #003E47;
+  --bg-dark: #0a1a20;
+  --text-light: rgba(255,255,255,0.85);
+  --text-dim: rgba(255,255,255,0.5);
+  --text-faint: rgba(255,255,255,0.22);
+  --border-light: rgba(255,255,255,0.08);
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Sora', -apple-system, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.brand {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: rgba(255,255,255,0.25);
+  text-decoration: none;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+}
+.brand span { color: var(--lime); }
+
+.mascot {
+  width: 140px;
+  height: auto;
+  margin-bottom: 24px;
+  opacity: 0.85;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.mascot:hover { transform: rotate(-8deg) scale(1.05); }
+
+.code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--lime);
+  line-height: 1;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.message {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  max-width: 380px;
+  margin-bottom: 32px;
+}
+
+.links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.links a {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.link-primary {
+  background: var(--lime);
+  color: var(--bg-dark);
+}
+.link-primary:hover {
+  background: #bde89a;
+}
+
+.link-secondary {
+  border: 1px solid var(--border-light);
+  color: var(--text-dim);
+}
+.link-secondary:hover {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
+.path {
+  position: absolute;
+  bottom: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-faint);
+}
+
+@media (max-width: 480px) {
+  .code { font-size: 3.5rem; }
+  h1 { font-size: 1.2rem; }
+  .mascot { width: 110px; }
+}
+</style>
+</head>
+<body>
+
+<a class="brand" href="/">couloir<span>.gg</span></a>
+
+<img class="mascot" id="frank" src="/assets/mascot/mascot_look.png" alt="Frank the llama looking around" onclick="this.src='/assets/mascot/mascot_silly.png'">
+
+<div class="code">404</div>
+<h1>Wrong couloir.</h1>
+<p class="message">Frank looked everywhere but couldn't find this page. It may have moved, or it never existed.</p>
+
+<div class="links">
+  <a class="link-primary" href="/">Back to Home</a>
+  <a class="link-secondary" href="/axis">AXIS Producer</a>
+  <a class="link-secondary" href="/tools/lama">LAMA</a>
+</div>
+
+<div class="path" id="path"></div>
+
+<script>
+document.getElementById('path').textContent = window.location.pathname;
+</script>
+
+</body>
+</html>
