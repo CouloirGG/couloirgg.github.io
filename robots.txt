@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /private/
+Disallow: /docs/
+
+Sitemap: https://couloir.gg/sitemap.xml
