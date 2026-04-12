@@ -432,7 +432,7 @@
   .wf-orbit-dot {
     animation: wf-orbit 8s linear infinite;
     transform-box: fill-box;
-    transform-origin: 80px 60px;
+    transform-origin: 85px 55px;
   }
   .wf-orbit-dot:nth-child(1) { animation-delay: 3.0s; }
   .wf-orbit-dot:nth-child(2) { animation-delay: 3.5s; }
@@ -531,7 +531,7 @@
   <div class="hero">
     <h1><span>AXIS</span> Producer</h1>
     <div class="workflow-anim">
-      <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow: conversation to capture to analysis to structured output">
+      <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow: conversation to capture to analysis to structured output">
         <defs>
           <filter id="glow">
             <feGaussianBlur stdDeviation="3" result="blur"/>
@@ -539,106 +539,146 @@
           </filter>
         </defs>
 
-        <!-- Zone 1: Conversation (x: 0-180) -->
-        <g transform="translate(0,20)">
-          <!-- Person 1 -->
-          <circle cx="50" cy="50" r="14" fill="#94a3b8" opacity="0.6"/>
-          <ellipse cx="50" cy="82" rx="18" ry="12" fill="#94a3b8" opacity="0.4"/>
-          <!-- Person 2 -->
-          <circle cx="95" cy="38" r="14" fill="#94a3b8" opacity="0.6"/>
-          <ellipse cx="95" cy="70" rx="18" ry="12" fill="#94a3b8" opacity="0.4"/>
-          <!-- Person 3 -->
-          <circle cx="140" cy="54" r="14" fill="#94a3b8" opacity="0.6"/>
-          <ellipse cx="140" cy="86" rx="18" ry="12" fill="#94a3b8" opacity="0.4"/>
-          <!-- Sound waves -->
+        <!-- Zone 1: Conversation (x: 0-170) -->
+        <g>
+          <!-- Person 1 (left, slightly behind) -->
+          <g transform="translate(28,42)" opacity="0.5">
+            <circle cx="0" cy="0" r="10" fill="#94a3b8"/>
+            <path d="M0,12 C-12,12 -16,22 -16,32 L-16,48 C-16,50 -14,52 -12,52 L12,52 C14,52 16,50 16,48 L16,32 C16,22 12,12 0,12Z" fill="#94a3b8"/>
+          </g>
+          <!-- Person 2 (center, front) -->
+          <g transform="translate(68,34)" opacity="0.7">
+            <circle cx="0" cy="0" r="12" fill="#c8d0e0"/>
+            <path d="M0,14 C-14,14 -19,26 -19,37 L-19,56 C-19,58 -17,60 -15,60 L15,60 C17,60 19,58 19,56 L19,37 C19,26 14,14 0,14Z" fill="#c8d0e0"/>
+          </g>
+          <!-- Person 3 (right, slightly behind) -->
+          <g transform="translate(112,42)" opacity="0.5">
+            <circle cx="0" cy="0" r="10" fill="#94a3b8"/>
+            <path d="M0,12 C-12,12 -16,22 -16,32 L-16,48 C-16,50 -14,52 -12,52 L12,52 C14,52 16,50 16,48 L16,32 C16,22 12,12 0,12Z" fill="#94a3b8"/>
+          </g>
+          <!-- Speech bubbles -->
           <g class="wf-wave" style="animation-delay:0s">
-            <path d="M162,55 Q172,45 172,60 Q172,75 162,65" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.6"/>
+            <rect x="42" y="8" width="22" height="14" rx="7" fill="#4ac0ff" opacity="0.2"/>
+            <rect x="45" y="12" width="8" height="2" rx="1" fill="#4ac0ff" opacity="0.4"/>
+            <rect x="55" y="12" width="5" height="2" rx="1" fill="#4ac0ff" opacity="0.3"/>
           </g>
-          <g class="wf-wave" style="animation-delay:0.3s">
-            <path d="M170,50 Q183,38 183,62 Q183,86 170,74" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.45"/>
+          <g class="wf-wave" style="animation-delay:0.4s">
+            <rect x="86" y="14" width="20" height="12" rx="6" fill="#4ac0ff" opacity="0.15"/>
+            <rect x="89" y="18" width="6" height="2" rx="1" fill="#4ac0ff" opacity="0.35"/>
+            <rect x="97" y="18" width="4" height="2" rx="1" fill="#4ac0ff" opacity="0.25"/>
           </g>
-          <g class="wf-wave" style="animation-delay:0.6s">
-            <path d="M178,45 Q194,30 194,62 Q194,94 178,79" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.3"/>
+          <!-- Sound wave arcs radiating right -->
+          <g class="wf-wave" style="animation-delay:0.2s">
+            <path d="M132,72 C138,62 138,82 132,72" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.5"/>
+          </g>
+          <g class="wf-wave" style="animation-delay:0.5s">
+            <path d="M138,65 C147,55 147,89 138,79" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.35"/>
+          </g>
+          <g class="wf-wave" style="animation-delay:0.8s">
+            <path d="M144,58 C156,46 156,98 144,86" fill="none" stroke="#4ac0ff" stroke-width="1.5" opacity="0.2"/>
           </g>
         </g>
-        <text class="wf-zone-label" x="90" y="210">conversation</text>
+        <text class="wf-zone-label" x="70" y="190">conversation</text>
 
-        <!-- Dashed connector 1->2 -->
-        <line x1="188" y1="90" x2="218" y2="90" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="4,3"/>
-        <!-- Flow packet 1 -->
-        <circle class="wf-packet wf-packet-1" cx="188" cy="90" r="3" fill="#4ac0ff" filter="url(#glow)"/>
+        <!-- Arrow connector 1->2 -->
+        <g opacity="0.4">
+          <line x1="158" y1="80" x2="192" y2="80" stroke="#4ac0ff" stroke-width="1" stroke-dasharray="4,3"/>
+          <polygon points="192,76 200,80 192,84" fill="#4ac0ff" opacity="0.5"/>
+        </g>
+        <circle class="wf-packet wf-packet-1" cx="158" cy="80" r="3" fill="#4ac0ff" filter="url(#glow)"/>
 
-        <!-- Zone 2: Capture (x: 210-375) -->
-        <g transform="translate(210,25)">
-          <!-- Device frame -->
-          <rect x="10" y="10" width="150" height="110" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
-          <!-- Mic icon -->
-          <rect x="72" y="30" width="18" height="32" rx="9" fill="none" stroke="#4ac0ff" stroke-width="1.8"/>
-          <line x1="81" y1="68" x2="81" y2="80" stroke="#4ac0ff" stroke-width="1.8"/>
-          <path d="M68,62 Q68,76 81,76 Q94,76 94,62" fill="none" stroke="#4ac0ff" stroke-width="1.5"/>
+        <!-- Zone 2: Capture (x: 200-370) -->
+        <g transform="translate(200,14)">
+          <!-- Phone frame -->
+          <rect x="20" y="0" width="130" height="140" rx="14" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Screen area -->
+          <rect x="28" y="10" width="114" height="120" rx="8" fill="#0f172a"/>
+          <!-- Top notch -->
+          <rect x="65" y="3" width="40" height="5" rx="2.5" fill="#1e293b"/>
+          <!-- Mic icon (centered, recognizable) -->
+          <rect x="76" y="32" width="18" height="28" rx="9" fill="none" stroke="#4ac0ff" stroke-width="2"/>
+          <path d="M70,55 C70,68 85,72 85,72 C85,72 100,68 100,55" fill="none" stroke="#4ac0ff" stroke-width="1.5"/>
+          <line x1="85" y1="72" x2="85" y2="82" stroke="#4ac0ff" stroke-width="1.5"/>
+          <line x1="77" y1="82" x2="93" y2="82" stroke="#4ac0ff" stroke-width="1.5" stroke-linecap="round"/>
           <!-- Mic glow -->
-          <circle class="wf-mic-glow" cx="81" cy="48" r="22" fill="#4ac0ff" opacity="0"/>
-          <!-- Waveform bars -->
-          <g transform="translate(30,90)">
-            <rect class="wf-bar" x="0" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
-            <rect class="wf-bar" x="10" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
-            <rect class="wf-bar" x="20" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
-            <rect class="wf-bar" x="30" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
-            <rect class="wf-bar" x="40" y="0" width="6" height="20" rx="2" fill="#4ac0ff" opacity="0.5"/>
+          <circle class="wf-mic-glow" cx="85" cy="48" r="24" fill="#4ac0ff" opacity="0"/>
+          <!-- Waveform bars at bottom of screen -->
+          <g transform="translate(40,100)">
+            <rect class="wf-bar" x="0" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="12" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="24" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="36" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="48" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="60" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
+            <rect class="wf-bar" x="72" y="0" width="8" height="22" rx="3" fill="#4ac0ff" opacity="0.45"/>
           </g>
         </g>
-        <text class="wf-zone-label" x="293" y="210">capture</text>
+        <text class="wf-zone-label" x="285" y="190">capture</text>
 
-        <!-- Dashed connector 2->3 -->
-        <line x1="383" y1="90" x2="418" y2="90" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="4,3"/>
-        <!-- Flow packet 2 -->
-        <circle class="wf-packet wf-packet-2" cx="383" cy="90" r="3" fill="#4ac0ff" filter="url(#glow)"/>
-
-        <!-- Zone 3: Analyze (x: 410-575) -->
-        <g transform="translate(410,25)">
-          <!-- Frame -->
-          <rect x="10" y="10" width="150" height="110" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
-          <!-- Orbiting dots -->
-          <circle class="wf-orbit-dot" cx="45" cy="45" r="4" fill="#4ac0ff" opacity="0"/>
-          <circle class="wf-orbit-dot" cx="120" cy="45" r="4" fill="#34d399" opacity="0"/>
-          <circle class="wf-orbit-dot" cx="80" cy="95" r="4" fill="#fbbf24" opacity="0"/>
-          <!-- Scan line -->
-          <rect class="wf-scan" x="18" y="20" width="2" height="90" rx="1" fill="#4ac0ff" opacity="0"/>
-          <!-- AI label -->
-          <text x="80" y="72" text-anchor="middle" fill="#475569" font-size="14" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
+        <!-- Arrow connector 2->3 -->
+        <g opacity="0.4">
+          <line x1="378" y1="80" x2="412" y2="80" stroke="#4ac0ff" stroke-width="1" stroke-dasharray="4,3"/>
+          <polygon points="412,76 420,80 412,84" fill="#4ac0ff" opacity="0.5"/>
         </g>
-        <text class="wf-zone-label" x="493" y="210">analyze</text>
+        <circle class="wf-packet wf-packet-2" cx="378" cy="80" r="3" fill="#4ac0ff" filter="url(#glow)"/>
 
-        <!-- Dashed connector 3->4 -->
-        <line x1="583" y1="90" x2="628" y2="90" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="4,3"/>
-        <!-- Flow packet 3 -->
-        <circle class="wf-packet wf-packet-3" cx="583" cy="90" r="3" fill="#4ac0ff" filter="url(#glow)"/>
+        <!-- Zone 3: Analyze (x: 420-580) -->
+        <g transform="translate(420,14)">
+          <!-- Processing box -->
+          <rect x="10" y="0" width="150" height="140" rx="14" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Brain/circuit pattern -->
+          <circle cx="85" cy="55" r="30" fill="none" stroke="#1e293b" stroke-width="1"/>
+          <circle cx="85" cy="55" r="18" fill="none" stroke="#1e293b" stroke-width="0.75"/>
+          <!-- Orbiting processing dots -->
+          <circle class="wf-orbit-dot" cx="55" cy="40" r="4.5" fill="#4ac0ff" opacity="0"/>
+          <circle class="wf-orbit-dot" cx="115" cy="40" r="4.5" fill="#34d399" opacity="0"/>
+          <circle class="wf-orbit-dot" cx="85" cy="90" r="4.5" fill="#fbbf24" opacity="0"/>
+          <!-- Scan line -->
+          <rect class="wf-scan" x="18" y="10" width="2" height="120" rx="1" fill="#4ac0ff" opacity="0"/>
+          <!-- AI label -->
+          <text x="85" y="60" text-anchor="middle" fill="#475569" font-size="16" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
+          <!-- Small processing text -->
+          <rect x="40" y="105" width="40" height="3" rx="1.5" fill="#1e293b" opacity="0.6"/>
+          <rect x="85" y="105" width="30" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
+          <rect x="50" y="115" width="60" height="3" rx="1.5" fill="#1e293b" opacity="0.3"/>
+        </g>
+        <text class="wf-zone-label" x="495" y="190">analyze</text>
 
-        <!-- Zone 4: Structured Output (x: 625-800) -->
-        <g transform="translate(625,25)">
+        <!-- Arrow connector 3->4 -->
+        <g opacity="0.4">
+          <line x1="590" y1="80" x2="624" y2="80" stroke="#4ac0ff" stroke-width="1" stroke-dasharray="4,3"/>
+          <polygon points="624,76 632,80 624,84" fill="#4ac0ff" opacity="0.5"/>
+        </g>
+        <circle class="wf-packet wf-packet-3" cx="590" cy="80" r="3" fill="#4ac0ff" filter="url(#glow)"/>
+
+        <!-- Zone 4: Structured Output (x: 632-800) -->
+        <g transform="translate(632,14)">
           <!-- Card 1: Decision (cyan) -->
           <g class="wf-card" style="animation-delay:0s">
-            <rect x="10" y="12" width="160" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
-            <circle cx="26" cy="26" r="5" fill="#4ac0ff"/>
-            <rect x="38" y="21" width="60" height="4" rx="2" fill="#1e293b"/>
-            <rect x="38" y="28" width="40" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
+            <rect x="4" y="4" width="160" height="38" rx="8" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="22" cy="23" r="6" fill="#4ac0ff"/>
+            <text x="36" y="19" fill="#64748b" font-size="7" font-family="'Outfit',sans-serif">DECISION</text>
+            <rect x="36" y="24" width="80" height="3.5" rx="1.5" fill="#1e293b"/>
+            <rect x="36" y="31" width="50" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
           </g>
           <!-- Card 2: Action (amber) -->
           <g class="wf-card" style="animation-delay:0.2s">
-            <rect x="10" y="48" width="160" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
-            <circle cx="26" cy="62" r="5" fill="#fbbf24"/>
-            <rect x="38" y="57" width="70" height="4" rx="2" fill="#1e293b"/>
-            <rect x="38" y="64" width="45" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
+            <rect x="4" y="50" width="160" height="38" rx="8" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="22" cy="69" r="6" fill="#fbbf24"/>
+            <text x="36" y="65" fill="#64748b" font-size="7" font-family="'Outfit',sans-serif">ACTION</text>
+            <rect x="36" y="70" width="90" height="3.5" rx="1.5" fill="#1e293b"/>
+            <rect x="36" y="77" width="55" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
           </g>
           <!-- Card 3: Blocker (red) -->
           <g class="wf-card" style="animation-delay:0.4s">
-            <rect x="10" y="84" width="160" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
-            <circle cx="26" cy="98" r="5" fill="#ef4444"/>
-            <rect x="38" y="93" width="55" height="4" rx="2" fill="#1e293b"/>
-            <rect x="38" y="100" width="35" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
+            <rect x="4" y="96" width="160" height="38" rx="8" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="22" cy="115" r="6" fill="#ef4444"/>
+            <text x="36" y="111" fill="#64748b" font-size="7" font-family="'Outfit',sans-serif">BLOCKER</text>
+            <rect x="36" y="116" width="70" height="3.5" rx="1.5" fill="#1e293b"/>
+            <rect x="36" y="123" width="45" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
           </g>
         </g>
-        <text class="wf-zone-label" x="713" y="210">structured output</text>
+        <text class="wf-zone-label" x="716" y="190">structured output</text>
       </svg>
     </div>
   </div>
