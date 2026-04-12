@@ -446,7 +446,22 @@
    *   7.5-8.0s  Pause, everything fades, cycle restarts
    */
 
-  /* Analyze zone: scan line sweeps then processing dots pulse */
+  /* Analyze zone: pulsing ring around AI */
+  .wf-ai-ring {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: wf-ring-pulse 8s ease-in-out infinite;
+  }
+  @keyframes wf-ring-pulse {
+    0%, 42% { opacity: 0; transform: scale(0.8); }
+    48% { opacity: 0.5; transform: scale(1); }
+    54% { opacity: 0.2; transform: scale(1.15); }
+    58% { opacity: 0.5; transform: scale(1); }
+    64% { opacity: 0.2; transform: scale(1.1); }
+    68%, 100% { opacity: 0; transform: scale(1.2); }
+  }
+  /* Scan line sweeps across analyze box */
   .wf-scan {
     opacity: 0;
     animation: wf-scan-sweep 8s ease-in-out infinite;
@@ -457,23 +472,34 @@
     60% { opacity: 0.5; transform: translateX(130px); }
     64%, 100% { opacity: 0; transform: translateX(130px); }
   }
-  /* Processing dots: fade in during analyze window, pulse */
+  /* Processing nodes: data points being analyzed */
   .wf-process-dot {
     opacity: 0;
     animation: wf-pdot 8s ease-in-out infinite;
   }
   .wf-process-dot:nth-child(1) { animation-delay: 0s; }
-  .wf-process-dot:nth-child(2) { animation-delay: 0.25s; }
-  .wf-process-dot:nth-child(3) { animation-delay: 0.5s; }
+  .wf-process-dot:nth-child(2) { animation-delay: 0.2s; }
+  .wf-process-dot:nth-child(3) { animation-delay: 0.4s; }
+  .wf-process-dot:nth-child(4) { animation-delay: 0.1s; }
+  .wf-process-dot:nth-child(5) { animation-delay: 0.3s; }
   @keyframes wf-pdot {
-    0%, 46% { opacity: 0; }
-    52% { opacity: 0.9; }
-    56% { opacity: 0.3; }
-    60% { opacity: 0.9; }
-    64% { opacity: 0.3; }
+    0%, 44% { opacity: 0; }
+    50% { opacity: 0.8; }
+    56% { opacity: 0.25; }
+    60% { opacity: 0.8; }
+    66%, 100% { opacity: 0; }
+  }
+  /* Connecting lines between process dots */
+  .wf-process-line {
+    opacity: 0;
+    animation: wf-pline 8s ease-in-out infinite;
+  }
+  @keyframes wf-pline {
+    0%, 48% { opacity: 0; }
+    54%, 62% { opacity: 0.3; }
     68%, 100% { opacity: 0; }
   }
-  /* Output cards slide in after packet 3 arrives */
+  /* Output: cards slide in and STAY visible until end */
   .wf-card {
     opacity: 0;
     animation: wf-card-in 8s ease-out infinite;
@@ -482,9 +508,32 @@
   .wf-card:nth-child(2) { animation-delay: 0.15s; }
   .wf-card:nth-child(3) { animation-delay: 0.3s; }
   @keyframes wf-card-in {
-    0%, 68% { opacity: 0; transform: translateY(8px); }
-    74% { opacity: 1; transform: translateY(0); }
-    90%, 100% { opacity: 0; }
+    0%, 68% { opacity: 0; transform: translateX(-6px); }
+    74% { opacity: 1; transform: translateX(0); }
+    94%, 100% { opacity: 0; }
+  }
+  /* Team member icons appear after cards */
+  .wf-team-member {
+    opacity: 0;
+    animation: wf-team-in 8s ease-out infinite;
+  }
+  .wf-team-member:nth-child(1) { animation-delay: 0.3s; }
+  .wf-team-member:nth-child(2) { animation-delay: 0.5s; }
+  .wf-team-member:nth-child(3) { animation-delay: 0.7s; }
+  @keyframes wf-team-in {
+    0%, 74% { opacity: 0; }
+    80% { opacity: 0.7; }
+    94%, 100% { opacity: 0; }
+  }
+  /* Distribution lines from cards to team */
+  .wf-dist-line {
+    opacity: 0;
+    animation: wf-dist 8s ease-out infinite;
+  }
+  @keyframes wf-dist {
+    0%, 76% { opacity: 0; }
+    82%, 92% { opacity: 0.3; }
+    96%, 100% { opacity: 0; }
   }
   /* Flow packets travel between zones */
   .wf-packet {
@@ -555,9 +604,13 @@
     .wf-wave { animation: none !important; opacity: 0.25; }
     .wf-mic-glow { animation: none !important; opacity: 0.4; }
     .wf-bar { animation: none !important; transform: scaleY(0.6); }
+    .wf-ai-ring { animation: none !important; opacity: 0.3; }
     .wf-process-dot { animation: none !important; opacity: 0.5; }
+    .wf-process-line { animation: none !important; opacity: 0.2; }
     .wf-scan { animation: none !important; opacity: 0; }
     .wf-card { animation: none !important; opacity: 1; transform: none; }
+    .wf-team-member { animation: none !important; opacity: 0.6; }
+    .wf-dist-line { animation: none !important; opacity: 0.3; }
     .wf-packet { animation: none !important; opacity: 0; }
   }
 </style>
@@ -664,18 +717,24 @@
         <g transform="translate(420,14)">
           <!-- Processing box -->
           <rect x="10" y="0" width="150" height="140" rx="14" fill="#111827" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Pulsing ring around AI -->
+          <circle class="wf-ai-ring" cx="85" cy="58" r="28" fill="none" stroke="#4ac0ff" stroke-width="1.5"/>
           <!-- Scan line -->
           <rect class="wf-scan" x="18" y="10" width="2" height="120" rx="1" fill="#4ac0ff" opacity="0"/>
           <!-- AI label -->
-          <text x="85" y="58" text-anchor="middle" fill="#475569" font-size="18" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
-          <!-- Processing dots (three dots below AI text, pulse sequentially) -->
-          <circle class="wf-process-dot" cx="68" cy="80" r="5" fill="#4ac0ff"/>
-          <circle class="wf-process-dot" cx="85" cy="80" r="5" fill="#4ac0ff"/>
-          <circle class="wf-process-dot" cx="102" cy="80" r="5" fill="#4ac0ff"/>
-          <!-- Text line placeholders below -->
-          <rect x="40" y="105" width="40" height="3" rx="1.5" fill="#1e293b" opacity="0.5"/>
-          <rect x="85" y="105" width="30" height="3" rx="1.5" fill="#1e293b" opacity="0.35"/>
-          <rect x="50" y="115" width="60" height="3" rx="1.5" fill="#1e293b" opacity="0.25"/>
+          <text x="85" y="64" text-anchor="middle" fill="#64748b" font-size="18" font-family="'Outfit',sans-serif" font-weight="600">AI</text>
+          <!-- Data nodes being processed (scattered around AI) -->
+          <circle class="wf-process-dot" cx="42" cy="35" r="3.5" fill="#4ac0ff"/>
+          <circle class="wf-process-dot" cx="128" cy="35" r="3.5" fill="#34d399"/>
+          <circle class="wf-process-dot" cx="42" cy="85" r="3.5" fill="#fbbf24"/>
+          <circle class="wf-process-dot" cx="128" cy="85" r="3.5" fill="#ef4444"/>
+          <circle class="wf-process-dot" cx="85" cy="105" r="3.5" fill="#4ac0ff"/>
+          <!-- Connecting lines between nodes (network/graph look) -->
+          <line class="wf-process-line" x1="42" y1="35" x2="85" y2="58" stroke="#4ac0ff" stroke-width="0.75"/>
+          <line class="wf-process-line" x1="128" y1="35" x2="85" y2="58" stroke="#34d399" stroke-width="0.75"/>
+          <line class="wf-process-line" x1="42" y1="85" x2="85" y2="58" stroke="#fbbf24" stroke-width="0.75"/>
+          <line class="wf-process-line" x1="128" y1="85" x2="85" y2="58" stroke="#ef4444" stroke-width="0.75"/>
+          <line class="wf-process-line" x1="85" y1="105" x2="85" y2="70" stroke="#4ac0ff" stroke-width="0.75"/>
         </g>
         <text class="wf-zone-label" x="495" y="190">analyze</text>
 
@@ -686,34 +745,48 @@
         </g>
         <circle class="wf-packet wf-packet-3" cx="590" cy="80" r="3" fill="#4ac0ff" filter="url(#glow)"/>
 
-        <!-- Zone 4: Structured Output (x: 632-800) -->
-        <g transform="translate(632,14)">
-          <!-- Card 1: Decision (cyan) -->
+        <!-- Zone 4: Team Output (x: 632-800) -->
+        <g transform="translate(632,8)">
+          <!-- Cards (left column, compact) -->
           <g class="wf-card" style="animation-delay:0s">
-            <rect x="4" y="4" width="160" height="38" rx="8" fill="#111827" stroke="#1e293b" stroke-width="1"/>
-            <circle cx="22" cy="23" r="6" fill="#4ac0ff"/>
-            <text x="36" y="19" fill="#64748b" font-size="7" font-family="'Outfit',sans-serif">DECISION</text>
-            <rect x="36" y="24" width="80" height="3.5" rx="1.5" fill="#1e293b"/>
-            <rect x="36" y="31" width="50" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
+            <rect x="0" y="4" width="100" height="26" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="14" cy="17" r="4.5" fill="#4ac0ff"/>
+            <text x="24" y="14" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">DECISION</text>
+            <rect x="24" y="18" width="50" height="2.5" rx="1" fill="#1e293b"/>
           </g>
-          <!-- Card 2: Action (amber) -->
-          <g class="wf-card" style="animation-delay:0.2s">
-            <rect x="4" y="50" width="160" height="38" rx="8" fill="#111827" stroke="#1e293b" stroke-width="1"/>
-            <circle cx="22" cy="69" r="6" fill="#fbbf24"/>
-            <text x="36" y="65" fill="#64748b" font-size="7" font-family="'Outfit',sans-serif">ACTION</text>
-            <rect x="36" y="70" width="90" height="3.5" rx="1.5" fill="#1e293b"/>
-            <rect x="36" y="77" width="55" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
+          <g class="wf-card" style="animation-delay:0.15s">
+            <rect x="0" y="36" width="100" height="26" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="14" cy="49" r="4.5" fill="#fbbf24"/>
+            <text x="24" y="46" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">ACTION</text>
+            <rect x="24" y="50" width="55" height="2.5" rx="1" fill="#1e293b"/>
           </g>
-          <!-- Card 3: Blocker (red) -->
-          <g class="wf-card" style="animation-delay:0.4s">
-            <rect x="4" y="96" width="160" height="38" rx="8" fill="#111827" stroke="#1e293b" stroke-width="1"/>
-            <circle cx="22" cy="115" r="6" fill="#ef4444"/>
-            <text x="36" y="111" fill="#64748b" font-size="7" font-family="'Outfit',sans-serif">BLOCKER</text>
-            <rect x="36" y="116" width="70" height="3.5" rx="1.5" fill="#1e293b"/>
-            <rect x="36" y="123" width="45" height="3" rx="1.5" fill="#1e293b" opacity="0.4"/>
+          <g class="wf-card" style="animation-delay:0.3s">
+            <rect x="0" y="68" width="100" height="26" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="14" cy="81" r="4.5" fill="#ef4444"/>
+            <text x="24" y="78" fill="#64748b" font-size="6" font-family="'Outfit',sans-serif">BLOCKER</text>
+            <rect x="24" y="82" width="45" height="2.5" rx="1" fill="#1e293b"/>
+          </g>
+
+          <!-- Distribution lines (cards -> team members) -->
+          <line class="wf-dist-line" x1="100" y1="17" x2="120" y2="20" stroke="#4ac0ff" stroke-width="0.75" stroke-dasharray="3,2"/>
+          <line class="wf-dist-line" x1="100" y1="49" x2="120" y2="62" stroke="#4ac0ff" stroke-width="0.75" stroke-dasharray="3,2"/>
+          <line class="wf-dist-line" x1="100" y1="81" x2="120" y2="105" stroke="#4ac0ff" stroke-width="0.75" stroke-dasharray="3,2"/>
+
+          <!-- Team members (right column, receiving data) -->
+          <g class="wf-team-member" style="animation-delay:0.3s">
+            <circle cx="134" cy="14" r="7" fill="#c8d0e0" opacity="0.6"/>
+            <path d="M134,22 C126,22 123,28 123,33 L123,38 C123,39 124,40 125,40 L143,40 C144,40 145,39 145,38 L145,33 C145,28 142,22 134,22Z" fill="#c8d0e0" opacity="0.4"/>
+          </g>
+          <g class="wf-team-member" style="animation-delay:0.5s">
+            <circle cx="140" cy="56" r="7" fill="#94a3b8" opacity="0.6"/>
+            <path d="M140,64 C132,64 129,70 129,75 L129,80 C129,81 130,82 131,82 L149,82 C150,82 151,81 151,80 L151,75 C151,70 148,64 140,64Z" fill="#94a3b8" opacity="0.4"/>
+          </g>
+          <g class="wf-team-member" style="animation-delay:0.7s">
+            <circle cx="134" cy="100" r="7" fill="#94a3b8" opacity="0.6"/>
+            <path d="M134,108 C126,108 123,114 123,119 L123,124 C123,125 124,126 125,126 L143,126 C144,126 145,125 145,124 L145,119 C145,114 142,108 134,108Z" fill="#94a3b8" opacity="0.4"/>
           </g>
         </g>
-        <text class="wf-zone-label" x="716" y="190">structured output</text>
+        <text class="wf-zone-label" x="716" y="190">team output</text>
       </svg>
     </div>
   </div>
