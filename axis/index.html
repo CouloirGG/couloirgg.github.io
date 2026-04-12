@@ -514,16 +514,25 @@
   .wf-sources-ticker {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 18px;
     margin-top: 10px;
     overflow: hidden;
     flex-wrap: wrap;
+    align-items: center;
   }
   .wf-sources-ticker span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-size: 0.72rem;
     color: #475569;
     letter-spacing: 0.03em;
     animation: wf-ticker-fade 6s ease-in-out infinite;
+  }
+  .wf-sources-ticker span svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
   }
   .wf-sources-ticker span:nth-child(1) { animation-delay: 0s; }
   .wf-sources-ticker span:nth-child(2) { animation-delay: 0.3s; }
@@ -857,7 +866,7 @@
         <text class="wf-zone-label" x="716" y="192">summary</text>
       </svg>
       <div class="wf-sources-ticker">
-        <span>voice</span><span>Slack</span><span>Discord</span><span>Claude Code</span><span>email</span><span>calendar</span><span>Git</span><span>clipboard</span>
+        <span><svg viewBox="0 0 16 16" fill="none"><rect x="4" y="2" width="8" height="11" rx="4" stroke="currentColor" stroke-width="1.4"/><path d="M2 9c0 4 6 6 6 6s6-2 6-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="8" y1="15" x2="8" y2="13" stroke="currentColor" stroke-width="1.2"/></svg>voice</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.2"/><text x="8" y="11.5" text-anchor="middle" fill="currentColor" font-size="9" font-family="monospace" font-weight="700">#</text></svg>Slack</span><span><svg viewBox="0 0 16 16" fill="none"><path d="M3 4c2-1.5 4-2 5-2s3 .5 5 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M3 4c0 6 2 8 5 10 3-2 5-4 5-10" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="8" r="1.3" fill="currentColor"/><circle cx="10" cy="8" r="1.3" fill="currentColor"/></svg>Discord</span><span><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L9.2 5.5 13 6.5 10 9 11 13 8 10.8 5 13 6 9 3 6.5 6.8 5.5Z" fill="currentColor" opacity="0.7"/></svg>Claude Code</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 4.5L8 9 13.5 4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>email</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/><line x1="2" y1="6.5" x2="14" y2="6.5" stroke="currentColor" stroke-width="1"/><line x1="6" y1="3" x2="6" y2="6.5" stroke="currentColor" stroke-width="0.8"/><line x1="10" y1="3" x2="10" y2="6.5" stroke="currentColor" stroke-width="0.8"/><circle cx="5.5" cy="9.5" r="0.8" fill="currentColor"/><circle cx="8" cy="9.5" r="0.8" fill="currentColor"/><circle cx="10.5" cy="9.5" r="0.8" fill="currentColor"/><circle cx="5.5" cy="12" r="0.8" fill="currentColor"/><circle cx="8" cy="12" r="0.8" fill="currentColor"/></svg>calendar</span><span><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="11.5" r="2.2" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="9.3" x2="8" y2="2" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="4" r="2" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="4" x2="8" y2="5.5" stroke="currentColor" stroke-width="1.2"/></svg>Git</span><span><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/><rect x="5.5" y="2" width="5" height="3.5" rx="1" stroke="currentColor" stroke-width="1.1"/><line x1="6" y1="8.5" x2="10" y2="8.5" stroke="currentColor" stroke-width="0.9"/><line x1="6" y1="11" x2="9" y2="11" stroke="currentColor" stroke-width="0.9"/></svg>clipboard</span>
       </div>
     </div>
   </div>
