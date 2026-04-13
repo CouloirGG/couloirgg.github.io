@@ -21,6 +21,12 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-jsKuNwamSbECoYw-7tuuA.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -883,7 +889,7 @@ body {
       <p class="tools-intro">Tools we have built and shipped. Open source where possible, production-tested, used by real teams.</p>
       <div class="tools-grid">
 
-        <a href="/axis" class="tool-card">
+        <a href="/axis" class="tool-card plausible-event-name=Tool+Card+Click">
           <span class="tool-tag beta">Beta</span>
           <h3>AXIS Producer</h3>
           <p>AI session intelligence. Records meetings and work sessions, extracts decisions, action items, and communication insights. Local-first, consent-required.</p>
@@ -895,7 +901,7 @@ body {
           </div>
         </a>
 
-        <a href="/tools/lama" class="tool-card">
+        <a href="/tools/lama" class="tool-card plausible-event-name=Tool+Card+Click">
           <span class="tool-tag alpha">Alpha</span>
           <h3>LAMA</h3>
           <p>Build analysis and price checking tool for Path of Exile 2. Skill recommendations, gear evaluation, and real-time market data. Clipboard overlay, no alt-tabbing.</p>
@@ -908,7 +914,7 @@ body {
           <img src="/assets/mascot/mascot_idle.png" alt="" class="tool-mascot" aria-hidden="true">
         </a>
 
-        <a href="/tools/arc" class="tool-card">
+        <a href="/tools/arc" class="tool-card plausible-event-name=Tool+Card+Click">
           <span class="tool-tag dev">In Dev</span>
           <h3>ARC View</h3>
           <p>Desktop companion & overlay for Arc Raiders. In-game HUD with event tracking, stash organizer, build advisor, and raid analytics.</p>
@@ -929,7 +935,7 @@ body {
     <div class="contact-inner">
       <p>If any of this sounds like your organisation, reach out. No pitch. Just a conversation.</p>
       <!-- TODO: Replace with actual contact email -->
-      <a href="mailto:hello@couloir.gg" class="contact-email">hello@couloir.gg</a>
+      <a href="mailto:hello@couloir.gg" class="contact-email plausible-event-name=Contact+Click">hello@couloir.gg</a>
     </div>
   </div>
 
@@ -940,13 +946,13 @@ body {
   <div class="footer-inner">
     <div class="footer-brand">Couloir<span>GG</span> LLC</div>
     <div class="footer-links">
-      <a href="https://github.com/CouloirGG" target="_blank">GitHub</a>
-      <a href="https://discord.gg/mwNZ8P6q" target="_blank">Discord</a>
-      <a href="https://x.com/CouloirGG" target="_blank">X</a>
-      <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank">Bluesky</a>
-      <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank">YouTube</a>
-      <a href="https://www.reddit.com/r/CouloirGG/" target="_blank">Reddit</a>
-      <a href="https://couloirgg.itch.io/" target="_blank">itch.io</a>
+      <a href="https://github.com/CouloirGG" target="_blank" class="plausible-event-name=Outbound+Click">GitHub</a>
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank" class="plausible-event-name=Outbound+Click">Discord</a>
+      <a href="https://x.com/CouloirGG" target="_blank" class="plausible-event-name=Outbound+Click">X</a>
+      <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank" class="plausible-event-name=Outbound+Click">Bluesky</a>
+      <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank" class="plausible-event-name=Outbound+Click">YouTube</a>
+      <a href="https://www.reddit.com/r/CouloirGG/" target="_blank" class="plausible-event-name=Outbound+Click">Reddit</a>
+      <a href="https://couloirgg.itch.io/" target="_blank" class="plausible-event-name=Outbound+Click">itch.io</a>
     </div>
   </div>
 </footer>

@@ -9,6 +9,12 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-jsKuNwamSbECoYw-7tuuA.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -896,7 +902,9 @@
     if (isNewBest) {
       highScore = score;
       localStorage.setItem('frankrun_hi', String(highScore));
+      if (typeof plausible !== 'undefined') plausible('New+High+Score', {props: {score: score}});
     }
+    if (typeof plausible !== 'undefined') plausible('Game+Over', {props: {score: score, distance: Math.floor(distance), exalts: exaltCount}});
 
     document.getElementById('hud').style.display = 'none';
     document.getElementById('final-score').textContent = score;
@@ -911,6 +919,7 @@
     initAudio();
     resetGame();
     state = 'playing';
+    if (typeof plausible !== 'undefined') plausible('Game+Start');
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('gameover-screen').classList.remove('active');
     document.getElementById('hud').style.display = 'block';
