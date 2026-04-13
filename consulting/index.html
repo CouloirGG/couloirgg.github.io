@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulting | CouloirGG</title>
+  <meta name="description" content="Systems architecture and operational consulting. Twenty years of production-grade systems thinking applied to your organization. Find the break, fix it, leave the team more capable.">
+  <meta property="og:title" content="Consulting | CouloirGG">
+  <meta property="og:description" content="I find where things break. Then I fix them. Twenty years building and debugging complex systems across AAA game studios, now applied to your organization.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://couloir.gg/consulting">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@CouloirGG">
+  <meta name="twitter:title" content="Consulting | CouloirGG">
+  <meta name="twitter:description" content="I find where things break. Then I fix them. Systems architecture and operational consulting.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-jsKuNwamSbECoYw-7tuuA.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+  <style>
+    *, ::before, ::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --lime: #A7DB78;
+      --lime-dim: rgba(167,219,120,0.15);
+      --lime-faint: rgba(167,219,120,0.06);
+      --teal: #005770;
+      --bg-dark: #0a1a20;
+      --bg-card: #0c1e26;
+      --bg-mid: #0e2430;
+      --text-light: rgba(255,255,255,0.85);
+      --text-dim: rgba(255,255,255,0.5);
+      --text-faint: rgba(255,255,255,0.22);
+      --border: rgba(255,255,255,0.08);
+      --border-lime: rgba(167,219,120,0.18);
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --red-dim: rgba(239,68,68,0.12);
+      --amber-dim: rgba(245,158,11,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(10,26,32,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(167,219,120,0.1);
+    }
+    .nav-brand {
+      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.25); text-decoration: none;
+    }
+    .nav-brand span { color: var(--lime); }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-dim); text-decoration: none;
+      font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--lime); }
+    .nav-links a.active { color: var(--lime); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--text-dim); margin: 4px 0; transition: 0.3s; border-radius: 1px; }
+    @media (max-width: 640px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        background: rgba(10,26,32,0.97);
+        backdrop-filter: blur(20px);
+        padding: 1.5rem 2rem; gap: 1.25rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 2rem 5rem;
+      max-width: 900px; margin: 0 auto;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeIn 0.8s ease 0.2s forwards;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 2rem; max-width: 720px;
+      opacity: 0; animation: fadeIn 0.8s ease 0.35s forwards;
+    }
+    .hero h1 em { color: var(--lime); font-style: normal; }
+    .hero-body {
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      color: var(--text-dim); max-width: 540px;
+      line-height: 1.8; font-weight: 300;
+      opacity: 0; animation: fadeIn 0.8s ease 0.5s forwards;
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      opacity: 0; animation: fadeIn 0.8s ease 0.65s forwards;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .btn-outline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--lime); text-decoration: none;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid rgba(167,219,120,0.25);
+      border-radius: 6px;
+      display: inline-block; transition: 0.2s;
+    }
+    .btn-outline:hover {
+      background: rgba(167,219,120,0.08);
+      border-color: rgba(167,219,120,0.4);
+    }
+    .btn-ghost {
+      font-size: 0.82rem; color: var(--text-dim);
+      text-decoration: none; padding: 0.6rem 1.5rem;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text-light); }
+
+    /* SCROLL INDICATOR */
+    .scroll-hint {
+      position: absolute; bottom: 3rem; left: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; color: var(--text-faint);
+      letter-spacing: 0.1em;
+      display: flex; align-items: center; gap: 0.75rem;
+      opacity: 0; animation: fadeIn 1s ease 1.2s forwards;
+    }
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, var(--lime), transparent);
+    }
+
+    /* BACKGROUND GRID */
+    .bg-grid {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(167,219,120,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(167,219,120,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* SECTION STRUCTURE */
+    .section { position: relative; z-index: 1; }
+    .section-dark { background: var(--bg-dark); }
+    .section-mid { background: var(--bg-mid); }
+    .section-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+    .section-inner--wide { max-width: 1060px; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 2rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.15; margin-bottom: 1rem;
+      color: rgba(255,255,255,0.92);
+    }
+    .section-body {
+      font-size: 1rem; color: var(--text-dim);
+      max-width: 560px; line-height: 1.8;
+      font-weight: 300; margin-bottom: 3rem;
+    }
+
+    /* FADE IN ON SCROLL */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* PHASE STEPS */
+    .phases { display: flex; flex-direction: column; gap: 0; }
+    .phase-item {
+      display: flex; gap: 1.5rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .phase-item:last-child { border-bottom: none; }
+    .phase-num-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      flex-shrink: 0; padding-top: 2px;
+    }
+    .phase-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; font-weight: 600;
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; border: 1px solid var(--border-lime);
+      color: var(--lime);
+    }
+    .phase-vert {
+      width: 1px; flex: 1; margin-top: 8px;
+      background: var(--border);
+    }
+    .phase-item:last-child .phase-vert { display: none; }
+    .phase-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 2px 8px;
+      border-radius: 3px; margin-left: auto; flex-shrink: 0;
+      align-self: flex-start;
+    }
+    .tag-observe { color: var(--lime); border: 1px solid rgba(167,219,120,0.2); }
+    .tag-analyze { color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+    .tag-execute { color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
+    .phase-content { flex: 1; }
+    .phase-title {
+      font-size: 0.95rem; font-weight: 700;
+      letter-spacing: -0.01em; margin-bottom: 0.4rem;
+      color: rgba(255,255,255,0.9);
+    }
+    .phase-desc {
+      font-size: 0.875rem; color: var(--text-dim);
+      line-height: 1.7; font-weight: 300;
+    }
+
+    /* CHAIN CASCADE */
+    .chain-section { padding: 5rem 2rem; }
+    .chain-container {
+      max-width: 900px; margin: 0 auto;
+    }
+    .chain-visual {
+      position: relative;
+      margin: 3rem 0;
+      overflow-x: auto;
+    }
+    .chain-track {
+      display: flex; align-items: center;
+      gap: 0; min-width: 560px;
+      padding: 0.5rem 0;
+    }
+    .chain-node {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem;
+    }
+    .chain-box {
+      width: 100%; padding: 1rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card);
+      text-align: center;
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--text-dim);
+      transition: all 0.4s ease;
+      position: relative; overflow: hidden;
+      cursor: default;
+      line-height: 1.3;
+    }
+    .chain-box::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--lime);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 7px;
+    }
+    .chain-box.healthy {
+      border-color: rgba(167,219,120,0.3);
+      color: var(--lime);
+      background: rgba(167,219,120,0.06);
+    }
+    .chain-box.problem {
+      border-color: rgba(239,68,68,0.5);
+      color: var(--red);
+      background: var(--red-dim);
+      animation: pulse-red 2s ease-in-out infinite;
+    }
+    .chain-box.cascade {
+      border-color: rgba(245,158,11,0.4);
+      color: var(--amber);
+      background: var(--amber-dim);
+    }
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+      50% { box-shadow: 0 0 0 4px rgba(239,68,68,0.15); }
+    }
+    .chain-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 4px;
+      opacity: 0.7;
+    }
+    .chain-name { font-size: 0.72rem; font-weight: 700; }
+    .chain-arrow {
+      color: var(--text-faint);
+      font-size: 1rem; flex-shrink: 0;
+      padding: 0 4px;
+    }
+    .chain-arrow.problem-flow { color: var(--red); }
+    .chain-arrow.cascade-flow { color: var(--amber); }
+    .chain-sublabel {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; color: var(--text-faint);
+      text-align: center; letter-spacing: 0.05em;
+    }
+
+    /* CHAIN EXPLAINER */
+    .chain-explainer {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+      margin-top: 2rem;
+    }
+    .bleed-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.25rem;
+    }
+    .bleed-card.bc-red { border-left: 2px solid var(--red); }
+    .bleed-card.bc-amber { border-left: 2px solid var(--amber); }
+    .bleed-card.bc-blue { border-left: 2px solid #38bdf8; }
+    .bleed-title {
+      font-size: 0.78rem; font-weight: 700;
+      color: rgba(255,255,255,0.85); margin-bottom: 0.4rem;
+    }
+    .bleed-desc {
+      font-size: 0.75rem; color: var(--text-dim);
+      line-height: 1.6; font-weight: 300;
+    }
+
+    /* ORG HIERARCHY */
+    .org-section { background: var(--bg-mid); }
+    .hier-wrap { overflow-x: auto; padding: 1rem 0 1.5rem; }
+    .hier {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0;
+      min-width: 480px;
+    }
+    .tier-label-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-faint); margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .tier-row {
+      display: flex; justify-content: center;
+      gap: 8px; width: 100%;
+    }
+    .hnode {
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.625rem 0.875rem;
+      text-align: center; background: var(--bg-card);
+      cursor: pointer; transition: all 0.2s;
+      min-width: 100px;
+    }
+    .hnode:hover, .hnode.selected {
+      border-color: var(--border-lime);
+      background: var(--lime-faint);
+    }
+    .hnode.hn-lead { border-color: rgba(167,139,250,0.3); }
+    .hnode.hn-lead.selected { border-color: rgba(167,139,250,0.6); background: rgba(167,139,250,0.06); }
+    .hnode.hn-mgr { border-color: rgba(56,189,248,0.2); }
+    .hnode.hn-mgr.selected { border-color: rgba(56,189,248,0.5); background: rgba(56,189,248,0.06); }
+    .hnode.hn-gap { border-color: rgba(239,68,68,0.3); }
+    .hnode.hn-gap.selected { border-color: rgba(239,68,68,0.5); background: rgba(239,68,68,0.06); }
+    .hn-name {
+      font-size: 0.72rem; font-weight: 700;
+      color: rgba(255,255,255,0.85);
+    }
+    .hn-role { font-size: 0.62rem; color: var(--text-faint); margin-top: 2px; }
+    .hn-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 2px 6px;
+      border-radius: 3px; margin-top: 5px; display: inline-block;
+    }
+    .hb-lead { background: rgba(167,139,250,0.15); color: #a78bfa; }
+    .hb-mgr { background: rgba(56,189,248,0.12); color: #38bdf8; }
+    .hb-ic { background: rgba(255,255,255,0.06); color: var(--text-dim); }
+    .hb-gap { background: rgba(239,68,68,0.12); color: var(--red); }
+    .hb-key { background: rgba(167,219,120,0.12); color: var(--lime); }
+    .hb-amber { background: rgba(245,158,11,0.12); color: var(--amber); }
+
+    .connector-v { width: 1px; height: 20px; background: var(--border); margin: 0 auto; }
+    .branch-h {
+      display: flex; width: 100%; justify-content: center;
+      position: relative;
+    }
+    .branch-h::before {
+      content: ''; position: absolute; top: 0; height: 1px;
+      background: var(--border);
+      left: 15%; right: 15%;
+    }
+    .branch-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .branch-col-line { width: 1px; height: 18px; background: var(--border); }
+
+    .node-detail {
+      background: var(--bg-card);
+      border: 1px solid var(--border-lime);
+      border-radius: 8px; padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem; color: var(--text-dim);
+      line-height: 1.75; font-weight: 300;
+      min-height: 80px;
+      transition: all 0.2s;
+    }
+    .node-detail strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+    /* CATEGORIES */
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; margin-top: 2rem;
+    }
+    .cat-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.125rem;
+    }
+    .cat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .cat-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; font-weight: 300; }
+
+    /* TEN PERCENT */
+    .ten-section { background: var(--bg-dark); }
+    .ten-hero {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -0.04em;
+      line-height: 1.15; margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.92);
+    }
+    .ten-hero em { color: var(--lime); font-style: normal; }
+    .ten-items { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2.5rem; }
+    .ten-item {
+      display: flex; gap: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .ten-item:last-child { border-bottom: none; }
+    .ten-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--lime); flex-shrink: 0; margin-top: 8px;
+    }
+    .ten-text {
+      font-size: 0.9rem; color: var(--text-dim);
+      line-height: 1.75; font-weight: 300;
+    }
+    .ten-text strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+    /* CREDENTIALS */
+    .cred-section { background: var(--bg-mid); }
+    .cred-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; margin-top: 2rem;
+    }
+    .cred-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .cred-card:hover { border-color: var(--border-lime); }
+    .cred-card.featured {
+      border-color: rgba(167,219,120,0.25);
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(167,219,120,0.04) 0%, transparent 60%);
+    }
+    .cred-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--lime);
+      margin-bottom: 0.5rem;
+    }
+    .cred-title {
+      font-size: 0.95rem; font-weight: 700;
+      color: rgba(255,255,255,0.9); margin-bottom: 0.5rem;
+    }
+    .cred-body {
+      font-size: 0.82rem; color: var(--text-dim);
+      line-height: 1.7; font-weight: 300;
+    }
+
+    /* TIMELINE */
+    .timeline { margin-top: 3rem; }
+    .tl-item {
+      display: flex; gap: 1.5rem;
+      padding-bottom: 2rem;
+    }
+    .tl-left {
+      display: flex; flex-direction: column;
+      align-items: center; flex-shrink: 0; width: 80px;
+    }
+    .tl-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; color: var(--text-faint);
+      white-space: nowrap;
+    }
+    .tl-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); margin-top: 8px; flex-shrink: 0;
+    }
+    .tl-dot.accent { background: var(--lime); }
+    .tl-line {
+      width: 1px; flex: 1; background: var(--border);
+      margin-top: 4px;
+    }
+    .tl-item:last-child .tl-line { display: none; }
+    .tl-body { padding-top: 2px; }
+    .tl-title {
+      font-size: 0.85rem; font-weight: 700;
+      color: rgba(255,255,255,0.85); margin-bottom: 0.25rem;
+    }
+    .tl-text {
+      font-size: 0.8rem; color: var(--text-dim);
+      line-height: 1.65; font-weight: 300;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: var(--bg-dark);
+      border-top: 1px solid var(--border);
+    }
+    .cta-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 5rem 2rem; text-align: center;
+    }
+    .cta-inner p {
+      font-size: 1rem; color: var(--text-dim);
+      font-weight: 300; line-height: 1.7; margin-bottom: 2rem;
+      max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+
+    /* FOOTER */
+    .site-footer { border-top: 1px solid var(--border); padding: 2rem; }
+    .footer-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand {
+      font-size: 0.8rem; font-weight: 700;
+      color: rgba(255,255,255,0.25); letter-spacing: -0.01em;
+    }
+    .footer-brand span { color: rgba(167,219,120,0.5); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 0.75rem; color: var(--text-faint);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-dim); }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .chain-explainer { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: 1fr; }
+      .cred-grid { grid-template-columns: 1fr; }
+      .cred-card.featured { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="/" class="nav-brand">Couloir<span>GG</span></a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="/#problem">The Problem</a>
+    <a href="/#approach">Approach</a>
+    <a href="/#services">Services</a>
+    <a href="/#tools">Tools</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="section section-dark">
+  <div class="hero">
+    <div class="hero-eyebrow">// consulting</div>
+    <h1>I find where things<br>break. <em>Then I fix them.</em></h1>
+    <p class="hero-body">
+      Twenty years building and debugging complex systems across AAA game studios
+      built one repeatable instinct: systems fail in predictable ways, the failure
+      is almost never where leadership thinks it is, and the fix is almost always
+      more surgical than anyone expects.
+    </p>
+    <div class="hero-cta">
+      <a href="#approach" class="btn-outline">See the method</a>
+      <a href="#contact" class="btn-ghost">Start a conversation &rarr;</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      scroll to explore
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="section section-dark" id="approach">
+  <div class="section-inner">
+    <div class="section-label reveal">// the engagement loop</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Five phases. One repeatable outcome.
+    </h2>
+    <p class="section-body reveal reveal-delay-2">
+      Every engagement runs the same loop regardless of industry, company size,
+      or type of problem. The shape of failure is consistent. The method of
+      finding it is too.
+    </p>
+
+    <div class="phases">
+      <div class="phase-item reveal reveal-delay-1">
+        <div class="phase-num-wrap">
+          <div class="phase-num">01</div>
+          <div class="phase-vert"></div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Research before touching anything</div>
+          <div class="phase-desc">
+            Before entering a building, I map the company's public footprint: market
+            position, product complexity, vertical, and the generic failure modes
+            for organizations of this type and size. I walk in already knowing where
+            to look.
+          </div>
+        </div>
+        <div class="phase-tag tag-observe">Observe</div>
+      </div>
+
+      <div class="phase-item reveal reveal-delay-2">
+        <div class="phase-num-wrap">
+          <div class="phase-num">02</div>
+          <div class="phase-vert"></div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Get the ownership view first</div>
+          <div class="phase-desc">
+            Leadership gets the first conversation. What do they believe is broken,
+            what have they already tried, and what does success look like to them
+            specifically. This surfaces the official story and its gaps simultaneously.
+          </div>
+        </div>
+        <div class="phase-tag tag-observe">Observe</div>
+      </div>
+
+      <div class="phase-item reveal reveal-delay-3">
+        <div class="phase-num-wrap">
+          <div class="phase-num">03</div>
+          <div class="phase-vert"></div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Talk to the people doing the work</div>
+          <div class="phase-desc">
+            Targeted one-on-one conversations, not town halls. The people closest to
+            the friction already know what is wrong. They have never been asked the
+            right questions by someone with the authority to act on the answers.
+          </div>
+        </div>
+        <div class="phase-tag tag-analyze">Analyze</div>
+      </div>
+
+      <div class="phase-item reveal reveal-delay-4">
+        <div class="phase-num-wrap">
+          <div class="phase-num">04</div>
+          <div class="phase-vert"></div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Build the full picture</div>
+          <div class="phase-desc">
+            Synthesize the chain map, the people map, and the cascade analysis into
+            one clear document: where things actually fail, why, and what each failure
+            costs per cycle in time, money, and organizational momentum.
+          </div>
+        </div>
+        <div class="phase-tag tag-analyze">Analyze</div>
+      </div>
+
+      <div class="phase-item reveal reveal-delay-5">
+        <div class="phase-num-wrap">
+          <div class="phase-num">05</div>
+          <div class="phase-vert"></div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Make precise cuts and build the fix</div>
+          <div class="phase-desc">
+            No overhaul. No reorganization theater. Specific interventions: a new tool,
+            a process tweak, a redirected employee focus, an automation that removes a
+            class of work entirely. Then I stay and build it until it runs.
+          </div>
+        </div>
+        <div class="phase-tag tag-execute">Execute</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAIN CASCADE -->
+<section class="section section-mid" id="systems">
+  <div class="section-inner">
+    <div class="section-label reveal">// systems thinking</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Every operation is a chain.
+    </h2>
+    <p class="section-body reveal reveal-delay-2">
+      Problems do not live in isolation. They originate at a specific link, then
+      bleed forward and backward from there. Most organizations treat the cascade.
+      I find the origin.
+    </p>
+
+    <div class="chain-visual reveal reveal-delay-3">
+      <div class="chain-track">
+        <div class="chain-node">
+          <div class="chain-box healthy">
+            <div class="chain-badge">healthy</div>
+            <div class="chain-name">Intake &amp;<br>Demand Signal</div>
+          </div>
+          <div class="chain-sublabel">Step 1</div>
+        </div>
+        <div class="chain-arrow">&rsaquo;</div>
+        <div class="chain-node">
+          <div class="chain-box problem">
+            <div class="chain-badge">origin</div>
+            <div class="chain-name">Planning &amp;<br>Scheduling</div>
+          </div>
+          <div class="chain-sublabel">Where it breaks</div>
+        </div>
+        <div class="chain-arrow problem-flow">&rsaquo;</div>
+        <div class="chain-node">
+          <div class="chain-box cascade">
+            <div class="chain-badge">cascade</div>
+            <div class="chain-name">Resource<br>Allocation</div>
+          </div>
+          <div class="chain-sublabel">Pain becomes visible</div>
+        </div>
+        <div class="chain-arrow cascade-flow">&rsaquo;</div>
+        <div class="chain-node">
+          <div class="chain-box cascade">
+            <div class="chain-badge">cascade</div>
+            <div class="chain-name">Execution<br>/ Delivery</div>
+          </div>
+          <div class="chain-sublabel">People get blamed</div>
+        </div>
+        <div class="chain-arrow">&rsaquo;</div>
+        <div class="chain-node">
+          <div class="chain-box healthy">
+            <div class="chain-badge">healthy</div>
+            <div class="chain-name">Handoff &amp;<br>Output</div>
+          </div>
+          <div class="chain-sublabel">Client feels it</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chain-explainer">
+      <div class="bleed-card bc-red reveal reveal-delay-1">
+        <div class="bleed-title">Upstream bleed</div>
+        <div class="bleed-desc">
+          Backlog and rework pressure earlier stages, forcing re-intake,
+          re-planning, and re-prioritization loops.
+        </div>
+      </div>
+      <div class="bleed-card bc-amber reveal reveal-delay-2">
+        <div class="bleed-title">Downstream cascade</div>
+        <div class="bleed-desc">
+          Late or incorrect outputs force every subsequent step to absorb the
+          error, compounding delay and quality loss per cycle.
+        </div>
+      </div>
+      <div class="bleed-card bc-blue reveal reveal-delay-3">
+        <div class="bleed-title">Lateral contamination</div>
+        <div class="bleed-desc">
+          Parallel tracks get pulled in to compensate, stealing capacity from
+          systems that were working fine before the cascade.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORG / PEOPLE -->
+<section class="section org-section" id="people">
+  <div class="section-inner">
+    <div class="section-label reveal">// people architecture</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Organizations are chains too.
+    </h2>
+    <p class="section-body reveal reveal-delay-2">
+      Every person connects upward and sideways. Friction is rarely one
+      person's fault. It is almost always a gap between two people that
+      nobody formally owns. I map both the official org and the real one.
+    </p>
+
+    <div class="hier-wrap reveal reveal-delay-3">
+      <div class="hier">
+        <div class="tier-label-text">Leadership</div>
+        <div class="tier-row">
+          <div class="hnode hn-lead" onclick="selectNode(0)">
+            <div class="hn-name">Owner / CEO</div>
+            <div class="hn-role">Vision, strategy</div>
+            <div class="hn-badge hb-lead">Decision maker</div>
+          </div>
+        </div>
+        <div class="connector-v"></div>
+
+        <div class="tier-label-text" style="margin-top:0.25rem;">Management</div>
+        <div class="branch-h">
+          <div class="branch-col">
+            <div class="branch-col-line"></div>
+            <div class="hnode hn-mgr" onclick="selectNode(1)">
+              <div class="hn-name">Operations</div>
+              <div class="hn-role">Production / delivery</div>
+              <div class="hn-badge hb-mgr">Manager</div>
+            </div>
+          </div>
+          <div class="branch-col">
+            <div class="branch-col-line"></div>
+            <div class="hnode hn-mgr" onclick="selectNode(2)">
+              <div class="hn-name">Sales / BD</div>
+              <div class="hn-role">Revenue ownership</div>
+              <div class="hn-badge hb-mgr">Manager</div>
+            </div>
+          </div>
+          <div class="branch-col">
+            <div class="branch-col-line"></div>
+            <div class="hnode hn-gap" onclick="selectNode(3)">
+              <div class="hn-name">Gap zone</div>
+              <div class="hn-role">No clear owner</div>
+              <div class="hn-badge hb-gap">Watch</div>
+            </div>
+          </div>
+        </div>
+        <div class="connector-v"></div>
+
+        <div class="tier-label-text" style="margin-top:0.25rem;">Individual Contributors</div>
+        <div class="branch-h">
+          <div class="branch-col">
+            <div class="branch-col-line"></div>
+            <div class="hnode" onclick="selectNode(4)">
+              <div class="hn-name">Key operator</div>
+              <div class="hn-role">High leverage IC</div>
+              <div class="hn-badge hb-key">High leverage</div>
+            </div>
+          </div>
+          <div class="branch-col">
+            <div class="branch-col-line"></div>
+            <div class="hnode" onclick="selectNode(5)">
+              <div class="hn-name">Friction carrier</div>
+              <div class="hn-role">Absorbing bad process</div>
+              <div class="hn-badge hb-ic">IC</div>
+            </div>
+          </div>
+          <div class="branch-col">
+            <div class="branch-col-line"></div>
+            <div class="hnode" onclick="selectNode(6)">
+              <div class="hn-name">Ghost resource</div>
+              <div class="hn-role">Underutilized</div>
+              <div class="hn-badge hb-amber">Repoint</div>
+            </div>
+          </div>
+          <div class="branch-col">
+            <div class="branch-col-line"></div>
+            <div class="hnode" onclick="selectNode(7)">
+              <div class="hn-name">Unofficial hub</div>
+              <div class="hn-role">Off the org chart</div>
+              <div class="hn-badge hb-key">Key person</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node-detail" id="node-detail">
+      Click any node to understand how I read and act on that role type.
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat-card reveal reveal-delay-1">
+        <div class="cat-label" style="color:#a78bfa;">Decision maker</div>
+        <div class="cat-desc">The person whose buy-in determines whether any change actually lands. Not always the most senior person in the room.</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-2">
+        <div class="cat-label" style="color:#38bdf8;">Manager</div>
+        <div class="cat-desc">How much of their time is real management versus IC work filling a staffing gap? That ratio reveals org health faster than any survey.</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-3">
+        <div class="cat-label" style="color:var(--lime);">High-leverage IC</div>
+        <div class="cat-desc">The person whose output quality multiplies everyone around them. Protecting their focus is often the highest-ROI intervention available.</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-4">
+        <div class="cat-label" style="color:var(--red);">Gap zone</div>
+        <div class="cat-desc">A responsibility that lives between two teams with no clear owner. This is almost always where cascade problems originate.</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-1">
+        <div class="cat-label" style="color:var(--amber);">Ghost resource</div>
+        <div class="cat-desc">Capable, available, pointed at the wrong work. Not a performance problem. A routing problem. Repointing them is fast and high-impact.</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-2">
+        <div class="cat-label" style="color:var(--lime);">Unofficial hub</div>
+        <div class="cat-desc">The person everyone actually goes to when something breaks. Does not appear on the org chart at their real level of influence. Find them early.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10% RULE -->
+<section class="section ten-section" id="friction">
+  <div class="section-inner">
+    <div class="section-label reveal">// the 10% rule</div>
+    <h2 class="ten-hero reveal reveal-delay-1">
+      Remove <em>10%</em> of everyone's<br>daily friction.
+    </h2>
+    <p class="section-body reveal reveal-delay-2">
+      The whole organization moves faster. Not because of a transformation program,
+      but because 20 people each got back a piece of their day and stopped doing
+      the thing they hated most.
+    </p>
+
+    <div class="ten-items">
+      <div class="ten-item reveal reveal-delay-1">
+        <div class="ten-dot"></div>
+        <div class="ten-text">
+          <strong>Find the repeating annoyances first.</strong> Every person has 3 to 5 things
+          they do every day that are not their real job, that nobody asked them to own,
+          and that could be eliminated or automated. Those are the targets.
+        </div>
+      </div>
+      <div class="ten-item reveal reveal-delay-2">
+        <div class="ten-dot"></div>
+        <div class="ten-text">
+          <strong>Subtract, do not overhaul.</strong> I am not redesigning anyone's job.
+          I am removing the parts that drain energy and produce nothing. The rest of
+          the day sharpens automatically.
+        </div>
+      </div>
+      <div class="ten-item reveal reveal-delay-3">
+        <div class="ten-dot"></div>
+        <div class="ten-text">
+          <strong>Multiply across the org.</strong> 10% recovered for 20 people is not
+          just two recovered FTEs of time. It is 20 people who are less frustrated,
+          more focused, and slightly better at the work that actually matters.
+        </div>
+      </div>
+      <div class="ten-item reveal reveal-delay-4">
+        <div class="ten-dot"></div>
+        <div class="ten-text">
+          <strong>Common cuts:</strong> status meetings replaced by dashboards,
+          manual reporting replaced by automation, unclear handoffs replaced by
+          defined checklists, duplicated communication replaced by a single source
+          of truth.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="section cred-section" id="background">
+  <div class="section-inner">
+    <div class="section-label reveal">// background</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Twenty years of<br>production under pressure.
+    </h2>
+    <p class="section-body reveal reveal-delay-2">
+      AAA game development is one of the most operationally complex environments
+      that exists. Hundreds of people, massive technical interdependencies, and
+      no tolerance for cascade failure on launch day. That instinct travels.
+    </p>
+
+    <div class="cred-grid">
+      <div class="cred-card featured reveal reveal-delay-1">
+        <div class="cred-eyebrow">core differentiator</div>
+        <div class="cred-title">I build the fix, not just the spec</div>
+        <div class="cred-body">
+          Most consultants deliver a document and leave. The deliverable here is a
+          running system: the automation configured, the tool built, the process
+          documented, and the thing validated before the engagement closes. You are
+          not left holding a roadmap and a bill.
+        </div>
+      </div>
+      <div class="cred-card reveal reveal-delay-2">
+        <div class="cred-eyebrow">career foundation</div>
+        <div class="cred-title">AAA game development</div>
+        <div class="cred-body">
+          17 years across Bungie, 343 Industries, Turn 10, Zipper Interactive, and
+          Respawn Entertainment building QA systems, triage automation, live
+          data dashboards, and multi-system operational workflows.
+        </div>
+      </div>
+      <div class="cred-card reveal reveal-delay-3">
+        <div class="cred-eyebrow">tooling</div>
+        <div class="cred-title">AI-augmented discovery</div>
+        <div class="cred-body">
+          AXIS captures and structures every discovery conversation so nothing falls
+          through the cracks. The analysis is documented and organized from day one,
+          not reconstructed from memory at the end of the engagement.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="section-label" style="margin-top:3rem; margin-bottom:1.5rem;">// studio history</div>
+      <div class="tl-item reveal reveal-delay-1">
+        <div class="tl-left">
+          <div class="tl-year">2007</div>
+          <div class="tl-dot accent"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Entered AAA game development</div>
+          <div class="tl-text">QA and systems work at Zipper Interactive. First exposure to the scale of coordinating complex production pipelines under launch pressure.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal reveal-delay-2">
+        <div class="tl-left">
+          <div class="tl-year">2011</div>
+          <div class="tl-dot accent"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Bungie / 343 Industries / Turn 10</div>
+          <div class="tl-text">QA leadership across some of the highest-profile Xbox franchises. Built internal automation systems, triage workflows, and org-wide tooling used by hundreds of people daily.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal reveal-delay-3">
+        <div class="tl-left">
+          <div class="tl-year">2019</div>
+          <div class="tl-dot accent"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">Respawn Entertainment / EA</div>
+          <div class="tl-text">Development Director of QA on Apex Legends. Built AI tooling, triage automation, live data dashboards, and multi-system workflows at the intersection of live-ops and production at scale.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal reveal-delay-4">
+        <div class="tl-left">
+          <div class="tl-year">2024</div>
+          <div class="tl-dot accent"></div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-title">CouloirGG LLC</div>
+          <div class="tl-text">Founded to bring production-grade systems thinking and AI tooling to organizations outside games. Consulting, open-source tooling, and AXIS Producer, an ambient session intelligence platform for teams.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="section-label reveal" style="text-align:center; display:block;">// get in touch</div>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center; margin-bottom:1.5rem;">
+      No pitch. Just a conversation.
+    </h2>
+    <p class="reveal reveal-delay-2" style="font-size:1rem;color:var(--text-dim);font-weight:300;line-height:1.7;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto;text-align:center;">
+      If something in here sounds like your organization, reach out.
+      I will tell you within one conversation whether I think I can help.
+    </p>
+    <div class="reveal reveal-delay-3" style="text-align:center;">
+      <a href="mailto:hello@couloir.gg" class="btn-outline" onclick="plausible('Contact+Click')">hello@couloir.gg</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Couloir<span>GG</span> LLC</div>
+    <div class="footer-links">
+      <a href="https://github.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">GitHub</a>
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank" onclick="plausible('Outbound+Click')">Discord</a>
+      <a href="https://x.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">X</a>
+      <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank" onclick="plausible('Outbound+Click')">Bluesky</a>
+      <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank" onclick="plausible('Outbound+Click')">YouTube</a>
+      <a href="https://www.reddit.com/r/CouloirGG/" target="_blank" onclick="plausible('Outbound+Click')">Reddit</a>
+      <a href="https://couloirgg.itch.io/" target="_blank" onclick="plausible('Outbound+Click')">itch.io</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* SCROLL REVEAL */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ORG NODE DETAILS */
+  const nodeData = [
+    '<strong>Owner / CEO.</strong> First conversation, always. What do they believe is broken, what have they tried, and what does winning look like to them specifically. The delta between their answer and the ground-level answer is where the real work starts.',
+    '<strong>Operations manager.</strong> How much of their time is genuine management versus IC work filling a gap because nobody else can or will? That ratio tells you whether the org is actually staffed for its workload or just appearing to be.',
+    '<strong>Sales and BD manager.</strong> The connective tissue between external demand and internal capacity. Gaps here produce the most visible cascade because client-facing errors are immediately felt. Check what they are absorbing that operations should own.',
+    '<strong>Gap zone.</strong> The most important node in any org. A responsibility that sits between two departments with no clear owner. Problems that originate here get blamed on whoever happened to touch them last. Finding and assigning this gap is usually the single highest-impact intervention.',
+    '<strong>High-leverage IC.</strong> The person whose output quality multiplies the people around them. Protecting their focus from administrative drag and cross-functional interruption is almost always the highest-ROI move available in the first 30 days.',
+    '<strong>Friction carrier.</strong> A capable person spending significant energy absorbing a broken process. They look inconsistent. They are not. Remove the bad process and their output changes immediately. Misreading this as a performance issue is a costly mistake.',
+    '<strong>Ghost resource.</strong> Capable, available, and pointed at the wrong work. Not a performance problem and not a headcount problem. A routing problem. Repointing them is fast and often has an outsized impact relative to the effort required.',
+    '<strong>Unofficial hub.</strong> The person everyone actually goes to when something breaks. Does not appear on the org chart at their real level of influence. Any change that does not account for them will stall regardless of how good the plan is. Find them early.'
+  ];
+
+  function selectNode(idx) {
+    document.querySelectorAll('.hnode').forEach(n => n.classList.remove('selected'));
+    document.querySelectorAll('.hnode')[idx].classList.add('selected');
+    const detail = document.getElementById('node-detail');
+    detail.innerHTML = nodeData[idx];
+    detail.style.borderColor = 'rgba(167,219,120,0.35)';
+  }
+</script>
+</body>
+</html>
