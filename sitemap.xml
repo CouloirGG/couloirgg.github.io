@@ -48,4 +48,12 @@
     <loc>https://couloir.gg/blog/game-dev-systems/</loc>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://couloir.gg/privacy/</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://couloir.gg/terms/</loc>
+    <priority>0.3</priority>
+  </url>
 </urlset>

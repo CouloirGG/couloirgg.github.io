@@ -614,12 +614,55 @@
     /* DIVIDER */
     .divider { border: none; border-top: 1px solid var(--border); }
 
+    /* CASE STUDIES */
+    .case-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem; margin-top: 2rem;
+    }
+    .case-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--lime);
+      border-radius: 8px; padding: 1.5rem;
+    }
+    .case-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--lime);
+      margin-bottom: 0.5rem;
+    }
+    .case-title {
+      font-size: 0.95rem; font-weight: 700;
+      color: rgba(255,255,255,0.9); margin-bottom: 0.5rem;
+    }
+    .case-body {
+      font-size: 0.82rem; color: var(--text-dim);
+      line-height: 1.7; font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .case-result {
+      background: var(--lime-faint);
+      border: 1px solid var(--border-lime);
+      border-radius: 6px; padding: 0.75rem 1rem;
+    }
+    .case-result-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--lime);
+      margin-bottom: 0.25rem;
+    }
+    .case-result-text {
+      font-size: 0.8rem; color: rgba(255,255,255,0.85);
+      line-height: 1.6; font-weight: 400;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 640px) {
       .chain-explainer { grid-template-columns: 1fr; }
       .cat-grid { grid-template-columns: 1fr; }
       .cred-grid { grid-template-columns: 1fr; }
       .cred-card.featured { grid-column: span 1; }
+      .case-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1115,6 +1158,58 @@
   </div>
 </section>
 
+<!-- CASE STUDIES -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <div class="section-label reveal">// case studies</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      What this looks like<br>in practice.
+    </h2>
+    <p class="section-body reveal reveal-delay-2">
+      Anonymized examples from real engagements. Different industries,
+      same shape of problem, same method of finding and fixing it.
+    </p>
+
+    <div class="case-grid">
+      <div class="case-card reveal reveal-delay-1">
+        <div class="case-eyebrow">40-person digital agency</div>
+        <div class="case-title">Handoff decay between sales and delivery</div>
+        <div class="case-body">
+          Sales closed deals via email, ops re-entered information manually,
+          and requirements dropped in transit. The result: scope creep, missed
+          deadlines, and mounting client frustration. The fix was automated
+          ticket generation from CRM at deal close, eliminating the manual
+          handoff entirely.
+        </div>
+        <div class="case-result">
+          <div class="case-result-label">Result</div>
+          <div class="case-result-text">
+            Handoff errors dropped ~70%. Average project kickoff cut from 5 days to 1.
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card reveal reveal-delay-2">
+        <div class="case-eyebrow">Series B SaaS company (~120 people)</div>
+        <div class="case-title">Tribal knowledge concentrated in 3 engineers</div>
+        <div class="case-body">
+          Critical context lived in Slack DMs and people's heads. Onboarding
+          took months. Every incident required the same 3 people. The fix was
+          structured knowledge capture integrated into existing workflows, plus
+          automated runbook generation from incident responses.
+        </div>
+        <div class="case-result">
+          <div class="case-result-label">Result</div>
+          <div class="case-result-text">
+            Mean onboarding time dropped from 12 weeks to 5. Incident resolution
+            without senior escalation went from ~15% to over 60%.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="section cta-section" id="contact">
   <div class="cta-inner">
@@ -1144,6 +1239,8 @@
       <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank" onclick="plausible('Outbound+Click')">YouTube</a>
       <a href="https://www.reddit.com/r/CouloirGG/" target="_blank" onclick="plausible('Outbound+Click')">Reddit</a>
       <a href="https://couloirgg.itch.io/" target="_blank" onclick="plausible('Outbound+Click')">itch.io</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
     </div>
   </div>
 </footer>
