@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building AI Tools People Actually Trust | CouloirGG</title>
+  <meta name="description" content="Most AI meeting tools record by default and bury the opt-out. Consent-first design costs market share but produces better data. Why AXIS runs locally and requires explicit consent.">
+  <meta property="og:title" content="Building AI Tools People Actually Trust">
+  <meta property="og:description" content="Consent-first design costs market share but produces better data. Why local-first is a trust decision.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://couloir.gg/blog/ai-trust/">
+  <meta property="og:site_name" content="CouloirGG">
+  <meta property="og:image" content="https://couloir.gg/assets/og/og-ai-trust.svg">
+  <meta property="article:published_time" content="2026-04-10T00:00:00Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CouloirGG">
+  <meta name="twitter:title" content="Building AI Tools People Actually Trust">
+  <meta name="twitter:description" content="Consent-first design costs market share but produces better data. Why local-first is a trust decision.">
+  <meta name="twitter:image" content="https://couloir.gg/assets/og/og-ai-trust.svg">
+  <link rel="canonical" href="https://couloir.gg/blog/ai-trust/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <script async src="https://plausible.io/js/pa-jsKuNwamSbECoYw-7tuuA.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Building AI Tools People Actually Trust",
+    "description": "Most AI meeting tools record by default and bury the opt-out. Consent-first design costs market share but produces better data.",
+    "url": "https://couloir.gg/blog/ai-trust/",
+    "datePublished": "2026-04-10",
+    "author": {
+      "@type": "Organization",
+      "name": "CouloirGG",
+      "url": "https://couloir.gg"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CouloirGG",
+      "url": "https://couloir.gg",
+      "logo": "https://couloir.gg/android-chrome-512x512.png"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://couloir.gg/blog/ai-trust/"
+    }
+  }
+  </script>
+  <style>
+    *, ::before, ::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --lime: #A7DB78;
+      --teal: #005770;
+      --bg-dark: #0a1a20;
+      --bg-card: #0c1e26;
+      --text-light: rgba(255,255,255,0.85);
+      --text-dim: rgba(255,255,255,0.5);
+      --text-faint: rgba(255,255,255,0.22);
+      --border: rgba(255,255,255,0.08);
+      --border-lime: rgba(167,219,120,0.18);
+      --blue: #4ac0ff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(10,26,32,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(167,219,120,0.1);
+    }
+    .nav-brand {
+      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.25); text-decoration: none;
+    }
+    .nav-brand span { color: var(--lime); }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-dim); text-decoration: none;
+      font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--lime); }
+    .nav-links a.active { color: var(--lime); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--text-dim); margin: 4px 0; transition: 0.3s; border-radius: 1px; }
+    @media (max-width: 640px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; background: rgba(10,26,32,0.97);
+        backdrop-filter: blur(20px); padding: 1.5rem 2rem; gap: 1.25rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ARTICLE */
+    .article {
+      max-width: 720px; margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--text-faint);
+      text-decoration: none; display: inline-block;
+      margin-bottom: 2rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--lime); }
+
+    .post-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px;
+      display: inline-block; margin-bottom: 1.25rem;
+      background: rgba(74,192,255,0.12); color: var(--blue);
+    }
+
+    .article h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 1rem;
+    }
+
+    .post-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem; color: var(--text-faint);
+      margin-bottom: 3rem;
+      display: flex; gap: 1rem;
+    }
+
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.9);
+      margin: 2.5rem 0 1rem;
+    }
+
+    .article-body p {
+      font-size: 1rem; color: var(--text-dim);
+      line-height: 1.85; font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-body blockquote {
+      border-left: 3px solid var(--lime);
+      padding: 0.75rem 1.25rem;
+      margin: 2rem 0;
+      background: rgba(167,219,120,0.03);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .article-body blockquote p {
+      margin-bottom: 0;
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+    }
+
+    .article-body ul, .article-body ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-body li {
+      font-size: 1rem; color: var(--text-dim);
+      line-height: 1.85; font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-body code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: rgba(255,255,255,0.06);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      color: var(--lime);
+    }
+
+    /* CTA BOX */
+    .cta-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-lime);
+      border-radius: 10px;
+      padding: 2rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+    .cta-box p {
+      font-size: 0.95rem; color: var(--text-dim);
+      line-height: 1.7; font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+    .cta-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--lime); text-decoration: none;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid rgba(167,219,120,0.25);
+      border-radius: 6px; display: inline-block;
+      transition: 0.2s;
+    }
+    .cta-link:hover {
+      background: rgba(167,219,120,0.08);
+      border-color: rgba(167,219,120,0.4);
+    }
+
+    .back-bottom {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--text-faint);
+      text-decoration: none; display: inline-block;
+      margin-top: 1rem; transition: color 0.2s;
+    }
+    .back-bottom:hover { color: var(--lime); }
+
+    /* FOOTER */
+    .site-footer { border-top: 1px solid var(--border); padding: 2rem; }
+    .footer-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand {
+      font-size: 0.8rem; font-weight: 700;
+      color: rgba(255,255,255,0.25); letter-spacing: -0.01em;
+    }
+    .footer-brand span { color: rgba(167,219,120,0.5); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 0.75rem; color: var(--text-faint);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-dim); }
+
+    @media (max-width: 640px) {
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="/" class="nav-brand">Couloir<span>GG</span></a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="/#services">Services</a>
+    <a href="/#tools">Tools</a>
+    <a href="/consulting">Consulting</a>
+    <a href="/blog" class="active">Blog</a>
+    <a href="/consulting#contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+  <article class="article">
+    <a href="/blog/" class="back-link">&larr; Back to blog</a>
+
+    <span class="post-tag">Product</span>
+    <h1>Building AI Tools People Actually Trust</h1>
+    <div class="post-meta">
+      <span>April 10, 2026</span>
+      <span>5 min read</span>
+    </div>
+
+    <div class="article-body">
+
+      <p>There is a moment in every meeting where someone says "just so everyone knows, the AI is recording." Watch what happens next. The room shifts. People measure their words differently. The candor drops by half. Conversations that would have been direct become diplomatic. The meeting still happens, but the version the AI captures is a sanitized copy of what people actually think.</p>
+
+      <p>This is the paradox at the heart of AI meeting tools: the act of recording changes what gets recorded. And most tools on the market have decided that is an acceptable trade-off.</p>
+
+      <h2>The consent problem</h2>
+
+      <p>Most AI meeting tools follow the same playbook. They record by default. Opt-out is buried in settings. The bot joins the call automatically, and participants are notified after the fact, if they are notified at all. The design assumption is that recording everything produces the most value, and consent is a friction point to be minimized.</p>
+
+      <p>From a pure data volume perspective, this is correct. You capture more audio. You generate more transcripts. You have more content to summarize.</p>
+
+      <p>From a trust perspective, it is catastrophic.</p>
+
+      <p>People are not irrational when they distrust these tools. They are making a perfectly reasonable calculation: "This system is capturing everything I say, I do not fully understand who has access to it, and I did not meaningfully consent to it. I will adjust my behavior accordingly."</p>
+
+      <p>The tool gets the meeting. It does not get the conversation.</p>
+
+      <h2>Local-first is a trust decision</h2>
+
+      <p>When we built AXIS, we made a decision early that shaped everything else: the tool runs locally. Audio stays on the user's machine. Processing happens on the user's hardware. Nothing leaves the device unless the user explicitly chooses to send it somewhere.</p>
+
+      <p>This was not a technical constraint. Cloud processing would have been easier to build and easier to scale. Local-first was a trust decision. We wanted users to be able to answer the question "where does my data go?" with complete certainty: "Nowhere. It stays right here."</p>
+
+      <p>The second decision was consent. AXIS does not record anything without explicit, per-session consent from every participant. Not a banner notification. Not a terms-of-service checkbox. A deliberate "yes, I want this session recorded" from each person in the room.</p>
+
+      <p>These two decisions together remove the entire class of trust objections that plague cloud-based, default-on recording tools. There is no ambiguity about data ownership. There is no question about who consented. The user has genuine control, not the appearance of control through settings menus.</p>
+
+      <h2>What consent-first design costs</h2>
+
+      <p>We should be honest about the trade-offs. Consent-first design is not free.</p>
+
+      <p>It costs market share. A tool that requires explicit consent from every participant will never capture as many meetings as a tool that records by default. Some meetings will not be recorded because one person declines. That is by design, but it means fewer total sessions processed.</p>
+
+      <p>It costs convenience. Asking for consent adds a step. Users have to initiate the process. Participants have to agree. There is a moment of friction that default-on tools skip entirely.</p>
+
+      <p>It costs development speed. Local-first architecture is harder to build, harder to debug, and harder to update than cloud-based processing. Every model update has to be distributed to end-user machines instead of deployed once to a server.</p>
+
+      <p>These are real costs. We chose to absorb them because the alternative (building another surveillance tool and calling it productivity software) was not something we were willing to ship.</p>
+
+      <h2>The signal quality paradox</h2>
+
+      <p>Here is what most people miss about consent-first design: it produces better data.</p>
+
+      <p>When people know they have genuinely consented to recording, and they know their data stays local, they speak more candidly. They say what they actually think instead of what they think is safe to have on record. The meeting that gets captured is the real meeting, not the performative version.</p>
+
+      <blockquote>
+        <p>Consent does not reduce the signal. It increases the signal quality by removing the noise that surveillance creates.</p>
+      </blockquote>
+
+      <p>A tool that captures 100% of meetings but only gets the sanitized version of each one is less valuable than a tool that captures 70% of meetings but gets the honest version. The decisions that matter, the disagreements that need to surface, the concerns that need to be heard: those only appear when people trust the system enough to be direct.</p>
+
+      <p>This is not an idealistic argument. It is a practical one. The entire value proposition of an AI meeting tool is extracting actionable intelligence from conversations. If the conversations are guarded, the intelligence is shallow. Consent is not a limitation on the product. It is a prerequisite for the product to work as intended.</p>
+
+    </div>
+
+    <div class="cta-box">
+      <p>AXIS Producer captures meetings with full participant consent and local-first processing. No cloud. No surveillance. Just signal.</p>
+      <a href="/axis" class="cta-link">Learn about AXIS</a>
+    </div>
+
+    <a href="/blog/" class="back-bottom">&larr; Back to blog</a>
+  </article>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Couloir<span>GG</span> LLC</div>
+    <div class="footer-links">
+      <a href="https://github.com/CouloirGG" target="_blank">GitHub</a>
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank">Discord</a>
+      <a href="https://x.com/CouloirGG" target="_blank">X</a>
+      <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank">Bluesky</a>
+      <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank">YouTube</a>
+      <a href="https://www.reddit.com/r/CouloirGG/" target="_blank">Reddit</a>
+      <a href="https://couloirgg.itch.io/" target="_blank">itch.io</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

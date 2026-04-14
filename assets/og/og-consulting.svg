@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a1a20"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#A7DB78"/>
+  <text x="60" y="64" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="#A7DB78">CouloirGG</text>
+  <text x="600" y="290" font-family="system-ui, sans-serif" font-size="48" font-weight="700" fill="#ffffff" text-anchor="middle">I find where things break.</text>
+  <text x="600" y="350" font-family="system-ui, sans-serif" font-size="48" font-weight="700" fill="#ffffff" text-anchor="middle">Then I fix them.</text>
+  <text x="600" y="410" font-family="system-ui, sans-serif" font-size="22" fill="#A7DB78" text-anchor="middle">couloir.gg/consulting</text>
+  <rect x="0" y="626" width="1200" height="4" fill="#A7DB78"/>
+</svg>

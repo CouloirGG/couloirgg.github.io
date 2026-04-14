@@ -1,0 +1,8 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0a1a20"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#A7DB78"/>
+  <text x="80" y="240" font-family="system-ui, sans-serif" font-size="22" font-weight="600" letter-spacing="4" fill="#A7DB78" text-transform="uppercase">// BLOG</text>
+  <text x="80" y="310" font-family="system-ui, sans-serif" font-size="64" font-weight="800" fill="rgba(255,255,255,0.92)" letter-spacing="-2">Thinking in systems.</text>
+  <text x="80" y="370" font-family="system-ui, sans-serif" font-size="24" font-weight="300" fill="rgba(255,255,255,0.5)">Consulting, product design, and career lessons from CouloirGG.</text>
+  <text x="80" y="560" font-family="monospace" font-size="18" font-weight="700" fill="rgba(255,255,255,0.25)">Couloir<tspan fill="rgba(167,219,120,0.5)">GG</tspan></text>
+</svg>

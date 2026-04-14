@@ -1,0 +1,10 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0a1a20"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#a78bfa"/>
+  <rect x="80" y="220" width="68" height="28" rx="4" fill="rgba(167,139,250,0.12)"/>
+  <text x="114" y="240" font-family="monospace" font-size="12" font-weight="600" fill="#a78bfa" text-anchor="middle" letter-spacing="1">CAREER</text>
+  <text x="80" y="310" font-family="system-ui, sans-serif" font-size="52" font-weight="800" fill="rgba(255,255,255,0.92)" letter-spacing="-2">What Game Dev Taught Me</text>
+  <text x="80" y="375" font-family="system-ui, sans-serif" font-size="52" font-weight="800" fill="rgba(255,255,255,0.92)" letter-spacing="-2">About Systems That Break</text>
+  <text x="80" y="430" font-family="system-ui, sans-serif" font-size="20" font-weight="300" fill="rgba(255,255,255,0.5)">Cascades, live-service thinking, and the people nobody listens to.</text>
+  <text x="80" y="560" font-family="monospace" font-size="18" font-weight="700" fill="rgba(255,255,255,0.25)">Couloir<tspan fill="rgba(167,219,120,0.5)">GG</tspan></text>
+</svg>
