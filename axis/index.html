@@ -739,6 +739,365 @@
     .cta-buttons { flex-direction: column; align-items: center; }
   }
 
+  /* Data-flow section (architecture animation) */
+  .df-anim { max-width: 760px; margin: 12px auto 0; }
+  .df-anim svg { width: 100%; height: auto; display: block; }
+  .df-zone-label {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 10px;
+    fill: #475569;
+    text-anchor: middle;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .df-chip-label {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 8.5px;
+    fill: #94a3b8;
+  }
+  /*
+   * 12s cycle:
+   *   0-1.5s    Capture: waveforms pulse, mic glows
+   *   1.5-2.5s  Packet 1 travels Capture -> Transcription
+   *   2-4s      Transcription: active path (cloud_byok) lights
+   *   4-5s      Packet 2 travels Transcription -> LLM
+   *   4.5-6.5s  LLM extraction: active provider lights, prompt scans
+   *   6.5-7.5s  Packet 3 travels LLM -> Gate
+   *   7-9s      Gate signals fire, score climbs to threshold
+   *   9-10s     Split: two packets travel to Personal + Team
+   *   9.5-12s   Outcomes: feeds light up
+   */
+  .df-wave {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transform: scaleY(0.3);
+    animation: df-wave-bounce 12s ease-in-out infinite;
+  }
+  .df-wave:nth-child(1) { animation-delay: 0s; }
+  .df-wave:nth-child(2) { animation-delay: 0.1s; }
+  .df-wave:nth-child(3) { animation-delay: 0.2s; }
+  .df-wave:nth-child(4) { animation-delay: 0.3s; }
+  .df-wave:nth-child(5) { animation-delay: 0.4s; }
+  @keyframes df-wave-bounce {
+    0%, 13% { transform: scaleY(0.3); }
+    4% { transform: scaleY(1); }
+    7% { transform: scaleY(0.5); }
+    10% { transform: scaleY(0.85); }
+    16%, 100% { transform: scaleY(0.3); }
+  }
+  .df-mic-glow {
+    opacity: 0.1;
+    animation: df-mic-pulse 12s ease-in-out infinite;
+  }
+  @keyframes df-mic-pulse {
+    0%, 1% { opacity: 0.1; }
+    6% { opacity: 0.7; }
+    13% { opacity: 0.5; }
+    16%, 100% { opacity: 0.1; }
+  }
+  .df-tier-pill {
+    opacity: 0.18;
+    animation: df-tier-glow 12s ease-in-out infinite;
+  }
+  @keyframes df-tier-glow {
+    0%, 4% { opacity: 0.18; }
+    9% { opacity: 0.85; }
+    32% { opacity: 0.6; }
+    38%, 100% { opacity: 0.18; }
+  }
+  /* Transcription paths: persistent dim, active route brightens */
+  .df-stt-path {
+    opacity: 0.12;
+  }
+  .df-stt-active {
+    animation: df-stt-active 12s ease-in-out infinite;
+  }
+  @keyframes df-stt-active {
+    0%, 16% { opacity: 0.12; }
+    21% { opacity: 0.85; }
+    32% { opacity: 0.7; }
+    36%, 100% { opacity: 0.12; }
+  }
+  .df-stt-label {
+    opacity: 0.35;
+    animation: df-stt-label 12s ease-in-out infinite;
+  }
+  @keyframes df-stt-label {
+    0%, 16% { opacity: 0.35; }
+    21% { opacity: 1; }
+    32% { opacity: 0.8; }
+    36%, 100% { opacity: 0.35; }
+  }
+  /* LLM provider chips: persistent dim, one (Anthropic) lights up */
+  .df-llm-chip {
+    opacity: 0.22;
+  }
+  .df-llm-chip-active {
+    animation: df-llm-active 12s ease-in-out infinite;
+  }
+  @keyframes df-llm-active {
+    0%, 36% { opacity: 0.22; }
+    41% { opacity: 1; }
+    52% { opacity: 0.8; }
+    56%, 100% { opacity: 0.22; }
+  }
+  .df-llm-scan {
+    opacity: 0;
+    animation: df-llm-scan 12s ease-in-out infinite;
+  }
+  @keyframes df-llm-scan {
+    0%, 38% { opacity: 0; transform: translateX(0); }
+    44% { opacity: 0.7; transform: translateX(0); }
+    52% { opacity: 0.5; transform: translateX(110px); }
+    56%, 100% { opacity: 0; transform: translateX(110px); }
+  }
+  /* Gate signals fire one by one, score badge reaches 3 */
+  .df-signal {
+    opacity: 0.18;
+    animation: df-signal 12s ease-in-out infinite;
+  }
+  .df-signal-1 { animation-delay: 0s; }
+  .df-signal-2 { animation-delay: 0.4s; }
+  .df-signal-3 { animation-delay: 0.8s; }
+  @keyframes df-signal {
+    0%, 58% { opacity: 0.18; }
+    62% { opacity: 1; }
+    73% { opacity: 0.7; }
+    78%, 100% { opacity: 0.18; }
+  }
+  .df-gate-meter {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: df-meter 12s ease-in-out infinite;
+  }
+  @keyframes df-meter {
+    0%, 58% { transform: scaleX(0); }
+    66% { transform: scaleX(0.33); }
+    72% { transform: scaleX(0.66); }
+    78% { transform: scaleX(1); }
+    82%, 100% { transform: scaleX(1); }
+    100% { transform: scaleX(0); }
+  }
+  .df-gate-glow {
+    opacity: 0.15;
+    animation: df-gate-glow 12s ease-in-out infinite;
+  }
+  @keyframes df-gate-glow {
+    0%, 60% { opacity: 0.15; }
+    74% { opacity: 0.7; }
+    80% { opacity: 0.5; }
+    85%, 100% { opacity: 0.15; }
+  }
+  /* Outcome panels light up at the end */
+  .df-outcome {
+    opacity: 0.22;
+    animation: df-outcome 12s ease-in-out infinite;
+  }
+  .df-outcome-personal { animation-delay: 0s; }
+  .df-outcome-team { animation-delay: 0.3s; }
+  @keyframes df-outcome {
+    0%, 75% { opacity: 0.22; }
+    82% { opacity: 1; }
+    95% { opacity: 0.85; }
+    98%, 100% { opacity: 0.22; }
+  }
+  .df-outcome-team-glow {
+    opacity: 0;
+    animation: df-team-glow 12s ease-in-out infinite;
+  }
+  @keyframes df-team-glow {
+    0%, 78% { opacity: 0; }
+    85% { opacity: 0.6; }
+    93% { opacity: 0.4; }
+    98%, 100% { opacity: 0; }
+  }
+  /* Packets travel between zones */
+  .df-packet { opacity: 0; }
+  .df-packet-1 { animation: df-pkt1 12s ease-in-out infinite; }
+  @keyframes df-pkt1 {
+    0%, 12% { opacity: 0; transform: translateX(0); }
+    14% { opacity: 1; transform: translateX(0); }
+    20% { opacity: 1; transform: translateX(22px); }
+    22% { opacity: 0; transform: translateX(22px); }
+    100% { opacity: 0; }
+  }
+  .df-packet-2 { animation: df-pkt2 12s ease-in-out infinite; }
+  @keyframes df-pkt2 {
+    0%, 32% { opacity: 0; transform: translateX(0); }
+    34% { opacity: 1; transform: translateX(0); }
+    40% { opacity: 1; transform: translateX(22px); }
+    42% { opacity: 0; transform: translateX(22px); }
+    100% { opacity: 0; }
+  }
+  /* Team output: travels diagonally from gate to team panel */
+  .df-packet-team {
+    animation: df-pkt-team 12s ease-in-out infinite;
+  }
+  @keyframes df-pkt-team {
+    0%, 78% { opacity: 0; transform: translate(0, 0); }
+    80% { opacity: 1; transform: translate(0, 0); }
+    87% { opacity: 1; transform: translate(105px, 40px); }
+    90% { opacity: 0; transform: translate(105px, 40px); }
+    100% { opacity: 0; }
+  }
+  /* Snake-connector flow line: dashes scroll toward gate */
+  .sc-pulse-line {
+    stroke-dasharray: 6, 8;
+    animation: sc-dash 1.4s linear infinite;
+  }
+  /* (sc-dash keyframes already defined above for the existing scene) */
+  .df-team-flow {
+    stroke-dasharray: 4, 4;
+    animation: df-team-dash 1.6s linear infinite;
+  }
+  @keyframes df-team-dash {
+    to { stroke-dashoffset: -16; }
+  }
+  /* Architecture detail flyout (full-viewport modal) */
+  .df-flyout-wrap { text-align: center; margin-top: 18px; }
+  .df-flyout-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(74, 192, 255, 0.3);
+    background: rgba(74, 192, 255, 0.06);
+    color: #4ac0ff;
+    font-size: 0.82rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .df-flyout-trigger:hover {
+    background: rgba(74, 192, 255, 0.12);
+    border-color: rgba(74, 192, 255, 0.55);
+  }
+  .df-flyout-trigger svg { width: 12px; height: 12px; }
+  .df-flyout {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(5, 9, 18, 0.95);
+    backdrop-filter: blur(14px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    overflow-y: auto;
+    padding: 24px;
+  }
+  .df-flyout.active { opacity: 1; visibility: visible; }
+  .df-flyout-card {
+    background: #0f1623;
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 880px;
+    width: 100%;
+    margin: auto;
+    color: #c8d0e0;
+  }
+  .df-flyout-card h3 {
+    font-size: 1.3rem;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+  }
+  .df-flyout-card .df-flyout-sub {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+  .df-er-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 18px 0 24px;
+  }
+  .df-er-card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .df-er-card h4 {
+    color: #4ac0ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .df-er-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .df-er-card li {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    padding: 3px 0;
+    border-bottom: 1px dashed rgba(30, 41, 59, 0.7);
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+  }
+  .df-er-card li:last-child { border-bottom: none; }
+  .df-er-card li .df-pk { color: #4ac0ff; font-weight: 600; }
+  .df-er-card li .df-fk { color: #34d399; }
+  .df-er-card li .df-note { color: #64748b; font-size: 0.7rem; font-family: 'Outfit', sans-serif; }
+  .df-rules {
+    background: rgba(74, 192, 255, 0.04);
+    border: 1px solid rgba(74, 192, 255, 0.15);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 8px;
+  }
+  .df-rules h4 {
+    color: #4ac0ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+  .df-rules ul { padding-left: 18px; }
+  .df-rules li {
+    color: #c8d0e0;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+  .df-rules li code {
+    background: rgba(74, 192, 255, 0.08);
+    color: #4ac0ff;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+  }
+  .df-flyout-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    color: #e2e8f0;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 1001;
+  }
+  .df-flyout-close:hover { background: rgba(255,255,255,0.18); }
+  @media (max-width: 640px) {
+    .df-er-grid { grid-template-columns: 1fr; }
+    .df-flyout-card { padding: 24px 18px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ss-card {
       opacity: 1;
@@ -748,6 +1107,21 @@
     .ss-card:hover { transform: none; }
     .ss-card::after { display: none; }
     .lb-overlay { transition: none; }
+    /* Data-flow animation: static fallback */
+    .df-wave { animation: none !important; transform: scaleY(0.6); }
+    .df-mic-glow { animation: none !important; opacity: 0.4; }
+    .df-tier-pill { animation: none !important; opacity: 0.6; }
+    .df-stt-active { animation: none !important; opacity: 0.5; }
+    .df-stt-label { animation: none !important; opacity: 0.7; }
+    .df-llm-chip-active { animation: none !important; opacity: 0.6; }
+    .df-llm-scan { animation: none !important; opacity: 0; }
+    .df-signal { animation: none !important; opacity: 0.5; }
+    .df-gate-meter { animation: none !important; transform: scaleX(0.7); }
+    .df-gate-glow { animation: none !important; opacity: 0.3; }
+    .df-outcome { animation: none !important; opacity: 0.7; }
+    .df-outcome-team-glow { animation: none !important; opacity: 0; }
+    .df-packet { animation: none !important; opacity: 0; }
+    .df-flyout { transition: none; }
     /* Workflow animation: static fallback */
     .wf-wave { animation: none !important; opacity: 0.25; }
     .wf-text-in { animation: none !important; opacity: 0.5; }
@@ -1343,6 +1717,65 @@
     <div class="lb-counter" id="lb-counter"></div>
   </div>
 
+  <!-- Architecture detail flyout -->
+  <div class="df-flyout" id="df-flyout" role="dialog" aria-modal="true" aria-labelledby="df-flyout-title">
+    <button class="df-flyout-close" aria-label="Close" id="df-flyout-close">&times;</button>
+    <div class="df-flyout-card">
+      <h3 id="df-flyout-title">The Schema Behind the Flow</h3>
+      <p class="df-flyout-sub">Three tables do the heavy lifting. Workspace tools drive the gate score; consent timestamps gate every write; visibility decides who sees what.</p>
+
+      <div class="df-er-grid">
+        <div class="df-er-card">
+          <h4>users</h4>
+          <ul>
+            <li><span class="df-pk">id</span> <span class="df-note">uuid PK</span></li>
+            <li>email <span class="df-note">unique</span></li>
+            <li>tier <span class="df-note">solo_free | solo_pro | team_*</span></li>
+            <li>transcription_mode</li>
+            <li>recording_consent_acknowledged_at <span class="df-note">migration 028</span></li>
+            <li>solo_mode</li>
+            <li>is_platform_admin <span class="df-note">NOT NULL, migration 030</span></li>
+          </ul>
+        </div>
+        <div class="df-er-card">
+          <h4>teams</h4>
+          <ul>
+            <li><span class="df-pk">id</span> <span class="df-note">uuid PK</span></li>
+            <li><span class="df-fk">owner_id</span> <span class="df-note">FK users</span></li>
+            <li>workspace_type</li>
+            <li>workspace_tools <span class="df-note">jsonb, drives gate</span></li>
+            <li>workspace_context</li>
+            <li>monthly_audio_minutes_quota</li>
+          </ul>
+        </div>
+        <div class="df-er-card">
+          <h4>events</h4>
+          <ul>
+            <li><span class="df-pk">id</span> <span class="df-note">bigint PK</span></li>
+            <li><span class="df-fk">team_id</span> <span class="df-note">FK teams</span></li>
+            <li>event_type <span class="df-note">session_batch, chat, ...</span></li>
+            <li>visibility <span class="df-note">personal | team</span></li>
+            <li>raw <span class="df-note">jsonb: transcript, mode, intent</span></li>
+            <li>search_text <span class="df-note">generated, gin trgm</span></li>
+            <li>status, ts, session_id</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="df-rules">
+        <h4>Gate Logic</h4>
+        <ul>
+          <li>Gate evaluates only when <code>event_type == 'session_batch'</code> AND <code>raw.mode == 'active'</code>.</li>
+          <li>Score = +1 active calendar meeting, +1 non-empty active-window dwell, +2 dominant process matches <code>team.workspace_tools</code>.</li>
+          <li>If score &gt;= 3, <code>visibility</code> flips to <code>'team'</code> and <code>raw._gate</code> is stamped with the decision.</li>
+          <li>Hard veto: <code>raw.user_intent == 'personal'</code> keeps the row personal regardless of score.</li>
+          <li>Out-of-gate event types (voice_trigger, chat, voice_chat) skip the gate entirely. They keep the visibility the client set, which defaults to personal.</li>
+          <li>Server-side <code>recording_consent_acknowledged_at</code> on <code>users</code> gates every <code>POST /events</code>. No timestamp, no write.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <!-- CTA -->
   <div class="cta-section">
     <h3>Get AXIS Producer</h3>
@@ -1386,6 +1819,278 @@
         <h3>Multi-Source</h3>
         <p>Captures from voice, Claude Code, clipboard, Git, Slack, email, and calendar, all in one timeline.</p>
       </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How AXIS Routes Your Data</h2>
+    <p>Every captured moment travels the same path: local capture, your chosen transcription mode, your chosen LLM, then a server-side gate that decides whether it stays personal or reaches your team. Nothing leaves your machine without a tier-locked route and an explicit consent timestamp.</p>
+    <div class="df-anim">
+      <svg viewBox="0 0 800 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Data flow: capture and transcription, LLM extraction, promotion gate, personal or team feed">
+        <defs>
+          <filter id="df-glow">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="df-glow-strong">
+            <feGaussianBlur stdDeviation="4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="df-scan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4ac0ff" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#4ac0ff" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#4ac0ff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- ============================================================
+             ROW 1 (y: 16-200) — LTR: Capture > Transcription > LLM
+             ============================================================ -->
+
+        <!-- Zone 1: CAPTURE (x: 16-260) -->
+        <g transform="translate(16,16)">
+          <text x="122" y="14" class="df-zone-label">1 . Capture</text>
+          <rect x="0" y="22" width="244" height="158" rx="10" fill="#0f1623" stroke="#1e293b" stroke-width="1"/>
+
+          <!-- Desktop -->
+          <g transform="translate(40,40)">
+            <rect x="0" y="0" width="56" height="38" rx="4" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity="0.6"/>
+            <line x1="0" y1="32" x2="56" y2="32" stroke="#94a3b8" stroke-width="1" opacity="0.5"/>
+            <rect x="-8" y="38" width="72" height="2.5" rx="1" fill="#94a3b8" opacity="0.4"/>
+            <circle cx="28" cy="17" r="6" fill="#4ac0ff" class="df-mic-glow" filter="url(#df-glow)"/>
+          </g>
+          <text x="68" y="100" text-anchor="middle" fill="#475569" font-size="9.5" font-family="'Outfit',sans-serif">desktop</text>
+
+          <!-- Mobile -->
+          <g transform="translate(150,42)">
+            <rect x="0" y="0" width="28" height="40" rx="4" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity="0.6"/>
+            <line x1="3" y1="7" x2="25" y2="7" stroke="#94a3b8" stroke-width="0.6" opacity="0.4"/>
+            <circle cx="14" cy="36" r="1.6" fill="#94a3b8" opacity="0.5"/>
+            <circle cx="14" cy="22" r="4" fill="#4ac0ff" class="df-mic-glow" filter="url(#df-glow)" style="animation-delay:0.2s"/>
+          </g>
+          <text x="164" y="100" text-anchor="middle" fill="#475569" font-size="9.5" font-family="'Outfit',sans-serif">mobile</text>
+
+          <!-- Waveform -->
+          <g transform="translate(60,128)">
+            <rect x="0"   y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="14"  y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="28"  y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="42"  y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="56"  y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="70"  y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="84"  y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="98"  y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+            <rect x="112" y="-13" width="7" height="26" rx="1.5" fill="#4ac0ff" class="df-wave"/>
+          </g>
+
+          <!-- Consent gate badge -->
+          <g transform="translate(67,158)">
+            <rect x="0" y="0" width="110" height="18" rx="9" fill="rgba(52,211,153,0.06)" stroke="#34d399" stroke-width="0.8" opacity="0.7"/>
+            <circle cx="12" cy="9" r="2.7" fill="none" stroke="#34d399" stroke-width="0.9"/>
+            <path d="M10.3,9 L11.5,10.3 L13.7,7.7" fill="none" stroke="#34d399" stroke-width="1" stroke-linecap="round"/>
+            <text x="63" y="12.5" text-anchor="middle" fill="#34d399" font-size="9" font-family="'Outfit',sans-serif" font-weight="500">consent acknowledged</text>
+          </g>
+        </g>
+
+        <!-- Connector 1->2 -->
+        <line x1="262" y1="115" x2="278" y2="115" stroke="#4ac0ff" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.45"/>
+        <polygon points="278,112 284,115 278,118" fill="#4ac0ff" opacity="0.5"/>
+        <circle class="df-packet df-packet-1" cx="262" cy="115" r="3.5" fill="#4ac0ff" filter="url(#df-glow-strong)"/>
+
+        <!-- Zone 2: TRANSCRIPTION (x: 286-526) -->
+        <g transform="translate(286,16)">
+          <text x="120" y="14" class="df-zone-label">2 . Transcribe</text>
+          <rect x="0" y="22" width="240" height="158" rx="10" fill="#0f1623" stroke="#1e293b" stroke-width="1"/>
+
+          <!-- local_auto -->
+          <g transform="translate(14,38)">
+            <rect x="0" y="0" width="212" height="36" rx="6" fill="none" stroke="#1e293b" stroke-width="0.8" class="df-stt-path"/>
+            <circle cx="16" cy="18" r="7" fill="none" stroke="#94a3b8" stroke-width="0.9" opacity="0.4"/>
+            <path d="M12.5,18 L15.5,21 L20,15" fill="none" stroke="#94a3b8" stroke-width="0.8" opacity="0.4"/>
+            <text x="32" y="15" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif" font-weight="500">local_auto</text>
+            <text x="32" y="27" fill="#475569" font-size="8.5" font-family="'Outfit',sans-serif">faster-whisper, on-device</text>
+          </g>
+
+          <!-- cloud_shared -->
+          <g transform="translate(14,82)">
+            <rect x="0" y="0" width="212" height="36" rx="6" fill="none" stroke="#1e293b" stroke-width="0.8" class="df-stt-path"/>
+            <path d="M6,22 C6,16 12,12 18,12 C22,10 28,12 30,16 C34,16 36,20 36,22 C36,26 32,28 28,28 L10,28 C7,28 4,26 6,22Z" fill="none" stroke="#94a3b8" stroke-width="0.9" opacity="0.4"/>
+            <text x="32" y="15" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif" font-weight="500">cloud_shared</text>
+            <text x="32" y="27" fill="#475569" font-size="8.5" font-family="'Outfit',sans-serif">Groq via AXIS proxy</text>
+          </g>
+
+          <!-- cloud_byok (active for Solo Pro) -->
+          <g transform="translate(14,126)">
+            <rect x="0" y="0" width="212" height="36" rx="6" fill="rgba(74,192,255,0.06)" stroke="#4ac0ff" stroke-width="0.9" class="df-stt-active"/>
+            <path d="M6,22 C6,16 12,12 18,12 C22,10 28,12 30,16 C34,16 36,20 36,22 C36,26 32,28 28,28 L10,28 C7,28 4,26 6,22Z" fill="none" stroke="#4ac0ff" stroke-width="1" class="df-stt-label"/>
+            <circle cx="20" cy="22" r="1.7" fill="#4ac0ff" class="df-stt-label"/>
+            <text x="32" y="15" fill="#4ac0ff" font-size="10" font-family="'Outfit',sans-serif" font-weight="600" class="df-stt-label">cloud_byok</text>
+            <text x="32" y="27" fill="#94a3b8" font-size="8.5" font-family="'Outfit',sans-serif" class="df-stt-label">direct to Groq with your key</text>
+          </g>
+        </g>
+
+        <!-- Connector 2->3 -->
+        <line x1="528" y1="115" x2="544" y2="115" stroke="#4ac0ff" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.45"/>
+        <polygon points="544,112 550,115 544,118" fill="#4ac0ff" opacity="0.5"/>
+        <circle class="df-packet df-packet-2" cx="528" cy="115" r="3.5" fill="#4ac0ff" filter="url(#df-glow-strong)"/>
+
+        <!-- Zone 3: LLM EXTRACTION (x: 552-784) -->
+        <g transform="translate(552,16)">
+          <text x="116" y="14" class="df-zone-label">3 . Extract</text>
+          <rect x="0" y="22" width="232" height="158" rx="10" fill="#0f1623" stroke="#1e293b" stroke-width="1"/>
+          <text x="116" y="40" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'Outfit',sans-serif" letter-spacing="0.05em">YOUR LLM, YOUR KEY</text>
+
+          <!-- Anthropic (active row) -->
+          <g transform="translate(14,50)" class="df-llm-chip-active">
+            <rect x="0" y="0" width="204" height="22" rx="5" fill="rgba(74,192,255,0.08)" stroke="#4ac0ff" stroke-width="0.9"/>
+            <rect x="6" y="5" width="12" height="12" rx="2" fill="#d97757"/>
+            <text x="12" y="14" text-anchor="middle" fill="#0a0f1a" font-size="9.5" font-family="'Outfit',sans-serif" font-weight="700">A</text>
+            <text x="24" y="14.5" fill="#e2e8f0" font-size="9" font-family="'Outfit',sans-serif" font-weight="600">Anthropic</text>
+            <text x="84" y="14.5" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif">Sonnet 4 + Haiku 4.5</text>
+          </g>
+          <!-- Scan line -->
+          <rect x="14" y="50" width="14" height="22" fill="url(#df-scan-grad)" class="df-llm-scan"/>
+
+          <!-- Other providers in a 2x2 grid -->
+          <g transform="translate(14,82)">
+            <!-- Groq -->
+            <g class="df-llm-chip">
+              <rect x="0" y="0" width="98" height="20" rx="4" fill="none" stroke="#1e293b" stroke-width="0.8"/>
+              <circle cx="11" cy="10" r="5" fill="#f55036"/>
+              <text x="22" y="13.5" fill="#94a3b8" font-size="8.5" font-family="'Outfit',sans-serif">Groq</text>
+            </g>
+            <!-- Gemini -->
+            <g transform="translate(106,0)" class="df-llm-chip">
+              <rect x="0" y="0" width="98" height="20" rx="4" fill="none" stroke="#1e293b" stroke-width="0.8"/>
+              <path d="M11,3 L12.5,8 L17,9.5 L12.5,11 L11,16 L9.5,11 L5,9.5 L9.5,8Z" fill="#4285f4"/>
+              <text x="22" y="13.5" fill="#94a3b8" font-size="8.5" font-family="'Outfit',sans-serif">Gemini</text>
+            </g>
+            <!-- OpenAI -->
+            <g transform="translate(0,26)" class="df-llm-chip">
+              <rect x="0" y="0" width="98" height="20" rx="4" fill="none" stroke="#1e293b" stroke-width="0.8"/>
+              <circle cx="11" cy="10" r="5.5" fill="none" stroke="#10a37f" stroke-width="1.4"/>
+              <text x="22" y="13.5" fill="#94a3b8" font-size="8.5" font-family="'Outfit',sans-serif">OpenAI</text>
+            </g>
+            <!-- Ollama (local) -->
+            <g transform="translate(106,26)" class="df-llm-chip">
+              <rect x="0" y="0" width="98" height="20" rx="4" fill="none" stroke="#1e293b" stroke-width="0.8"/>
+              <ellipse cx="11" cy="10" rx="5.5" ry="4.5" fill="none" stroke="#a78bfa" stroke-width="1"/>
+              <circle cx="9" cy="9" r="0.8" fill="#a78bfa"/>
+              <circle cx="13" cy="9" r="0.8" fill="#a78bfa"/>
+              <text x="22" y="13.5" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif">Ollama (local)</text>
+            </g>
+          </g>
+
+          <text x="116" y="158" text-anchor="middle" fill="#475569" font-size="8" font-family="'SF Mono',Menlo,Consolas,monospace">SYSTEM_PROMPT_JSON_SLIM</text>
+          <text x="116" y="170" text-anchor="middle" fill="#64748b" font-size="8" font-family="'Outfit',sans-serif">actions . decisions . blockers</text>
+        </g>
+
+        <!-- ============================================================
+             SNAKE CONNECTOR — curves from row 1 (LLM, right) DOWN AND LEFT
+             to row 2 (Gate, center). Animated stroke flow.
+             ============================================================ -->
+        <path d="M 668 200 C 668 230, 400 218, 400 252" fill="none" stroke="#4ac0ff" stroke-width="1.2" stroke-dasharray="6,8" opacity="0.45" class="sc-pulse-line"/>
+        <polygon points="397,247 400,255 403,247" fill="#4ac0ff" opacity="0.6"/>
+
+        <!-- ============================================================
+             ROW 2 (y: 240-380) — centered: Promotion Gate
+             ============================================================ -->
+        <g transform="translate(100,260)">
+          <text x="300" y="-2" class="df-zone-label" text-anchor="middle">4 . Decide who sees it</text>
+          <rect x="0" y="6" width="600" height="124" rx="12" fill="#0f1623" stroke="#1e293b" stroke-width="1"/>
+
+          <!-- Diamond filter (centered, 200x80) -->
+          <g transform="translate(200,18)">
+            <polygon points="100,4 196,52 100,100 4,52" fill="rgba(74,192,255,0.05)" stroke="#4ac0ff" stroke-width="1.2" class="df-gate-glow"/>
+            <text x="100" y="48" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="'SF Mono',Menlo,monospace">event_type ==</text>
+            <text x="100" y="62" text-anchor="middle" fill="#4ac0ff" font-size="9" font-family="'SF Mono',Menlo,monospace" font-weight="600">'session_batch'</text>
+            <text x="100" y="78" text-anchor="middle" fill="#64748b" font-size="8" font-family="'SF Mono',Menlo,monospace">AND mode == 'active'</text>
+          </g>
+
+          <!-- Signals on left -->
+          <text x="80" y="36" text-anchor="middle" class="df-zone-label">Signals</text>
+          <g transform="translate(28,46)" class="df-signal df-signal-1">
+            <rect x="0" y="0" width="104" height="20" rx="10" fill="rgba(52,211,153,0.1)" stroke="#34d399" stroke-width="0.8"/>
+            <text x="14" y="14" text-anchor="middle" fill="#34d399" font-size="10" font-family="'Outfit',sans-serif" font-weight="700">+1</text>
+            <text x="58" y="13.5" text-anchor="middle" fill="#34d399" font-size="9" font-family="'Outfit',sans-serif">calendar meeting</text>
+          </g>
+          <g transform="translate(28,72)" class="df-signal df-signal-2">
+            <rect x="0" y="0" width="104" height="20" rx="10" fill="rgba(52,211,153,0.1)" stroke="#34d399" stroke-width="0.8"/>
+            <text x="14" y="14" text-anchor="middle" fill="#34d399" font-size="10" font-family="'Outfit',sans-serif" font-weight="700">+1</text>
+            <text x="62" y="13.5" text-anchor="middle" fill="#34d399" font-size="9" font-family="'Outfit',sans-serif">window dwell</text>
+          </g>
+          <g transform="translate(28,98)" class="df-signal df-signal-3">
+            <rect x="0" y="0" width="104" height="20" rx="10" fill="rgba(74,192,255,0.14)" stroke="#4ac0ff" stroke-width="0.8"/>
+            <text x="14" y="14" text-anchor="middle" fill="#4ac0ff" font-size="10" font-family="'Outfit',sans-serif" font-weight="700">+2</text>
+            <text x="62" y="13.5" text-anchor="middle" fill="#4ac0ff" font-size="9" font-family="'Outfit',sans-serif">tools match</text>
+          </g>
+
+          <!-- Threshold meter on right -->
+          <text x="520" y="36" text-anchor="middle" class="df-zone-label">Score</text>
+          <g transform="translate(460,52)">
+            <rect x="0" y="0" width="120" height="10" rx="5" fill="#1e293b"/>
+            <rect x="0" y="0" width="120" height="10" rx="5" fill="#4ac0ff" class="df-gate-meter"/>
+            <text x="60" y="-4" text-anchor="middle" fill="#64748b" font-size="8.5" font-family="'Outfit',sans-serif">threshold &gt;= 3</text>
+          </g>
+          <text x="520" y="86" text-anchor="middle" fill="#64748b" font-size="8.5" font-family="'Outfit',sans-serif">User intent veto</text>
+          <text x="520" y="98" text-anchor="middle" fill="#475569" font-size="7.5" font-family="'Outfit',sans-serif">overrides any score</text>
+        </g>
+
+        <!-- ============================================================
+             SNAKE CONNECTORS — gate splits to PERSONAL (left) + TEAM (right)
+             ============================================================ -->
+        <!-- To Personal (down-left) -->
+        <path d="M 280 390 C 280 410, 175 412, 175 432" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4" opacity="0.35"/>
+        <polygon points="172,427 175,435 178,427" fill="#94a3b8" opacity="0.45"/>
+        <!-- To Team (down-right) -->
+        <path d="M 520 390 C 520 410, 625 412, 625 432" fill="none" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.45" class="df-team-flow"/>
+        <polygon points="622,427 625,435 628,427" fill="#34d399" opacity="0.6"/>
+        <circle class="df-packet df-packet-team" cx="520" cy="395" r="3.5" fill="#34d399" filter="url(#df-glow-strong)"/>
+
+        <!-- ============================================================
+             ROW 3 (y: 432-540) — outcomes: Personal | Team
+             ============================================================ -->
+
+        <!-- Personal (left) -->
+        <g transform="translate(20,432)" class="df-outcome df-outcome-personal">
+          <text x="155" y="-2" class="df-zone-label" text-anchor="middle">5a . Stays Personal</text>
+          <rect x="0" y="6" width="310" height="100" rx="10" fill="#0f1623" stroke="#1e293b" stroke-width="1"/>
+          <!-- Lock icon -->
+          <g transform="translate(20,28)">
+            <rect x="2" y="8" width="22" height="18" rx="3" fill="none" stroke="#94a3b8" stroke-width="1.4"/>
+            <path d="M7,8 L7,5 C7,1.5 9.5,-1 13,-1 C16.5,-1 19,1.5 19,5 L19,8" fill="none" stroke="#94a3b8" stroke-width="1.4"/>
+            <circle cx="13" cy="17" r="2" fill="#94a3b8"/>
+          </g>
+          <text x="64" y="44" fill="#c8d0e0" font-size="14" font-family="'Outfit',sans-serif" font-weight="600">Personal</text>
+          <line x1="20" y1="62" x2="290" y2="62" stroke="#1e293b" stroke-width="0.6"/>
+          <text x="20" y="80" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif">visibility = 'personal' (default)</text>
+          <text x="20" y="94" fill="#64748b" font-size="9" font-family="'Outfit',sans-serif">Score &lt; 3, or you said so. Only you see it.</text>
+        </g>
+
+        <!-- Team (right) — animates / lights up -->
+        <g transform="translate(470,432)" class="df-outcome df-outcome-team">
+          <text x="155" y="-2" class="df-zone-label" text-anchor="middle">5b . Auto-Promoted to Team</text>
+          <rect x="0" y="6" width="310" height="100" rx="10" fill="rgba(52,211,153,0.06)" stroke="#34d399" stroke-width="1.4"/>
+          <rect x="0" y="6" width="310" height="100" rx="10" fill="rgba(52,211,153,0.08)" class="df-outcome-team-glow" filter="url(#df-glow-strong)"/>
+          <!-- People icon -->
+          <g transform="translate(20,30)">
+            <circle cx="9" cy="6" r="4.5" fill="#34d399"/>
+            <path d="M0,22 C0,15 4,12 9,12 C14,12 18,15 18,22 Z" fill="#34d399"/>
+            <circle cx="22" cy="8" r="3.6" fill="#34d399" opacity="0.7"/>
+            <path d="M14,22 C14,17 17,14 22,14 C27,14 30,17 30,22 Z" fill="#34d399" opacity="0.7"/>
+          </g>
+          <text x="68" y="44" fill="#34d399" font-size="14" font-family="'Outfit',sans-serif" font-weight="600">Team Feed</text>
+          <line x1="20" y1="62" x2="290" y2="62" stroke="rgba(52,211,153,0.2)" stroke-width="0.6"/>
+          <text x="20" y="80" fill="#94a3b8" font-size="10" font-family="'Outfit',sans-serif">visibility = 'team' (auto-promoted)</text>
+          <text x="20" y="94" fill="#64748b" font-size="9" font-family="'Outfit',sans-serif">Score &gt;= 3. Stamped with raw._gate trail.</text>
+        </g>
+      </svg>
+    </div>
+    <div class="df-flyout-wrap">
+      <button class="df-flyout-trigger" id="df-flyout-open" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h12"/></svg>
+        See the schema
+      </button>
     </div>
   </div>
 
@@ -1595,6 +2300,32 @@
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowRight') nextSlide();
     if (e.key === 'ArrowLeft') prevSlide();
+  });
+
+  /* ---- Architecture flyout ---- */
+  var dfFlyout = document.getElementById('df-flyout');
+  var dfOpen = document.getElementById('df-flyout-open');
+  var dfClose = document.getElementById('df-flyout-close');
+
+  function openFlyout() {
+    dfFlyout.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (window.plausible) window.plausible('Architecture Flyout Opened');
+  }
+  function closeFlyout() {
+    dfFlyout.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (dfOpen) dfOpen.addEventListener('click', openFlyout);
+  if (dfClose) dfClose.addEventListener('click', closeFlyout);
+  if (dfFlyout) {
+    dfFlyout.addEventListener('click', function(e) {
+      if (e.target === dfFlyout) closeFlyout();
+    });
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && dfFlyout && dfFlyout.classList.contains('active')) closeFlyout();
   });
 })();
 </script>
