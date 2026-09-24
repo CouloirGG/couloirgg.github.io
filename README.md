@@ -1,93 +1,42 @@
-# couloirgg.github.io
+# CouloirGG
 
-Landing page for **Couloir**, an open source game dev studio building games and tools for the people.
+AI adoption and workflow consulting led by **Stuart White**.
 
-Live at: [couloir.gg](https://couloir.gg)
+Live site: [couloir.gg](https://couloir.gg)
 
----
+## Current publication scope
 
-## About
+The owner confirmed on September 24, 2026 that the required outside-work acknowledgement is complete and instructed us to publish consulting only. AXIS and art commission offerings are withheld pending separate scope confirmation.
 
-Couloir is an independent studio built on 17+ years of AAA game development experience. Everything we make is open source under GPLv3. Community-first, ad-free, no strings attached.
+- Consulting serves businesses outside the games industry. Engagements exclude game-related entertainment and work for companies in the games business.
+- Twenty years of career experience spans Zipper Interactive, Turn 10 Studios, Microsoft, 343 Industries, Bungie, and EA. These are career references, not consulting clients or endorsements.
+- Use factual career names in text. Do not restore employer logos without separate permission; consulting approval does not grant permission to use employer intellectual property.
+- Public contact: `hello@couloir.gg`.
 
----
+## Editing and preview
 
-## Community & Support Links
+Static HTML, CSS, and JavaScript. Main navigation and related-page links share `assets/site-navigation.css`; mobile navigation uses `assets/site-navigation.js`. Keep the main menu consistent: Consulting, Blog, Contact.
 
-| Platform | URL |
-|----------|-----|
-| GitHub Org | https://github.com/CouloirGG |
-| Discord | https://discord.gg/mwNZ8P6q |
-| Ko-fi (support) | https://ko-fi.com/calschuss |
-| X / Twitter | https://x.com/CouloirGG |
-| YouTube | https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ |
-
-> Ko-fi is the primary public-facing support link. It routes to PayPal on the backend. Do not expose the PayPal dashboard URL publicly.
-
----
-
-## Active Projects
-
-### POE2 Price Checker
-- Real-time overlay tool for Path of Exile 2
-- Pulls live market data for pricing
-- Stack: Python, Overlay
-- License: GPLv3
-- Status: **In Development**
-
-### Retrofit
-- Autobattler. Scavenge, salvage, and rebuild mechanical units
-- 7-person team
-- Stack: Unity, C#, Wwise
-- Status: **In Development**
-
----
-
-## Future Brands (Leavenworth, WA)
-
-### Werkhaus
-German: "workshop". CrossFit and strength training gym in Leavenworth's Bavarian village.
-
-### Spielhalle
-German: "game hall". Retro arcade and gaming lounge with community game nights.
-
----
-
-## Repo Structure
-
-```
-couloirgg.github.io/
-├── index.html          # Main landing page (single-file HTML/CSS/JS)
-├── commission/
-│   └── index.html      # Commission inquiry page
-├── CNAME               # Custom domain config (couloir.gg)
-└── README.md           # This file
+```powershell
+python -m http.server 8000 --bind 127.0.0.1
 ```
 
----
+Open `http://127.0.0.1:8000/`. This raw local server does not apply Jekyll exclusions. GitHub Pages publishes `main` through Jekyll, with exclusions in `_config.yml`.
 
-## How to Make Edits
+## Published pages
 
-### Quick edits (recommended)
-1. Go to [github.dev/CouloirGG/couloirgg.github.io](https://github.dev/CouloirGG/couloirgg.github.io)
-2. Open `index.html`
-3. Use **Ctrl+H** for find & replace
-4. Commit via the Source Control panel (Ctrl+Shift+G) → type message → Ctrl+Enter
+- `/`: consulting overview, services, career introduction, and relevant reading.
+- `/consulting/`: approach, background, and engagement examples.
+- `/blog/`: articles on operations, systems, and AI adoption.
+- `/privacy/`, `/terms/`, and `404.html`: supporting pages.
+- Retired game, AXIS, download, and commission URLs redirect to consulting. The former career article URL redirects to `/blog/systems-under-pressure/`.
 
-### Local dev
-```bash
-git clone https://github.com/CouloirGG/couloirgg.github.io.git
-cd couloirgg.github.io
-# Open index.html in browser directly. No build step needed
-```
+## Content rules
 
-### Deployment
-The site is hosted on **GitHub Pages** and auto-deploys on every push to `main`. Changes are usually live within 1-2 minutes.
+Use calm, concrete language and short headings. Preserve the teal/lime palette. No em dashes, invented biography, client results, metrics, or testimonials. Discuss consulting prices per engagement.
 
----
+Client material under `/private/` must not be changed, linked publicly, or included in the sitemap. `_config.yml` excludes it from the published site along with working notes, retired product imagery, and employer logos. Publication exclusions do not make files in a public Git repository private.
 
-## Notes
+Do not publish employer confidential information or work-derived materials. Do not present the consulting practice as employer endorsed. Review screenshots as well as text before publishing.
 
-- The site is intentionally a **single HTML file**. All CSS and JS is inline. No frameworks, no build pipeline.
-- Do not associate the studio with real name in public-facing content.
-- Ko-fi (`ko-fi.com/calschuss`) is the public support/donation link. PayPal is connected on the backend via Ko-fi. Do not link the PayPal dashboard directly.
+Earlier product drafts are preserved in the ignored `.local-drafts/before-consulting-only-2026-09-24.zip`. Do not publish this archive. Restoring product or commission promotion requires confirmation of the approved scope.

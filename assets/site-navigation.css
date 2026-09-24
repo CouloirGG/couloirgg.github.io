@@ -1,0 +1,36 @@
+/* Shared navigation and contextual links across the public site. */
+.site-nav {
+  position: fixed; inset: 0 0 auto; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem; box-sizing: border-box;
+  background: rgba(10, 26, 32, 0.95); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(167, 219, 120, 0.1);
+  font-family: 'Sora', system-ui, sans-serif; line-height: 1.6;
+}
+.site-nav .nav-brand { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; color: rgba(255,255,255,0.5); text-decoration: none; }
+.site-nav .nav-brand span { color: #A7DB78; }
+.site-nav .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+.site-nav .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em; }
+.site-nav .nav-links a:hover, .site-nav .nav-links a[aria-current] { color: #A7DB78; }
+.site-nav .nav-links a[aria-current] { font-weight: 600; }
+.site-nav .nav-toggle { display: none; background: none; border: 0; cursor: pointer; padding: 0.5rem; }
+.site-nav .nav-toggle span { display: block; width: 20px; height: 2px; background: rgba(255,255,255,0.65); margin: 4px 0; border-radius: 1px; }
+.site-nav a:focus-visible, .site-nav button:focus-visible, .page-links a:focus-visible { outline: 2px solid #A7DB78; outline-offset: 5px; }
+.page-links { max-width: 900px; box-sizing: border-box; margin: 0 auto; padding: 3rem 2rem; color: #dbe5e8; }
+.page-links h2 { font-size: 1.25rem; font-weight: 600; line-height: 1.4; margin: 0 0 1.25rem; letter-spacing: -0.02em; color: #dbe5e8; }
+.page-links-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.page-links a { display: block; border: 1px solid rgba(167,219,120,0.18); border-radius: 8px; padding: 1.25rem; text-decoration: none; color: inherit; background: rgba(255,255,255,0.02); }
+.page-links a:hover { border-color: #A7DB78; background: rgba(167,219,120,0.04); }
+.page-links .page-link-label { display: block; color: #A7DB78; font: 0.65rem/1.6 'Sora', system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.page-links .page-link-title { display: block; font-size: 0.95rem; font-weight: 600; line-height: 1.6; }
+.page-links .page-link-summary { display: block; color: #99afb9; font-size: 0.85rem; line-height: 1.7; margin-top: 0.5rem; }
+.article .page-links { padding: 2rem 0; }
+.container .page-links { padding: 2rem 0; }
+@media (max-width: 640px) {
+  .site-nav { padding: 1rem 1.25rem; }
+  .site-nav .nav-toggle { display: block; }
+  .site-nav .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #0a1a20; padding: 1.5rem; gap: 1.25rem; border-bottom: 1px solid rgba(167,219,120,0.18); }
+  .site-nav .nav-links.open { display: flex; }
+  .page-links { padding: 2.5rem 1.25rem; }
+  .page-links-grid { grid-template-columns: 1fr; }
+}

@@ -47,40 +47,6 @@
       line-height: 1.6;
     }
 
-    /* NAV */
-    .site-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(10,26,32,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(167,219,120,0.1);
-    }
-    .nav-brand {
-      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
-      color: rgba(255,255,255,0.25); text-decoration: none;
-    }
-    .nav-brand span { color: var(--lime); }
-    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
-    .nav-links a {
-      color: var(--text-dim); text-decoration: none;
-      font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--lime); }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--text-dim); margin: 4px 0; transition: 0.3s; border-radius: 1px; }
-    @media (max-width: 640px) {
-      .nav-toggle { display: block; }
-      .nav-links {
-        display: none; position: absolute; top: 100%; left: 0; right: 0;
-        flex-direction: column; background: rgba(10,26,32,0.97);
-        backdrop-filter: blur(20px); padding: 1.5rem 2rem; gap: 1.25rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-links.open { display: flex; }
-    }
-
     /* ARTICLE */
     .article {
       max-width: 720px; margin: 0 auto;
@@ -157,44 +123,48 @@
       .footer-links { justify-content: center; }
     }
   </style>
+<link rel="stylesheet" href="/assets/site-navigation.css">
+<script src="/assets/site-navigation.js" defer></script>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="site-nav">
-  <a href="/" class="nav-brand">Couloir<span>GG</span></a>
-  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="CouloirGG home">Couloir<span>GG</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="main-nav-links" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links">
-    <a href="/#services">Services</a>
-    <a href="/#tools">Tools</a>
-    <a href="/consulting">Consulting</a>
-    <a href="/blog">Blog</a>
-    <a href="/consulting#contact">Contact</a>
+  <div class="nav-links" id="main-nav-links">
+    <a href="/consulting/">Consulting</a>
+
+    <a href="/blog/">Blog</a>
+    <a href="/consulting/#contact">Contact</a>
   </div>
 </nav>
 
 <main>
   <article class="article">
     <h1>Terms of Service</h1>
-    <div class="last-updated">Last updated: April 13, 2026</div>
+    <div class="last-updated">Last updated: September 24, 2026</div>
 
     <div class="article-body">
       <p>These terms govern your use of couloir.gg and any tools or services provided by CouloirGG LLC ("we", "us"). By accessing or using the site, you agree to these terms.</p>
 
+      <h2>Consulting scope</h2>
+      <p>CouloirGG provides AI adoption and workflow consulting for businesses outside the games industry. Engagements exclude game-related entertainment and work for companies in the games business.</p>
+
       <h2>Site content</h2>
-      <p>All content on this site is provided for informational purposes only. Blog posts, case studies, and descriptions of our consulting approach are not professional advice and should not be treated as such.</p>
+      <p>All content on this site is provided for informational purposes only. Blog posts and descriptions of our consulting approach are not professional advice and should not be treated as such.</p>
 
-      <h2>Free tools</h2>
-      <p>We offer several free tools (AXIS Producer, LAMA, ARC View). These tools are provided "as is" without warranty of any kind, express or implied. We do not guarantee that the tools will be error-free, uninterrupted, or fit for any particular purpose. Use them at your own risk.</p>
+      <h2>Software</h2>
+      <p>Software made available by CouloirGG is provided "as is" without warranty of any kind, express or implied. We do not guarantee that the tools will be error-free, uninterrupted, or fit for any particular purpose. Use them at your own risk.</p>
 
-      <h2>Open-source licensing</h2>
-      <p>LAMA and ARC View are released under the GNU General Public License v3 (GPLv3). Your use of these tools is additionally governed by the terms of that license. The full license text is included in each project's repository.</p>
+      <h2>Software licensing</h2>
+      <p>Software is governed by the license and terms supplied with it.</p>
 
       <h2>Intellectual property</h2>
       <p>Unless otherwise noted, all content on this site (text, graphics, design, logos) is the property of CouloirGG LLC and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works from this content without our written permission.</p>
-      <p>Open-source tools are excluded from this restriction and are governed by their respective licenses.</p>
+      <p>Third-party names and logos belong to their respective owners. Open-source software is governed by its accompanying license.</p>
 
       <h2>Limitation of liability</h2>
       <p>To the maximum extent permitted by law, CouloirGG LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the site or any tools we provide. This includes, without limitation, loss of data, loss of profits, or business interruption.</p>
@@ -214,7 +184,7 @@
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">Couloir<span>GG</span> LLC</div>
+    <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
     <div class="footer-links">
       <a href="https://github.com/CouloirGG" target="_blank">GitHub</a>
       <a href="https://discord.gg/mwNZ8P6q" target="_blank">Discord</a>
@@ -222,7 +192,6 @@
       <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank">Bluesky</a>
       <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank">YouTube</a>
       <a href="https://www.reddit.com/r/CouloirGG/" target="_blank">Reddit</a>
-      <a href="https://couloirgg.itch.io/" target="_blank">itch.io</a>
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
     </div>

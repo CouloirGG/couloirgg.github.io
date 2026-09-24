@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CouloirGG | Systems Architecture & Operational Consulting</title>
-<meta name="description" content="CouloirGG helps organisations figure out why their smart people and good tools aren't producing the results they should. Then fixes it. Systems architecture, workflow design, AI-assisted tooling.">
+<meta name="description" content="Systems architecture, AI adoption, and operational consulting led by Stuart White. Twenty years of experience applied to your organisation's workflows and internal tools.">
 <meta property="og:title" content="CouloirGG | Systems Architecture & Operational Consulting">
-<meta property="og:description" content="Your systems work. Your signals don't. We find where information stops travelling and design the structural fix.">
+<meta property="og:description" content="Stuart White helps businesses improve handoffs, connect information, and build useful internal tools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://couloir.gg">
 <meta property="og:site_name" content="CouloirGG">
@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@CouloirGG">
 <meta name="twitter:title" content="CouloirGG | Systems Architecture & Operational Consulting">
-<meta name="twitter:description" content="Your systems work. Your signals don't. We find where information stops travelling and design the structural fix.">
+<meta name="twitter:description" content="Stuart White helps businesses improve handoffs, connect information, and build useful internal tools.">
 <meta name="twitter:image" content="https://couloir.gg/assets/og/og-home.svg">
 <link rel="canonical" href="https://couloir.gg/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,14 +32,14 @@
   "legalName": "CouloirGG LLC",
   "url": "https://couloir.gg",
   "logo": "https://couloir.gg/android-chrome-512x512.png",
-  "description": "Systems architecture and operational consulting. AI-assisted tooling.",
+  "description": "Systems architecture and operational consulting led by Stuart White. AI adoption, workflow design, and custom internal tooling.",
+  "founder": { "@type": "Person", "@id": "https://couloir.gg/consulting/#stuart-white", "name": "Stuart White", "url": "https://couloir.gg/consulting/" },
   "sameAs": [
     "https://github.com/CouloirGG",
     "https://x.com/CouloirGG",
     "https://bsky.app/profile/couloirgg.bsky.social",
     "https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ",
-    "https://www.reddit.com/r/CouloirGG/",
-    "https://couloirgg.itch.io/"
+    "https://www.reddit.com/r/CouloirGG/"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -86,72 +86,14 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== NAV ===== */
-.site-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(10, 26, 32, 0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(167, 219, 120, 0.1);
-  transition: all 0.3s ease;
-}
-
-.nav-brand {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: rgba(255,255,255,0.25);
-  text-decoration: none;
-}
-
-.nav-brand span { color: var(--lime); }
-
-.nav-links { display: flex; gap: 1.75rem; align-items: center; }
-
-.nav-links a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover { color: var(--lime); }
-
-.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-.nav-toggle span { display: block; width: 20px; height: 2px; background: var(--text-dim); margin: 4px 0; transition: 0.3s; border-radius: 1px; }
-
-@media (max-width: 768px) {
-  .nav-toggle { display: block; }
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    flex-direction: column;
-    background: rgba(10, 26, 32, 0.97);
-    backdrop-filter: blur(20px);
-    padding: 1.5rem 2rem;
-    gap: 1.25rem;
-    border-bottom: 1px solid var(--border-light);
-  }
-  .nav-links.open { display: flex; }
-}
-
 /* ===== HERO ===== */
 .hero {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   max-width: 900px;
   margin: 0 auto;
-  padding: 6rem 2rem 4rem;
+  padding: 8rem 2rem 3.5rem;
 }
 
 .hero-label {
@@ -215,7 +157,7 @@ body {
 }
 
 .section-inner--wide {
-  max-width: 1060px;
+  max-width: 900px;
 }
 
 .section-label {
@@ -229,21 +171,6 @@ body {
 
 .section-light .section-label { color: var(--teal); }
 .section-dark .section-label { color: var(--lime); }
-
-/* ===== PROBLEM SECTION ===== */
-.problem-text {
-  max-width: 640px;
-}
-
-.problem-text p {
-  font-size: 1rem;
-  line-height: 1.85;
-  font-weight: 300;
-  margin-bottom: 1.5rem;
-  color: var(--text-dark-dim);
-}
-
-.problem-text p:last-child { margin-bottom: 0; }
 
 /* ===== HOW WE WORK ===== */
 .approach-text {
@@ -527,19 +454,6 @@ body {
   overflow: visible;
 }
 
-/* ===== SIGNAL FLOW ANIMATION (JS-driven) ===== */
-
-.sf-break-x {
-  opacity: 0;
-}
-.anim-visible .sf-break-x {
-  animation: sf-break-pulse 2s ease-in-out infinite;
-}
-@keyframes sf-break-pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.25; }
-}
-
 /* ===== APPROACH ANIMATION (JS-driven) ===== */
 /* All elements positioned/styled by JS; minimal CSS defaults */
 
@@ -625,19 +539,17 @@ body {
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
-  .sf-break-x,
   .si-beam, .si-dot, .si-arrow-dot,
   .si-wave, .si-block {
     animation: none !important;
   }
-  .sf-break-x { opacity: 0.4; }
   .si-block { opacity: 1; transform: none; }
   .si-wave { opacity: 0; }
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .hero { min-height: 85vh; padding-top: 5rem; }
+  .hero { padding: 6.5rem 1.25rem 2.5rem; }
   .section-inner { padding: 3.5rem 1.25rem; }
   .contact-inner { padding: 3rem 1.25rem; }
   .footer-inner { flex-direction: column; text-align: center; }
@@ -648,27 +560,76 @@ body {
     gap: 2rem;
   }
   .section-grid .anim-container { max-width: 280px; order: 1; }
-  .section-grid .problem-text,
   .section-grid .approach-text { order: 0; }
 }
+
+/* Career experience */
+.career-intro { max-width: 900px; margin: 0 auto; padding: 0 2rem 3.5rem; }
+.career-kicker { color: #A7DB78; font: 0.68rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.career-intro h2 { font-size: clamp(1.4rem, 3vw, 1.75rem); font-weight: 600; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: rgba(255,255,255,0.92); }
+.career-copy { color: rgba(255,255,255,0.65); font-size: 0.95rem; line-height: 1.8; max-width: 720px; }
+.career-copy a { color: #A7DB78; text-underline-offset: 4px; }
+.career-logos { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center; gap: 1.5rem; margin: 2rem 0 0; padding: 1.75rem 0; border-top: 1px solid rgba(255,255,255,0.12); border-bottom: 1px solid rgba(255,255,255,0.12); }
+.career-logos li { min-width: 0; display: flex; align-items: center; justify-content: center; height: 68px; }
+.career-logos img { display: block; width: 100%; max-width: 135px; height: 44px; object-fit: contain; }
+.career-logos .career-turn10 { height: 66px; }
+.career-logos .career-on-light { background: #f5f7fa; border-radius: 4px; padding: 10px; }
+.career-caption { margin-top: 0.9rem; font-size: 0.72rem; line-height: 1.7; color: rgba(255,255,255,0.55); }
+.career-background { margin: 2rem 0 0; }
+.career-background .career-logos { margin-top: 0; }
+@media (max-width: 600px) {
+  .career-intro { padding: 0 1.25rem 2.5rem; }
+  .career-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; }
+  .career-logos li:last-child { grid-column: 1 / -1; }
+}
+
+
+/* Page hierarchy */
+[id] { scroll-margin-top: 5.5rem; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; margin-top: 1.75rem; }
+.action-primary { display: inline-flex; align-items: center; gap: 1.25rem; background: var(--lime); color: var(--bg-dark); border: 1px solid var(--lime); border-radius: 6px; padding: 0.8rem 1.15rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+.action-primary:hover { background: #bde89a; }
+.action-secondary { color: var(--text-light); font-size: 0.85rem; padding: 0.75rem 0; text-underline-offset: 5px; }
+.section-heading { font-size: clamp(1.65rem, 3.5vw, 2.35rem); line-height: 1.25; letter-spacing: -0.04em; font-weight: 600; margin-bottom: 1rem; }
+.section-lead { color: var(--text-dark-dim); max-width: 650px; font-size: 1rem; line-height: 1.8; }
+.section-link { display: inline-block; margin-top: 1.75rem; font-size: 0.9rem; color: var(--lime); text-underline-offset: 5px; }
+.section-light .section-link { color: var(--teal); }
+.service-card { display: flex; flex-direction: column; }
+.service-card p.service-output { margin-top: auto; padding-top: 1.25rem; font-size: 0.8rem; }
+.service-output strong { display: block; border-top: 1px solid var(--border-dark); padding-top: 1rem; margin-bottom: 0.35rem; color: var(--teal-dark); font-weight: 600; }
+.method-summary { list-style: none; counter-reset: method; }
+.method-summary li { counter-increment: method; position: relative; padding-left: 2.1rem; margin-top: 1.5rem; }
+.method-summary li::before { content: '0' counter(method); position: absolute; left: 0; top: 0.1rem; font: 0.7rem 'JetBrains Mono', monospace; color: var(--lime); }
+.method-summary h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.method-summary p { font-size: 0.9rem; line-height: 1.75; }
+.contact-inner { max-width: 760px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-offset: 5px; }
+.section-light a:focus-visible { outline-color: var(--teal); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-label, .hero h1, .hero-body { animation: none; opacity: 1; transform: none; }
+  .nr-pipe, .nr-pipe-post { stroke: #A7DB78; stroke-dasharray: none; opacity: 0.55; }
+  .nr-fill { opacity: 0.55; }
+  .nr-fix-label { opacity: 0.85; }
+  .nr-gap-mark { opacity: 0; }
+}
 </style>
+<link rel="stylesheet" href="/assets/site-navigation.css">
+<script src="/assets/site-navigation.js" defer></script>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="site-nav">
-  <a href="#" class="nav-brand">Couloir<span>GG</span></a>
-  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="CouloirGG home">Couloir<span>GG</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="main-nav-links" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links">
-    <a href="#problem">The Problem</a>
-    <a href="#approach">Approach</a>
-    <a href="#services">Services</a>
-    <a href="#tools">Tools</a>
-    <a href="/consulting">Consulting</a>
-    <a href="/blog">Blog</a>
-    <a href="#contact">Contact</a>
+  <div class="nav-links" id="main-nav-links">
+    <a href="/consulting/">Consulting</a>
+
+    <a href="/blog/">Blog</a>
+    <a href="/consulting/#contact">Contact</a>
   </div>
 </nav>
 
@@ -678,90 +639,115 @@ body {
   <section class="hero" id="top">
     <div class="hero-label">Systems Architecture & Operational Consulting</div>
     <h1>Your systems work. <em>Your signals don't.</em></h1>
-    <p class="hero-body">We help organisations figure out why their smart people and good tools aren't producing the results they should. Then we fix it. Not by changing how people work, but by designing the conditions where the right information reaches the right person automatically.</p>
+    <p class="hero-body">I help businesses find where information gets lost between teams, then build the workflows and internal tools that get it to the right person.</p>
+    <div class="hero-actions">
+      <a class="action-primary" href="mailto:hello@couloir.gg" onclick="plausible('Contact+Click')">Start a conversation <span aria-hidden="true">&rarr;</span></a>
+      <a class="action-secondary" href="#services">Explore services</a>
+    </div>
   </section>
 
-  <!-- THE PROBLEM -->
-  <div class="section-light" id="problem">
-    <div class="section-inner section-inner--wide">
-      <div class="section-label">// what we keep seeing</div>
-      <div class="section-grid">
-        <div class="problem-text">
-          <p>Most organisations we work with have the same shape of problem. Good people. Good tools. Reasonable processes. And yet, information stops travelling somewhere in the middle. A signal lands in one team and never reaches the person who could act on it. A meeting produces two hours of context that evaporates by end of day. A handoff degrades because the structured path takes three more steps than saying it out loud.</p>
-          <p>Nobody is doing anything wrong. The gaps are not dramatic. But they compound quietly over months and years into something harder to untangle: tribal knowledge, received wisdom, institutional blind spots that nobody remembers the origin of.</p>
-          <p>The cost is not a single failure. It is the slow accumulation of missed signals, duplicated effort, and decisions made on incomplete context. By the time it is visible, it has been compounding for a long time.</p>
+  <section class="career-intro" aria-labelledby="founder-heading">
+    <p class="career-kicker">Independent consulting, led by Stuart White</p>
+    <h2 id="founder-heading">Twenty years in complex systems.</h2>
+    <p class="career-copy">Quality, production, and operations experience across Zipper Interactive, Turn 10, Microsoft, 343 Industries, Bungie, and EA. <a href="/consulting/#background">Meet Stuart White</a>.</p>
+
+    <p class="career-caption">Independent consulting through CouloirGG LLC, based near Seattle. Career references do not imply employer endorsement.</p>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section-light" id="services" aria-labelledby="services-heading">
+    <div class="section-inner">
+      <div class="section-label">// consulting services</div>
+      <h2 class="section-heading" id="services-heading">Where I can help.</h2>
+      <p class="section-lead">AI adoption and workflow consulting for businesses outside the games industry. Engagements exclude game-related entertainment and work for companies in the games business.</p>
+      <p class="section-lead" id="problem">Missed handoffs, scattered information, or decisions that never reach the people who need them. Start with the part that is slowing your team down.</p>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <!-- Network dots inside lens area -->
+              <circle cx="19" cy="19" r="1.5" fill="#005770" opacity="0.4"/>
+              <circle cx="28" cy="16" r="1.5" fill="#005770" opacity="0.4"/>
+              <circle cx="23" cy="26" r="1.5" fill="#005770" opacity="0.4"/>
+              <circle cx="15" cy="26" r="1.2" fill="#005770" opacity="0.25"/>
+              <circle cx="30" cy="24" r="1.2" fill="#005770" opacity="0.25"/>
+              <line x1="19" y1="19" x2="28" y2="16" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
+              <line x1="19" y1="19" x2="23" y2="26" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
+              <line x1="28" y1="16" x2="23" y2="26" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
+              <line x1="15" y1="26" x2="19" y2="19" stroke="#005770" stroke-width="0.5" opacity="0.15"/>
+              <line x1="30" y1="24" x2="28" y2="16" stroke="#005770" stroke-width="0.5" opacity="0.15"/>
+              <!-- Magnifying glass -->
+              <circle cx="22" cy="21" r="11" stroke="#005770" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <line x1="30" y1="29" x2="38" y2="37" stroke="#005770" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+              <!-- Scanning beam -->
+              <rect class="si-beam" x="14" y="12" width="2" height="18" rx="1" fill="#A7DB78" opacity="0"/>
+            </svg>
+          </div>
+          <h3>Workflow &amp; Systems Audit</h3>
+          <p>Find where handoffs break and work gets repeated. I map how information moves through your organisation and identify the changes that will help. </p><p class="service-output"><strong>You leave with</strong> A workflow map and a targeted action plan.</p>
         </div>
-        <div class="anim-container" aria-hidden="true" data-anim="signal-flow">
-          <svg viewBox="0 0 380 260" fill="none">
-            <defs>
-              <filter id="glow-g" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="4" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
 
-            <!-- Subtle background panel -->
-            <rect width="380" height="260" fill="rgba(0,87,112,0.02)" rx="10"/>
-
-            <!-- Industry label (cycles via JS) -->
-            <text class="sf-industry" x="375" y="18" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#005770" opacity="0.3">// saas</text>
-
-            <!-- === ROW 1: Customers  y=55 === -->
-            <text x="8" y="59" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">customers</text>
-            <line x1="82" y1="55" x2="158" y2="55" stroke="#005770" stroke-width="2.5" opacity="0.3"/>
-            <line x1="172" y1="55" x2="260" y2="55" stroke="#005770" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 3"/>
-            <g class="sf-break-x" transform="translate(165,55)">
-              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-              <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-            </g>
-            <path d="M165,62 L165,88" stroke="#ef4444" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
-            <circle cx="165" cy="91" r="2.5" fill="#ef4444" opacity="0.15"/>
-
-            <!-- === ROW 2: Employees  y=120 === -->
-            <text x="8" y="124" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">employees</text>
-            <line x1="82" y1="120" x2="175" y2="120" stroke="#005770" stroke-width="2.5" opacity="0.3"/>
-            <line x1="192" y1="120" x2="260" y2="120" stroke="#005770" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 3"/>
-            <g class="sf-break-x" transform="translate(183,120)">
-              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-              <line x1="5" y1="-5" x2="-5" y2="5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-            </g>
-            <path d="M183,127 L183,153" stroke="#ef4444" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
-            <circle cx="183" cy="156" r="2.5" fill="#ef4444" opacity="0.15"/>
-
-            <!-- === ROW 3: Leads  y=185 === -->
-            <text x="8" y="189" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#005770" opacity="0.65">leads</text>
-            <line x1="82" y1="185" x2="142" y2="185" stroke="#005770" stroke-width="2.5" opacity="0.3"/>
-            <line x1="158" y1="185" x2="260" y2="185" stroke="#005770" stroke-width="1.5" opacity="0.08" stroke-dasharray="4 3"/>
-            <g class="sf-break-x" transform="translate(150,185)">
-              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-              <line x1="5" y1="-5" x2="-5" y2="5" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-            </g>
-            <path d="M150,192 L150,218" stroke="#f59e0b" stroke-width="0.8" opacity="0.18" stroke-dasharray="2 2"/>
-            <circle cx="150" cy="221" r="2.5" fill="#f59e0b" opacity="0.15"/>
-
-            <!-- Bottom -->
-            <text x="190" y="248" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#005770" opacity="0.15">compounding daily across every channel</text>
-
-            <!-- 9 animated packets (3 per row, JS-driven) -->
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-            <circle class="sf-pkt" r="4.5" fill="#A7DB78" opacity="0" filter="url(#glow-g)"/>
-          </svg>
+        <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <!-- Scattered input signals -->
+              <circle class="si-dot" cx="7" cy="14" r="2.5" fill="#005770" opacity="0.3"/>
+              <circle class="si-dot" cx="10" cy="24" r="2.5" fill="#005770" opacity="0.3"/>
+              <circle class="si-dot" cx="5" cy="34" r="2.5" fill="#005770" opacity="0.3"/>
+              <!-- Converge lines -->
+              <line x1="9" y1="14" x2="20" y2="21" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <line x1="12" y1="24" x2="20" y2="24" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <line x1="7" y1="34" x2="20" y2="27" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <!-- Chevron/funnel -->
+              <polyline points="20,14 28,24 20,34" stroke="#005770" stroke-width="1.2" fill="none" opacity="0.3" stroke-linejoin="round"/>
+              <!-- Output arrow line -->
+              <line x1="28" y1="24" x2="42" y2="24" stroke="#A7DB78" stroke-width="1" opacity="0.25"/>
+              <!-- Output dot -->
+              <circle class="si-arrow-dot" cx="34" cy="24" r="3" fill="#A7DB78" opacity="0"/>
+              <!-- Target -->
+              <circle cx="42" cy="24" r="3.5" stroke="#A7DB78" stroke-width="1" fill="none" opacity="0.25"/>
+              <circle cx="42" cy="24" r="1" fill="#A7DB78" opacity="0.35"/>
+            </svg>
+          </div>
+          <h3>AI &amp; Internal Tooling</h3>
+          <p>Connect the information your team already has. I build tools and automation that turn scattered signals into useful next actions.</p><p class="service-output"><strong>You leave with</strong> Working tools built around your process.</p>
         </div>
+
+        <div class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <!-- Waveform -->
+              <polyline class="si-wave" points="4,24 8,17 12,31 16,14 20,33 24,19 28,29 32,13 36,27 40,21 44,24" stroke="#005770" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+              <!-- Structured blocks -->
+              <g class="si-block">
+                <rect x="6" y="14" width="18" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.55"/>
+                <rect x="26" y="14" width="10" height="3.5" rx="1.5" fill="#005770" opacity="0.2"/>
+              </g>
+              <g class="si-block">
+                <rect x="6" y="22" width="12" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.45"/>
+                <rect x="20" y="22" width="20" height="3.5" rx="1.5" fill="#005770" opacity="0.15"/>
+              </g>
+              <g class="si-block">
+                <rect x="6" y="30" width="24" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.35"/>
+                <rect x="32" y="30" width="8" height="3.5" rx="1.5" fill="#005770" opacity="0.12"/>
+              </g>
+            </svg>
+          </div>
+          <h3>Session Intelligence</h3>
+          <p>Keep decisions and context after a conversation ends. I help teams capture sessions with consent and make the output useful to the next person.</p><p class="service-output"><strong>You leave with</strong> Structured notes and a route from discussion to action.</p>
+        </div>
+
       </div>
+      <a class="section-link" href="/consulting/">How an engagement works <span aria-hidden="true">&rarr;</span></a>
     </div>
-  </div>
+  </section>
 
-  <!-- HOW WE WORK -->
-  <div class="section-dark" id="approach">
+  <!-- APPROACH -->
+  <section class="section-dark" id="approach" aria-labelledby="approach-heading">
     <div class="section-inner section-inner--wide">
-      <div class="section-label">// how we work</div>
+      <div class="section-label">// how I work</div>
+      <h2 class="section-heading" id="approach-heading">Find the break. Build the fix.</h2>
       <div class="section-grid section-grid--anim-first">
         <div class="anim-container" aria-hidden="true" data-anim="network-resolve">
           <svg viewBox="0 0 380 260" fill="none">
@@ -818,152 +804,32 @@ body {
           </svg>
         </div>
         <div class="approach-text">
-          <p>We start by listening. Not to leadership decks or strategy documents, but to the people doing the work. The handoffs they navigate every day. The workarounds they have built because the system does not quite fit. The things they know that are not written down anywhere.</p>
-          <p>We build a picture of how information actually moves through the organisation before we propose anything. The diagnosis matters more than the prescription. When we do act, the fixes are targeted and structural, not cultural mandates that revert within weeks.</p>
-          <p>We leave teams more capable, not more dependent. The goal is always the same: make the structured path feel as natural as the obvious one, so the right behaviour happens without anyone having to remember to do it.</p>
+          <ol class="method-summary">
+            <li><h3>Listen to the people doing the work.</h3><p>Understand the handoffs, workarounds, and information that never makes it into the system.</p></li>
+            <li><h3>Trace the problem to its source.</h3><p>Map where information gets lost and agree which changes are worth making.</p></li>
+            <li><h3>Build it, then make sure it works.</h3><p>Put the fix into the team's existing workflow, document it, and validate it with the people using it.</p></li>
+          </ol>
+          <a class="section-link" href="/consulting/#approach">See the full method <span aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
     </div>
+  </section>
+
+
+
+<section class="page-links" aria-label="Related pages">
+  <h2>Further reading</h2>
+  <div class="page-links-grid">
+    <a href="/blog/signal-loss/"><span class="page-link-label">Operations</span><span class="page-link-title">Why good tools still leave gaps between teams <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How information gets lost between teams, and where to start looking.</span></a>
+    <a href="/blog/ai-trust/"><span class="page-link-label">AI adoption</span><span class="page-link-title">Building AI tools people can trust <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How consent, processing choices, and human review shape useful AI workflows.</span></a>
   </div>
-
-  <!-- SERVICES -->
-  <div class="section-light" id="services">
-    <div class="section-inner">
-      <div class="section-label">// what we build</div>
-      <div class="services-grid">
-
-        <div class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none">
-              <!-- Network dots inside lens area -->
-              <circle cx="19" cy="19" r="1.5" fill="#005770" opacity="0.4"/>
-              <circle cx="28" cy="16" r="1.5" fill="#005770" opacity="0.4"/>
-              <circle cx="23" cy="26" r="1.5" fill="#005770" opacity="0.4"/>
-              <circle cx="15" cy="26" r="1.2" fill="#005770" opacity="0.25"/>
-              <circle cx="30" cy="24" r="1.2" fill="#005770" opacity="0.25"/>
-              <line x1="19" y1="19" x2="28" y2="16" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
-              <line x1="19" y1="19" x2="23" y2="26" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
-              <line x1="28" y1="16" x2="23" y2="26" stroke="#005770" stroke-width="0.5" opacity="0.2"/>
-              <line x1="15" y1="26" x2="19" y2="19" stroke="#005770" stroke-width="0.5" opacity="0.15"/>
-              <line x1="30" y1="24" x2="28" y2="16" stroke="#005770" stroke-width="0.5" opacity="0.15"/>
-              <!-- Magnifying glass -->
-              <circle cx="22" cy="21" r="11" stroke="#005770" stroke-width="1.5" fill="none" opacity="0.5"/>
-              <line x1="30" y1="29" x2="38" y2="37" stroke="#005770" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
-              <!-- Scanning beam -->
-              <rect class="si-beam" x="14" y="12" width="2" height="18" rx="1" fill="#A7DB78" opacity="0"/>
-            </svg>
-          </div>
-          <h3>Workflow & Systems Audit</h3>
-          <p>For organisations that know something is off but cannot name it. We map how information actually moves through the org, where it stops, and what the compounding cost is. The output is a clear picture and a targeted plan, not a 90-page report.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none">
-              <!-- Scattered input signals -->
-              <circle class="si-dot" cx="7" cy="14" r="2.5" fill="#005770" opacity="0.3"/>
-              <circle class="si-dot" cx="10" cy="24" r="2.5" fill="#005770" opacity="0.3"/>
-              <circle class="si-dot" cx="5" cy="34" r="2.5" fill="#005770" opacity="0.3"/>
-              <!-- Converge lines -->
-              <line x1="9" y1="14" x2="20" y2="21" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
-              <line x1="12" y1="24" x2="20" y2="24" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
-              <line x1="7" y1="34" x2="20" y2="27" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
-              <!-- Chevron/funnel -->
-              <polyline points="20,14 28,24 20,34" stroke="#005770" stroke-width="1.2" fill="none" opacity="0.3" stroke-linejoin="round"/>
-              <!-- Output arrow line -->
-              <line x1="28" y1="24" x2="42" y2="24" stroke="#A7DB78" stroke-width="1" opacity="0.25"/>
-              <!-- Output dot -->
-              <circle class="si-arrow-dot" cx="34" cy="24" r="3" fill="#A7DB78" opacity="0"/>
-              <!-- Target -->
-              <circle cx="42" cy="24" r="3.5" stroke="#A7DB78" stroke-width="1" fill="none" opacity="0.25"/>
-              <circle cx="42" cy="24" r="1" fill="#A7DB78" opacity="0.35"/>
-            </svg>
-          </div>
-          <h3>AI Tooling: Signal to Action</h3>
-          <p>For teams drowning in data with no layer to synthesise it. We design and build the aggregation and routing layer that turns raw signals into the right action for the right person at the right time. Custom built, not off-the-shelf.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none">
-              <!-- Waveform -->
-              <polyline class="si-wave" points="4,24 8,17 12,31 16,14 20,33 24,19 28,29 32,13 36,27 40,21 44,24" stroke="#005770" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
-              <!-- Structured blocks -->
-              <g class="si-block">
-                <rect x="6" y="14" width="18" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.55"/>
-                <rect x="26" y="14" width="10" height="3.5" rx="1.5" fill="#005770" opacity="0.2"/>
-              </g>
-              <g class="si-block">
-                <rect x="6" y="22" width="12" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.45"/>
-                <rect x="20" y="22" width="20" height="3.5" rx="1.5" fill="#005770" opacity="0.15"/>
-              </g>
-              <g class="si-block">
-                <rect x="6" y="30" width="24" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.35"/>
-                <rect x="32" y="30" width="8" height="3.5" rx="1.5" fill="#005770" opacity="0.12"/>
-              </g>
-            </svg>
-          </div>
-          <h3>Session Intelligence</h3>
-          <p>For organisations losing institutional knowledge to turnover, acquisition integration lag, or verbal-only culture. Ambient capture and structured output that means context survives any individual leaving.</p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- TOOLS -->
-  <div class="section-dark" id="tools">
-    <div class="section-inner">
-      <div class="section-label">// what we've built</div>
-      <p class="tools-intro">Tools we have built and shipped. Open source where possible, production-tested, used by real teams.</p>
-      <div class="tools-grid">
-
-        <a href="/axis" class="tool-card" onclick="plausible('Tool+Card+Click')">
-          <span class="tool-tag beta">Beta</span>
-          <h3>AXIS Producer</h3>
-          <p>AI session intelligence. Records meetings and work sessions, extracts decisions, action items, and communication insights. Local-first, consent-required.</p>
-          <div class="tool-tech">
-            <span>Python</span>
-            <span>Whisper</span>
-            <span>Claude</span>
-            <span>FastAPI</span>
-          </div>
-        </a>
-
-        <a href="/tools/lama" class="tool-card" onclick="plausible('Tool+Card+Click')">
-          <span class="tool-tag alpha">Alpha</span>
-          <h3>LAMA</h3>
-          <p>Build analysis and price checking tool for Path of Exile 2. Skill recommendations, gear evaluation, and real-time market data. Clipboard overlay, no alt-tabbing.</p>
-          <div class="tool-tech">
-            <span>Python</span>
-            <span>Build Analysis</span>
-            <span>Trade API</span>
-            <span>GPLv3</span>
-          </div>
-          <img src="/assets/mascot/mascot_idle.png" alt="" class="tool-mascot" aria-hidden="true">
-        </a>
-
-        <a href="/tools/arc" class="tool-card" onclick="plausible('Tool+Card+Click')">
-          <span class="tool-tag dev">In Dev</span>
-          <h3>ARC View</h3>
-          <p>Desktop companion & overlay for Arc Raiders. In-game HUD with event tracking, stash organizer, build advisor, and raid analytics.</p>
-          <div class="tool-tech">
-            <span>React Native</span>
-            <span>Electron</span>
-            <span>OCR</span>
-            <span>GPLv3</span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </div>
+</section>
 
   <!-- CONTACT -->
   <div class="section-dark contact-section" id="contact">
     <div class="contact-inner">
-      <p>If any of this sounds like your organisation, reach out. No pitch. Just a conversation.</p>
-      <!-- TODO: Replace with actual contact email -->
+      <h2 class="section-heading">What keeps getting in your team's way?</h2>
+      <p>Tell me where work slows down or context gets lost. We can start with a conversation about what is happening and whether I can help.</p>
       <a href="mailto:hello@couloir.gg" class="contact-email" onclick="plausible('Contact+Click')">hello@couloir.gg</a>
     </div>
   </div>
@@ -973,7 +839,7 @@ body {
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">Couloir<span>GG</span> LLC</div>
+    <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
     <div class="footer-links">
       <a href="https://github.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">GitHub</a>
       <a href="https://discord.gg/mwNZ8P6q" target="_blank" onclick="plausible('Outbound+Click')">Discord</a>
@@ -981,7 +847,6 @@ body {
       <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank" onclick="plausible('Outbound+Click')">Bluesky</a>
       <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank" onclick="plausible('Outbound+Click')">YouTube</a>
       <a href="https://www.reddit.com/r/CouloirGG/" target="_blank" onclick="plausible('Outbound+Click')">Reddit</a>
-      <a href="https://couloirgg.itch.io/" target="_blank" onclick="plausible('Outbound+Click')">itch.io</a>
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
     </div>
@@ -1011,137 +876,8 @@ body {
   }
 
   /* ================================================================
-     SIGNAL FLOW (Problem section)
-     Three lanes: customers, employees, leads.
-     Packets leak at gap points per row.
-     Loss percentages count up. Industry label cycles.
-     ================================================================ */
-  function initSignalFlow(container) {
-    var pkts = container.querySelectorAll('.sf-pkt');
-    var industryLabel = container.querySelector('.sf-industry');
-
-    var cycle = 7000;
-    var stagger = 350;
-
-    /* Industry scenarios */
-    var industries = [
-      { name: '// saas' },
-      { name: '// agencies' },
-      { name: '// manufacturing' }
-    ];
-    var industryIdx = 0;
-
-    /* Row definitions matching SVG layout */
-    var rows = [
-      { y: 55, gapX: 165, lineStart: 82, lineEnd: 260 },
-      { y: 120, gapX: 183, lineStart: 82, lineEnd: 260 },
-      { y: 185, gapX: 150, lineStart: 82, lineEnd: 260 }
-    ];
-
-    /* Which packets pass vs fall per row:
-       Row 0 (customers): 1 passes, 2 fall
-       Row 1 (employees): all fall
-       Row 2 (leads): 2 pass, 1 falls */
-    var passMap = [
-      [true, false, false],
-      [false, false, false],
-      [true, true, false]
-    ];
-
-    var lossColors = ['#ef4444', '#ef4444', '#f59e0b'];
-
-    function buildPath(row, passes) {
-      if (passes) {
-        return [
-          { x: row.lineStart, y: row.y, t: 0 },
-          { x: row.gapX - 10, y: row.y, t: 0.45 },
-          { x: row.gapX + 10, y: row.y, t: 0.6 },
-          { x: row.lineEnd, y: row.y, t: 1.0 }
-        ];
-      } else {
-        return [
-          { x: row.lineStart, y: row.y, t: 0 },
-          { x: row.gapX - 3, y: row.y, t: 0.5 },
-          { x: row.gapX, y: row.y + 8, t: 0.65 },
-          { x: row.gapX + 4, y: row.y + 45, t: 1.0 }
-        ];
-      }
-    }
-
-    /* Build packet definitions: 3 packets x 3 rows = 9 total */
-    var pktDefs = [];
-    for (var r = 0; r < 3; r++) {
-      for (var p = 0; p < 3; p++) {
-        pktDefs.push({
-          path: buildPath(rows[r], passMap[r][p]),
-          dur: 3200,
-          delay: r * 150 + p * stagger,
-          passes: passMap[r][p],
-          rowIdx: r
-        });
-      }
-    }
-
-    function pktColor(def, pos) {
-      if (pos.y > rows[def.rowIdx].y + 5) return lossColors[def.rowIdx];
-      if (def.passes && pos.x > rows[def.rowIdx].gapX) return '#f59e0b';
-      return '#A7DB78';
-    }
-
-    function runCycle() {
-      var ind = industries[industryIdx % industries.length];
-      industryIdx++;
-
-      /* Update industry label */
-      if (industryLabel) industryLabel.textContent = ind.name;
-
-      /* Reset */
-      pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
-
-      var t0 = performance.now();
-
-      function frame(now) {
-        var elapsed = now - t0;
-        if (elapsed > cycle) { runCycle(); return; }
-
-        /* Animate packets */
-        pktDefs.forEach(function(d, i) {
-          var p = pkts[i];
-          if (!p) return;
-          var local = (elapsed - d.delay) / d.dur;
-          if (local < 0 || local > 1.1) {
-            if (local > 1) p.setAttribute('opacity', '0');
-            return;
-          }
-          local = Math.min(local, 1);
-
-          var pos = waypointPos(d.path, easeInOutCubic(local));
-          p.setAttribute('cx', pos.x.toFixed(1));
-          p.setAttribute('cy', pos.y.toFixed(1));
-          p.setAttribute('fill', pktColor(d, pos));
-
-          /* Opacity: fade in, fade out when falling or reaching end */
-          var op = 1;
-          if (local < 0.05) op = local / 0.05;
-          else if (!d.passes && pos.y > rows[d.rowIdx].y + 8) {
-            op = Math.max(0, 1 - (pos.y - rows[d.rowIdx].y - 8) / 38);
-          } else if (d.passes && local > 0.88) {
-            op = (1 - local) / 0.12;
-          }
-          p.setAttribute('opacity', Math.max(0, op).toFixed(3));
-        });
-
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    }
-
-    runCycle();
-  }
-
-  /* ================================================================
      NETWORK RESOLVE (Approach section)
-     Three lanes matching problem layout.
+     Three lanes showing information moving through a workflow.
      Phase 0: broken hold with leak packets (same problem)
      Phase 1: diagnose - identify root causes
      Phase 2: fix - fill gaps, pipes solidify
@@ -1395,9 +1131,6 @@ body {
       entry.target.classList.add('anim-visible');
 
       if (!prefersReduced) {
-        if (entry.target.dataset.anim === 'signal-flow') {
-          initSignalFlow(entry.target);
-        }
         if (entry.target.dataset.anim === 'network-resolve') {
           initNetworkResolve(entry.target);
         }

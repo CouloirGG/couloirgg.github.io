@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog | CouloirGG</title>
-  <meta name="description" content="Thinking in systems. Writing on operational consulting, product design, AI tooling, and lessons from twenty years building complex systems.">
+  <meta name="description" content="Thinking in systems. Writing on operational consulting, AI adoption, and lessons from twenty years building complex systems.">
   <meta property="og:title" content="Blog | CouloirGG">
-  <meta property="og:description" content="Writing on operational consulting, product design, AI tooling, and lessons from twenty years building complex systems.">
+  <meta property="og:description" content="Writing on operational consulting, AI adoption, and lessons from twenty years building complex systems.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://couloir.gg/blog/">
   <meta property="og:site_name" content="CouloirGG">
@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@CouloirGG">
   <meta name="twitter:title" content="Blog | CouloirGG">
-  <meta name="twitter:description" content="Writing on operational consulting, product design, AI tooling, and lessons from twenty years building complex systems.">
+  <meta name="twitter:description" content="Writing on operational consulting, AI adoption, and lessons from twenty years building complex systems.">
   <meta name="twitter:image" content="https://couloir.gg/assets/og/og-blog.svg">
   <link rel="canonical" href="https://couloir.gg/blog/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
     "@context": "https://schema.org",
     "@type": "Blog",
     "name": "CouloirGG Blog",
-    "description": "Writing on operational consulting, product design, AI tooling, and lessons from twenty years building complex systems.",
+    "description": "Writing on operational consulting, AI adoption, and lessons from twenty years building complex systems.",
     "url": "https://couloir.gg/blog/",
     "publisher": {
       "@type": "Organization",
@@ -46,21 +46,24 @@
     "blogPost": [
       {
         "@type": "BlogPosting",
-        "headline": "Why Your Tools Work But Your Team Doesn't",
+        "headline": "Why good tools still leave gaps between teams",
         "url": "https://couloir.gg/blog/signal-loss/",
-        "datePublished": "2026-04-07"
+        "datePublished": "2026-04-07",
+        "dateModified": "2026-09-22"
       },
       {
         "@type": "BlogPosting",
-        "headline": "Building AI Tools People Actually Trust",
+        "headline": "Building AI tools people can trust",
         "url": "https://couloir.gg/blog/ai-trust/",
-        "datePublished": "2026-04-10"
+        "datePublished": "2026-04-10",
+        "dateModified": "2026-09-24"
       },
       {
         "@type": "BlogPosting",
-        "headline": "What Game Dev Taught Me About Systems That Break",
-        "url": "https://couloir.gg/blog/game-dev-systems/",
-        "datePublished": "2026-04-13"
+        "headline": "What twenty years taught me about systems",
+        "url": "https://couloir.gg/blog/systems-under-pressure/",
+        "datePublished": "2026-04-13",
+        "dateModified": "2026-09-22"
       }
     ]
   }
@@ -92,44 +95,6 @@
       color: var(--text-light);
       line-height: 1.6;
       overflow-x: hidden;
-    }
-
-    /* NAV */
-    .site-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(10,26,32,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(167,219,120,0.1);
-    }
-    .nav-brand {
-      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
-      color: rgba(255,255,255,0.25); text-decoration: none;
-    }
-    .nav-brand span { color: var(--lime); }
-    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
-    .nav-links a {
-      color: var(--text-dim); text-decoration: none;
-      font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--lime); }
-    .nav-links a.active { color: var(--lime); }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--text-dim); margin: 4px 0; transition: 0.3s; border-radius: 1px; }
-    @media (max-width: 640px) {
-      .nav-toggle { display: block; }
-      .nav-links {
-        display: none;
-        position: absolute; top: 100%; left: 0; right: 0;
-        flex-direction: column;
-        background: rgba(10,26,32,0.97);
-        backdrop-filter: blur(20px);
-        padding: 1.5rem 2rem; gap: 1.25rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-links.open { display: flex; }
     }
 
     /* HERO */
@@ -260,21 +225,22 @@
       .footer-links { justify-content: center; }
     }
   </style>
+<link rel="stylesheet" href="/assets/site-navigation.css">
+<script src="/assets/site-navigation.js" defer></script>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="site-nav">
-  <a href="/" class="nav-brand">Couloir<span>GG</span></a>
-  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="CouloirGG home">Couloir<span>GG</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="main-nav-links" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links">
-    <a href="/#services">Services</a>
-    <a href="/#tools">Tools</a>
-    <a href="/consulting">Consulting</a>
-    <a href="/blog" class="active">Blog</a>
-    <a href="/consulting#contact">Contact</a>
+  <div class="nav-links" id="main-nav-links">
+    <a href="/consulting/">Consulting</a>
+
+    <a href="/blog/" class="active" aria-current="page">Blog</a>
+    <a href="/consulting/#contact">Contact</a>
   </div>
 </nav>
 
@@ -284,7 +250,7 @@
   <section class="hero">
     <div class="hero-eyebrow">// blog</div>
     <h1>Thinking in <em>systems.</em></h1>
-    <p class="hero-sub">Writing on operational consulting, product design, and lessons learned from twenty years building things that have to work under pressure.</p>
+    <p class="hero-sub">Writing on operational consulting, AI adoption, and lessons learned from twenty years building things that have to work under pressure.</p>
   </section>
 
   <!-- POSTS -->
@@ -293,46 +259,54 @@
 
       <a href="/blog/signal-loss/" class="post-card">
         <span class="post-tag tag-consulting">Consulting</span>
-        <h2>Why Your Tools Work But Your Team Doesn't</h2>
+        <h2>Why good tools still leave gaps between teams</h2>
         <div class="post-meta">
-          <span>Apr 7, 2026</span>
-          <span>6 min read</span>
+          <span>Updated Sep 22, 2026</span>
+          <span>3 min read</span>
         </div>
-        <p class="post-excerpt">The company that bought every tool and still sends critical info in DMs. Signal loss is a structural failure, not an adoption failure.</p>
+        <p class="post-excerpt">How information gets lost between teams, why workarounds persist, and what a clearer handoff looks like.</p>
         <div class="post-read">Read &rarr;</div>
       </a>
 
       <a href="/blog/ai-trust/" class="post-card">
-        <span class="post-tag tag-product">Product</span>
-        <h2>Building AI Tools People Actually Trust</h2>
+        <span class="post-tag tag-product">AI adoption</span>
+        <h2>Building AI tools people can trust</h2>
         <div class="post-meta">
-          <span>Apr 10, 2026</span>
-          <span>5 min read</span>
+          <span>Updated Sep 24, 2026</span>
+          <span>3 min read</span>
         </div>
-        <p class="post-excerpt">Recording changes how people talk. That is not an AI problem, it is a recording problem. Consent-first design minimizes the effect and produces better signal.</p>
+        <p class="post-excerpt">Clear consent, processing choices, and human review are part of designing useful session tools.</p>
         <div class="post-read">Read &rarr;</div>
       </a>
 
-      <a href="/blog/game-dev-systems/" class="post-card">
+      <a href="/blog/systems-under-pressure/" class="post-card">
         <span class="post-tag tag-career">Career</span>
-        <h2>What Game Dev Taught Me About Systems That Break</h2>
+        <h2>What twenty years taught me about systems</h2>
         <div class="post-meta">
-          <span>Apr 13, 2026</span>
-          <span>7 min read</span>
+          <span>Updated Sep 22, 2026</span>
+          <span>3 min read</span>
         </div>
-        <p class="post-excerpt">Game dev is one of the most operationally complex things humans do. The cascade is always the real problem, and the people nobody listens to already know the answer.</p>
+        <p class="post-excerpt">Trace failures to their source, listen to the people across the handoffs, and adapt the fix to the organisation in front of you.</p>
         <div class="post-read">Read &rarr;</div>
       </a>
 
     </div>
   </section>
 
+<section class="page-links" aria-label="Related pages">
+  <h2>Put it into practice</h2>
+  <div class="page-links-grid">
+    <a href="/consulting/"><span class="page-link-label">Consulting</span><span class="page-link-title">Find the break in your workflow <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">See how I work with teams, from discovery through implementation.</span></a>
+    <a href="/blog/systems-under-pressure/"><span class="page-link-label">Experience</span><span class="page-link-title">What twenty years taught me about systems <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">Trace the problem back through the handoffs before changing the process.</span></a>
+  </div>
+</section>
+
 </main>
 
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">Couloir<span>GG</span> LLC</div>
+    <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
     <div class="footer-links">
       <a href="https://github.com/CouloirGG" target="_blank">GitHub</a>
       <a href="https://discord.gg/mwNZ8P6q" target="_blank">Discord</a>
@@ -340,7 +314,6 @@
       <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank">Bluesky</a>
       <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank">YouTube</a>
       <a href="https://www.reddit.com/r/CouloirGG/" target="_blank">Reddit</a>
-      <a href="https://couloirgg.itch.io/" target="_blank">itch.io</a>
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
     </div>

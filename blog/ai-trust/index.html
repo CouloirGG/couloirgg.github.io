@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Building AI Tools People Actually Trust | CouloirGG</title>
-  <meta name="description" content="Recording changes how people talk. That is not an AI problem, it is a recording problem. Consent-first design minimizes the effect and produces better data. Why AXIS runs locally and requires explicit consent.">
-  <meta property="og:title" content="Building AI Tools People Actually Trust">
-  <meta property="og:description" content="Recording changes how people talk. Consent-first design minimizes the effect and produces better data.">
+  <title>Building AI tools people can trust | CouloirGG</title>
+  <meta name="description" content="Why clear recording consent, processing choices, and human review matter when adopting AI tools for business workflows.">
+  <meta property="og:title" content="Building AI tools people can trust">
+  <meta property="og:description" content="Why clear recording consent, processing choices, and human review matter when adopting AI tools for business workflows.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://couloir.gg/blog/ai-trust/">
   <meta property="og:site_name" content="CouloirGG">
@@ -14,8 +14,8 @@
   <meta property="article:published_time" content="2026-04-10T00:00:00Z">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@CouloirGG">
-  <meta name="twitter:title" content="Building AI Tools People Actually Trust">
-  <meta name="twitter:description" content="Recording changes how people talk. Consent-first design minimizes the effect and produces better data.">
+  <meta name="twitter:title" content="Building AI tools people can trust">
+  <meta name="twitter:description" content="Why clear recording consent, processing choices, and human review matter when adopting AI tools for business workflows.">
   <meta name="twitter:image" content="https://couloir.gg/assets/og/og-ai-trust.svg">
   <link rel="canonical" href="https://couloir.gg/blog/ai-trust/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,15 +34,12 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Building AI Tools People Actually Trust",
-    "description": "Recording changes how people talk. Consent-first design minimizes the effect and produces better data.",
+    "headline": "Building AI tools people can trust",
+    "description": "Why clear recording consent, processing choices, and human review matter when adopting AI tools for business workflows.",
     "url": "https://couloir.gg/blog/ai-trust/",
     "datePublished": "2026-04-10",
-    "author": {
-      "@type": "Organization",
-      "name": "CouloirGG",
-      "url": "https://couloir.gg"
-    },
+    "dateModified": "2026-09-24",
+    "author": { "@type": "Person", "name": "Stuart White", "url": "https://couloir.gg/consulting/" },
     "publisher": {
       "@type": "Organization",
       "name": "CouloirGG",
@@ -78,41 +75,6 @@
       background: var(--bg-dark);
       color: var(--text-light);
       line-height: 1.6;
-    }
-
-    /* NAV */
-    .site-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(10,26,32,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(167,219,120,0.1);
-    }
-    .nav-brand {
-      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
-      color: rgba(255,255,255,0.25); text-decoration: none;
-    }
-    .nav-brand span { color: var(--lime); }
-    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
-    .nav-links a {
-      color: var(--text-dim); text-decoration: none;
-      font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--lime); }
-    .nav-links a.active { color: var(--lime); }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--text-dim); margin: 4px 0; transition: 0.3s; border-radius: 1px; }
-    @media (max-width: 640px) {
-      .nav-toggle { display: block; }
-      .nav-links {
-        display: none; position: absolute; top: 100%; left: 0; right: 0;
-        flex-direction: column; background: rgba(10,26,32,0.97);
-        backdrop-filter: blur(20px); padding: 1.5rem 2rem; gap: 1.25rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-links.open { display: flex; }
     }
 
     /* ARTICLE */
@@ -260,21 +222,22 @@
       .footer-links { justify-content: center; }
     }
   </style>
+<link rel="stylesheet" href="/assets/site-navigation.css">
+<script src="/assets/site-navigation.js" defer></script>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="site-nav">
-  <a href="/" class="nav-brand">Couloir<span>GG</span></a>
-  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="CouloirGG home">Couloir<span>GG</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="main-nav-links" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links">
-    <a href="/#services">Services</a>
-    <a href="/#tools">Tools</a>
-    <a href="/consulting">Consulting</a>
-    <a href="/blog" class="active">Blog</a>
-    <a href="/consulting#contact">Contact</a>
+  <div class="nav-links" id="main-nav-links">
+    <a href="/consulting/">Consulting</a>
+
+    <a href="/blog/" class="active" aria-current="page">Blog</a>
+    <a href="/consulting/#contact">Contact</a>
   </div>
 </nav>
 
@@ -282,71 +245,52 @@
   <article class="article">
     <a href="/blog/" class="back-link">&larr; Back to blog</a>
 
-    <span class="post-tag">Product</span>
-    <h1>Building AI Tools People Actually Trust</h1>
+    <span class="post-tag">AI adoption</span>
+    <h1>Building AI tools people can trust</h1>
     <div class="post-meta">
-      <span>April 10, 2026</span>
-      <span>5 min read</span>
+      <span>Stuart White</span>
+      <span>Updated September 24, 2026</span>
+      <span>3 min read</span>
     </div>
 
     <div class="article-body">
+      <p>Knowing a conversation is being recorded can change what someone is willing to say. AI adds another question: who will see the summary, and what will they think it means?</p>
+      <p>That is a practical concern when helping a team adopt AI tools. Useful notes depend on people understanding what is captured, where it is processed, and how it will be shared.</p>
 
-      <p>There is a moment in every meeting where someone says "just so everyone knows, this is being recorded." It does not matter whether it is an AI tool or a basic screen capture. The effect is the same. Nobody panics. Nobody storms out. But the tone shifts. People become slightly more measured, slightly more diplomatic. The conversation still happens, but it becomes a more tactful version of itself.</p>
+      <h2>Make consent understandable</h2>
+      <p>Before recording starts, participants should know what will be captured and who will have access. The person running the session needs to obtain their consent and respect a decision not to record.</p>
+      <p>A tool may ask its user to acknowledge a consent notice before starting a session. That acknowledgement does not establish that everyone present has agreed. The person running the session still needs to obtain participant consent.</p>
+      <p>I want the process around the tool to make those responsibilities clear. A recording indicator helps people know a session is active; it cannot replace the conversation about whether it should be recorded.</p>
 
-      <p>This is not an AI problem. It is a recording problem. It has existed since the first person hit the record button on a conference call. But AI tools have amplified it, because they do not just store the recording. They transcribe it, summarize it, and surface it to people who were not in the room. The audience for your words just got a lot bigger, and people adjust accordingly.</p>
+      <h2>Explain where the data goes</h2>
+      <p>Some tools support local transcription and analysis, allowing a session to be processed on the team's own hardware. That can be useful when conversations need to stay within a controlled environment.</p>
+      <p>Cloud transcription or AI analysis sends relevant audio or text to an external provider. Sharing notes with a team introduces another choice about who can access the output. Check how the chosen tool handles each step.</p>
+      <p>Those options need clear explanations. Calling an application local-first should not leave someone assuming that every configuration keeps all data on the device.</p>
+      <blockquote><p>People should be able to explain where their recording goes before they start one.</p></blockquote>
 
-      <h2>The consent problem</h2>
+      <h2>Account for the trade-offs</h2>
+      <p>Local processing depends on the available hardware and models. Cloud processing introduces another provider and its data-handling terms. Asking for consent takes time, and some sessions should remain unrecorded.</p>
+      <p>These are practical choices to make with the team. The right configuration depends on the work, the people involved, and the information being discussed.</p>
+      <p>A tool also needs a useful path when recording is not appropriate. A brief written decision or an agreed action list may be enough for that session.</p>
 
-      <p>Most AI meeting tools follow the same playbook. They record by default. Opt-out is buried in settings. The bot joins the call automatically, and participants are notified after the fact, if they are notified at all. The design assumption is that recording everything produces the most value, and consent is a friction point to be minimized.</p>
-
-      <p>From a pure data volume perspective, this is correct. You capture more audio. You generate more transcripts. You have more content to summarize.</p>
-
-      <p>But it makes the tactfulness problem worse, not better. When people do not feel like they chose to be recorded, the adjustment is stronger. It is the difference between choosing to go on the record and finding out you already were. Both produce more careful language. One of them also produces resentment.</p>
-
-      <p>The tool gets the meeting. It does not get the version people would have had without it.</p>
-
-      <h2>Local-first is a trust decision</h2>
-
-      <p>When we built AXIS, we made a decision early that shaped everything else: the tool runs locally. Audio stays on the user's machine. Processing happens on the user's hardware. Nothing leaves the device unless the user explicitly chooses to send it somewhere.</p>
-
-      <p>This was not a technical constraint. Cloud processing would have been easier to build and easier to scale. Local-first was a trust decision. We wanted users to be able to answer the question "where does my data go?" with complete certainty: "Nowhere. It stays right here."</p>
-
-      <p>The second decision was consent. AXIS does not record anything without explicit, per-session consent from every participant. Not a banner notification. Not a terms-of-service checkbox. A deliberate "yes, I want this session recorded" from each person in the room.</p>
-
-      <p>You cannot eliminate the recording effect entirely. People will always be slightly more deliberate when they know something is being captured. But you can minimize it. When people actively chose to be recorded, and they know the data stays on their machine, the gap between what they would have said and what they actually say gets a lot smaller.</p>
-
-      <h2>What consent-first design costs</h2>
-
-      <p>We should be honest about the trade-offs. Consent-first design is not free.</p>
-
-      <p>It costs market share. A tool that requires explicit consent from every participant will never capture as many meetings as a tool that records by default. Some meetings will not be recorded because one person declines. That is by design, but it means fewer total sessions processed.</p>
-
-      <p>It costs convenience. Asking for consent adds a step. Users have to initiate the process. Participants have to agree. There is a moment of friction that default-on tools skip entirely.</p>
-
-      <p>It costs development speed. Local-first architecture is harder to build, harder to debug, and harder to update than cloud-based processing. Every model update has to be distributed to end-user machines instead of deployed once to a server.</p>
-
-      <p>These are real costs. We chose to absorb them because the alternative, building a tool that records people without giving them genuine agency over the process, was not something we were willing to ship.</p>
-
-      <h2>The signal quality paradox</h2>
-
-      <p>Here is what most people miss about consent-first design: it produces better data.</p>
-
-      <p>The recording effect is a spectrum, not a binary. At one end, someone who chose to record and controls the data. At the other, someone who discovered after the fact that their words were transcribed and sent to their manager's dashboard. Both people adjust their language. But the person with agency adjusts a little. The person without it adjusts a lot.</p>
-
-      <blockquote>
-        <p>Consent does not eliminate the recording effect. It reduces it to its minimum. And that minimum is where the best data lives.</p>
-      </blockquote>
-
-      <p>A tool that captures 100% of meetings but gets the extra-diplomatic version of each one is less valuable than a tool that captures 70% of meetings but gets the version closer to how people actually talk when the stakes feel manageable. The decisions that matter, the disagreements that need to surface, the concerns that need to be heard: those appear more readily when people feel ownership over the recording process.</p>
-
-      <p>This is not an idealistic argument. It is a practical one. The entire value proposition of an AI meeting tool is extracting actionable intelligence from conversations. If everyone is being tactful to a fault, the intelligence is shallow. Consent is not a limitation on the product. It is a prerequisite for the product to work as intended.</p>
-
+      <h2>Keep people in the review</h2>
+      <p>An AI summary is an interpretation of a conversation. It can miss context, attribute an action incorrectly, or present an open question as a decision. A fluent report still needs checking.</p>
+      <p>In my view, trust depends on making that review part of the workflow. The people responsible for an action should be able to check what was captured and clarify what they agreed to do.</p>
+      <p>The aim is useful context that people understand and can work with. The amount of audio recorded is a poor measure of that on its own.</p>
     </div>
 
     <div class="cta-box">
-      <p>AXIS Producer captures meetings with full participant consent and local-first processing. No cloud uploads. No default-on recording. Just the signal that matters.</p>
-      <a href="/axis" class="cta-link">Learn about AXIS</a>
+      <p>If your team is considering AI tools, I can help assess where they fit, how information should be handled, and how people will review the results.</p>
+      <a href="/consulting/" class="cta-link">Explore AI adoption consulting</a>
     </div>
+
+<section class="page-links" aria-label="Related pages">
+  <h2>Keep reading</h2>
+  <div class="page-links-grid">
+    <a href="/blog/signal-loss/"><span class="page-link-label">Operations</span><span class="page-link-title">Why good tools still leave gaps between teams <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How information gets lost between teams, and where to start looking.</span></a>
+    <a href="/blog/systems-under-pressure/"><span class="page-link-label">Experience</span><span class="page-link-title">What twenty years taught me about systems <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">Trace the problem back through the handoffs before changing the process.</span></a>
+  </div>
+</section>
 
     <a href="/blog/" class="back-bottom">&larr; Back to blog</a>
   </article>
@@ -355,7 +299,7 @@
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">Couloir<span>GG</span> LLC</div>
+    <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
     <div class="footer-links">
       <a href="https://github.com/CouloirGG" target="_blank">GitHub</a>
       <a href="https://discord.gg/mwNZ8P6q" target="_blank">Discord</a>
@@ -363,7 +307,6 @@
       <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank">Bluesky</a>
       <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank">YouTube</a>
       <a href="https://www.reddit.com/r/CouloirGG/" target="_blank">Reddit</a>
-      <a href="https://couloirgg.itch.io/" target="_blank">itch.io</a>
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
     </div>

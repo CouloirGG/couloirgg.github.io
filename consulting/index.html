@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consulting | CouloirGG</title>
-  <meta name="description" content="Systems architecture and operational consulting. Twenty years of production-grade systems thinking applied to your organization. Find the break, fix it, leave the team more capable.">
-  <meta property="og:title" content="Consulting | CouloirGG">
-  <meta property="og:description" content="I find where things break. Then I fix them. Twenty years building and debugging complex systems across AAA game studios, now applied to your organization.">
+  <title>Stuart White | Consulting | CouloirGG</title>
+  <meta name="description" content="Systems architecture and operational consulting with Stuart White. Twenty years of experience across Zipper Interactive, Turn 10, Microsoft, Bungie, and EA.">
+  <meta property="og:title" content="Stuart White | Consulting | CouloirGG">
+  <meta property="og:description" content="Stuart White brings twenty years of experience to systems architecture, AI adoption, and operational consulting.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://couloir.gg/consulting">
   <meta property="og:image" content="https://couloir.gg/assets/og/og-consulting.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@CouloirGG">
-  <meta name="twitter:title" content="Consulting | CouloirGG">
+  <meta name="twitter:title" content="Stuart White | Consulting | CouloirGG">
   <meta name="twitter:description" content="I find where things break. Then I fix them. Systems architecture and operational consulting.">
   <meta name="twitter:image" content="https://couloir.gg/assets/og/og-consulting.svg">
   <link rel="canonical" href="https://couloir.gg/consulting/">
@@ -28,7 +28,7 @@
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Systems Architecture & Operational Consulting",
-    "description": "Find where information stops travelling in your organization, diagnose the structural cause, and build the fix.",
+    "description": "Find where information stops travelling in your organisation, diagnose the structural cause, and build the fix.",
     "url": "https://couloir.gg/consulting/",
     "provider": {
       "@type": "Organization",
@@ -36,8 +36,12 @@
       "url": "https://couloir.gg"
     },
     "serviceType": "Operational Consulting",
-    "areaServed": "Worldwide"
+    "areaServed": "Worldwide",
+    "mainEntityOfPage": "https://couloir.gg/consulting/"
   }
+  </script>
+  <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "Person", "@id": "https://couloir.gg/consulting/#stuart-white", "name": "Stuart White", "jobTitle": "Independent Consultant", "url": "https://couloir.gg/consulting/", "worksFor": { "@type": "Organization", "name": "CouloirGG LLC", "url": "https://couloir.gg/" }, "knowsAbout": ["Systems architecture", "Operational consulting", "AI adoption", "Quality assurance", "Workflow design"] }
   </script>
   <!-- Privacy-friendly analytics by Plausible -->
   <script async src="https://plausible.io/js/pa-jsKuNwamSbECoYw-7tuuA.js"></script>
@@ -77,49 +81,10 @@
       overflow-x: hidden;
     }
 
-    /* NAV */
-    .site-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(10,26,32,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(167,219,120,0.1);
-    }
-    .nav-brand {
-      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
-      color: rgba(255,255,255,0.25); text-decoration: none;
-    }
-    .nav-brand span { color: var(--lime); }
-    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
-    .nav-links a {
-      color: var(--text-dim); text-decoration: none;
-      font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--lime); }
-    .nav-links a.active { color: var(--lime); }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--text-dim); margin: 4px 0; transition: 0.3s; border-radius: 1px; }
-    @media (max-width: 640px) {
-      .nav-toggle { display: block; }
-      .nav-links {
-        display: none;
-        position: absolute; top: 100%; left: 0; right: 0;
-        flex-direction: column;
-        background: rgba(10,26,32,0.97);
-        backdrop-filter: blur(20px);
-        padding: 1.5rem 2rem; gap: 1.25rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-links.open { display: flex; }
-    }
-
     /* HERO */
     .hero {
-      min-height: 100vh;
       display: flex; flex-direction: column; justify-content: center;
-      padding: 8rem 2rem 5rem;
+      padding: 8rem 2rem 3.5rem;
       max-width: 900px; margin: 0 auto;
       position: relative;
     }
@@ -664,61 +629,97 @@
       .cred-card.featured { grid-column: span 1; }
       .case-grid { grid-template-columns: 1fr; }
     }
+
+/* Career experience */
+.career-intro { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+.career-kicker { color: #A7DB78; font: 0.68rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.career-intro h2 { font-size: clamp(1.55rem, 4vw, 2.25rem); font-weight: 600; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: rgba(255,255,255,0.92); }
+.career-copy { color: rgba(255,255,255,0.65); font-size: 0.95rem; line-height: 1.8; max-width: 720px; }
+.career-copy a { color: #A7DB78; text-underline-offset: 4px; }
+.career-logos { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center; gap: 1.5rem; margin: 2rem 0 0; padding: 1.75rem 0; border-top: 1px solid rgba(255,255,255,0.12); border-bottom: 1px solid rgba(255,255,255,0.12); }
+.career-logos li { min-width: 0; display: flex; align-items: center; justify-content: center; height: 68px; }
+.career-logos img { display: block; width: 100%; max-width: 135px; height: 44px; object-fit: contain; }
+.career-logos .career-turn10 { height: 66px; }
+.career-logos .career-on-light { background: #f5f7fa; border-radius: 4px; padding: 10px; }
+.career-caption { margin-top: 0.9rem; font-size: 0.72rem; line-height: 1.7; color: rgba(255,255,255,0.55); }
+.career-background { margin: 2rem 0 0; }
+.career-background .career-logos { margin-top: 0; }
+@media (max-width: 600px) {
+  .career-intro { padding: 0 1.5rem 3rem; }
+  .career-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; }
+  .career-logos li:last-child { grid-column: 1 / -1; }
+}
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .scroll-line { animation: none; }
+    }
+    [id] { scroll-margin-top: 5.5rem; }
+    .page-sections { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.25rem; }
+    .page-sections span { font: 0.65rem 'JetBrains Mono', monospace; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+    .page-sections a { color: var(--text-light); font-size: 0.8rem; text-underline-offset: 4px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-offset: 5px; }
+    @media (max-width: 640px) { .hero { padding: 6.5rem 1.5rem 2.5rem; } .page-sections span { flex-basis: 100%; } }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-eyebrow, .hero h1, .hero-body, .hero-cta { animation: none; opacity: 1; transform: none; }
+    }
   </style>
+<link rel="stylesheet" href="/assets/site-navigation.css">
+<script src="/assets/site-navigation.js" defer></script>
 </head>
 <body>
 
 <div class="bg-grid"></div>
 
 <!-- NAV -->
-<nav class="site-nav">
-  <a href="/" class="nav-brand">Couloir<span>GG</span></a>
-  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="CouloirGG home">Couloir<span>GG</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="main-nav-links" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links">
-    <a href="/#problem">The Problem</a>
-    <a href="/#approach">Approach</a>
-    <a href="/#services">Services</a>
-    <a href="/#tools">Tools</a>
-    <a href="/blog">Blog</a>
-    <a href="#contact">Contact</a>
+  <div class="nav-links" id="main-nav-links">
+    <a href="/consulting/" class="active" aria-current="page">Consulting</a>
+
+    <a href="/blog/">Blog</a>
+    <a href="/consulting/#contact">Contact</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="section section-dark">
   <div class="hero">
-    <div class="hero-eyebrow">// consulting</div>
+    <div class="hero-eyebrow" id="stuart-white">// Stuart White &middot; independent consultant</div>
     <h1>I find where things<br>break. <em>Then I fix them.</em></h1>
     <p class="hero-body">
-      Twenty years building and debugging complex systems across AAA game studios
-      built one repeatable instinct: systems fail in predictable ways, the failure
-      is almost never where leadership thinks it is, and the fix is almost always
-      more surgical than anyone expects.
+      I help organisations find where information stops travelling, where handoffs
+      lose context, and where good people are spending time working around the system.
+      Then I design and build the fix. Twenty years in quality, production, and
+      complex operations inform how I work.
     </p>
+    <p class="hero-body">AI adoption and workflow consulting for businesses outside the games industry. Engagements exclude game-related entertainment and work for companies in the games business.</p>
     <div class="hero-cta">
-      <a href="#approach" class="btn-outline">See the method</a>
-      <a href="#contact" class="btn-ghost">Start a conversation &rarr;</a>
+      <a href="mailto:hello@couloir.gg" class="btn-outline" onclick="plausible('Contact+Click')">Start a conversation &rarr;</a>
+      <a href="/#services" class="btn-ghost">Explore services</a>
     </div>
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      scroll to explore
-    </div>
+    <nav class="page-sections" aria-label="On this page">
+      <span>On this page</span>
+      <a href="#approach">The method</a>
+      <a href="#systems">Systems</a>
+      <a href="#people">People</a>
+      <a href="#background">My background</a>
+    </nav>
   </div>
 </section>
 
 <!-- APPROACH -->
 <section class="section section-dark" id="approach">
   <div class="section-inner">
-    <div class="section-label reveal">// the engagement loop</div>
+    <div class="section-label reveal">// the method</div>
     <h2 class="section-title reveal reveal-delay-1">
-      Five phases. One repeatable outcome.
+      From discovery to a working fix.
     </h2>
     <p class="section-body reveal reveal-delay-2">
-      Every engagement runs the same loop regardless of industry, company size,
-      or type of problem. The shape of failure is consistent. The method of
-      finding it is too.
+      I use these five steps to understand the work, agree priorities, and make useful changes. The scope and pace depend on your team and the problem.
     </p>
 
     <div class="phases">
@@ -728,13 +729,8 @@
           <div class="phase-vert"></div>
         </div>
         <div class="phase-content">
-          <div class="phase-title">Research before touching anything</div>
-          <div class="phase-desc">
-            Before entering a building, I map the company's public footprint: market
-            position, product complexity, vertical, and the generic failure modes
-            for organizations of this type and size. I walk in already knowing where
-            to look.
-          </div>
+          <div class="phase-title">Understand the business</div>
+          <div class="phase-desc">I review the business, its products, and its operating context before we meet. That gives us a starting point for the questions, without assuming I already know the answer.</div>
         </div>
         <div class="phase-tag tag-observe">Observe</div>
       </div>
@@ -745,12 +741,8 @@
           <div class="phase-vert"></div>
         </div>
         <div class="phase-content">
-          <div class="phase-title">Get the ownership view first</div>
-          <div class="phase-desc">
-            Leadership gets the first conversation. What do they believe is broken,
-            what have they already tried, and what does success look like to them
-            specifically. This surfaces the official story and its gaps simultaneously.
-          </div>
+          <div class="phase-title">Agree what needs to change</div>
+          <div class="phase-desc">I start with the people responsible for the outcome. We discuss what feels difficult, what has been tried, and how we will recognise an improvement.</div>
         </div>
         <div class="phase-tag tag-observe">Observe</div>
       </div>
@@ -762,13 +754,9 @@
         </div>
         <div class="phase-content">
           <div class="phase-title">Talk to the people doing the work</div>
-          <div class="phase-desc">
-            Targeted one-on-one conversations, not town halls. The people closest to
-            the friction already know what is wrong. They have never been asked the
-            right questions by someone with the authority to act on the answers.
-          </div>
+          <div class="phase-desc">I talk with the people handling the work each day. Their handoffs and workarounds help explain where the process fits and where it creates extra effort.</div>
         </div>
-        <div class="phase-tag tag-analyze">Analyze</div>
+        <div class="phase-tag tag-analyze">Analyse</div>
       </div>
 
       <div class="phase-item reveal reveal-delay-4">
@@ -777,14 +765,10 @@
           <div class="phase-vert"></div>
         </div>
         <div class="phase-content">
-          <div class="phase-title">Build the full picture</div>
-          <div class="phase-desc">
-            Synthesize the chain map, the people map, and the cascade analysis into
-            one clear document: where things actually fail, why, and what each failure
-            costs per cycle in time, money, and organizational momentum.
-          </div>
+          <div class="phase-title">Map the problem</div>
+          <div class="phase-desc">I bring the workflow, responsibilities, and dependencies into one picture. We identify where context gets lost, how the problem affects other teams, and which changes are worth making.</div>
         </div>
-        <div class="phase-tag tag-analyze">Analyze</div>
+        <div class="phase-tag tag-analyze">Analyse</div>
       </div>
 
       <div class="phase-item reveal reveal-delay-5">
@@ -793,12 +777,8 @@
           <div class="phase-vert"></div>
         </div>
         <div class="phase-content">
-          <div class="phase-title">Make precise cuts and build the fix</div>
-          <div class="phase-desc">
-            No overhaul. No reorganization theater. Specific interventions: a new tool,
-            a process tweak, a redirected employee focus, an automation that removes a
-            class of work entirely. Then I stay and build it until it runs.
-          </div>
+          <div class="phase-title">Build and validate the change</div>
+          <div class="phase-desc">The agreed changes might be an automation, a clearer handoff, or a small internal tool. I build and document the change, then check it with the people who will use it.</div>
         </div>
         <div class="phase-tag tag-execute">Execute</div>
       </div>
@@ -811,12 +791,10 @@
   <div class="section-inner">
     <div class="section-label reveal">// systems thinking</div>
     <h2 class="section-title reveal reveal-delay-1">
-      Every operation is a chain.
+      Follow the dependencies.
     </h2>
     <p class="section-body reveal reveal-delay-2">
-      Problems do not live in isolation. They originate at a specific link, then
-      bleed forward and backward from there. Most organizations treat the cascade.
-      I find the origin.
+      A delay in one step can change the work at several others. I trace those dependencies to understand where a problem starts and where the team is absorbing its effects.
     </p>
 
     <div class="chain-visual reveal reveal-delay-3">
@@ -850,7 +828,7 @@
             <div class="chain-badge">cascade</div>
             <div class="chain-name">Execution<br>/ Delivery</div>
           </div>
-          <div class="chain-sublabel">People get blamed</div>
+          <div class="chain-sublabel">Delivery is delayed</div>
         </div>
         <div class="chain-arrow">&rsaquo;</div>
         <div class="chain-node">
@@ -858,32 +836,23 @@
             <div class="chain-badge">healthy</div>
             <div class="chain-name">Handoff &amp;<br>Output</div>
           </div>
-          <div class="chain-sublabel">Client feels it</div>
+          <div class="chain-sublabel">Customer impact</div>
         </div>
       </div>
     </div>
 
     <div class="chain-explainer">
       <div class="bleed-card bc-red reveal reveal-delay-1">
-        <div class="bleed-title">Upstream bleed</div>
-        <div class="bleed-desc">
-          Backlog and rework pressure earlier stages, forcing re-intake,
-          re-planning, and re-prioritization loops.
-        </div>
+        <div class="bleed-title">Earlier work repeats</div>
+        <div class="bleed-desc">Missing or changed information sends work back for clarification, planning, or another review.</div>
       </div>
       <div class="bleed-card bc-amber reveal reveal-delay-2">
-        <div class="bleed-title">Downstream cascade</div>
-        <div class="bleed-desc">
-          Late or incorrect outputs force every subsequent step to absorb the
-          error, compounding delay and quality loss per cycle.
-        </div>
+        <div class="bleed-title">Later work is delayed</div>
+        <div class="bleed-desc">A late or incomplete handoff leaves the next team with less time and more uncertainty.</div>
       </div>
       <div class="bleed-card bc-blue reveal reveal-delay-3">
-        <div class="bleed-title">Lateral contamination</div>
-        <div class="bleed-desc">
-          Parallel tracks get pulled in to compensate, stealing capacity from
-          systems that were working fine before the cascade.
-        </div>
+        <div class="bleed-title">Other teams absorb the work</div>
+        <div class="bleed-desc">People are pulled from other work to help, creating delays beyond the original workflow.</div>
       </div>
     </div>
   </div>
@@ -892,14 +861,12 @@
 <!-- ORG / PEOPLE -->
 <section class="section org-section" id="people">
   <div class="section-inner">
-    <div class="section-label reveal">// people architecture</div>
+    <div class="section-label reveal">// roles and responsibilities</div>
     <h2 class="section-title reveal reveal-delay-1">
-      Organizations are chains too.
+      Understand how people work together.
     </h2>
     <p class="section-body reveal reveal-delay-2">
-      Every person connects upward and sideways. Friction is rarely one
-      person's fault. It is almost always a gap between two people that
-      nobody formally owns. I map both the official org and the real one.
+      The organisation chart shows formal responsibility. Conversations show who people rely on, where work is shared, and which decisions have no clear owner. I look at both.
     </p>
 
     <div class="hier-wrap reveal reveal-delay-3">
@@ -935,7 +902,7 @@
           <div class="branch-col">
             <div class="branch-col-line"></div>
             <div class="hnode hn-gap" onclick="selectNode(3)">
-              <div class="hn-name">Gap zone</div>
+              <div class="hn-name">Ownership gap</div>
               <div class="hn-role">No clear owner</div>
               <div class="hn-badge hb-gap">Watch</div>
             </div>
@@ -948,32 +915,32 @@
           <div class="branch-col">
             <div class="branch-col-line"></div>
             <div class="hnode" onclick="selectNode(4)">
-              <div class="hn-name">Key operator</div>
-              <div class="hn-role">High leverage IC</div>
-              <div class="hn-badge hb-key">High leverage</div>
+              <div class="hn-name">Key contributor</div>
+              <div class="hn-role">Specialist knowledge</div>
+              <div class="hn-badge hb-key">Protect focus</div>
             </div>
           </div>
           <div class="branch-col">
             <div class="branch-col-line"></div>
             <div class="hnode" onclick="selectNode(5)">
-              <div class="hn-name">Friction carrier</div>
-              <div class="hn-role">Absorbing bad process</div>
+              <div class="hn-name">Workaround owner</div>
+              <div class="hn-role">Filling process gaps</div>
               <div class="hn-badge hb-ic">IC</div>
             </div>
           </div>
           <div class="branch-col">
             <div class="branch-col-line"></div>
             <div class="hnode" onclick="selectNode(6)">
-              <div class="hn-name">Ghost resource</div>
-              <div class="hn-role">Underutilized</div>
-              <div class="hn-badge hb-amber">Repoint</div>
+              <div class="hn-name">Underused skills</div>
+              <div class="hn-role">Available expertise</div>
+              <div class="hn-badge hb-amber">Review focus</div>
             </div>
           </div>
           <div class="branch-col">
             <div class="branch-col-line"></div>
             <div class="hnode" onclick="selectNode(7)">
-              <div class="hn-name">Unofficial hub</div>
-              <div class="hn-role">Off the org chart</div>
+              <div class="hn-name">Team connector</div>
+              <div class="hn-role">Informal coordination</div>
               <div class="hn-badge hb-key">Key person</div>
             </div>
           </div>
@@ -982,33 +949,33 @@
     </div>
 
     <div class="node-detail" id="node-detail">
-      Click any node to understand how I read and act on that role type.
+      Select a role to see the questions I would explore.
     </div>
 
     <div class="cat-grid">
       <div class="cat-card reveal reveal-delay-1">
         <div class="cat-label" style="color:#a78bfa;">Decision maker</div>
-        <div class="cat-desc">The person whose buy-in determines whether any change actually lands. Not always the most senior person in the room.</div>
+        <div class="cat-desc">The person who can agree priorities, resolve trade-offs, and support the change.</div>
       </div>
       <div class="cat-card reveal reveal-delay-2">
         <div class="cat-label" style="color:#38bdf8;">Manager</div>
-        <div class="cat-desc">How much of their time is real management versus IC work filling a staffing gap? That ratio reveals org health faster than any survey.</div>
+        <div class="cat-desc">How much time goes into coordination, and how much into covering work the team cannot otherwise complete?</div>
       </div>
       <div class="cat-card reveal reveal-delay-3">
-        <div class="cat-label" style="color:var(--lime);">High-leverage IC</div>
-        <div class="cat-desc">The person whose output quality multiplies everyone around them. Protecting their focus is often the highest-ROI intervention available.</div>
+        <div class="cat-label" style="color:var(--lime);">Key contributor</div>
+        <div class="cat-desc">Someone whose knowledge helps others make progress. I look at how to protect their focus and share that knowledge.</div>
       </div>
       <div class="cat-card reveal reveal-delay-4">
-        <div class="cat-label" style="color:var(--red);">Gap zone</div>
-        <div class="cat-desc">A responsibility that lives between two teams with no clear owner. This is almost always where cascade problems originate.</div>
+        <div class="cat-label" style="color:var(--red);">Ownership gap</div>
+        <div class="cat-desc">Work shared between teams without a clear owner. Agreeing responsibility can prevent repeated delays.</div>
       </div>
       <div class="cat-card reveal reveal-delay-1">
-        <div class="cat-label" style="color:var(--amber);">Ghost resource</div>
-        <div class="cat-desc">Capable, available, pointed at the wrong work. Not a performance problem. A routing problem. Repointing them is fast and high-impact.</div>
+        <div class="cat-label" style="color:var(--amber);">Underused skills</div>
+        <div class="cat-desc">Skills or capacity that the current work does not make good use of. I explore this with the person and their manager.</div>
       </div>
       <div class="cat-card reveal reveal-delay-2">
-        <div class="cat-label" style="color:var(--lime);">Unofficial hub</div>
-        <div class="cat-desc">The person everyone actually goes to when something breaks. Does not appear on the org chart at their real level of influence. Find them early.</div>
+        <div class="cat-label" style="color:var(--lime);">Team connector</div>
+        <div class="cat-desc">Someone people rely on for context or coordination, beyond their formal role. Their perspective helps explain how work gets done.</div>
       </div>
     </div>
   </div>
@@ -1017,49 +984,30 @@
 <!-- 10% RULE -->
 <section class="section ten-section" id="friction">
   <div class="section-inner">
-    <div class="section-label reveal">// the 10% rule</div>
+    <div class="section-label reveal">// daily friction</div>
     <h2 class="ten-hero reveal reveal-delay-1">
-      Remove <em>10%</em> of everyone's<br>daily friction.
+      Make <em>room</em> for<br>the work that matters.
     </h2>
     <p class="section-body reveal reveal-delay-2">
-      The whole organization moves faster. Not because of a transformation program,
-      but because 20 people each got back a piece of their day and stopped doing
-      the thing they hated most.
+      Repeated administrative work adds up. Removing a small task from several workflows can give a team more time for the work it is there to do.
     </p>
 
     <div class="ten-items">
       <div class="ten-item reveal reveal-delay-1">
         <div class="ten-dot"></div>
-        <div class="ten-text">
-          <strong>Find the repeating annoyances first.</strong> Every person has 3 to 5 things
-          they do every day that are not their real job, that nobody asked them to own,
-          and that could be eliminated or automated. Those are the targets.
-        </div>
+        <div class="ten-text"><strong>Start with repeated work.</strong> Look for information copied between tools, updates assembled by hand, and the same clarification requested at every handoff.</div>
       </div>
       <div class="ten-item reveal reveal-delay-2">
         <div class="ten-dot"></div>
-        <div class="ten-text">
-          <strong>Subtract, do not overhaul.</strong> I am not redesigning anyone's job.
-          I am removing the parts that drain energy and produce nothing. The rest of
-          the day sharpens automatically.
-        </div>
+        <div class="ten-text"><strong>Keep what already works.</strong> Make a focused change around the parts people rely on, and check that it reduces effort in practice.</div>
       </div>
       <div class="ten-item reveal reveal-delay-3">
         <div class="ten-dot"></div>
-        <div class="ten-text">
-          <strong>Multiply across the org.</strong> 10% recovered for 20 people is not
-          just two recovered FTEs of time. It is 20 people who are less frustrated,
-          more focused, and slightly better at the work that actually matters.
-        </div>
+        <div class="ten-text"><strong>Check the effect across the team.</strong> A change that saves one person time should not leave someone else with more work. Follow it through the full workflow.</div>
       </div>
       <div class="ten-item reveal reveal-delay-4">
         <div class="ten-dot"></div>
-        <div class="ten-text">
-          <strong>Common cuts:</strong> status meetings replaced by dashboards,
-          manual reporting replaced by automation, unclear handoffs replaced by
-          defined checklists, duplicated communication replaced by a single source
-          of truth.
-        </div>
+        <div class="ten-text"><strong>Possible changes:</strong> automate a recurring report, clarify who owns a handoff, or put a decision where the next team can find it.</div>
       </div>
     </div>
   </div>
@@ -1073,140 +1021,71 @@
       Twenty years of<br>production under pressure.
     </h2>
     <p class="section-body reveal reveal-delay-2">
-      AAA game development is one of the most operationally complex environments
-      that exists. Hundreds of people, massive technical interdependencies, and
-      no tolerance for cascade failure on launch day. That instinct travels.
+      My career spans Zipper Interactive, Turn 10 Studios, Microsoft,
+      343 Industries, Bungie, and Electronic Arts. Twenty years working with
+      interdependent teams taught me to trace a problem through the whole system,
+      rather than stop at the place where it becomes visible.
     </p>
+
+    <div class="career-background">
+
+      <p class="career-caption">These organisations are part of my career history, not consulting clients or endorsements. Consulting is provided independently through CouloirGG LLC.</p>
+    </div>
 
     <div class="cred-grid">
       <div class="cred-card featured reveal reveal-delay-1">
-        <div class="cred-eyebrow">core differentiator</div>
-        <div class="cred-title">I build the fix, not just the spec</div>
-        <div class="cred-body">
-          Most consultants deliver a document and leave. The deliverable here is a
-          running system: the automation configured, the tool built, the process
-          documented, and the thing validated before the engagement closes. You are
-          not left holding a roadmap and a bill.
-        </div>
+        <div class="cred-eyebrow">delivery</div>
+        <div class="cred-title">Built, documented, and tested</div>
+        <div class="cred-body">For implementation work, I stay through delivery: configuring the automation, building the tool, documenting the process, and testing the result with your team.</div>
       </div>
       <div class="cred-card reveal reveal-delay-2">
         <div class="cred-eyebrow">career foundation</div>
-        <div class="cred-title">AAA game development</div>
-        <div class="cred-body">
-          20 years across multiple major AAA studios designing operational
-          systems, production pipelines, triage automation, live data
-          dashboards, and cross-team workflows at scale.
-        </div>
+        <div class="cred-title">Quality, production, and operations</div>
+        <div class="cred-body">Experience leading test teams across live operations, builds, performance, usability testing, and user research. A view across the delivery process, from the initial requirement to the handoff and follow-through.</div>
       </div>
       <div class="cred-card reveal reveal-delay-3">
         <div class="cred-eyebrow">tooling</div>
-        <div class="cred-title">AI-augmented discovery</div>
-        <div class="cred-body">
-          AXIS captures and structures every discovery conversation so nothing falls
-          through the cracks. The analysis is documented and organized from day one,
-          not reconstructed from memory at the end of the engagement.
-        </div>
+        <div class="cred-title">Practical AI adoption</div>
+        <div class="cred-body">I help teams choose suitable AI tools, agree how information is handled, and build review into the workflow. For recorded sessions, that includes participant consent and a clear route from notes to action.</div>
       </div>
     </div>
 
-    <div class="timeline">
-      <div class="section-label" style="margin-top:3rem; margin-bottom:1.5rem;">// career timeline</div>
-      <div class="tl-item reveal reveal-delay-1">
-        <div class="tl-left">
-          <div class="tl-year">2007</div>
-          <div class="tl-dot accent"></div>
-          <div class="tl-line"></div>
-        </div>
-        <div class="tl-body">
-          <div class="tl-title">Where the instinct started</div>
-          <div class="tl-text">Walked into a first-party AAA studio and immediately saw the gap between how leadership thought production worked and how it actually worked. Spent the next several years learning that gap is universal, and the interesting problems always live inside it.</div>
-        </div>
+    <p class="section-body" style="margin-top:2rem;">
+      I founded CouloirGG LLC in 2026 to apply that experience to business operations:
+      workflow audits, AI adoption, and custom internal tooling. Based near Seattle,
+      I work directly with the people doing the work, from discovery through implementation.
+    </p>
+  </div>
+</section>
+
+<!-- ENGAGEMENT EXAMPLES -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <div class="section-label reveal">// where I can help</div>
+    <h2 class="section-title reveal reveal-delay-1">Make the handoff work.</h2>
+    <p class="section-body reveal reveal-delay-2">Two common places to start. The work begins by understanding your process and agreeing what a useful result looks like.</p>
+    <div class="case-grid">
+      <div class="case-card reveal reveal-delay-1">
+        <div class="case-eyebrow">Workflow architecture</div>
+        <div class="case-title">Context lost between teams</div>
+        <div class="case-body">A decision lands in one tool, someone copies it into another, and delivery starts with half the context. I map that path, clarify ownership, and build the connection that carries the information forward.</div>
+        <div class="case-result"><div class="case-result-label">The work</div><div class="case-result-text">A workflow map, clear handoffs, and targeted automation built into the tools your team uses.</div></div>
       </div>
-      <div class="tl-item reveal reveal-delay-2">
-        <div class="tl-left">
-          <div class="tl-year">2011</div>
-          <div class="tl-dot accent"></div>
-          <div class="tl-line"></div>
-        </div>
-        <div class="tl-body">
-          <div class="tl-title">Every hat, multiple studios</div>
-          <div class="tl-text">Producer, release manager, technical product owner, tooling lead. Moved across several major first-party studios and high-profile franchises. Built automation and internal tooling used by hundreds of people daily. The cross-functional view is where the real leverage lives; most people only ever see one slice of the machine.</div>
-        </div>
-      </div>
-      <div class="tl-item reveal reveal-delay-3">
-        <div class="tl-left">
-          <div class="tl-year">2019</div>
-          <div class="tl-dot accent"></div>
-          <div class="tl-line"></div>
-        </div>
-        <div class="tl-body">
-          <div class="tl-title">Live-service at the highest scale</div>
-          <div class="tl-text">Owned operational architecture on a top live-service title with tens of millions of players. Built AI tooling, live data dashboards, and the workflows that let production and live-ops run simultaneously without stepping on each other. Shipping once is hard. Shipping continuously while the thing is running is a different discipline entirely.</div>
-        </div>
-      </div>
-      <div class="tl-item reveal reveal-delay-4">
-        <div class="tl-left">
-          <div class="tl-year">2024</div>
-          <div class="tl-dot accent"></div>
-        </div>
-        <div class="tl-body">
-          <div class="tl-title">CouloirGG LLC</div>
-          <div class="tl-text">Took everything from games and pointed it outward. The failure patterns are identical in every industry; only the vocabulary changes. Now I help organizations find their breaks and build the fix, backed by open-source tooling and AXIS Producer, an ambient intelligence platform that makes every discovery conversation permanent.</div>
-        </div>
+      <div class="case-card reveal reveal-delay-2">
+        <div class="case-eyebrow">Session intelligence</div>
+        <div class="case-title">Knowledge that stays with the team</div>
+        <div class="case-body">Important context lives in conversations and individual memory. I help teams capture decisions and actions with consent, structure the output, and make it useful to the next person who needs it.</div>
+        <div class="case-result"><div class="case-result-label">The work</div><div class="case-result-text">A capture and review process, useful structured notes, and a clear route from a discussion to its next action.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CASE STUDIES -->
-<section class="section section-dark">
-  <div class="section-inner">
-    <div class="section-label reveal">// case studies</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      What this looks like<br>in practice.
-    </h2>
-    <p class="section-body reveal reveal-delay-2">
-      Anonymized examples from real engagements. Different industries,
-      same shape of problem, same method of finding and fixing it.
-    </p>
-
-    <div class="case-grid">
-      <div class="case-card reveal reveal-delay-1">
-        <div class="case-eyebrow">40-person digital agency</div>
-        <div class="case-title">Handoff decay between sales and delivery</div>
-        <div class="case-body">
-          Sales closed deals via email, ops re-entered information manually,
-          and requirements dropped in transit. The result: scope creep, missed
-          deadlines, and mounting client frustration. The fix was automated
-          ticket generation from CRM at deal close, eliminating the manual
-          handoff entirely.
-        </div>
-        <div class="case-result">
-          <div class="case-result-label">Result</div>
-          <div class="case-result-text">
-            Handoff errors dropped ~70%. Average project kickoff cut from 5 days to 1.
-          </div>
-        </div>
-      </div>
-
-      <div class="case-card reveal reveal-delay-2">
-        <div class="case-eyebrow">Series B SaaS company (~120 people)</div>
-        <div class="case-title">Tribal knowledge concentrated in 3 engineers</div>
-        <div class="case-body">
-          Critical context lived in Slack DMs and people's heads. Onboarding
-          took months. Every incident required the same 3 people. The fix was
-          structured knowledge capture integrated into existing workflows, plus
-          automated runbook generation from incident responses.
-        </div>
-        <div class="case-result">
-          <div class="case-result-label">Result</div>
-          <div class="case-result-text">
-            Mean onboarding time dropped from 12 weeks to 5. Incident resolution
-            without senior escalation went from ~15% to over 60%.
-          </div>
-        </div>
-      </div>
-    </div>
+<section class="page-links" aria-label="Related pages">
+  <h2>Explore the work</h2>
+  <div class="page-links-grid">
+    <a href="/blog/ai-trust/"><span class="page-link-label">AI adoption</span><span class="page-link-title">Building AI tools people can trust <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How consent, processing choices, and human review shape useful AI workflows.</span></a>
+    <a href="/blog/signal-loss/"><span class="page-link-label">Operations</span><span class="page-link-title">Why good tools still leave gaps between teams <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How information gets lost between teams, and where to start looking.</span></a>
   </div>
 </section>
 
@@ -1215,11 +1094,10 @@
   <div class="cta-inner">
     <div class="section-label reveal" style="text-align:center; display:block;">// get in touch</div>
     <h2 class="section-title reveal reveal-delay-1" style="text-align:center; margin-bottom:1.5rem;">
-      No pitch. Just a conversation.
+      Let's talk about your workflow.
     </h2>
     <p class="reveal reveal-delay-2" style="font-size:1rem;color:var(--text-dim);font-weight:300;line-height:1.7;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto;text-align:center;">
-      If something in here sounds like your organization, reach out.
-      I will tell you within one conversation whether I think I can help.
+      Tell me where work slows down, what you have tried, and what you would like to change. We can discuss whether an engagement would be useful.
     </p>
     <div class="reveal reveal-delay-3" style="text-align:center;">
       <a href="mailto:hello@couloir.gg" class="btn-outline" onclick="plausible('Contact+Click')">hello@couloir.gg</a>
@@ -1230,7 +1108,7 @@
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">Couloir<span>GG</span> LLC</div>
+    <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
     <div class="footer-links">
       <a href="https://github.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">GitHub</a>
       <a href="https://discord.gg/mwNZ8P6q" target="_blank" onclick="plausible('Outbound+Click')">Discord</a>
@@ -1238,7 +1116,6 @@
       <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank" onclick="plausible('Outbound+Click')">Bluesky</a>
       <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank" onclick="plausible('Outbound+Click')">YouTube</a>
       <a href="https://www.reddit.com/r/CouloirGG/" target="_blank" onclick="plausible('Outbound+Click')">Reddit</a>
-      <a href="https://couloirgg.itch.io/" target="_blank" onclick="plausible('Outbound+Click')">itch.io</a>
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
     </div>
@@ -1259,15 +1136,15 @@
 
   /* ORG NODE DETAILS */
   const nodeData = [
-    '<strong>Owner / CEO.</strong> First conversation, always. What do they believe is broken, what have they tried, and what does winning look like to them specifically. The delta between their answer and the ground-level answer is where the real work starts.',
-    '<strong>Operations manager.</strong> How much of their time is genuine management versus IC work filling a gap because nobody else can or will? That ratio tells you whether the org is actually staffed for its workload or just appearing to be.',
-    '<strong>Sales and BD manager.</strong> The connective tissue between external demand and internal capacity. Gaps here produce the most visible cascade because client-facing errors are immediately felt. Check what they are absorbing that operations should own.',
-    '<strong>Gap zone.</strong> The most important node in any org. A responsibility that sits between two departments with no clear owner. Problems that originate here get blamed on whoever happened to touch them last. Finding and assigning this gap is usually the single highest-impact intervention.',
-    '<strong>High-leverage IC.</strong> The person whose output quality multiplies the people around them. Protecting their focus from administrative drag and cross-functional interruption is almost always the highest-ROI move available in the first 30 days.',
-    '<strong>Friction carrier.</strong> A capable person spending significant energy absorbing a broken process. They look inconsistent. They are not. Remove the bad process and their output changes immediately. Misreading this as a performance issue is a costly mistake.',
-    '<strong>Ghost resource.</strong> Capable, available, and pointed at the wrong work. Not a performance problem and not a headcount problem. A routing problem. Repointing them is fast and often has an outsized impact relative to the effort required.',
-    '<strong>Unofficial hub.</strong> The person everyone actually goes to when something breaks. Does not appear on the org chart at their real level of influence. Any change that does not account for them will stall regardless of how good the plan is. Find them early.'
-  ];
+    "<strong>Owner / CEO.</strong> What needs to change, what has already been tried, and how will we recognise a useful result? I compare that perspective with the experience of the teams doing the work.",
+    "<strong>Operations manager.</strong> Where does the team spend time on planned delivery, coordination, and unexpected work? That helps identify capacity constraints and missing support.",
+    "<strong>Sales and business development.</strong> How does customer context reach the delivery team? I look at ownership, expectations, and the information each side needs.",
+    "<strong>Ownership gap.</strong> Which decisions or tasks sit between teams? We identify who can own the next step and what they need to do it.",
+    "<strong>Key contributor.</strong> Who provides knowledge that others depend on? I look for ways to protect their focus and make that knowledge available to the team.",
+    "<strong>Workaround owner.</strong> Who keeps the process moving by filling its gaps? Their extra work can show where the formal workflow needs attention.",
+    "<strong>Underused skills.</strong> Where could existing expertise help more? I explore options with the person and their manager, alongside current commitments.",
+    "<strong>Team connector.</strong> Who helps people find context and coordinate across teams? Involving them makes it easier to understand the practical effect of a change."
+];
 
   function selectNode(idx) {
     document.querySelectorAll('.hnode').forEach(n => n.classList.remove('selected'));

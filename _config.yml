@@ -1,0 +1,10 @@
+# Keep working notes, private materials, and retired product assets out of Pages.
+exclude:
+  - README.md
+  - docs
+  - private
+  - assets/career
+  - assets/axis
+  - assets/mascot
+  - assets/og/og-axis.svg
+  - .local-drafts

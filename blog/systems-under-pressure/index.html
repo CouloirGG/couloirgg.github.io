@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Why good tools still leave gaps between teams | CouloirGG</title>
-  <meta name="description" content="How information gets lost between teams, why workarounds persist, and how to improve a handoff without adding more administration.">
-  <meta property="og:title" content="Why good tools still leave gaps between teams">
-  <meta property="og:description" content="How information gets lost between teams, why workarounds persist, and how to improve a handoff without adding more administration.">
+  <title>What twenty years taught me about systems | CouloirGG</title>
+  <meta name="description" content="Stuart White on tracing operational failures to their source, protecting the people doing the work, and designing handoffs that hold up under pressure.">
+  <meta property="og:title" content="What twenty years taught me about systems">
+  <meta property="og:description" content="Twenty years of experience applied to the way organisations work. Trace the failure to its source before changing the process.">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://couloir.gg/blog/signal-loss/">
+  <meta property="og:url" content="https://couloir.gg/blog/systems-under-pressure/">
   <meta property="og:site_name" content="CouloirGG">
-  <meta property="og:image" content="https://couloir.gg/assets/og/og-signal-loss.svg">
-  <meta property="article:published_time" content="2026-04-07T00:00:00Z">
+  <meta property="og:image" content="https://couloir.gg/assets/og/og-systems-under-pressure.svg">
+  <meta property="article:published_time" content="2026-04-13T00:00:00Z">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@CouloirGG">
-  <meta name="twitter:title" content="Why good tools still leave gaps between teams">
-  <meta name="twitter:description" content="How information gets lost between teams, why workarounds persist, and how to improve a handoff without adding more administration.">
-  <meta name="twitter:image" content="https://couloir.gg/assets/og/og-signal-loss.svg">
-  <link rel="canonical" href="https://couloir.gg/blog/signal-loss/">
+  <meta name="twitter:title" content="What twenty years taught me about systems">
+  <meta name="twitter:description" content="Twenty years of experience applied to the way organisations work. Trace the failure to its source before changing the process.">
+  <meta name="twitter:image" content="https://couloir.gg/assets/og/og-systems-under-pressure.svg">
+  <link rel="canonical" href="https://couloir.gg/blog/systems-under-pressure/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -34,10 +34,10 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Why good tools still leave gaps between teams",
-    "description": "How information gets lost between teams, why workarounds persist, and how to improve a handoff without adding more administration.",
-    "url": "https://couloir.gg/blog/signal-loss/",
-    "datePublished": "2026-04-07",
+    "headline": "What twenty years taught me about systems",
+    "description": "Stuart White on tracing operational failures to their source, protecting the people doing the work, and designing handoffs that hold up under pressure.",
+    "url": "https://couloir.gg/blog/systems-under-pressure/",
+    "datePublished": "2026-04-13",
     "dateModified": "2026-09-22",
     "author": { "@type": "Person", "name": "Stuart White", "url": "https://couloir.gg/consulting/" },
     "publisher": {
@@ -48,7 +48,7 @@
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://couloir.gg/blog/signal-loss/"
+      "@id": "https://couloir.gg/blog/systems-under-pressure/"
     }
   }
   </script>
@@ -65,6 +65,7 @@
       --text-faint: rgba(255,255,255,0.22);
       --border: rgba(255,255,255,0.08);
       --border-lime: rgba(167,219,120,0.18);
+      --purple: #a78bfa;
     }
 
     html { scroll-behavior: smooth; }
@@ -96,7 +97,7 @@
       letter-spacing: 0.08em; text-transform: uppercase;
       padding: 3px 8px; border-radius: 4px;
       display: inline-block; margin-bottom: 1.25rem;
-      background: rgba(167,219,120,0.12); color: var(--lime);
+      background: rgba(167,139,250,0.12); color: var(--purple);
     }
 
     .article h1 {
@@ -114,7 +115,6 @@
       display: flex; gap: 1rem;
     }
 
-    /* BODY CONTENT */
     .article-body h2 {
       font-size: 1.35rem; font-weight: 700;
       letter-spacing: -0.02em;
@@ -217,11 +217,6 @@
     }
     .footer-links a:hover { color: var(--text-dim); }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     @media (max-width: 640px) {
       .footer-inner { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
@@ -250,8 +245,8 @@
   <article class="article">
     <a href="/blog/" class="back-link">&larr; Back to blog</a>
 
-    <span class="post-tag">Consulting</span>
-    <h1>Why good tools still leave gaps between teams</h1>
+    <span class="post-tag">Career</span>
+    <h1>What twenty years taught me about systems</h1>
     <div class="post-meta">
       <span>Stuart White</span>
       <span>Updated September 22, 2026</span>
@@ -259,39 +254,41 @@
     </div>
 
     <div class="article-body">
-      <p>A team can have capable people, useful software, and documented processes, yet still lose important information between one step and the next. Decisions stay in messages. Requirements get copied by hand. The next person starts work without knowing what was agreed.</p>
-      <p>I call that signal loss: information exists, but it does not reach the person who needs it with enough context to act.</p>
-      <p>Replacing a tool may help. Before doing that, I want to understand the route the information takes and the effort required to keep it moving.</p>
+      <p>A delivery deadline slips. The last team in the chain gets the difficult conversation. But the decision that made the delay inevitable may have happened weeks earlier, in another department, before anyone thought there was a problem.</p>
+      <p>My twenty years of experience span Zipper Interactive, Turn 10 Studios, Microsoft, 343 Industries, Bungie, and EA. Working across quality, production, and interdependent teams taught me to look beyond the visible failure. That habit now informs my independent consulting work at CouloirGG.</p>
 
-      <h2>Look at the path people use</h2>
-      <p>A quick message can be easier than opening a project, finding the right record, and completing several fields. If that is how work gets done, the workaround tells you something about the formal process.</p>
-      <p>The useful questions are specific. What makes the informal path easier? Which information is missing when it reaches the next team? What does the sender need to know to make a useful handoff?</p>
-      <blockquote><p>A workaround is a useful place to start looking for friction.</p></blockquote>
-      <p>Training and clearer expectations can help, but they work better when the process itself is practical. Asking people to record the same information twice leaves the extra work in place.</p>
+      <h2>Trace the cascade</h2>
+      <p>A requirement changes after planning. A dependency arrives late. Testing starts with less time than it needs. The release absorbs the cost. Each team can be doing reasonable work while the overall process produces a result nobody wanted.</p>
+      <p>The useful question is where the first assumption stopped being true. What did each team expect to receive? What actually arrived? Who knew the difference, and where could they send that information?</p>
+      <blockquote><p>The place where a problem becomes visible is often the place absorbing it.</p></blockquote>
+      <p>When an organisation says delivery keeps missing deadlines, I start with the handoffs. Asking the delivery team to move faster will not fix missing requirements or decisions that arrive after the work has started.</p>
 
-      <h2>Three places to look</h2>
-      <p><strong>Handoffs.</strong> Information changes shape as it moves between teams. A short summary may omit the reason for a decision, a customer constraint, or an assumption the next person needs to check.</p>
-      <p><strong>Meetings.</strong> A discussion produces decisions and actions, but the notes do not reach the people expected to act. Later, participants remember different versions of the agreement.</p>
-      <p><strong>Individual knowledge.</strong> Someone knows why a process works the way it does, but there is no convenient place to record that context. A holiday or role change exposes the dependency.</p>
+      <h2>Protect the work already running</h2>
+      <p>Operating a service while improving it creates competing demands on the same people. An incident interrupts a planned change. The change introduces another dependency. Work that looked manageable on a roadmap becomes a series of urgent exceptions.</p>
+      <p>The response starts with visibility and ownership: who handles interruptions, how capacity changes when they happen, and which commitments need to be revisited. Without that structure, individuals make the tradeoffs privately and the cost appears somewhere else.</p>
+      <p>A useful process gives people a way to make those decisions together, with enough context to understand what they are postponing.</p>
 
-      <h2>Make the handoff easier</h2>
-      <p>Consider an illustrative sales-to-delivery workflow. A deal closes in a CRM. Sales emails the details to operations, which copies them into a project tool. Requirements can be lost during that re-entry.</p>
-      <p>One possible improvement is to create a draft delivery record from the CRM when the deal closes. The teams agree the required fields, identify the owner, and review missing information before delivery starts.</p>
-      <p>The automation handles the copying. People still need to check the requirements, resolve uncertainty, and accept the handoff. That distinction matters: moving incomplete information faster does not make it complete.</p>
-      <p>I would check the change with both teams. Does it reduce re-entry? Are fewer clarifications needed? Can delivery find the original context? Those questions help establish whether the new workflow is useful.</p>
-      <blockquote><p>Make the information easier to pass on, and make responsibility for the next step clear.</p></blockquote>
-      <p>The same approach applies to meeting notes, support escalations, and recurring reports. Follow the information, find the repeated effort, and make a focused change that the people involved can use.</p>
+      <h2>Listen across the handoffs</h2>
+      <p>People in quality, coordination, support, and release management see the same failure pass through multiple teams. Their work gives them a perspective that an individual team's dashboard may never show.</p>
+      <p>I start by listening to those people. Which information do they keep asking for? What do they copy between tools? Which workarounds would stop the process if they stopped doing them?</p>
+      <blockquote><p>A workaround is evidence of a gap the formal process has not addressed.</p></blockquote>
+      <p>Those conversations are often enough to narrow a broad complaint into a specific intervention: a clearer owner, a connection between two systems, or a decision recorded where the next team can find it.</p>
+
+      <h2>Adapt the method</h2>
+      <p>The experience transfers. The exact workflow usually does not. An organisation with a monthly delivery cycle needs different controls from one handling changes throughout the day.</p>
+      <p>I map the actual operation before proposing a fix. The goal is to remove recurring friction while preserving the parts people already rely on. That means understanding the work, building a targeted change, and checking whether it helps the team in practice.</p>
+      <p>Some of the most useful improvements address a problem people have stopped noticing. A manual handoff repeated every morning may never trigger a crisis. It can still consume time and lose context each time it happens.</p>
     </div>
 
     <div class="cta-box">
-      <p>If information keeps getting lost between your teams, I can help map the handoffs and identify a practical change.</p>
+      <p>If delays keep spreading between your teams, I can help trace the dependencies and agree where to start.</p>
       <a href="/consulting/" class="cta-link">Learn about consulting</a>
     </div>
 
 <section class="page-links" aria-label="Related pages">
   <h2>Keep reading</h2>
   <div class="page-links-grid">
-    <a href="/blog/systems-under-pressure/"><span class="page-link-label">Experience</span><span class="page-link-title">What twenty years taught me about systems <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">Trace the problem back through the handoffs before changing the process.</span></a>
+    <a href="/blog/signal-loss/"><span class="page-link-label">Operations</span><span class="page-link-title">Why good tools still leave gaps between teams <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How information gets lost between teams, and where to start looking.</span></a>
     <a href="/blog/ai-trust/"><span class="page-link-label">AI adoption</span><span class="page-link-title">Building AI tools people can trust <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How consent, processing choices, and human review shape useful AI workflows.</span></a>
   </div>
 </section>
