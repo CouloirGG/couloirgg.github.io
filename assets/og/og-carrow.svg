@@ -2,8 +2,8 @@
   <rect width="1200" height="630" fill="#0a1a20"/>
   <rect x="0" y="0" width="1200" height="4" fill="#A7DB78"/>
   <text x="60" y="64" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="#A7DB78">Carrow &#183; from CouloirGG</text>
-  <text x="600" y="290" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#ffffff" text-anchor="middle">Talk it through.</text>
-  <text x="600" y="355" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#A7DB78" text-anchor="middle">Carrow keeps track.</text>
+  <text x="600" y="290" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#ffffff" text-anchor="middle">A passive listener that</text>
+  <text x="600" y="355" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#A7DB78" text-anchor="middle">builds the path forward.</text>
   <text x="600" y="420" font-family="system-ui, sans-serif" font-size="22" fill="rgba(255,255,255,0.6)" text-anchor="middle">couloir.gg/carrow</text>
   <rect x="0" y="626" width="1200" height="4" fill="#A7DB78"/>
 </svg>

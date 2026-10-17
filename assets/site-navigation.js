@@ -22,3 +22,33 @@
   });
   window.matchMedia('(min-width: 641px)').addEventListener('change', () => setOpen(false));
 })();
+
+/* Email links: copy the address instead of relying on a mail app being set up. */
+(() => {
+  let toast, hideTimer;
+  const show = (html) => {
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'cgg-toast';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = html;
+    toast.classList.add('show');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => toast.classList.remove('show'), 7000);
+  };
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href^="mailto:"]');
+    if (!link || link.hasAttribute('data-mail-direct') || !navigator.clipboard) return;
+    event.preventDefault();
+    const href = link.getAttribute('href');
+    const address = href.slice(7).split('?')[0];
+    const subject = new URLSearchParams(href.split('?')[1] || '').get('subject');
+    navigator.clipboard.writeText(address).then(() => {
+      const hint = subject ? ` Use the subject "${subject}".` : '';
+      show(`<strong>${address}</strong> copied. Paste it into your email.${hint} <a href="${href}" data-mail-direct>Open mail app</a>`);
+    }, () => { window.location.href = href; });
+  });
+})();
