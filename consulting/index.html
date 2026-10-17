@@ -28,7 +28,7 @@
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Systems Architecture & Operational Consulting",
-    "description": "Find where information stops travelling in your organisation, diagnose the structural cause, and build the fix.",
+    "description": "Find where information stops moving in your organization, work out why, and build the fix.",
     "url": "https://couloir.gg/consulting/",
     "provider": {
       "@type": "Organization",
@@ -144,10 +144,6 @@
       letter-spacing: 0.1em;
       display: flex; align-items: center; gap: 0.75rem;
       opacity: 0; animation: fadeIn 1s ease 1.2s forwards;
-    }
-    .scroll-line {
-      width: 40px; height: 1px;
-      background: linear-gradient(90deg, var(--lime), transparent);
     }
 
     /* BACKGROUND GRID */
@@ -427,6 +423,9 @@
     }
     .node-detail strong { color: rgba(255,255,255,0.9); font-weight: 600; }
 
+    @media (min-width: 641px) { .cat-grid { display: none; } }
+    .hnode:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+
     /* CATEGORIES */
     .cat-grid {
       display: grid; grid-template-columns: repeat(2, 1fr);
@@ -643,6 +642,13 @@
       .cat-grid { grid-template-columns: 1fr; }
       .cred-grid { grid-template-columns: 1fr; }
       .cred-card.featured { grid-column: span 1; }
+      .chain-visual { overflow: visible; }
+      .chain-track { flex-direction: column; align-items: stretch; min-width: 0; gap: 0.25rem; }
+      .chain-node { flex-direction: row; gap: 0.75rem; }
+      .chain-box { flex: 0 0 58%; }
+      .chain-sublabel { text-align: left; }
+      .chain-arrow { transform: rotate(90deg); align-self: flex-start; margin-left: 27%; padding: 0; line-height: 1; }
+      .hier-wrap, .node-detail { display: none; }
       .case-grid { grid-template-columns: 1fr; }
     }
 
@@ -668,7 +674,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; transition: none; }
-      .scroll-line { animation: none; }
+      .chain-box.problem { animation: none; }
     }
     [id] { scroll-margin-top: 5.5rem; }
     .page-sections { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.25rem; }
@@ -696,6 +702,7 @@
   <div class="nav-links" id="main-nav-links">
     <a href="/consulting/" class="active" aria-current="page">Consulting</a>
 
+    <a href="/carrow/">Carrow</a>
     <a href="/blog/">Blog</a>
     <a href="/consulting/#contact">Contact</a>
   </div>
@@ -707,7 +714,7 @@
     <div class="hero-eyebrow" id="stuart-white">// Stuart White &middot; independent consultant</div>
     <h1>I find where things<br>break. <em>Then I fix them.</em></h1>
     <p class="hero-body">
-      I help organisations find where information stops travelling, where handoffs
+      I help organizations find where information stops moving, where handoffs
       lose context, and where good people are spending time working around the system.
       Then I design and build the fix. Twenty years in quality, production, and
       complex operations inform how I work.
@@ -730,10 +737,10 @@
 
 <!-- TRACK RECORD -->
 <section class="section range-section" id="range">
-  <div class="section-inner section-inner--wide">
+  <div class="section-inner">
     <div class="section-label reveal">// track record</div>
     <h2 class="section-title reveal reveal-delay-1">What I've done.</h2>
-    <p class="section-body reveal reveal-delay-2">I earn trust between teams that don't agree, fix the process with them, prove the change with data, build the tool when one is needed, and hand it off so it runs without me. Each of those is a common skill. Doing all five is the rare part.</p>
+    <p class="section-body reveal reveal-delay-2">I earn trust between teams that don't agree, fix the process with them, prove the change with data, build the tool when one is needed, and hand it off so it runs without me. Plenty of people are good at one or two of these. I do all five.</p>
     <ol class="range-chain reveal reveal-delay-2" aria-label="How the work fits together">
       <li><span>01</span>Earn trust</li>
       <li><span>02</span>Fix the process</li>
@@ -822,7 +829,7 @@
         </div>
         <div class="phase-content">
           <div class="phase-title">Agree what needs to change</div>
-          <div class="phase-desc">I start with the people responsible for the outcome. We discuss what feels difficult, what has been tried, and how we will recognise an improvement.</div>
+          <div class="phase-desc">I start with the people responsible for the outcome. We discuss what feels difficult, what has been tried, and how we will recognize an improvement.</div>
         </div>
         <div class="phase-tag tag-observe">Observe</div>
       </div>
@@ -836,7 +843,7 @@
           <div class="phase-title">Talk to the people doing the work</div>
           <div class="phase-desc">I talk with the people handling the work each day. Their handoffs and workarounds help explain where the process fits and where it creates extra effort.</div>
         </div>
-        <div class="phase-tag tag-analyze">Analyse</div>
+        <div class="phase-tag tag-analyze">Analyze</div>
       </div>
 
       <div class="phase-item reveal reveal-delay-4">
@@ -848,7 +855,7 @@
           <div class="phase-title">Map the problem</div>
           <div class="phase-desc">I bring the workflow, responsibilities, and dependencies into one picture. We identify where context gets lost, how the problem affects other teams, and which changes are worth making.</div>
         </div>
-        <div class="phase-tag tag-analyze">Analyse</div>
+        <div class="phase-tag tag-analyze">Analyze</div>
       </div>
 
       <div class="phase-item reveal reveal-delay-5">
@@ -946,7 +953,7 @@
       Understand how people work together.
     </h2>
     <p class="section-body reveal reveal-delay-2">
-      The organisation chart shows formal responsibility. Conversations show who people rely on, where work is shared, and which decisions have no clear owner. I look at both.
+      The org chart shows formal responsibility. Conversations show who people rely on, where work is shared, and which decisions have no clear owner. I look at both.
     </p>
 
     <div class="hier-wrap reveal reveal-delay-3">
@@ -1047,7 +1054,7 @@
       </div>
       <div class="cat-card reveal reveal-delay-4">
         <div class="cat-label" style="color:var(--red);">Ownership gap</div>
-        <div class="cat-desc">Work shared between teams without a clear owner. Agreeing responsibility can prevent repeated delays.</div>
+        <div class="cat-desc">Work shared between teams without a clear owner. Agreeing on an owner can prevent repeated delays.</div>
       </div>
       <div class="cat-card reveal reveal-delay-1">
         <div class="cat-label" style="color:var(--amber);">Underused skills</div>
@@ -1066,7 +1073,7 @@
   <div class="section-inner">
     <div class="section-label reveal">// daily friction</div>
     <h2 class="ten-hero reveal reveal-delay-1">
-      Make <em>room</em> for<br>the work that matters.
+      Cut the <em>repeated</em> work.
     </h2>
     <p class="section-body reveal reveal-delay-2">
       Repeated administrative work adds up. Removing a small task from several workflows can give a team more time for the work it is there to do.
@@ -1098,7 +1105,7 @@
   <div class="section-inner">
     <div class="section-label reveal">// background</div>
     <h2 class="section-title reveal reveal-delay-1">
-      Twenty years of<br>production under pressure.
+      Twenty years in<br>production and operations.
     </h2>
     <p class="section-body reveal reveal-delay-2">
       My career spans Zipper Interactive, Turn 10 Studios, Microsoft,
@@ -1109,7 +1116,7 @@
 
     <div class="career-background">
 
-      <p class="career-caption">These organisations are part of my career history, not consulting clients or endorsements. Consulting is provided independently through CouloirGG LLC.</p>
+      <p class="career-caption">These companies are part of my career history, not consulting clients or endorsements. Consulting is provided independently through CouloirGG LLC.</p>
     </div>
 
     <div class="cred-grid">
@@ -1152,7 +1159,7 @@
         <div class="case-result"><div class="case-result-label">The work</div><div class="case-result-text">A workflow map, clear handoffs, and targeted automation built into the tools your team uses.</div></div>
       </div>
       <div class="case-card reveal reveal-delay-2">
-        <div class="case-eyebrow">Session intelligence</div>
+        <div class="case-eyebrow">Session capture</div>
         <div class="case-title">Knowledge that stays with the team</div>
         <div class="case-body">Important context lives in conversations and individual memory. I help teams capture decisions and actions with consent, structure the output, and make it useful to the next person who needs it.</div>
         <div class="case-result"><div class="case-result-label">The work</div><div class="case-result-text">A capture and review process, useful structured notes, and a clear route from a discussion to its next action.</div></div>
@@ -1216,7 +1223,7 @@
 
   /* ORG NODE DETAILS */
   const nodeData = [
-    "<strong>Owner / CEO.</strong> What needs to change, what has already been tried, and how will we recognise a useful result? I compare that perspective with the experience of the teams doing the work.",
+    "<strong>Owner / CEO.</strong> What needs to change, what has already been tried, and how will we recognize a useful result? I compare that perspective with the experience of the teams doing the work.",
     "<strong>Operations manager.</strong> Where does the team spend time on planned delivery, coordination, and unexpected work? That helps identify capacity constraints and missing support.",
     "<strong>Sales and business development.</strong> How does customer context reach the delivery team? I look at ownership, expectations, and the information each side needs.",
     "<strong>Ownership gap.</strong> Which decisions or tasks sit between teams? We identify who can own the next step and what they need to do it.",
@@ -1225,6 +1232,14 @@
     "<strong>Underused skills.</strong> Where could existing expertise help more? I explore options with the person and their manager, alongside current commitments.",
     "<strong>Team connector.</strong> Who helps people find context and coordinate across teams? Involving them makes it easier to understand the practical effect of a change."
 ];
+
+  document.querySelectorAll('.hnode').forEach(n => {
+    n.setAttribute('role', 'button');
+    n.setAttribute('tabindex', '0');
+    n.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); n.click(); }
+    });
+  });
 
   function selectNode(idx) {
     document.querySelectorAll('.hnode').forEach(n => n.classList.remove('selected'));

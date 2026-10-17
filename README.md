@@ -6,7 +6,7 @@ Live site: [couloir.gg](https://couloir.gg)
 
 ## Current publication scope
 
-The owner confirmed on September 24, 2026 that the required outside-work acknowledgement is complete and instructed us to publish consulting only. AXIS and art commission offerings are withheld pending separate scope confirmation.
+The owner confirmed on September 24, 2026 that the required outside-work acknowledgement is complete and instructed us to publish consulting only. On October 16, 2026 the owner restored the product page under its new name, Carrow (formerly AXIS), at `/carrow/`. Art commission offerings remain withheld.
 
 - Consulting serves businesses outside the games industry. Engagements exclude game-related entertainment and work for companies in the games business.
 - Twenty years of career experience spans Zipper Interactive, Turn 10 Studios, Microsoft, 343 Industries, Bungie, and EA. These are career references, not consulting clients or endorsements.
@@ -15,7 +15,7 @@ The owner confirmed on September 24, 2026 that the required outside-work acknowl
 
 ## Editing and preview
 
-Static HTML, CSS, and JavaScript. Main navigation and related-page links share `assets/site-navigation.css`; mobile navigation uses `assets/site-navigation.js`. Keep the main menu consistent: Consulting, Blog, Contact.
+Static HTML, CSS, and JavaScript. Main navigation and related-page links share `assets/site-navigation.css`; mobile navigation uses `assets/site-navigation.js`. Keep the main menu consistent: Consulting, Carrow, Blog, Contact.
 
 ```powershell
 python -m http.server 8000 --bind 127.0.0.1
@@ -26,10 +26,11 @@ Open `http://127.0.0.1:8000/`. This raw local server does not apply Jekyll exclu
 ## Published pages
 
 - `/`: consulting overview, services, career introduction, and relevant reading.
-- `/consulting/`: approach, background, and engagement examples.
+- `/consulting/`: track record, approach, background, and engagement examples.
+- `/carrow/`: Carrow product page (early access). No prices until launch. Do not list Jira, Confluence, or Perforce integrations.
 - `/blog/`: articles on operations, systems, and AI adoption.
 - `/privacy/`, `/terms/`, and `404.html`: supporting pages.
-- Retired game, AXIS, download, and commission URLs redirect to consulting. The former career article URL redirects to `/blog/systems-under-pressure/`.
+- `/axis/` and `/axis/download.html` redirect to `/carrow/`. Retired game, download, and commission URLs redirect to consulting. The former career article URL redirects to `/blog/systems-under-pressure/`.
 
 ## Content rules
 

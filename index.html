@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CouloirGG | Systems Architecture & Operational Consulting</title>
-<meta name="description" content="Systems architecture, AI adoption, and operational consulting led by Stuart White. Twenty years of experience applied to your organisation's workflows and internal tools.">
+<meta name="description" content="Systems architecture, AI adoption, and operational consulting led by Stuart White. Twenty years of experience applied to your workflows and internal tools.">
 <meta property="og:title" content="CouloirGG | Systems Architecture & Operational Consulting">
 <meta property="og:description" content="Stuart White helps businesses improve handoffs, connect information, and build useful internal tools.">
 <meta property="og:type" content="website">
@@ -330,24 +330,7 @@ body {
   color: var(--text-faint);
 }
 
-.tool-mascot {
-  position: absolute;
-  bottom: 10px;
-  right: 12px;
-  width: 40px;
-  height: auto;
-  opacity: 0.15;
-  pointer-events: none;
-  animation: mascot-float 4s ease-in-out infinite;
-  transition: opacity 0.3s;
-}
 
-.tool-card:hover .tool-mascot { opacity: 0.3; }
-
-@keyframes mascot-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
 
 /* ===== CONTACT ===== */
 .contact-section {
@@ -509,7 +492,7 @@ body {
   100%    { opacity: 0; transform: translateX(7px); }
 }
 
-/* Session Intelligence: waveform fades, blocks appear */
+/* Session Capture: waveform fades, blocks appear */
 .si-wave {
   animation: si-wave-cycle 5s ease-in-out infinite;
 }
@@ -627,7 +610,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
   </button>
   <div class="nav-links" id="main-nav-links">
     <a href="/consulting/">Consulting</a>
-
+    <a href="/carrow/">Carrow</a>
     <a href="/blog/">Blog</a>
     <a href="/consulting/#contact">Contact</a>
   </div>
@@ -685,7 +668,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
             </svg>
           </div>
           <h3>Workflow &amp; Systems Audit</h3>
-          <p>Find where handoffs break and work gets repeated. I map how information moves through your organisation and identify the changes that will help. </p><p class="service-output"><strong>You leave with</strong> A workflow map and a targeted action plan.</p>
+          <p>Find where handoffs break and work gets repeated. I map how information moves through your organization and identify the changes that will help. </p><p class="service-output"><strong>You leave with</strong> A workflow map and a targeted action plan.</p>
         </div>
 
         <div class="service-card">
@@ -734,7 +717,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
               </g>
             </svg>
           </div>
-          <h3>Session Intelligence</h3>
+          <h3>Session Capture</h3>
           <p>Keep decisions and context after a conversation ends. I help teams capture sessions with consent and make the output useful to the next person.</p><p class="service-output"><strong>You leave with</strong> Structured notes and a route from discussion to action.</p>
         </div>
 
@@ -762,31 +745,31 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
             <rect width="380" height="260" fill="rgba(167,219,120,0.015)" rx="10"/>
 
             <!-- === ROW 1: Customers  y=55 — gap FIXED (auto-route) === -->
-            <text x="8" y="59" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">customers</text>
+            <text x="8" y="59" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.75">customers</text>
             <line class="nr-pipe" x1="82" y1="55" x2="158" y2="55" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
-            <line class="nr-pipe-post" x1="172" y1="55" x2="260" y2="55" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-pipe-post" x1="172" y1="55" x2="360" y2="55" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
             <line class="nr-gap-mark" x1="165" y1="42" x2="165" y2="68" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
             <line class="nr-fill" x1="155" y1="55" x2="175" y2="55" stroke="#A7DB78" stroke-width="2.5" opacity="0"/>
-            <text class="nr-diagnosis" x="165" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f59e0b" opacity="0">signal dies at handoff</text>
-            <text class="nr-fix-label" x="165" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">auto-route added</text>
+            <text class="nr-diagnosis" x="165" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#f59e0b" opacity="0">lost at the handoff</text>
+            <text class="nr-fix-label" x="165" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#A7DB78" opacity="0">routed automatically</text>
 
             <!-- === ROW 2: Employees  y=120 — gap ELIMINATED === -->
-            <text x="8" y="124" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">employees</text>
+            <text x="8" y="124" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.75">employees</text>
             <line class="nr-pipe" x1="82" y1="120" x2="175" y2="120" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
-            <line class="nr-pipe-post" x1="192" y1="120" x2="260" y2="120" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-pipe-post" x1="192" y1="120" x2="360" y2="120" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
             <line class="nr-gap-mark" x1="183" y1="107" x2="183" y2="133" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
             <line class="nr-fill" x1="172" y1="120" x2="195" y2="120" stroke="#A7DB78" stroke-width="2.5" opacity="0"/>
-            <text class="nr-diagnosis" x="183" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f59e0b" opacity="0">unnecessary step</text>
-            <text class="nr-fix-label" x="183" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">step removed</text>
+            <text class="nr-diagnosis" x="183" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#f59e0b" opacity="0">unnecessary step</text>
+            <text class="nr-fix-label" x="183" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#A7DB78" opacity="0">step removed</text>
 
             <!-- === ROW 3: Leads  y=185 — gap FIXED (structured intake) === -->
-            <text x="8" y="189" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.4">leads</text>
+            <text x="8" y="189" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600" fill="#A7DB78" opacity="0.75">leads</text>
             <line class="nr-pipe" x1="82" y1="185" x2="142" y2="185" stroke="rgba(167,219,120,0.12)" stroke-width="2.5"/>
-            <line class="nr-pipe-post" x1="158" y1="185" x2="260" y2="185" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line class="nr-pipe-post" x1="158" y1="185" x2="360" y2="185" stroke="rgba(167,219,120,0.06)" stroke-width="1.5" stroke-dasharray="4 3"/>
             <line class="nr-gap-mark" x1="150" y1="172" x2="150" y2="198" stroke="rgba(167,219,120,0.1)" stroke-width="1.5" stroke-dasharray="3 2"/>
             <line class="nr-fill" x1="139" y1="185" x2="161" y2="185" stroke="#A7DB78" stroke-width="2.5" opacity="0"/>
-            <text class="nr-diagnosis" x="150" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f59e0b" opacity="0">no structured path</text>
-            <text class="nr-fix-label" x="150" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#A7DB78" opacity="0">structured intake</text>
+            <text class="nr-diagnosis" x="150" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#f59e0b" opacity="0">no clear path</text>
+            <text class="nr-fix-label" x="150" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#A7DB78" opacity="0">clear intake</text>
 
             <!-- Phase narration (updated by JS) -->
             <text class="nr-phase" x="190" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#A7DB78" opacity="0"></text>
@@ -904,9 +887,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
 
     /* Row definitions (matching problem SVG positions) */
     var rows = [
-      { y: 55, gapX: 165, lineStart: 82, lineEnd: 260 },
-      { y: 120, gapX: 183, lineStart: 82, lineEnd: 260 },
-      { y: 185, gapX: 150, lineStart: 82, lineEnd: 260 }
+      { y: 55, gapX: 165, lineStart: 82, lineEnd: 360 },
+      { y: 120, gapX: 183, lineStart: 82, lineEnd: 360 },
+      { y: 185, gapX: 150, lineStart: 82, lineEnd: 360 }
     ];
 
     function leakPath(row) {
@@ -955,11 +938,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
       phaseText.setAttribute('opacity', op.toFixed(3));
     }
 
+    var onScreen = true, last = performance.now();
+    new IntersectionObserver(function(es) { onScreen = es[0].isIntersecting; }).observe(container);
+
     function runCycle() {
       reset();
       var t0 = performance.now();
 
       function frame(now) {
+        if (!onScreen || document.hidden) { t0 += now - last; last = now; requestAnimationFrame(frame); return; }
+        last = now;
         var elapsed = now - t0;
         if (elapsed > totalCycle) { runCycle(); return; }
 
@@ -1003,7 +991,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
         if (p1e <= P1) {
           var t = p1e / P1;
           var fadeIn = t < 0.2 ? t / 0.2 : 1;
-          setPhaseText('mapping how signals actually move', fadeIn * 0.5);
+          setPhaseText('finding where it gets lost', fadeIn * 0.8);
 
           /* Pulse gap marks amber */
           var pulse = Math.sin(t * Math.PI * 3) * 0.2 + 0.35;
@@ -1015,7 +1003,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
           diagLabels.forEach(function(d, i) {
             var s = 0.1 + i * 0.15;
             var lt = Math.max(0, Math.min((t - s) / 0.3, 1));
-            d.setAttribute('opacity', (lt * 0.65).toFixed(3));
+            d.setAttribute('opacity', (lt * 0.9).toFixed(3));
           });
 
           requestAnimationFrame(frame);
@@ -1026,11 +1014,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
         var p2e = elapsed - P0 - P1;
         if (p2e <= P2) {
           var t = easeInOutCubic(p2e / P2);
-          setPhaseText('the fix is often simple', 0.5);
+          setPhaseText('fixing the handoffs', 0.8);
 
           /* Diagnosis labels fade out */
           diagLabels.forEach(function(d) {
-            d.setAttribute('opacity', Math.max(0, 0.65 * (1 - t * 2.5)).toFixed(3));
+            d.setAttribute('opacity', Math.max(0, 0.9 * (1 - t * 2.5)).toFixed(3));
           });
 
           /* Gap marks fade out */
@@ -1050,7 +1038,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
           fixLabels.forEach(function(f, i) {
             var s = 0.25 + i * 0.15;
             var lt = Math.max(0, Math.min((t - s) / 0.3, 1));
-            f.setAttribute('opacity', (lt * 0.6).toFixed(3));
+            f.setAttribute('opacity', (lt * 0.9).toFixed(3));
           });
 
           /* Pre-gap pipes brighten */
@@ -1075,7 +1063,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
         gapMarks.forEach(function(g) { g.setAttribute('opacity', '0'); });
         diagLabels.forEach(function(d) { d.setAttribute('opacity', '0'); });
         fills.forEach(function(f) { f.setAttribute('opacity', '1'); });
-        fixLabels.forEach(function(f) { f.setAttribute('opacity', '0.6'); });
+        fixLabels.forEach(function(f) { f.setAttribute('opacity', '0.9'); });
         pipes.forEach(function(p) { p.setAttribute('stroke', 'rgba(167,219,120,0.4)'); });
         pipesPost.forEach(function(p) {
           p.setAttribute('stroke', 'rgba(167,219,120,0.4)');
@@ -1086,7 +1074,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
         /* ---- Phase 3: packets flow through repaired paths ---- */
         var p3e = elapsed - P0 - P1 - P2;
         if (p3e <= P3) {
-          setPhaseText('signals flow without workarounds', 0.5);
+          setPhaseText('information gets through', 0.8);
 
           var flowDur = 1800;
           var pktStagger = 220;
@@ -1114,7 +1102,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
         pkts.forEach(function(p) { p.setAttribute('opacity', '0'); });
 
         /* ---- Phase 4: hold resolved ---- */
-        setPhaseText('every signal arrives', 0.5);
+        setPhaseText('no workarounds needed', 0.8);
         requestAnimationFrame(frame);
       }
 

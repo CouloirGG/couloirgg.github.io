@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrow | CouloirGG</title>
+  <meta name="description" content="Carrow records the conversations your team is already having and turns them into decisions, action items, blockers and open questions, each with an owner.">
+  <meta property="og:title" content="Carrow | CouloirGG">
+  <meta property="og:description" content="Talk it through. Carrow keeps track of the decisions, actions, blockers and questions.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://couloir.gg/carrow/">
+  <meta property="og:image" content="https://couloir.gg/assets/og/og-carrow.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CouloirGG">
+  <meta name="twitter:title" content="Carrow | CouloirGG">
+  <meta name="twitter:description" content="Talk it through. Carrow keeps track of the decisions, actions, blockers and questions.">
+  <meta name="twitter:image" content="https://couloir.gg/assets/og/og-carrow.svg">
+  <link rel="canonical" href="https://couloir.gg/carrow/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Carrow",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Windows",
+    "description": "Records the conversations your team is already having and turns them into decisions, action items, blockers and open questions, each with an owner.",
+    "url": "https://couloir.gg/carrow/",
+    "publisher": { "@type": "Organization", "name": "CouloirGG LLC", "url": "https://couloir.gg/" }
+  }
+  </script>
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-jsKuNwamSbECoYw-7tuuA.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+  <style>
+    *, ::before, ::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --lime: #A7DB78;
+      --lime-dim: rgba(167,219,120,0.15);
+      --lime-faint: rgba(167,219,120,0.06);
+      --bg-dark: #0a1a20;
+      --bg-card: #0c1e26;
+      --bg-mid: #0e2430;
+      --text-light: rgba(255,255,255,0.85);
+      --text-dim: rgba(255,255,255,0.55);
+      --text-faint: rgba(255,255,255,0.3);
+      --border: rgba(255,255,255,0.08);
+      --border-lime: rgba(167,219,120,0.2);
+      --t-decision: #A7DB78;
+      --t-action: #38bdf8;
+      --t-blocker: #f87171;
+      --t-question: #fbbf24;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Sora', -apple-system, sans-serif;
+      background: var(--bg-dark); color: var(--text-light);
+      line-height: 1.6; overflow-x: hidden;
+    }
+    a:focus-visible { outline: 2px solid var(--lime); outline-offset: 5px; }
+
+    .crw-section { position: relative; }
+    .crw-mid { background: var(--bg-mid); }
+    .crw-inner { max-width: 900px; margin: 0 auto; padding: 5rem 2rem; }
+    .crw-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 1.5rem;
+    }
+    .crw-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem;
+      color: rgba(255,255,255,0.92);
+    }
+    .crw-body {
+      font-size: 1rem; color: var(--text-dim); max-width: 580px;
+      line-height: 1.8; font-weight: 300; margin-bottom: 2.5rem;
+    }
+
+    /* HERO */
+    .crw-hero {
+      max-width: 1060px; margin: 0 auto; padding: 8rem 2rem 4.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center;
+    }
+    .crw-eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--lime); margin-bottom: 1.5rem;
+    }
+    .crw-hero h1 {
+      font-size: clamp(2.3rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.08;
+      letter-spacing: -0.04em; color: rgba(255,255,255,0.92); margin-bottom: 1.75rem;
+    }
+    .crw-hero h1 em { color: var(--lime); font-style: normal; }
+    .crw-lead { font-size: 1.05rem; color: var(--text-dim); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; }
+    .crw-cta { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }
+    .crw-btn {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: var(--lime); color: var(--bg-dark); border-radius: 6px;
+      padding: 0.8rem 1.15rem; font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    }
+    .crw-btn:hover { background: #bde89a; }
+    .crw-link { color: var(--text-light); font-size: 0.85rem; text-underline-offset: 5px; }
+    .crw-status {
+      margin-top: 1.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      color: var(--text-faint); letter-spacing: 0.03em; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .crw-status i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px var(--lime-dim); flex-shrink: 0; }
+
+    /* LIVE SESSION MOCK */
+    .crw-mock {
+      background: var(--bg-card); border: 1px solid var(--border-lime); border-radius: 10px;
+      overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      font-size: 0.78rem;
+    }
+    .crw-mock-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.7rem 1rem; border-bottom: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--text-dim);
+    }
+    .crw-mock-bar b { color: rgba(255,255,255,0.9); font-weight: 600; letter-spacing: 0.02em; }
+    .crw-rec { display: flex; align-items: center; gap: 0.45rem; color: var(--t-blocker); }
+    .crw-rec i { width: 7px; height: 7px; border-radius: 50%; background: var(--t-blocker); animation: crw-blink 1.4s ease-in-out infinite; }
+    @keyframes crw-blink { 50% { opacity: 0.25; } }
+    .crw-wave { display: flex; align-items: center; gap: 3px; height: 34px; padding: 0 1rem; border-bottom: 1px solid var(--border); }
+    .crw-wave span { flex: 1; height: 20%; background: rgba(167,219,120,0.45); border-radius: 2px; transition: height 0.18s ease; }
+    .crw-transcript { padding: 0.85rem 1rem; min-height: 92px; border-bottom: 1px solid var(--border); }
+    .crw-line { color: var(--text-dim); line-height: 1.55; opacity: 0; transform: translateY(4px); transition: opacity 0.4s, transform 0.4s; margin-bottom: 0.3rem; }
+    .crw-line.on { opacity: 1; transform: none; }
+    .crw-line b { color: rgba(255,255,255,0.8); font-weight: 600; margin-right: 0.35rem; }
+    .crw-items { padding: 0.85rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; min-height: 214px; }
+    .crw-items-head { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.15rem; }
+    .crw-item {
+      display: grid; grid-template-columns: 74px 1fr; gap: 0.6rem; align-items: start;
+      padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-left: 2px solid var(--c);
+      border-radius: 6px; background: rgba(255,255,255,0.015);
+      opacity: 0; transform: translateX(-8px); transition: opacity 0.45s, transform 0.45s;
+    }
+    .crw-item.on { opacity: 1; transform: none; }
+    .crw-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); padding-top: 2px; }
+    .crw-item p { color: rgba(255,255,255,0.85); line-height: 1.45; }
+    .crw-item small { display: block; color: var(--text-faint); font-size: 0.66rem; margin-top: 2px; }
+    .t-decision { --c: var(--t-decision); }
+    .t-action { --c: var(--t-action); }
+    .t-blocker { --c: var(--t-blocker); }
+    .t-question { --c: var(--t-question); }
+
+    /* FEATURES */
+    .crw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .crw-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem; transition: border-color 0.2s;
+    }
+    .crw-card:hover { border-color: var(--border-lime); }
+    .crw-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); margin-bottom: 0.5rem; }
+    .crw-card h3 { font-size: 0.95rem; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 0.5rem; }
+    .crw-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; font-weight: 300; }
+
+    /* REPORT */
+    .crw-report { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .crw-report-col { background: var(--bg-card); border: 1px solid var(--border); border-top: 2px solid var(--c); border-radius: 8px; padding: 1.25rem 1.35rem; }
+    .crw-report-col h3 { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c); margin-bottom: 0.75rem; }
+    .crw-report-col li { list-style: none; font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; padding: 0.45rem 0; border-top: 1px solid var(--border); font-weight: 300; }
+    .crw-report-col li:first-of-type { border-top: 0; padding-top: 0; }
+    .crw-caption { font-size: 0.72rem; color: var(--text-faint); margin-top: 1rem; }
+
+    /* DATA PATH */
+    .crw-path { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; position: relative; margin-bottom: 2.5rem; }
+    .crw-step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.15rem 1.15rem 1.25rem; position: relative; animation: crw-step 8s ease-in-out infinite; animation-delay: calc(var(--i) * 2s); }
+    .crw-step::after { content: '\2192'; position: absolute; right: -0.62rem; top: 1.05rem; color: var(--text-faint); font-size: 0.8rem; }
+    .crw-step:last-child::after { content: none; }
+    .crw-step span { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--lime); letter-spacing: 0.08em; }
+    .crw-step h3 { font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.9); margin: 0.35rem 0 0.4rem; }
+    .crw-step p { font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; font-weight: 300; }
+    @keyframes crw-step {
+      0%, 30%, 100% { border-color: var(--border); background: var(--bg-card); }
+      8%, 22% { border-color: rgba(167,219,120,0.45); background: rgba(167,219,120,0.05); }
+    }
+    .crw-rules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem 2rem; }
+    .crw-rule h3 { font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 0.3rem; display: flex; gap: 0.6rem; align-items: center; }
+    .crw-rule h3::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); flex-shrink: 0; }
+    .crw-rule p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; font-weight: 300; padding-left: 1rem; }
+
+    /* PLANS */
+    .crw-plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .crw-plan { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.35rem; display: flex; flex-direction: column; }
+    .crw-plan h3 { font-size: 0.95rem; font-weight: 700; color: rgba(255,255,255,0.92); margin-bottom: 0.15rem; }
+    .crw-plan .crw-who { font-size: 0.72rem; color: var(--text-faint); margin-bottom: 0.85rem; }
+    .crw-plan li { list-style: none; font-size: 0.8rem; color: var(--text-dim); line-height: 1.55; padding: 0.35rem 0; border-top: 1px solid var(--border); font-weight: 300; }
+
+    /* CTA */
+    .crw-final { text-align: center; }
+    .crw-final .crw-body { margin-left: auto; margin-right: auto; }
+    .crw-final .crw-cta { justify-content: center; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* FOOTER */
+    .site-footer { border-top: 1px solid var(--border); padding: 2rem; }
+    .footer-inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.25); letter-spacing: -0.01em; }
+    .footer-brand span { color: rgba(167,219,120,0.5); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.75rem; color: var(--text-faint); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-dim); }
+
+    @media (max-width: 900px) {
+      .crw-hero { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 7rem; }
+      .crw-grid, .crw-report { grid-template-columns: 1fr 1fr; }
+      .crw-plans, .crw-path { grid-template-columns: 1fr 1fr; }
+      .crw-step:nth-child(2)::after { content: none; }
+    }
+    @media (max-width: 640px) {
+      .crw-inner { padding: 4rem 1.25rem; }
+      .crw-hero { padding: 6.5rem 1.25rem 3.5rem; }
+      .crw-grid, .crw-report, .crw-plans, .crw-path, .crw-rules { grid-template-columns: 1fr; }
+      .crw-step::after { content: none; }
+      .crw-item { grid-template-columns: 66px 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .crw-step { animation: none; }
+      .crw-rec i { animation: none; }
+      .crw-line, .crw-item { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+<link rel="stylesheet" href="/assets/site-navigation.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="CouloirGG home">Couloir<span>GG</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="main-nav-links" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="main-nav-links">
+    <a href="/consulting/">Consulting</a>
+    <a href="/carrow/" class="active" aria-current="page">Carrow</a>
+    <a href="/blog/">Blog</a>
+    <a href="/consulting/#contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="crw-section">
+  <div class="crw-hero">
+    <div>
+      <div class="crw-eyebrow">// Carrow &middot; from CouloirGG</div>
+      <h1>Talk it through.<br><em>Carrow keeps track.</em></h1>
+      <p class="crw-lead">Carrow records the conversations you're already having, in meetings, working sessions, or just thinking out loud. It pulls out the decisions, action items, blockers and open questions, and gives each one an owner.</p>
+      <div class="crw-cta">
+        <a class="crw-btn" href="mailto:hello@couloir.gg?subject=Carrow%20early%20access" onclick="plausible('Carrow+Access')">Request early access <span aria-hidden="true">&rarr;</span></a>
+        <a class="crw-link" href="#data">How it handles your data</a>
+      </div>
+      <div class="crw-status"><i aria-hidden="true"></i>Early access. Windows first, with iOS and Android companion apps.</div>
+    </div>
+
+    <div class="crw-mock" id="crw-mock" role="img" aria-label="Example Carrow session: a short conversation becomes a decision, an action item, a blocker and an open question.">
+      <div class="crw-mock-bar">
+        <b>Carrow</b>
+        <span>Launch planning</span>
+        <span class="crw-rec"><i></i><span id="crw-clock">00:12:40</span></span>
+      </div>
+      <div class="crw-wave" id="crw-wave" aria-hidden="true"></div>
+      <div class="crw-transcript" aria-hidden="true">
+        <p class="crw-line"><b>Dana</b>Let's move the launch review to Thursday so finance can join.</p>
+        <p class="crw-line"><b>Marco</b>Fine by me. I still need the updated pricing sheet though.</p>
+        <p class="crw-line"><b>Dana</b>I'll send it Friday. The vendor contract is still unsigned.</p>
+      </div>
+      <div class="crw-items" aria-hidden="true">
+        <div class="crw-items-head">From this session</div>
+        <div class="crw-item t-decision"><span class="crw-tag">Decision</span><p>Launch review moves to Thursday<small>Agreed by Dana and Marco</small></p></div>
+        <div class="crw-item t-action"><span class="crw-tag">Action</span><p>Send the updated pricing sheet<small>Dana &middot; due Friday</small></p></div>
+        <div class="crw-item t-blocker"><span class="crw-tag">Blocker</span><p>Vendor contract still unsigned<small>No owner yet</small></p></div>
+        <div class="crw-item t-question"><span class="crw-tag">Question</span><p>Who writes the onboarding emails?<small>Raised, not answered</small></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT DOES -->
+<section class="crw-section crw-mid" id="features">
+  <div class="crw-inner">
+    <div class="crw-label reveal">// what it does</div>
+    <h2 class="crw-title reveal">The notes you would take if you weren't busy talking.</h2>
+    <p class="crw-body reveal">Start a session and keep working. Carrow listens, sorts what it hears, and keeps the list current while you talk.</p>
+    <div class="crw-grid">
+      <div class="crw-card reveal">
+        <div class="crw-kicker">capture</div>
+        <h3>Notes as you go</h3>
+        <p>Decisions, action items, blockers, ideas and open questions, sorted while the conversation is still happening.</p>
+      </div>
+      <div class="crw-card reveal">
+        <div class="crw-kicker">follow-through</div>
+        <h3>A backlog with owners</h3>
+        <p>Action items land as cards with an owner and a due date when one was mentioned, so nothing depends on someone's memory.</p>
+      </div>
+      <div class="crw-card reveal">
+        <div class="crw-kicker">report</div>
+        <h3>A read on the session</h3>
+        <p>When you stop, Carrow writes up where people agreed, where they talked past each other, and what to sort out next.</p>
+      </div>
+      <div class="crw-card reveal">
+        <div class="crw-kicker">solo</div>
+        <h3>Think out loud</h3>
+        <p>Talk through a plan on your own, the way you would with a producer, and get back the plan, the risks and the next steps.</p>
+      </div>
+      <div class="crw-card reveal">
+        <div class="crw-kicker">team</div>
+        <h3>One team feed</h3>
+        <p>See what your team discussed and decided without another status meeting. Sessions are grouped by topic.</p>
+      </div>
+      <div class="crw-card reveal">
+        <div class="crw-kicker">sources</div>
+        <h3>Works with what you use</h3>
+        <p>Your computer's mic and audio, your phone, or a wireless mic. It also connects to Slack, Discord, Teams, your calendar, email and Git.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT -->
+<section class="crw-section" id="report">
+  <div class="crw-inner">
+    <div class="crw-label reveal">// the session report</div>
+    <h2 class="crw-title reveal">Where you agreed, and where you didn't.</h2>
+    <p class="crw-body reveal">Most notes tell you what was said. The report also tells you where people walked away with different ideas of what was decided.</p>
+    <div class="crw-report reveal">
+      <div class="crw-report-col" style="--c: var(--t-decision)">
+        <h3>Agreed</h3>
+        <ul>
+          <li>Launch review moves to Thursday.</li>
+          <li>Finance signs off on pricing before the review.</li>
+        </ul>
+      </div>
+      <div class="crw-report-col" style="--c: var(--t-question)">
+        <h3>Talked past each other</h3>
+        <ul>
+          <li>"Ready" meant feature complete to Marco and contract signed to Dana.</li>
+          <li>Nobody confirmed who writes the onboarding emails.</li>
+        </ul>
+      </div>
+      <div class="crw-report-col" style="--c: var(--t-action)">
+        <h3>Next</h3>
+        <ul>
+          <li>Agree what "ready" means before Thursday.</li>
+          <li>Pick an owner for the vendor contract.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="crw-caption reveal">Example report. The people and project are made up.</p>
+  </div>
+</section>
+
+<!-- DATA -->
+<section class="crw-section crw-mid" id="data">
+  <div class="crw-inner">
+    <div class="crw-label reveal">// your data</div>
+    <h2 class="crw-title reveal">You choose where it goes.</h2>
+    <p class="crw-body reveal">Every session follows the same path. At each step you can see where the data is going and change it.</p>
+    <ol class="crw-path reveal">
+      <li class="crw-step" style="--i:0"><span>01</span><h3>Capture</h3><p>Recording starts when you start a session, on your computer or phone.</p></li>
+      <li class="crw-step" style="--i:1"><span>02</span><h3>Transcribe</h3><p>On your own machine, so audio never leaves it. Or in the cloud, through Carrow or with your own key.</p></li>
+      <li class="crw-step" style="--i:2"><span>03</span><h3>Analyze</h3><p>With your own AI key, or a model running on your own hardware.</p></li>
+      <li class="crw-step" style="--i:3"><span>04</span><h3>Share</h3><p>Sessions start personal. Team work goes to your team feed, and you can keep any session to yourself.</p></li>
+    </ol>
+    <div class="crw-rules reveal">
+      <div class="crw-rule"><h3>Consent first</h3><p>Everyone in the session should know it's being recorded. Carrow asks you to acknowledge that before you can record.</p></div>
+      <div class="crw-rule"><h3>Locked to your team</h3><p>Each team's data stays with that team. No team can see another team's sessions.</p></div>
+      <div class="crw-rule"><h3>Your keys, your models</h3><p>Use your own AI provider key, or run a local model so analysis stays on hardware you control.</p></div>
+      <div class="crw-rule"><h3>Not for surveillance</h3><p>Carrow is for teams working together. It can't be used to monitor people without their knowledge, or by law enforcement or government agencies.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="crw-section" id="plans">
+  <div class="crw-inner">
+    <div class="crw-label reveal">// plans</div>
+    <h2 class="crw-title reveal">Start solo. Add your team.</h2>
+    <p class="crw-body reveal">Four plans, set when you sign up. Pricing will be announced at launch.</p>
+    <div class="crw-plans reveal">
+      <div class="crw-plan"><h3>Solo Free</h3><div class="crw-who">For trying it out</div><ul><li>Transcripts of your sessions</li><li>Synced across two devices</li></ul></div>
+      <div class="crw-plan"><h3>Solo Pro</h3><div class="crw-who">For one person</div><ul><li>Full notes, backlog and reports</li><li>Your own AI key or a local model</li></ul></div>
+      <div class="crw-plan"><h3>Team</h3><div class="crw-who">For small teams</div><ul><li>Shared team feed</li><li>One AI key for the whole team</li></ul></div>
+      <div class="crw-plan"><h3>Team Private</h3><div class="crw-who">For sensitive work</div><ul><li>Analysis on a model hosted on your network</li><li>Transcription on each device</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="crw-section crw-mid crw-final" id="access">
+  <div class="crw-inner">
+    <div class="crw-label reveal">// early access</div>
+    <h2 class="crw-title reveal">Try it with your team.</h2>
+    <p class="crw-body reveal">Carrow is in early access on Windows. Tell me a bit about how your team meets and works, and I'll get you set up.</p>
+    <div class="crw-cta reveal">
+      <a class="crw-btn" href="mailto:hello@couloir.gg?subject=Carrow%20early%20access" onclick="plausible('Carrow+Access')">Request early access <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
+    <div class="footer-links">
+      <a href="https://github.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">GitHub</a>
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank" onclick="plausible('Outbound+Click')">Discord</a>
+      <a href="https://x.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">X</a>
+      <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank" onclick="plausible('Outbound+Click')">Bluesky</a>
+      <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank" onclick="plausible('Outbound+Click')">YouTube</a>
+      <a href="https://www.reddit.com/r/CouloirGG/" target="_blank" onclick="plausible('Outbound+Click')">Reddit</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var crwReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Scroll reveal */
+  var crwReveal = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); crwReveal.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { crwReveal.observe(el); });
+
+  /* Live session mock */
+  var crwMock = document.getElementById('crw-mock');
+  var crwWave = document.getElementById('crw-wave');
+  var crwClock = document.getElementById('crw-clock');
+  var crwLines = crwMock.querySelectorAll('.crw-line');
+  var crwItems = crwMock.querySelectorAll('.crw-item');
+  var crwBars = [];
+  for (var i = 0; i < 36; i++) { var s = document.createElement('span'); crwWave.appendChild(s); crwBars.push(s); }
+
+  if (crwReduced) {
+    crwBars.forEach(function (b, i) { b.style.height = (25 + 45 * Math.abs(Math.sin(i * 0.7))) + '%'; });
+    return;
+  }
+
+  /* Timeline (ms): lines appear, then items, hold, reset */
+  var crwSteps = [
+    [600, crwLines[0]], [2200, crwLines[1]], [3800, crwLines[2]],
+    [2800, crwItems[0]], [4600, crwItems[1]], [5600, crwItems[2]], [7200, crwItems[3]]
+  ];
+  var crwCycle = 11500, crwVisible = false, crwStart = 0, crwPaused = 0, crwSecs = 760, crwLastSec = 0;
+
+  new IntersectionObserver(function (es) { crwVisible = es[0].isIntersecting; }, { threshold: 0.2 }).observe(crwMock);
+
+  function crwFrame(now) {
+    if (!crwVisible || document.hidden) { crwPaused = now; requestAnimationFrame(crwFrame); return; }
+    if (crwPaused) { crwStart += now - crwPaused; crwPaused = 0; }
+    if (!crwStart) crwStart = now;
+    var t = now - crwStart;
+    if (t > crwCycle) { crwStart = now; t = 0; crwLines.forEach(function (l) { l.classList.remove('on'); }); crwItems.forEach(function (it) { it.classList.remove('on'); }); }
+    crwSteps.forEach(function (st) { if (t >= st[0]) st[1].classList.add('on'); });
+
+    var talking = t < 5200;
+    crwBars.forEach(function (b, i) {
+      var h = talking ? 18 + 70 * Math.abs(Math.sin(now / 170 + i * 0.55) * Math.sin(now / 410 + i * 0.23)) : 12 + 6 * Math.abs(Math.sin(now / 600 + i));
+      b.style.height = h.toFixed(0) + '%';
+    });
+
+    if (now - crwLastSec > 1000) {
+      crwLastSec = now; crwSecs++;
+      var m = Math.floor(crwSecs / 60), sec = crwSecs % 60;
+      crwClock.textContent = '00:' + (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+    requestAnimationFrame(crwFrame);
+  }
+  requestAnimationFrame(crwFrame);
+})();
+</script>
+<script src="/assets/site-navigation.js" defer></script>
+</body>
+</html>
