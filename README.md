@@ -38,6 +38,8 @@ Open `http://127.0.0.1:8000/`. This raw local server does not apply Jekyll exclu
 
 ## Content rules
 
+No social media links in the footer or structured data: the CouloirGG social profiles still describe a game studio. Link previews use the PNG cards in `assets/og/` (social sites do not render SVG previews); edit the matching SVG and re-render the PNG when copy changes.
+
 Use calm, concrete language and short headings. Preserve the teal/lime palette. No em dashes, invented biography, client results, metrics, or testimonials. Discuss consulting prices per engagement.
 
 Client material under `/private/` must not be changed, linked publicly, or included in the sitemap. `_config.yml` excludes it from the published site along with working notes, retired product imagery, and employer logos. Publication exclusions do not make files in a public Git repository private.
