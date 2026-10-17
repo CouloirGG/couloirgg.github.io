@@ -501,6 +501,22 @@
       line-height: 1.7; font-weight: 300;
     }
 
+
+    /* TRACK RECORD */
+    .range-section { background: var(--bg-mid); }
+    .range-chain { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 0; margin: 0 0 2.5rem; padding: 0; }
+    .range-chain li { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.85); display: flex; align-items: center; white-space: nowrap; }
+    .range-chain li span { color: var(--lime); margin-right: 0.45rem; }
+    .range-chain li + li::before { content: '\2192'; color: var(--text-faint); margin: 0 0.75rem; }
+    .range-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .range-grid .cred-card { display: flex; flex-direction: column; }
+    @media (max-width: 860px) { .range-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) {
+      .range-grid { grid-template-columns: 1fr; }
+      .range-chain { flex-direction: column; gap: 0.6rem; }
+      .range-chain li + li::before { content: none; }
+    }
+
     /* TIMELINE */
     .timeline { margin-top: 3rem; }
     .tl-item {
@@ -703,11 +719,75 @@
     </div>
     <nav class="page-sections" aria-label="On this page">
       <span>On this page</span>
+      <a href="#range">What I've done</a>
       <a href="#approach">The method</a>
       <a href="#systems">Systems</a>
       <a href="#people">People</a>
       <a href="#background">My background</a>
     </nav>
+  </div>
+</section>
+
+<!-- TRACK RECORD -->
+<section class="section range-section" id="range">
+  <div class="section-inner section-inner--wide">
+    <div class="section-label reveal">// track record</div>
+    <h2 class="section-title reveal reveal-delay-1">What I've done.</h2>
+    <p class="section-body reveal reveal-delay-2">I earn trust between teams that don't agree, fix the process with them, prove the change with data, build the tool when one is needed, and hand it off so it runs without me. Each of those is a common skill. Doing all five is the rare part.</p>
+    <ol class="range-chain reveal reveal-delay-2" aria-label="How the work fits together">
+      <li><span>01</span>Earn trust</li>
+      <li><span>02</span>Fix the process</li>
+      <li><span>03</span>Prove it with data</li>
+      <li><span>04</span>Build the tool</li>
+      <li><span>05</span>Hand it off</li>
+    </ol>
+    <div class="range-grid">
+      <div class="cred-card reveal reveal-delay-1">
+        <div class="cred-eyebrow">partnership</div>
+        <h3 class="cred-title">Turn friction into partnership</h3>
+        <p class="cred-body">I've joined groups where two teams argued more than they agreed. By showing each side how the other could help, I rebuilt the relationship until the partner team started handing over work they used to keep to themselves.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-2">
+        <div class="cred-eyebrow">decisions</div>
+        <h3 class="cred-title">Meetings that end in a decision</h3>
+        <p class="cred-body">I've rebuilt recurring triage and launch meetings that had drifted into tangents: a set time per item, the right people in the room, a call before moving on. Then I stepped out and they kept running.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-3">
+        <div class="cred-eyebrow">expectations</div>
+        <h3 class="cred-title">Clear service levels</h3>
+        <p class="cred-body">I've turned unspoken expectations into simple tiers, like bronze, silver and gold, so anyone requesting work knows exactly what they are asking for and how long it will take.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-1">
+        <div class="cred-eyebrow">follow-through</div>
+        <h3 class="cred-title">Problems that don't repeat</h3>
+        <p class="cred-body">I've taken a thin post-incident review process and built it into a measure leadership relies on, with training, templates, feedback channels and clear owners. Then I handed it to the people closest to the work.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-2">
+        <div class="cred-eyebrow">data</div>
+        <h3 class="cred-title">The pattern nobody was tracking</h3>
+        <p class="cred-body">I've dug back through years of history to find a recurring failure, brought it to the teams who could fix it, and watched it nearly disappear. I build the dashboards and tell the story at the level each audience needs.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-3">
+        <div class="cred-eyebrow">cost</div>
+        <h3 class="cred-title">Cheaper and better</h3>
+        <p class="cred-body">I've led evaluations of paid vendors against tools a company already had, and supported a provider migration on a tight timeline that came out cheaper and performed better.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-1">
+        <div class="cred-eyebrow">structure</div>
+        <h3 class="cred-title">More capacity, same headcount</h3>
+        <p class="cred-body">I've reorganized teams around automation and clear focus areas so they could take on new responsibilities without new hires or longer hours.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-2">
+        <div class="cred-eyebrow">people</div>
+        <h3 class="cred-title">People who grow</h3>
+        <p class="cred-body">My teams have consistently rated their management among the strongest in the organization, and several people I've led have earned promotions. I give people room to lead, and I've brought new team members in across countries and time zones.</p>
+      </div>
+      <div class="cred-card reveal reveal-delay-3">
+        <div class="cred-eyebrow">building</div>
+        <h3 class="cred-title">I build the tool too</h3>
+        <p class="cred-body">I design and build AI tools end to end, including ones that pull chat, tickets and build data into a single view of what is at risk and who owns it. I also write the guidance teams follow to use AI safely.</p>
+      </div>
+    </div>
   </div>
 </section>
 
