@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CouloirGG | Systems Architecture & Operational Consulting</title>
-<meta name="description" content="Systems architecture, AI adoption, and operational consulting led by Stuart White. Twenty years of experience applied to your workflows and internal tools.">
-<meta property="og:title" content="CouloirGG | Systems Architecture & Operational Consulting">
+<title>CouloirGG | Operations, Tooling and AI Adoption</title>
+<meta name="description" content="Stuart White fixes how teams work and builds the tools that keep it fixed: workflow fixes, custom internal tools, and safe AI adoption.">
+<meta property="og:title" content="CouloirGG | Operations, Tooling and AI Adoption">
 <meta property="og:description" content="Stuart White helps businesses improve handoffs, connect information, and build useful internal tools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://couloir.gg">
@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://couloir.gg/assets/og/og-home.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@CouloirGG">
-<meta name="twitter:title" content="CouloirGG | Systems Architecture & Operational Consulting">
+<meta name="twitter:title" content="CouloirGG | Operations, Tooling and AI Adoption">
 <meta name="twitter:description" content="Stuart White helps businesses improve handoffs, connect information, and build useful internal tools.">
 <meta name="twitter:image" content="https://couloir.gg/assets/og/og-home.svg">
 <link rel="canonical" href="https://couloir.gg/">
@@ -226,6 +226,9 @@ body {
 
 .service-card:hover::before { opacity: 1; }
 
+.service-quote { font-style: italic; color: var(--teal); opacity: 0.85; margin-bottom: 0.5rem; }
+.service-more { display: inline-block; margin-top: 1rem; font-size: 0.85rem; font-weight: 600; color: var(--teal); text-underline-offset: 4px; }
+.service-scope { font-size: 0.8rem; opacity: 0.75; }
 .service-card h3 {
   font-size: 1rem;
   font-weight: 700;
@@ -492,7 +495,7 @@ body {
   100%    { opacity: 0; transform: translateX(7px); }
 }
 
-/* Session Capture: waveform fades, blocks appear */
+/* AI adoption icon (former waveform rules kept for reference): waveform fades, blocks appear */
 .si-wave {
   animation: si-wave-cycle 5s ease-in-out infinite;
 }
@@ -609,10 +612,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="main-nav-links">
-    <a href="/consulting/">Consulting</a>
+    <a href="/services/">Services</a>
     <a href="/carrow/">Carrow</a>
-    <a href="/blog/">Blog</a>
-    <a href="/consulting/#contact">Contact</a>
+    <a href="/about/">About</a>
+    <a href="/contact/">Contact</a>
   </div>
 </nav>
 
@@ -620,19 +623,19 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
 
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="hero-label">Systems Architecture & Operational Consulting</div>
-    <h1>Your systems work. <em>Your signals don't.</em></h1>
-    <p class="hero-body">I help businesses find where information gets lost between teams, then build the workflows and internal tools that get it to the right person.</p>
+    <div class="hero-label">Operations &middot; Tooling &middot; AI adoption</div>
+    <h1>I fix how teams work. <em>Then I build the tools that keep it fixed.</em></h1>
+    <p class="hero-body">Most teams come to me with one of three problems: work getting dropped between teams, a tool they need that doesn't exist yet, or AI they want without the risk.</p>
     <div class="hero-actions">
-      <a class="action-primary" href="mailto:hello@couloir.gg" onclick="plausible('Contact+Click')">Start a conversation <span aria-hidden="true">&rarr;</span></a>
-      <a class="action-secondary" href="#services">Explore services</a>
+      <a class="action-primary" href="/contact/">Start a conversation <span aria-hidden="true">&rarr;</span></a>
+      <a class="action-secondary" href="#services">See how I help</a>
     </div>
   </section>
 
   <section class="career-intro" aria-labelledby="founder-heading">
     <p class="career-kicker">Independent consulting, led by Stuart White</p>
     <h2 id="founder-heading">Twenty years in complex systems.</h2>
-    <p class="career-copy">Quality, production, and operations experience across Zipper Interactive, Turn 10, Microsoft, 343 Industries, Bungie, and EA. I earn trust between teams, fix the process with them, prove it with data, build the tool, and hand it off so it runs without me. <a href="/consulting/#range">See what I've done</a>.</p>
+    <p class="career-copy">Quality, production, and operations experience across Zipper Interactive, Turn 10, Microsoft, 343 Industries, Bungie, and EA. I earn trust between teams, fix the process with them, prove it with data, build the tool, and hand it off so it runs without me. <a href="/about/#range">See what I've done</a>.</p>
 
     <p class="career-caption">Independent consulting through CouloirGG LLC, based near Seattle. Career references do not imply employer endorsement.</p>
   </section>
@@ -640,10 +643,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
   <!-- SERVICES -->
   <section class="section-light" id="services" aria-labelledby="services-heading">
     <div class="section-inner">
-      <div class="section-label">// consulting services</div>
-      <h2 class="section-heading" id="services-heading">Where I can help.</h2>
-      <p class="section-lead">AI adoption and workflow consulting for businesses outside the games industry. Engagements exclude game-related entertainment and work for companies in the games business.</p>
-      <p class="section-lead" id="problem">Missed handoffs, scattered information, or decisions that never reach the people who need them. Start with the part that is slowing your team down.</p>
+      <div class="section-label">// where I can help</div>
+      <h2 class="section-heading" id="services-heading">Three problems I solve.</h2>
+      <p class="section-lead" id="problem">Pick the one that sounds most like your team. They often lead into each other.</p>
+      <p class="section-lead service-scope">For businesses outside the games industry. I don't take work from companies in the games business or on game-related entertainment.</p>
       <div class="services-grid">
 
         <div class="service-card">
@@ -667,8 +670,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
               <rect class="si-beam" x="14" y="12" width="2" height="18" rx="1" fill="#A7DB78" opacity="0"/>
             </svg>
           </div>
-          <h3>Workflow &amp; Systems Audit</h3>
-          <p>Find where handoffs break and work gets repeated. I map how information moves through your organization and identify the changes that will help. </p><p class="service-output"><strong>You leave with</strong> A workflow map and a targeted action plan.</p>
+          <h3>Fix how work moves</h3>
+          <p class="service-quote">"Things keep getting dropped between teams."</p>
+          <p>I find where handoffs, meetings and decisions break down, fix them with the people involved, and make sure the fix holds.</p><p class="service-output"><strong>You get</strong> A map of where work breaks, the changes that fix it, and a way to see it's working.</p><a class="service-more" href="/services/workflow/">How it works <span aria-hidden="true">&rarr;</span></a>
         </div>
 
         <div class="service-card">
@@ -693,36 +697,37 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
               <circle cx="42" cy="24" r="1" fill="#A7DB78" opacity="0.35"/>
             </svg>
           </div>
-          <h3>AI &amp; Internal Tooling</h3>
-          <p>Connect the information your team already has. I build tools and automation that turn scattered signals into useful next actions.</p><p class="service-output"><strong>You leave with</strong> Working tools built around your process.</p>
+          <h3>Build the tool you're missing</h3>
+          <p class="service-quote">"We need something that doesn't exist yet."</p>
+          <p>I design and build internal tools, dashboards and automation around how your team already works, with settings you can change without touching code.</p><p class="service-output"><strong>You get</strong> A working tool, documented and handed over.</p><a class="service-more" href="/services/tools/">How it works <span aria-hidden="true">&rarr;</span></a>
         </div>
 
         <div class="service-card">
           <div class="service-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none">
-              <!-- Waveform -->
-              <polyline class="si-wave" points="4,24 8,17 12,31 16,14 20,33 24,19 28,29 32,13 36,27 40,21 44,24" stroke="#005770" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
-              <!-- Structured blocks -->
-              <g class="si-block">
-                <rect x="6" y="14" width="18" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.55"/>
-                <rect x="26" y="14" width="10" height="3.5" rx="1.5" fill="#005770" opacity="0.2"/>
-              </g>
-              <g class="si-block">
-                <rect x="6" y="22" width="12" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.45"/>
-                <rect x="20" y="22" width="20" height="3.5" rx="1.5" fill="#005770" opacity="0.15"/>
-              </g>
-              <g class="si-block">
-                <rect x="6" y="30" width="24" height="3.5" rx="1.5" fill="#A7DB78" opacity="0.35"/>
-                <rect x="32" y="30" width="8" height="3.5" rx="1.5" fill="#005770" opacity="0.12"/>
-              </g>
+              <!-- Data reaching a gate; only one item passes -->
+              <circle class="si-dot" cx="7" cy="15" r="2.5" fill="#005770" opacity="0.3"/>
+              <circle class="si-dot" cx="7" cy="24" r="2.5" fill="#005770" opacity="0.3"/>
+              <circle class="si-dot" cx="7" cy="33" r="2.5" fill="#005770" opacity="0.3"/>
+              <line x1="10" y1="15" x2="19" y2="20" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <line x1="10" y1="24" x2="19" y2="24" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <line x1="10" y1="33" x2="19" y2="28" stroke="#005770" stroke-width="0.6" opacity="0.2" stroke-dasharray="2 2"/>
+              <rect x="19" y="11" width="9" height="26" rx="2.5" stroke="#005770" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <circle cx="23.5" cy="20" r="2" stroke="#005770" stroke-width="1" fill="none" opacity="0.4"/>
+              <line x1="23.5" y1="22" x2="23.5" y2="26" stroke="#005770" stroke-width="1" opacity="0.4"/>
+              <line x1="28" y1="24" x2="40" y2="24" stroke="#A7DB78" stroke-width="1" opacity="0.25"/>
+              <circle class="si-arrow-dot" cx="34" cy="24" r="3" fill="#A7DB78" opacity="0"/>
+              <circle cx="42" cy="24" r="3.5" stroke="#A7DB78" stroke-width="1" fill="none" opacity="0.25"/>
+              <circle cx="42" cy="24" r="1" fill="#A7DB78" opacity="0.35"/>
             </svg>
           </div>
-          <h3>Session Capture</h3>
-          <p>Keep decisions and context after a conversation ends. I help teams capture sessions with consent and make the output useful to the next person.</p><p class="service-output"><strong>You leave with</strong> Structured notes and a route from discussion to action.</p>
+          <h3>Adopt AI safely</h3>
+          <p class="service-quote">"We want AI, but not the risk."</p>
+          <p>I help you pick the right AI tools, decide what they can and can't reach, and keep people reviewing what comes out.</p><p class="service-output"><strong>You get</strong> Tools set up with the right limits, written guidance, and a team that knows how to use them.</p><a class="service-more" href="/services/ai-adoption/">How it works <span aria-hidden="true">&rarr;</span></a>
         </div>
 
       </div>
-      <a class="section-link" href="/consulting/">How an engagement works <span aria-hidden="true">&rarr;</span></a>
+      <a class="section-link" href="/services/#engagement">How an engagement works <span aria-hidden="true">&rarr;</span></a>
     </div>
   </section>
 
@@ -792,7 +797,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
             <li><h3>Trace the problem to its source.</h3><p>Map where information gets lost and agree which changes are worth making.</p></li>
             <li><h3>Build it, then make sure it works.</h3><p>Put the fix into the team's existing workflow, document it, and validate it with the people using it.</p></li>
           </ol>
-          <a class="section-link" href="/consulting/#approach">See the full method <span aria-hidden="true">&rarr;</span></a>
+          <a class="section-link" href="/services/#method">See the full method <span aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
     </div>
@@ -801,8 +806,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
 
 
 <section class="page-links" aria-label="Related pages">
-  <h2>Further reading</h2>
+  <h2>Keep exploring</h2>
   <div class="page-links-grid">
+    <a href="/carrow/"><span class="page-link-label">Product</span><span class="page-link-title">Carrow <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">Talk it through. Carrow keeps track of the decisions, actions and blockers.</span></a>
+    <a href="/about/#range"><span class="page-link-label">About</span><span class="page-link-title">What I've done <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">Nine kinds of problems I've solved over twenty years.</span></a>
     <a href="/blog/signal-loss/"><span class="page-link-label">Operations</span><span class="page-link-title">Why good tools still leave gaps between teams <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How information gets lost between teams, and where to start looking.</span></a>
     <a href="/blog/ai-trust/"><span class="page-link-label">AI adoption</span><span class="page-link-title">Building AI tools people can trust <span aria-hidden="true">&rarr;</span></span><span class="page-link-summary">How consent, processing choices, and human review shape useful AI workflows.</span></a>
   </div>
@@ -824,6 +831,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-
   <div class="footer-inner">
     <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
     <div class="footer-links">
+      <a href="/blog/">Writing</a>
       <a href="https://github.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">GitHub</a>
       <a href="https://discord.gg/mwNZ8P6q" target="_blank" onclick="plausible('Outbound+Click')">Discord</a>
       <a href="https://x.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">X</a>

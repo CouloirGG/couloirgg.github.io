@@ -15,7 +15,7 @@ The owner confirmed on September 24, 2026 that the required outside-work acknowl
 
 ## Editing and preview
 
-Static HTML, CSS, and JavaScript. Main navigation and related-page links share `assets/site-navigation.css`; mobile navigation uses `assets/site-navigation.js`. Keep the main menu consistent: Consulting, Carrow, Blog, Contact.
+Static HTML, CSS, and JavaScript. Main navigation and related-page links share `assets/site-navigation.css`; mobile navigation uses `assets/site-navigation.js`. Keep the main menu consistent: Services, Carrow, About, Contact. The blog is linked from the footer as Writing. `/services/`, `/about/` and `/contact/` share `assets/couloir.css`.
 
 ```powershell
 python -m http.server 8000 --bind 127.0.0.1
@@ -25,8 +25,12 @@ Open `http://127.0.0.1:8000/`. This raw local server does not apply Jekyll exclu
 
 ## Published pages
 
-- `/`: consulting overview, services, career introduction, and relevant reading.
-- `/consulting/`: track record, approach, background, and engagement examples.
+- `/`: one-line positioning, the three services, method summary, and links onward.
+- `/services/`: the three services, the method, and how an engagement works.
+- `/services/workflow/`, `/services/tools/`, `/services/ai-adoption/`: one page per service, each with an example and deliverables.
+- `/about/`: track record and background.
+- `/contact/`: what to include in a first email.
+- `/consulting/` redirects, mapping old anchors to the new pages.
 - `/carrow/`: Carrow product page (early access). No prices until launch. Do not list Jira, Confluence, or Perforce integrations.
 - `/blog/`: articles on operations, systems, and AI adoption.
 - `/privacy/`, `/terms/`, and `404.html`: supporting pages.

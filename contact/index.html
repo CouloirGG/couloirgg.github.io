@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | CouloirGG</title>
+  <meta name="description" content="Email Stuart White at hello@couloir.gg about fixing how work moves, building a tool, or adopting AI safely.">
+  <meta property="og:title" content="Contact | CouloirGG">
+  <meta property="og:description" content="Email Stuart White at hello@couloir.gg about fixing how work moves, building a tool, or adopting AI safely.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://couloir.gg/contact/">
+  <meta property="og:image" content="https://couloir.gg/assets/og/og-consulting.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CouloirGG">
+  <meta name="twitter:title" content="Contact | CouloirGG">
+  <meta name="twitter:description" content="Email Stuart White at hello@couloir.gg about fixing how work moves, building a tool, or adopting AI safely.">
+  <meta name="twitter:image" content="https://couloir.gg/assets/og/og-consulting.svg">
+  <link rel="canonical" href="https://couloir.gg/contact/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-jsKuNwamSbECoYw-7tuuA.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+  <link rel="stylesheet" href="/assets/couloir.css">
+  <link rel="stylesheet" href="/assets/site-navigation.css">
+  <script src="/assets/site-navigation.js" defer></script>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="CouloirGG home">Couloir<span>GG</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-controls="main-nav-links" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="main-nav-links">
+    <a href="/services/">Services</a>
+    <a href="/carrow/">Carrow</a>
+    <a href="/about/">About</a>
+    <a href="/contact/" class="active" aria-current="page">Contact</a>
+  </div>
+</nav>
+
+<main>
+<section class="section section-dark">
+  <div class="hero">
+    <div class="hero-eyebrow">// contact</div>
+    <h1>Tell me what's <em>getting in the way.</em></h1>
+    <p class="hero-body">Email is the best way to reach me. A few lines is plenty:</p>
+    <ul class="contact-list">
+      <li>What your team does, and roughly how big it is.</li>
+      <li>Which of the <a href="/services/" style="color:var(--lime);">three problems</a> sounds closest, or that you're not sure.</li>
+      <li>What you've already tried.</li>
+    </ul>
+    <div class="hero-cta">
+      <a href="mailto:hello@couloir.gg" class="btn-outline" onclick="plausible('Contact+Click')">hello@couloir.gg</a>
+    </div>
+    <p class="scope-note" style="margin-top:2.5rem;">For businesses outside the games industry. I don't take work from companies in the games business or on game-related entertainment. For Carrow early access, see the <a href="/carrow/" style="color:var(--lime);">Carrow page</a>.</p>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Couloir<span>GG</span> LLC &middot; Stuart White</div>
+    <div class="footer-links">
+      <a href="/blog/">Writing</a>
+      <a href="https://github.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">GitHub</a>
+      <a href="https://discord.gg/mwNZ8P6q" target="_blank" onclick="plausible('Outbound+Click')">Discord</a>
+      <a href="https://x.com/CouloirGG" target="_blank" onclick="plausible('Outbound+Click')">X</a>
+      <a href="https://bsky.app/profile/couloirgg.bsky.social" target="_blank" onclick="plausible('Outbound+Click')">Bluesky</a>
+      <a href="https://www.youtube.com/channel/UCjZCRl2B_kUd6Ah8gzq4CBQ" target="_blank" onclick="plausible('Outbound+Click')">YouTube</a>
+      <a href="https://www.reddit.com/r/CouloirGG/" target="_blank" onclick="plausible('Outbound+Click')">Reddit</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* SCROLL REVEAL */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
